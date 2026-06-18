@@ -1,5 +1,5 @@
 {
-  "name": "kody-store",
+  "name": "kody-company-store",
   "layoutVersion": 1,
   "defaultRef": "stable",
   "resolutionOrder": [
@@ -13,4 +13,3 @@
     "staff": ".kody/staff"
   }
 }
-
