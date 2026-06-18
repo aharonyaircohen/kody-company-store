@@ -1,0 +1,7 @@
+{
+  "name": "live-job-wiring",
+  "executable": "job-live-verify",
+  "staff": "live-verifier",
+  "every": "manual",
+  "describe": "Live duty description token: DUTY_DESCRIPTION_OK_2026_06_06"
+}

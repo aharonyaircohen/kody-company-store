@@ -1,0 +1,9 @@
+{
+  "name": "skills-research",
+  "describe": "Skills Research",
+  "every": "7d",
+  "runner": "cto",
+  "executables": [
+    "skills-research"
+  ]
+}

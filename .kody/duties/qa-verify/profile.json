@@ -1,0 +1,9 @@
+{
+  "name": "qa-verify",
+  "describe": "QA Fix Verification",
+  "every": "30m",
+  "runner": "qa",
+  "executables": [
+    "qa-verify"
+  ]
+}

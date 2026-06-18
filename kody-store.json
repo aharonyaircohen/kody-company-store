@@ -1,0 +1,16 @@
+{
+  "name": "kody-store",
+  "layoutVersion": 1,
+  "defaultRef": "stable",
+  "resolutionOrder": [
+    "consumer-local",
+    "store",
+    "engine-builtins"
+  ],
+  "assetRoots": {
+    "duties": ".kody/duties",
+    "executables": ".kody/executables",
+    "staff": ".kody/staff"
+  }
+}
+

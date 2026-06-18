@@ -1,0 +1,10 @@
+{
+  "name": "duty-call",
+  "describe": "Duty Call",
+  "every": "1d",
+  "runner": "ceo",
+  "executables": [
+    "duty-call"
+  ],
+  "disabled": true
+}

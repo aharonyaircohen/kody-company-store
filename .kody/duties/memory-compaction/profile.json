@@ -1,0 +1,16 @@
+{
+  "name": "memory-compaction",
+  "describe": "Memory Compaction",
+  "every": "7d",
+  "runner": "coo",
+  "executables": [
+    "compact-memory"
+  ],
+  "readsFrom": [
+    "memory-compaction",
+    "reports"
+  ],
+  "writesTo": [
+    "memory-compaction"
+  ]
+}
