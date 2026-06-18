@@ -35,7 +35,7 @@
     }
   ],
   "claudeCode": {
-    "model": "claude/claude-sonnet-4-6",
+      "model": "inherit",
     "permissionMode": "acceptEdits",
     "maxTurns": null,
     "maxTurnTimeoutSec": 1200,
