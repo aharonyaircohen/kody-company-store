@@ -32,18 +32,16 @@ Rules:
 
 ## Goals
 
-A store goal is an available managed-goal template.
+Store goals are inactive templates. Consumer repos may also define local goal templates.
+Templates live under `.kody/goals/templates/<slug>/state.json`; live runs live under
+`.kody/goals/instances/<id>/state.json`.
 
-Store goal templates live under `.kody/goals/templates/<slug>/state.json` and should use `state: "inactive"`. A consumer activates a goal
-by listing it under `company.activeGoals`, then creates or updates the runtime
-goal instance with repo facts such as `facts.issue`.
+The consumer activates a goal through `company.activeGoals`, then creates or updates
+a runtime goal instance with repo facts such as `facts.issue`. Missing or empty
+`company.activeGoals` means no store goals auto-run.
 
-Rules:
-
-- Missing `company.activeGoals` means no store goals auto-run.
-- Empty `company.activeGoals` means no store goals auto-run.
-- Store goals must not contain repo-specific runtime history.
-- Runtime goal progress belongs to the consumer repo and `kody-state`.
+Store goals must not contain repo-specific runtime history. Runtime goal progress
+belongs in the consumer repo's `kody-state` branch.
 
 ## Mental Model
 
