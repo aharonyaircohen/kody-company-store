@@ -1,21 +1,15 @@
 {
   "version": 1,
+  "kind": "template",
+  "templateId": "npm-release",
   "state": "inactive",
   "type": "npm-release",
   "description": "Shared managed goal template for releasing an npm package: prepare the release, merge it to main through task leadership, then publish to npm.",
   "destination": {
     "outcome": "Release is prepared, merged to main, and published to npm.",
-    "evidence": [
-      "releasePrExists",
-      "mainMerged",
-      "packagePublished"
-    ]
+    "evidence": ["releasePrExists", "mainMerged", "packagePublished"]
   },
-  "duties": [
-    "release",
-    "task-leader",
-    "npm-publish"
-  ],
+  "duties": ["release", "task-leader", "npm-publish"],
   "route": [
     {
       "stage": "release",
@@ -23,9 +17,7 @@
       "duty": "release",
       "executable": "release-prepare",
       "args": {
-        "issue": {
-          "fact": "issue"
-        },
+        "issue": { "fact": "issue" },
         "goal": "npm-release"
       }
     },
@@ -35,9 +27,7 @@
       "duty": "task-leader",
       "executable": "task-leader",
       "args": {
-        "issue": {
-          "fact": "issue"
-        }
+        "issue": { "fact": "issue" }
       }
     },
     {
@@ -49,9 +39,5 @@
   ],
   "stage": "release",
   "facts": {},
-  "blockers": [
-    "Activate this goal in the consumer repo and set facts.issue to the release issue number."
-  ],
-  "kind": "template",
-  "templateId": "npm-release"
+  "blockers": ["Instantiate this template in a consumer repo as .kody/goals/instances/<goal-id>/state.json with state active and facts.issue set."]
 }

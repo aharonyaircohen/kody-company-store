@@ -2,7 +2,7 @@
   "name": "qa-goal",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Operator-gated half of QA: promotes a QA report (already posted on an issue by qa-engineer) into a goal — manifest entry + one fix-ticket per finding + a committed .kody/goals/<id>/state.json. Deterministic, no agent. The qa / qa-sweep duties surface a `@kody qa-goal --issue <n>` inbox rec; this runs when the operator approves it, so QA never auto-creates goals on its own.",
+  "describe": "Operator-gated half of QA: promotes a QA report (already posted on an issue by qa-engineer) into a goal — manifest entry + one fix-ticket per finding + a committed .kody/goals/instances/<id>/state.json. Deterministic, no agent. The qa / qa-sweep duties surface a `@kody qa-goal --issue <n>` inbox rec; this runs when the operator approves it, so QA never auto-creates goals on its own.",
   "inputs": [
     {
       "name": "issue",
