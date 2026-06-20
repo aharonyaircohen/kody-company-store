@@ -1,0 +1,10 @@
+{
+  "name": "documentation-maintenance",
+  "describe": "Documentation Maintenance - discover product surfaces and keep the repo documented",
+  "every": "7d",
+  "runner": "tech-writer",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "executable": "documentation-maintenance"
+}
