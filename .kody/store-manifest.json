@@ -305,12 +305,12 @@
           "variantCount": 2
         },
         "release": {
-          "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/release",
-          "hash": "866669e42591",
-          "mtime": "2026-06-15T12:59:27.700Z",
-          "copyCount": 3,
-          "variantCount": 2
+          "project": "kody2",
+          "sourcePath": "/Users/aguy/projects/kody2/src/duties/release",
+          "hash": "d883c5435ddd",
+          "mtime": "2026-06-18T05:24:56.000Z",
+          "copyCount": 1,
+          "variantCount": 1
         },
         "repo-graph": {
           "project": "Kody-Dashboard",
@@ -1143,12 +1143,12 @@
           "variantCount": 2
         },
         "release": {
-          "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/release",
-          "hash": "4098d83da572",
-          "mtime": "2026-06-15T18:48:25.000Z",
-          "copyCount": 2,
-          "variantCount": 2
+          "project": "kody2",
+          "sourcePath": "/Users/aguy/projects/kody2/src/executables/release",
+          "hash": "c2b063f10e1c",
+          "mtime": "2026-06-18T05:24:56.000Z",
+          "copyCount": 1,
+          "variantCount": 1
         },
         "release-deploy": {
           "project": "kody2",
