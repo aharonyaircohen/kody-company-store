@@ -1,13 +1,22 @@
 {
-  "name": "preview-health",
+  "name": "duty-scheduler",
   "role": "watch",
-  "kind": "oneshot",
-  "describe": "Scan open PRs and dispatch mechanical preview repairs.",
-  "inputs": [],
+  "describe": "Scheduled: for every duty folder under .kody/duties/, invoke duty-tick once. No agent on the scheduler itself.",
+  "kind": "scheduled",
+  "schedule": "*/5 * * * *",
+  "inputs": [
+    {
+      "name": "duty",
+      "flag": "--duty",
+      "type": "string",
+      "required": false,
+      "describe": "Optional duty slug to run instead of scanning every due duty."
+    }
+  ],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
-    "maxTurns": 0,
+    "maxTurns": null,
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "tools": [],
@@ -26,8 +35,8 @@
         "checkCommand": "command -v gh"
       },
       "verify": "gh auth status",
-      "usage": "Reads open PRs, reads the CTO trust ledger, dispatches Kody workflows, and posts PR audit/recommendation comments.",
-      "allowedUses": ["pr", "api", "issue", "workflow"]
+      "usage": "",
+      "allowedUses": ["api", "issue", "pr"]
     }
   ],
   "inputArtifacts": [],
@@ -35,12 +44,12 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "tick.sh",
+        "script": "dispatchDutyFileTicks",
         "with": {
           "jobsDir": ".kody/duties",
-          "duty": "preview-health"
-        },
-        "timeoutSec": 300
+          "targetExecutable": "duty-tick",
+          "slugArg": "duty"
+        }
       }
     ],
     "postflight": []

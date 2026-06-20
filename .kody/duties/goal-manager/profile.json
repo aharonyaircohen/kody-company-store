@@ -1,0 +1,6 @@
+{
+  "name": "goal-manager",
+  "action": "goal-manager",
+  "executable": "goal-manager",
+  "describe": "Advance one managed goal by dispatching the duty responsible for its first missing evidence."
+}

@@ -1,36 +1,54 @@
 {
   "name": "release-prepare",
-  "role": "primitive",
-  "describe": "",
+  "role": "utility",
+  "phase": "shipped",
   "inputs": [
+    {
+      "name": "bump",
+      "flag": "--bump",
+      "type": "enum",
+      "values": ["patch", "minor", "major"],
+      "required": false,
+      "describe": "Version bump increment. Default patch."
+    },
+    {
+      "name": "dry-run",
+      "flag": "--dry-run",
+      "type": "bool",
+      "required": false,
+      "describe": "Print plan without writing files, committing, or opening a PR."
+    },
+    {
+      "name": "prefer",
+      "flag": "--prefer",
+      "type": "enum",
+      "values": ["ours", "theirs"],
+      "required": false,
+      "describe": "On release/vX.Y.Z branch collision: 'ours' force-pushes; 'theirs' reuses the existing PR. Default refuses non-ff."
+    },
     {
       "name": "issue",
       "flag": "--issue",
       "type": "int",
-      "required": true,
-      "describe": "GitHub issue number to work on."
+      "required": false,
+      "describe": "Issue/PR number to post the terminal notice on. Auto-injected by dispatch."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report release PR evidence to."
     }
   ],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "acceptEdits",
-    "maxTurns": null,
-    "maxTurnTimeoutSec": 1200,
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
     "systemPromptAppend": null,
-    "cacheable": true,
-    "enableVerifyTool": true,
-    "verifyAttempts": 4,
-    "tools": [
-      "Read",
-      "Write",
-      "Edit",
-      "Bash",
-      "Grep",
-      "Glob"
-    ],
-    "hooks": [
-      "block-git"
-    ],
+    "tools": [],
+    "hooks": [],
     "skills": [],
     "commands": [],
     "subagents": [],
@@ -38,22 +56,22 @@
     "mcpServers": []
   },
   "cliTools": [],
-  "lifecycle": "pr-branch",
-  "lifecycleConfig": {
-    "label": {
-      "name": "kody:running",
-      "color": "fbca04",
-      "description": "kody: working"
-    },
-    "context": "task",
-    "sync": false,
-    "verify": true,
-    "advance": false,
-    "mirrorState": true,
-    "finalize": true
-  },
+  "inputArtifacts": [],
+  "outputArtifacts": [],
   "scripts": {
-    "preflight": [],
-    "postflight": []
+    "preflight": [
+      { "script": "setCommentTarget", "with": { "type": "issue" } },
+      { "script": "loadTaskState" },
+      { "shell": "prepare.sh" },
+      { "script": "skipAgent" }
+    ],
+    "postflight": [
+      { "script": "recordOutcome" },
+      { "script": "applyDutyReports" },
+      { "script": "saveTaskState" },
+      { "script": "mirrorStateToPr" },
+      { "script": "notifyTerminal", "with": { "label": "release prepare" } },
+      { "script": "advanceFlow" }
+    ]
   }
 }
