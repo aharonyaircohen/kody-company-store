@@ -15,7 +15,7 @@
       "flag": "--base",
       "type": "string",
       "required": false,
-      "describe": "Optional base branch override (stacked-PR). Used by goal-tick so each task PR forks from the previous task's head ref."
+      "describe": "Optional safe base branch override for manual branch targeting."
     }
   ],
   "claudeCode": {

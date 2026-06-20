@@ -5,9 +5,17 @@
   "description": "Shared managed goal template for releasing a web app: prepare the release, merge it to main through task leadership, then deploy Vercel production.",
   "destination": {
     "outcome": "Release is prepared, merged to main, and deployed to Vercel production.",
-    "evidence": ["releasePrExists", "mainMerged", "productionDeployed"]
+    "evidence": [
+      "releasePrExists",
+      "mainMerged",
+      "productionDeployed"
+    ]
   },
-  "duties": ["release", "task-leader", "vercel-production-deploy"],
+  "duties": [
+    "release",
+    "task-leader",
+    "vercel-production-deploy"
+  ],
   "route": [
     {
       "stage": "release",
@@ -15,7 +23,9 @@
       "duty": "release",
       "executable": "release-prepare",
       "args": {
-        "issue": { "fact": "issue" },
+        "issue": {
+          "fact": "issue"
+        },
         "goal": "web-release"
       }
     },
@@ -25,7 +35,9 @@
       "duty": "task-leader",
       "executable": "task-leader",
       "args": {
-        "issue": { "fact": "issue" }
+        "issue": {
+          "fact": "issue"
+        }
       }
     },
     {
@@ -37,5 +49,9 @@
   ],
   "stage": "release",
   "facts": {},
-  "blockers": ["Activate this goal in the consumer repo and set facts.issue to the release issue number."]
+  "blockers": [
+    "Activate this goal in the consumer repo and set facts.issue to the release issue number."
+  ],
+  "kind": "template",
+  "templateId": "web-release"
 }

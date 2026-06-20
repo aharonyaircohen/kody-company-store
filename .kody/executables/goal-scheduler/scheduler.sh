@@ -1,10 +1,10 @@
 #!/usr/bin/env bash
 #
-# goal-scheduler: tick only consumer-activated managed goals.
+# goal-scheduler: tick only consumer-activated managed goal instances.
 
 set -euo pipefail
 
-goals_dir=".kody/goals"
+instances_dir=".kody/goals/instances"
 
 if ! command -v python3 >/dev/null 2>&1; then
   echo "[goal-scheduler] FATAL: python3 not found on PATH" >&2
@@ -29,7 +29,7 @@ except Exception:
 goals = config.get("company", {}).get("activeGoals", [])
 if not isinstance(goals, list):
     goals = []
-print(json.dumps([g for g in goals if isinstance(g, str) and g.strip()]))
+print(json.dumps([g.strip() for g in goals if isinstance(g, str) and g.strip()]))
 PY
 )
 
@@ -40,20 +40,20 @@ if [ "$active_goals_json" = "[]" ]; then
 fi
 
 git fetch origin kody-state --quiet 2>/dev/null || true
-git checkout origin/kody-state -- "$goals_dir" 2>/dev/null || true
+git checkout origin/kody-state -- "$instances_dir" 2>/dev/null || true
 
-if [ ! -d "$goals_dir" ]; then
-  echo "[goal-scheduler] no $goals_dir — nothing schedule"
+if [ ! -d "$instances_dir" ]; then
+  echo "[goal-scheduler] no $instances_dir — nothing schedule"
   echo "KODY_SKIP_AGENT=true"
   exit 0
 fi
 
 shopt -s nullglob
-state_files=("$goals_dir"/*/state.json)
+state_files=("$instances_dir"/*/state.json)
 shopt -u nullglob
 
 if [ "${#state_files[@]}" -eq 0 ]; then
-  echo "[goal-scheduler] no goal state files yet"
+  echo "[goal-scheduler] no goal instances yet"
   echo "KODY_SKIP_AGENT=true"
   exit 0
 fi
@@ -65,20 +65,32 @@ for state_file in "${state_files[@]}"; do
   [ -f "$state_file" ] || continue
 
   goal_id=$(basename "$(dirname "$state_file")")
-  activated=$(python3 -c 'import json,sys; print("yes" if sys.argv[1] in json.loads(sys.argv[2]) else "no")' "$goal_id" "$active_goals_json")
-  if [ "$activated" != "yes" ]; then
-    continue
-  fi
+  read -r state activated managed < <(python3 - "$state_file" "$goal_id" "$active_goals_json" <<'PY'
+import json
+import sys
 
-  state=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("state", ""))' "$state_file" 2>/dev/null || echo "")
-  if [ "$state" != "active" ]; then
+state_file, goal_id, active_json = sys.argv[1], sys.argv[2], sys.argv[3]
+try:
+    data = json.load(open(state_file))
+except Exception:
+    print("invalid no no")
+    raise SystemExit
+
+active = set(json.loads(active_json))
+template = data.get("template") or data.get("sourceTemplate") or data.get("templateId")
+activated = goal_id in active or (isinstance(template, str) and template in active)
+managed = all(k in data for k in ("type", "destination", "duties", "route", "facts", "blockers"))
+print(data.get("state", ""), "yes" if activated else "no", "yes" if managed else "no")
+PY
+  )
+
+  if [ "$activated" != "yes" ] || [ "$state" != "active" ]; then
     continue
   fi
 
   active=$((active + 1))
-  managed=$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print("yes" if all(k in d for k in ("type","destination","duties","route","facts","blockers")) else "no")' "$state_file" 2>/dev/null || echo "no")
   if [ "$managed" != "yes" ]; then
-    echo "[goal-scheduler] skip $goal_id: legacy goal files are not managed-goal activations"
+    echo "[goal-scheduler] skip $goal_id: legacy goal files are not managed-goal instances"
     continue
   fi
 
@@ -89,5 +101,5 @@ for state_file in "${state_files[@]}"; do
   fi
 done
 
-echo "[goal-scheduler] scanned ${#state_files[@]} goal(s), active=${active}, managed=${managed_active}"
+echo "[goal-scheduler] scanned ${#state_files[@]} goal instance(s), active=${active}, managed=${managed_active}"
 echo "KODY_SKIP_AGENT=true"

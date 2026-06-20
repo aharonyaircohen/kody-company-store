@@ -10,7 +10,7 @@ repo-specific assets locally and use this store as the shared default layer.
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
 - `.kody/duties/` contains shared duty definitions.
 - `.kody/executables/` contains shared executable definitions, prompts, and supporting scripts.
-- `.kody/goals/` contains shared managed goal templates.
+- `.kody/goals/templates/` contains shared managed goal templates.
 - `.kody/staff/` contains shared staff personas.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
@@ -29,6 +29,8 @@ defaults, not repo-specific runtime state.
 ## Activation
 
 The store is a catalog, not an auto-run list.
+
+See [docs/activation.md](docs/activation.md) for the full activation contract.
 
 Consumer repos decide which shared duties and goals are active:
 
@@ -49,7 +51,7 @@ a reusable template until the consumer activates it and supplies repo facts.
 
 - `duties`: scheduled or callable work definitions under `.kody/duties/<slug>/`
 - `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
-- `goals`: managed objective templates under `.kody/goals/<slug>/state.json`
+- `goals`: managed objective templates under `.kody/goals/templates/<slug>/state.json`
 - `staff`: persona files under `.kody/staff/<slug>.md`
 
 ## What Does Not Belong Here

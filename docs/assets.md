@@ -7,13 +7,15 @@ Kody store assets live under roots declared in `kody-store.json`.
   "assetRoots": {
     "duties": ".kody/duties",
     "executables": ".kody/executables",
-    "goals": ".kody/goals",
+    "goals": ".kody/goals/templates",
     "staff": ".kody/staff"
   }
 }
 ```
 
 The slug is the lookup key.
+
+Availability is separate from activation. See [activation.md](activation.md).
 
 ## Duties
 
@@ -69,7 +71,7 @@ executables, not in persona files.
 Path:
 
 ```text
-.kody/goals/<slug>/state.json
+.kody/goals/templates/<slug>/state.json
 ```
 
 Goals are managed objective templates. A shared goal should be portable enough

@@ -10,7 +10,7 @@
   "assetRoots": {
     "duties": ".kody/duties",
     "executables": ".kody/executables",
-    "goals": ".kody/goals",
+    "goals": ".kody/goals/templates",
     "staff": ".kody/staff"
   }
 }
