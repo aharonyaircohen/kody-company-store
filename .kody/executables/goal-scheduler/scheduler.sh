@@ -1,34 +1,49 @@
 #!/usr/bin/env bash
 #
-# goal-scheduler: enumerate every goal state file under .kody/goals/ and
-# dispatch goal-tick once for each whose state == "active". Runs as a
-# scheduled executable (cron `*/5 * * * *`). No agent.
-#
-# A failed individual tick logs and continues — one stuck goal must not
-# starve the rest.
+# goal-scheduler: tick only consumer-activated managed goals.
 
 set -euo pipefail
 
 goals_dir=".kody/goals"
 
-# python3 parses each goal's state.json below. It is declared as a required
-# cliTool in profile.json, but guard here too: without this check a missing
-# interpreter silently makes EVERY goal read state="" → treated as inactive →
-# nothing ticks, reported as a misleading success. Fail loud instead.
 if ! command -v python3 >/dev/null 2>&1; then
-  echo "[goal-scheduler] FATAL: python3 not found on PATH (required to read goal state)" >&2
+  echo "[goal-scheduler] FATAL: python3 not found on PATH" >&2
   exit 1
 fi
 
-# Goal state lives on the dedicated `kody-state` branch, not the default branch
-# (keeps `chore(goals): …` churn out of code history). Materialize it into the
-# working tree so the glob below sees current state. Best-effort: `kody-state`
-# may not exist yet, or carry no goals — both fall through to the checks below.
+active_goals_json=$(python3 - <<'PY'
+import json
+from pathlib import Path
+
+path = Path("kody.config.json")
+if not path.exists():
+    print("[]")
+    raise SystemExit
+
+try:
+    config = json.loads(path.read_text())
+except Exception:
+    print("[]")
+    raise SystemExit
+
+goals = config.get("company", {}).get("activeGoals", [])
+if not isinstance(goals, list):
+    goals = []
+print(json.dumps([g for g in goals if isinstance(g, str) and g.strip()]))
+PY
+)
+
+if [ "$active_goals_json" = "[]" ]; then
+  echo "[goal-scheduler] no company.activeGoals configured — store goals inactive"
+  echo "KODY_SKIP_AGENT=true"
+  exit 0
+fi
+
 git fetch origin kody-state --quiet 2>/dev/null || true
 git checkout origin/kody-state -- "$goals_dir" 2>/dev/null || true
 
 if [ ! -d "$goals_dir" ]; then
-  echo "[goal-scheduler] no $goals_dir — nothing to schedule"
+  echo "[goal-scheduler] no $goals_dir — nothing schedule"
   echo "KODY_SKIP_AGENT=true"
   exit 0
 fi
@@ -37,47 +52,42 @@ shopt -s nullglob
 state_files=("$goals_dir"/*/state.json)
 shopt -u nullglob
 
-if [ "${#state_files[@]}" = "0" ]; then
+if [ "${#state_files[@]}" -eq 0 ]; then
   echo "[goal-scheduler] no goal state files yet"
   echo "KODY_SKIP_AGENT=true"
   exit 0
 fi
 
 active=0
+managed_active=0
+
 for state_file in "${state_files[@]}"; do
   [ -f "$state_file" ] || continue
+
   goal_id=$(basename "$(dirname "$state_file")")
+  activated=$(python3 -c 'import json,sys; print("yes" if sys.argv[1] in json.loads(sys.argv[2]) else "no")' "$goal_id" "$active_goals_json")
+  if [ "$activated" != "yes" ]; then
+    continue
+  fi
 
-  state=$(python3 -c "import json,sys; print(json.load(open(sys.argv[1])).get('state',''))" "$state_file" 2>/dev/null || echo "")
-
+  state=$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1])).get("state", ""))' "$state_file" 2>/dev/null || echo "")
   if [ "$state" != "active" ]; then
     continue
   fi
 
   active=$((active + 1))
-  target=$(python3 -c "import json,sys; d=json.load(open(sys.argv[1])); managed=all(k in d for k in ('type','destination','duties','route','facts','blockers')); print('goal-manager' if managed else 'goal-tick')" "$state_file" 2>/dev/null || echo "goal-tick")
-  echo "[goal-scheduler] → tick $goal_id ($target)"
+  managed=$(python3 -c 'import json,sys; d=json.load(open(sys.argv[1])); print("yes" if all(k in d for k in ("type","destination","duties","route","facts","blockers")) else "no")' "$state_file" 2>/dev/null || echo "no")
+  if [ "$managed" != "yes" ]; then
+    echo "[goal-scheduler] skip $goal_id: legacy goal files are not managed-goal activations"
+    continue
+  fi
 
-  # NOTE: the shared goal branch is created lazily by goal-tick at the moment
-  # it's about to dispatch the first task. Goals whose ticks never dispatch
-  # (e.g. all tasks closed as won't-fix, or every task carries goal-runner:failed)
-  # never spawn an orphan goal-<id> ref on origin. The trade-off vs. the prior
-  # eager creation: the goal branch's base is "origin/<defaultBranch> at first
-  # dispatch" rather than "origin/<defaultBranch> at goal activation", which
-  # is better for short-lived QA-style goals where main may have moved on.
-
-  # Run the tick. The published CLI bin is `kody-engine` (see package.json
-  # "bin") — NOT `kody`. Calling bare `kody` here failed with
-  # `kody: command not found`, so every active goal silently failed to
-  # advance. `kody-engine` is on PATH because the workflow invokes the
-  # engine via `npx -p @kody-ade/kody-engine ... kody-engine`, and child
-  # processes inherit that PATH. A non-zero exit logs and continues so one
-  # stuck goal doesn't starve the rest of the schedule.
-  if ! kody-engine "$target" --goal "$goal_id"; then
+  managed_active=$((managed_active + 1))
+  echo "[goal-scheduler] -> tick $goal_id (goal-manager)"
+  if ! kody-engine goal-manager --goal "$goal_id"; then
     echo "[goal-scheduler] tick $goal_id failed (continuing)"
   fi
 done
 
-echo "[goal-scheduler] ticked $active active goal(s) of ${#state_files[@]} total"
+echo "[goal-scheduler] scanned ${#state_files[@]} goal(s), active=${active}, managed=${managed_active}"
 echo "KODY_SKIP_AGENT=true"
-exit 0

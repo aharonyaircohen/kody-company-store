@@ -69,6 +69,10 @@ Use the existing layout for the asset kind:
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
 reference it from duties, executables, scripts, or dashboards.
 
+Store duties and goals must be safe as inactive catalog entries. Do not add
+`disabled: true` to every shared duty; activation belongs in the consumer repo's
+`kody.config.json`. Store goal templates should start with `state: "inactive"`.
+
 ## Updating The Manifest
 
 The manifest is generated provenance from the import process. If an asset came

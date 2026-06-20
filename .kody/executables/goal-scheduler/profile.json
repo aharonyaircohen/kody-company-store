@@ -1,9 +1,9 @@
 {
   "name": "goal-scheduler",
   "role": "watch",
-  "describe": "Scheduled: for every active goal under .kody/goals/<id>/state.json, invoke goal-tick once. No agent on the scheduler itself.",
   "kind": "scheduled",
   "schedule": "*/5 * * * *",
+  "describe": "Scheduled: tick every active managed goal via goal-manager. Legacy/unmanaged goal files are skipped.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -21,23 +21,13 @@
   },
   "cliTools": [
     {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "",
-      "allowedUses": ["api", "issue", "pr"]
-    },
-    {
       "name": "python3",
       "install": {
         "required": true,
         "checkCommand": "command -v python3"
       },
       "verify": "python3 --version",
-      "usage": "scheduler.sh parses each goal's state.json to read its 'state' field",
+      "usage": "scheduler.sh parses each goal state.json",
       "allowedUses": []
     }
   ],
@@ -45,8 +35,12 @@
   "outputArtifacts": [],
   "scripts": {
     "preflight": [
-      { "shell": "scheduler.sh" },
-      { "script": "skipAgent" }
+      {
+        "shell": "scheduler.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": []
   }

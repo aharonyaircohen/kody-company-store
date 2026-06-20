@@ -1,6 +1,6 @@
 # Assets
 
-Kody store assets live under the roots declared in `kody-store.json`.
+Kody store assets live under roots declared in `kody-store.json`.
 
 ```json
 {
@@ -13,8 +13,7 @@ Kody store assets live under the roots declared in `kody-store.json`.
 }
 ```
 
-The slug is the lookup key. For directory-backed assets, the slug is the
-directory name. For staff, the slug is the filename without `.md`.
+The slug is the lookup key.
 
 ## Duties
 
@@ -26,17 +25,16 @@ Path:
 
 Common files:
 
-- `profile.json`: duty metadata, cadence, runner, mentions, and executable link.
-- `duty.md`: human-readable duty instructions when the duty needs them.
+- `profile.json`: duty metadata, cadence, staff, mentions, and executable link.
+- `duty.md`: human-readable duty instructions.
 
-Common `profile.json` fields:
+Store duties are inactive by default. `every` is a suggested cadence, not
+permission to run in every repo. A consumer activates store duties in
+`kody.config.json`:
 
-- `name`: should match the directory slug.
-- `describe`: short description shown to operators or agents.
-- `every`: optional schedule cadence, such as `1d`.
-- `runner`: staff persona slug.
-- `mentions`: optional GitHub/user mentions for reports.
-- `executable`: executable slug to run for this duty.
+```json
+{ "company": { "activeDuties": ["release"] } }
+```
 
 ## Executables
 
@@ -50,24 +48,10 @@ Common files:
 
 - `profile.json`: executable metadata and runtime contract.
 - `prompt.md`: prompt used by the executable.
-- `persona.md`: optional executable-specific persona context.
-- `*.sh`: optional helper scripts used by the executable.
+- `*.sh`: optional helper scripts.
 
-Common `profile.json` fields:
-
-- `name`: should match the directory slug.
-- `role`: executable role, for example `primitive`.
-- `kind`: execution kind, for example `oneshot`.
-- `describe`: short description of what the executable does.
-- `inputs`: expected input names.
-- `claudeCode`: model, permissions, tool, hook, skill, command, and MCP settings.
-- `cliTools`: external CLI tools the executable expects.
-- `scripts`: preflight and postflight script hooks.
-- `output`: expected output action types.
-
-Executable scripts should consume environment variables or files provided by the
-runtime. They should not own consumer secrets or decrypt repo-local vaults
-inside this store.
+Executable scripts should consume environment variables provided by the runtime.
+They should not own consumer secrets or decrypt repo-local vaults inside store.
 
 ## Staff
 
@@ -77,9 +61,8 @@ Path:
 .kody/staff/<slug>.md
 ```
 
-Staff files are personas. They describe identity, voice, and operating style.
-Concrete job behavior should live in duties and executables, not in persona
-files.
+Staff files are personas. Concrete job behavior should live in duties and
+executables, not in persona files.
 
 ## Goals
 
@@ -89,39 +72,19 @@ Path:
 .kody/goals/<slug>/state.json
 ```
 
-Goals are managed objective definitions. A shared goal should be portable enough
-for a consumer repo to copy or resolve as a starting state, then fill runtime
-facts such as the release issue number.
+Goals are managed objective templates. A shared goal should be portable enough
+for a consumer repo to activate as a starting state, then fill runtime facts such
+as the release issue number.
 
-Common `state.json` fields:
+Store goal templates should use `state: "inactive"`. Consumer runtime instances
+become `active`.
 
-- `state`: lifecycle state, usually `active`.
-- `type`: goal category, such as `web-release`.
-- `destination`: outcome text plus ordered evidence names.
-- `duties`: duty slugs this goal may use.
-- `route`: evidence-to-duty/executable routing table.
-- `stage`: current stage.
-- `facts`: evidence and runtime values known so far.
-- `blockers`: human-readable reasons the goal cannot progress.
+Store goals are inactive by default. A consumer activates store goals in
+`kody.config.json`:
+
+```json
+{ "company": { "activeGoals": ["web-release"] } }
+```
 
 Shared store goals must not contain consumer secrets, run logs, or completed
 runtime history.
-
-## Manifest
-
-`.kody/store-manifest.json` is import provenance. It records:
-
-- `generatedAt`: when the manifest was generated.
-- `projectsRoot`: source project root used during import.
-- `storeRoot`: destination store root.
-- `selection`: duplicate resolution strategy.
-- `kinds`: selected assets and duplicate metadata for duties, executables, goals,
-  and staff.
-
-The current selection strategy is `newest-file-mtime-per-kind-and-slug`.
-When duplicate slugs exist across imported projects, the newest file mtime won.
-
-That strategy documents the bootstrap import only. Do not use newest mtime as
-the ongoing `stable` publishing rule. `stable` should keep one curated shared
-default per slug; repo-specific or repeated variants should be local overrides
-or renamed assets.

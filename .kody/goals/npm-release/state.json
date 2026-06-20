@@ -1,8 +1,8 @@
 {
   "version": 1,
-  "state": "active",
+  "state": "inactive",
   "type": "npm-release",
-  "description": "Shared managed goal for releasing an npm package: prepare the release, merge it to main through task leadership, then publish to npm.",
+  "description": "Shared managed goal template for releasing an npm package: prepare the release, merge it to main through task leadership, then publish to npm.",
   "destination": {
     "outcome": "Release is prepared, merged to main, and published to npm.",
     "evidence": ["releasePrExists", "mainMerged", "packagePublished"]
@@ -37,5 +37,5 @@
   ],
   "stage": "release",
   "facts": {},
-  "blockers": ["Set facts.issue to the release issue number before running this goal."]
+  "blockers": ["Activate this goal in the consumer repo and set facts.issue to the release issue number."]
 }
