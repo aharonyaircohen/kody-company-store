@@ -46,6 +46,9 @@ Consumer repos decide which shared duties and goals are active:
 Store duties and goals are inactive by default. A duty may declare `every`, but
 that cadence is only used after the consumer activates the duty. A store goal is
 a reusable template until the consumer activates it and supplies repo facts.
+Scheduled goal activation uses object form, such as
+`{ "template": "web-release", "every": "1w" }`, to create one runtime instance
+per time bucket on the consumer repo's `kody-state` branch.
 
 ## Asset Kinds
 

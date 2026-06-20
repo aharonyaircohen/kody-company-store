@@ -4,7 +4,7 @@
   "templateId": "web-release",
   "state": "inactive",
   "type": "web-release",
-  "description": "Shared managed goal template for releasing a web app: prepare the release, merge it to main through task leadership, then deploy Vercel production.",
+  "description": "Shared managed goal template releasing a web app: prepare release, merge it to main through task leadership, then deploy Vercel production.",
   "destination": {
     "outcome": "Release is prepared, merged to main, and deployed to Vercel production.",
     "evidence": ["releasePrExists", "mainMerged", "productionDeployed"]
@@ -26,9 +26,7 @@
       "evidence": "mainMerged",
       "duty": "task-leader",
       "executable": "task-leader",
-      "args": {
-        "issue": { "fact": "issue" }
-      }
+      "args": { "issue": { "fact": "issue" } }
     },
     {
       "stage": "publish",
@@ -39,5 +37,5 @@
   ],
   "stage": "release",
   "facts": {},
-  "blockers": ["Instantiate this template in a consumer repo as .kody/goals/instances/<goal-id>/state.json with state active and facts.issue set."]
+  "blockers": []
 }

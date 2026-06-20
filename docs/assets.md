@@ -88,5 +88,17 @@ Store goals are inactive by default. A consumer activates store goals in
 { "company": { "activeGoals": ["web-release"] } }
 ```
 
+Scheduled activation creates a fresh runtime instance from the template:
+
+```json
+{
+  "company": {
+    "activeGoals": [
+      { "template": "web-release", "every": "1w", "facts": { "issue": 123 } }
+    ]
+  }
+}
+```
+
 Shared store goals must not contain consumer secrets, run logs, or completed
 runtime history.
