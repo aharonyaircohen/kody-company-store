@@ -63,6 +63,7 @@ Use the existing layout for the asset kind:
 
 - Duty: `.kody/duties/<slug>/profile.json`, plus `duty.md` when needed.
 - Executable: `.kody/executables/<slug>/profile.json`, plus prompt/script files.
+- Goal: `.kody/goals/<slug>/state.json`.
 - Staff: `.kody/staff/<slug>.md`.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that

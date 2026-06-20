@@ -12,6 +12,7 @@ repo-specific assets locally and use this store as the shared default layer.
 - `.kody/duties/` contains shared duty definitions.
 - `.kody/executables/` contains shared executable definitions, prompts, and
   supporting scripts.
+- `.kody/goals/` contains shared managed goal definitions.
 - `.kody/staff/` contains shared staff personas.
 - `.kody/store-manifest.json` records where imported assets came from and which
   duplicate slug won during import.
@@ -42,10 +43,11 @@ consumer repo. Repeated variants should get explicit names such as `qa-web`,
 
 ## Asset Kinds
 
-The store currently publishes three asset kinds:
+The store currently publishes four asset kinds:
 
 - `duties`: scheduled or callable work definitions under `.kody/duties/<slug>/`
 - `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
+- `goals`: managed objective definitions under `.kody/goals/<slug>/state.json`
 - `staff`: persona files under `.kody/staff/<slug>.md`
 
 See [docs/assets.md](docs/assets.md) for expected file layout and field
@@ -54,7 +56,8 @@ guidance.
 ## What Does Not Belong Here
 
 Do not commit consumer-specific runtime state to the store. That includes runs,
-sessions, secrets, reports, goals, local task state, or generated working files.
+sessions, secrets, reports, goal runtime history, local task state, or generated
+working files.
 
 The `.gitignore` already excludes `.kody/runs/` and `.kody/sessions/`.
 
@@ -72,6 +75,7 @@ The current default branch/ref is `stable`.
 .kody/
   duties/
   executables/
+  goals/
   staff/
 ```
 

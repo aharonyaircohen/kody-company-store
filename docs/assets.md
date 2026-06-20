@@ -7,6 +7,7 @@ Kody store assets live under the roots declared in `kody-store.json`.
   "assetRoots": {
     "duties": ".kody/duties",
     "executables": ".kody/executables",
+    "goals": ".kody/goals",
     "staff": ".kody/staff"
   }
 }
@@ -80,6 +81,32 @@ Staff files are personas. They describe identity, voice, and operating style.
 Concrete job behavior should live in duties and executables, not in persona
 files.
 
+## Goals
+
+Path:
+
+```text
+.kody/goals/<slug>/state.json
+```
+
+Goals are managed objective definitions. A shared goal should be portable enough
+for a consumer repo to copy or resolve as a starting state, then fill runtime
+facts such as the release issue number.
+
+Common `state.json` fields:
+
+- `state`: lifecycle state, usually `active`.
+- `type`: goal category, such as `web-release`.
+- `destination`: outcome text plus ordered evidence names.
+- `duties`: duty slugs this goal may use.
+- `route`: evidence-to-duty/executable routing table.
+- `stage`: current stage.
+- `facts`: evidence and runtime values known so far.
+- `blockers`: human-readable reasons the goal cannot progress.
+
+Shared store goals must not contain consumer secrets, run logs, or completed
+runtime history.
+
 ## Manifest
 
 `.kody/store-manifest.json` is import provenance. It records:
@@ -88,8 +115,8 @@ files.
 - `projectsRoot`: source project root used during import.
 - `storeRoot`: destination store root.
 - `selection`: duplicate resolution strategy.
-- `kinds`: selected assets and duplicate metadata for duties, executables, and
-  staff.
+- `kinds`: selected assets and duplicate metadata for duties, executables, goals,
+  and staff.
 
 The current selection strategy is `newest-file-mtime-per-kind-and-slug`.
 When duplicate slugs exist across imported projects, the newest file mtime won.

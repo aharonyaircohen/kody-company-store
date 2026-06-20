@@ -1,0 +1,41 @@
+{
+  "version": 1,
+  "state": "active",
+  "type": "npm-release",
+  "description": "Shared managed goal for releasing an npm package: prepare the release, merge it to main through task leadership, then publish to npm.",
+  "destination": {
+    "outcome": "Release is prepared, merged to main, and published to npm.",
+    "evidence": ["releasePrExists", "mainMerged", "packagePublished"]
+  },
+  "duties": ["release", "task-leader", "npm-publish"],
+  "route": [
+    {
+      "stage": "release",
+      "evidence": "releasePrExists",
+      "duty": "release",
+      "executable": "release-prepare",
+      "args": {
+        "issue": { "fact": "issue" },
+        "goal": "npm-release"
+      }
+    },
+    {
+      "stage": "merge",
+      "evidence": "mainMerged",
+      "duty": "task-leader",
+      "executable": "task-leader",
+      "args": {
+        "issue": { "fact": "issue" }
+      }
+    },
+    {
+      "stage": "publish",
+      "evidence": "packagePublished",
+      "duty": "npm-publish",
+      "executable": "npm-publish"
+    }
+  ],
+  "stage": "release",
+  "facts": {},
+  "blockers": ["Set facts.issue to the release issue number before running this goal."]
+}

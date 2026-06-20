@@ -4,14 +4,14 @@ Kody store assets are shared defaults. Local repo assets are overrides.
 
 Resolution order:
 
-1. Local `.kody/duties/<slug>`, `.kody/executables/<slug>`, or
-   `.kody/staff/<slug>.md`
-2. Store `.kody/duties/<slug>`, `.kody/executables/<slug>`, or
-   `.kody/staff/<slug>.md`
+1. Local `.kody/duties/<slug>`, `.kody/executables/<slug>`,
+   `.kody/goals/<slug>/state.json`, or `.kody/staff/<slug>.md`
+2. Store `.kody/duties/<slug>`, `.kody/executables/<slug>`,
+   `.kody/goals/<slug>/state.json`, or `.kody/staff/<slug>.md`
 3. Engine built-ins
 
 The store does not own repo-specific state, runs, sessions, secrets, reports, or
-goals.
+goal runtime history.
 
 ## Slugs
 
@@ -19,6 +19,7 @@ The slug is the stable asset key:
 
 - Duties use `.kody/duties/<slug>/`.
 - Executables use `.kody/executables/<slug>/`.
+- Goals use `.kody/goals/<slug>/state.json`.
 - Staff personas use `.kody/staff/<slug>.md`.
 
 If a consumer repo defines the same slug locally, the local asset wins. This lets
@@ -56,7 +57,7 @@ Store assets should be portable across consumers. Keep these out of the store:
 - Session files.
 - Secrets or encrypted consumer vaults.
 - Generated reports.
-- Repo-specific goals or task state.
+- Repo-specific goal runtime history or task state.
 - One-off local scripts that only work in a single consumer repo.
 
 If behavior only makes sense for one repo, keep it in that repo's local `.kody`
