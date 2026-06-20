@@ -238,6 +238,18 @@ gh pr merge <N> --squash --delete-branch=false
 This lane exists only for final production promotion PRs created by `release`
 duty. It may approve and merge because the release version PR already merged
 into integration branch and this PR only promotes integration to production.
+
+Clean boundary for Lane C:
+
+- `.github/workflows/kody.yml` is immutable and must not be changed.
+- Engine runs the requested executable and reports success/failure.
+- Preview executable/tool owns preview behavior and preview-provider details.
+- Task-leader/release policy decides whether a preview result is required.
+- Production promotion PRs do not require preview availability. If preview
+  infrastructure is unavailable, do not add workflow or engine exceptions;
+  treat preview as out of scope for Lane C and use CI/build/release metadata
+  as the gate.
+
 All following must be true:
 
 1. Read `.kody/variables.json` `RELEASE_FLOW`; `integrationBranch` must differ from `productionBranch`.
@@ -254,7 +266,11 @@ gh pr view <N> --json headRefName,baseRefName
 ```
 
 4. PR is not draft, mergeable, and has no changes requested or unresolved review threads.
-5. All required CI checks pass: `gh pr checks <N>`.
+5. Required non-preview CI checks pass. Use `gh pr checks <N>`, but do not
+   block Lane C only because a preview-only check or preview machine
+   availability check is unavailable. If GitHub branch protection marks such a
+   preview check as required and blocks merge, escalate that configuration
+   problem instead of editing `.github/workflows/kody.yml` or engine code.
 6. GitHub Release named in PR title exists. Extract `vX.Y.Z` from title and verify:
 
 ```sh
