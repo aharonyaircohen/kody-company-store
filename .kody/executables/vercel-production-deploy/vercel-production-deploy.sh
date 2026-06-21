@@ -81,7 +81,7 @@ value_or_variable() {
   printf '%s' "$default_value"
 }
 
-SCOPE="$(value_or_variable "${VERCEL_SCOPE:-}" "VERCEL_SCOPE" "aguy")"
+SCOPE="$(value_or_variable "${VERCEL_SCOPE:-}" "VERCEL_SCOPE")"
 DEPLOY_BRANCH="$(value_or_variable "${VERCEL_PRODUCTION_BRANCH:-}" "VERCEL_PRODUCTION_BRANCH" "main")"
 VERCEL_ORG_ID="$(value_or_variable "${VERCEL_ORG_ID:-}" "VERCEL_ORG_ID")"
 VERCEL_PROJECT_ID="$(value_or_variable "${VERCEL_PROJECT_ID:-}" "VERCEL_PROJECT_ID")"
@@ -123,7 +123,10 @@ fi
 git pull --ff-only origin "$DEPLOY_BRANCH"
 
 current_branch="$(git branch --show-current)"
-vercel_args=(--scope "$SCOPE" --token "$token")
+vercel_args=(--token "$token")
+if [ -n "$SCOPE" ]; then
+  vercel_args=(--scope "$SCOPE" "${vercel_args[@]}")
+fi
 
 echo "Deploying ${current_branch} to Vercel production..."
 "${vercel_cmd[@]}" deploy --prod --yes --format=json "${vercel_args[@]}" | tee "$tmp_json"
