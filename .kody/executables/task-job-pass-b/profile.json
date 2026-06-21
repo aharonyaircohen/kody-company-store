@@ -49,7 +49,5 @@
         "script": "saveTaskState"
       }
     ]
-  },
-  "action": "task-job-pass-b",
-  "capabilityKind": "act"
+  }
 }

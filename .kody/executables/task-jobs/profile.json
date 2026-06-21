@@ -47,7 +47,5 @@
       }
     ],
     "postflight": []
-  },
-  "action": "task-jobs",
-  "capabilityKind": "act"
+  }
 }

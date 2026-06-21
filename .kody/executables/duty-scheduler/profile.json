@@ -58,7 +58,5 @@
       }
     ],
     "postflight": []
-  },
-  "action": "duty-scheduler",
-  "capabilityKind": "act"
+  }
 }

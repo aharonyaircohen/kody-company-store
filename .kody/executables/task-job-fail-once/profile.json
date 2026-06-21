@@ -52,7 +52,5 @@
         "script": "saveTaskState"
       }
     ]
-  },
-  "action": "task-job-fail-once",
-  "capabilityKind": "act"
+  }
 }

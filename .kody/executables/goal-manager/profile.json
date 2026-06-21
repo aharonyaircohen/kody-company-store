@@ -52,7 +52,5 @@
         "script": "commitGoalState"
       }
     ]
-  },
-  "action": "goal-manager",
-  "capabilityKind": "act"
+  }
 }

@@ -72,7 +72,5 @@
         "script": "appendCompanyActivity"
       }
     ]
-  },
-  "action": "duty-tick-scripted",
-  "capabilityKind": "act"
+  }
 }

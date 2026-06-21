@@ -115,7 +115,5 @@
         }
       }
     ]
-  },
-  "action": "release",
-  "capabilityKind": "act"
+  }
 }
