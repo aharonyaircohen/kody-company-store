@@ -352,17 +352,13 @@ _… truncated; see CHANGELOG.md_"
   else
     body_entry="$entry"
   fi
-  # Link the PR back to the originating release issue WITHOUT auto-closing
-  # it. The orchestrator continues to publish + deploy after merge using the
-  # issue as the dispatch target, so the issue must stay open for the
-  # dashboard to keep showing the task as in-progress until finishFlow
-  # applies kody:done. We use `Tracking-Issue: #N` (not `Closes #N`) — GitHub
-  # treats this as plain text, the dashboard parses it as a fallback link
-  # signal, and no auto-close fires on PR merge.
+  # Link the PR back to the originating release issue with GitHub native
+  # auto-close semantics. Release progress stays in the managed goal;
+  # GitHub closes the visible tracking issue when the PR merges.
   issue_arg="${KODY_ARG_ISSUE:-}"
   tracking_line=""
   if [[ "$issue_arg" =~ ^[0-9]+$ && "$issue_arg" != "0" ]]; then
-    tracking_line=$'\n\nTracking-Issue: #'"${issue_arg}"
+    tracking_line=$'\n\nCloses #'"${issue_arg}"
   fi
   body=$'Automated release PR opened by kody.\n\n'"$body_entry"$'\n\nThe release orchestrator will merge this into `'"${default_branch}"$'` and continue to publish + deploy.'"${tracking_line}"
   pr_url=$(printf '%s' "$body" | gh pr create --head "$release_branch" --base "$default_branch" --title "chore: release ${tag}" --body-file -)
