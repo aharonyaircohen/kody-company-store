@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "codebase-health",
+  "state": "inactive",
+  "type": "standing",
+  "scheduleMode": "duty-cadence",
+  "title": "Codebase stays healthy",
+  "description": "Keep code, docs, memory, and repo health from drifting.",
+  "destination": {
+    "outcome": "The codebase stays maintainable and drift is found early.",
+    "evidence": []
+  },
+  "duties": [
+    "cleanup",
+    "code-health",
+    "docs-health",
+    "documentation-maintenance",
+    "memory-compaction",
+    "repo-graph",
+    "skills-research"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

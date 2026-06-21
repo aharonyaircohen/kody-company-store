@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "release-safety",
+  "state": "inactive",
+  "type": "standing",
+  "scheduleMode": "duty-cadence",
+  "title": "Releases ship safely",
+  "description": "Keep release preparation, publishing, and deploy work understandable.",
+  "destination": {
+    "outcome": "Releases are prepared, published, deployed, and verified safely.",
+    "evidence": []
+  },
+  "duties": [
+    "npm-publish",
+    "release",
+    "release-deploy",
+    "release-prepare",
+    "release-publish",
+    "vercel-dev-deploy",
+    "vercel-production-deploy"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

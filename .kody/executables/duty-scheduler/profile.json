@@ -1,7 +1,7 @@
 {
   "name": "duty-scheduler",
   "role": "watch",
-  "describe": "Scheduled: for every duty folder under .kody/duties/, invoke duty-tick once. No agent on the scheduler itself.",
+  "describe": "Explicit duty tick helper. Scheduled duty fan-out is owned by goal-scheduler; this only runs when a duty slug is provided.",
   "kind": "scheduled",
   "schedule": "*/5 * * * *",
   "inputs": [
@@ -10,7 +10,7 @@
       "flag": "--duty",
       "type": "string",
       "required": false,
-      "describe": "Optional duty slug to run instead of scanning every due duty."
+      "describe": "Optional duty slug run instead scanning every due duty."
     }
   ],
   "claudeCode": {
@@ -30,10 +30,7 @@
   "cliTools": [
     {
       "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
+      "install": { "required": true, "checkCommand": "command -v gh" },
       "verify": "gh auth status",
       "usage": "",
       "allowedUses": ["api", "issue", "pr"]
@@ -48,7 +45,8 @@
         "with": {
           "jobsDir": ".kody/duties",
           "targetExecutable": "duty-tick",
-          "slugArg": "duty"
+          "slugArg": "duty",
+          "requireExplicitDuty": true
         }
       }
     ],

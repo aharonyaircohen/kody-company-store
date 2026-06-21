@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "prs-stay-mergeable",
+  "state": "inactive",
+  "type": "standing",
+  "scheduleMode": "duty-cadence",
+  "title": "PRs stay mergeable",
+  "description": "Keep pull requests current, green, and repairable.",
+  "destination": {
+    "outcome": "Pull requests stay mergeable and blocked PRs are surfaced quickly.",
+    "evidence": []
+  },
+  "duties": [
+    "approval-gate",
+    "auto-fix-ci",
+    "auto-resolve",
+    "auto-sync",
+    "ci-health",
+    "dev-ci-health",
+    "pr-health-triage",
+    "redispatch"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

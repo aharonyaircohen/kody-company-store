@@ -1,9 +1,6 @@
 # Kody Store
 
-Shared Kody assets for Kody engine consumer repos.
-
-This repo is the central catalog of reusable `.kody` assets. Consumer repos keep
-repo-specific assets locally and use this store as the shared default layer.
+Shared Kody assets for Kody engine consumer repos. This repo is the central catalog for reusable `.kody` assets. Consumer repos keep repo-specific assets locally and use the store as the shared default layer.
 
 ## What's Here
 
@@ -23,50 +20,35 @@ Kody resolves assets in order:
 2. Store assets
 3. Engine built-ins
 
-Local assets override store assets with the same slug. Store assets are shared
-defaults, not repo-specific runtime state.
+Local assets override store assets with the same slug. Store assets are shared defaults, not repo-specific runtime state.
 
 ## Activation
 
-The store is a catalog, not an auto-run list.
-
-See [docs/activation.md](docs/activation.md) for the full activation contract.
-
-Consumer repos decide which shared duties and goals are active:
+The store is a catalog, not an auto-run list. Consumer repos decide which shared company model is active:
 
 ```json
 {
   "company": {
-    "activeDuties": ["release"],
-    "activeGoals": ["web-release"]
+    "activeGoals": ["prs-stay-mergeable", "product-quality"]
   }
 }
 ```
 
-Store duties and goals are inactive by default. A duty may declare `every`, but
-that cadence is only used after the consumer activates the duty. A store goal is
-a reusable template until the consumer activates it and supplies repo facts.
-Scheduled goal activation uses object form, such as
-`{ "template": "web-release", "every": "1w" }`, to create one runtime instance
-per time bucket on the consumer repo's `kody-state` branch.
+Scheduled company behavior should be activated through goals. A duty may declare `every`, but the active goal tick decides whether that duty is due, skipped, blocked, or selected. A store goal is a reusable template until a consumer activates it or supplies repo facts. String activation creates one stable standing instance from the matching template. Scheduled goal activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
+
+See [docs/activation.md](docs/activation.md) for the full activation contract.
 
 ## Asset Kinds
 
-- `duties`: scheduled or callable work definitions under `.kody/duties/<slug>/`
+- `duties`: available responsibilities and command wrappers under `.kody/duties/<slug>/`
 - `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
 - `goals`: managed objective templates under `.kody/goals/templates/<slug>/state.json`
 - `staff`: persona files under `.kody/staff/<slug>.md`
 
 ## What Does Not Belong Here
 
-Do not commit consumer-specific runtime state to the store. That includes runs,
-sessions, secrets, reports, goal runtime history, local task state, and generated
-working files.
+Do not commit consumer-specific runtime state to the store. This includes runs, sessions, secrets, reports, goal runtime history, local task state, and generated working files.
 
 ## Maintenance
 
-This repo has no app build or package command. It is a versioned asset store.
-Before changing shared assets, read [docs/maintenance.md](docs/maintenance.md)
-and validate edited JSON.
-
-The current default branch/ref is `stable`.
+This repo has no app build package command. It is a versioned asset store. Before changing shared assets, read [docs/maintenance.md](docs/maintenance.md) and validate edited JSON. The current default branch/ref is `stable`.

@@ -247,6 +247,38 @@ def shutil_which(name: str) -> str | None:
     return None
 
 
+def create_instance_from_template(
+    template: str,
+    goal_id: str,
+    facts_patch: dict | None = None,
+) -> bool:
+    state_path = instances_dir / goal_id / "state.json"
+    if state_path.exists():
+        return False
+
+    template_path = find_template(template)
+    if template_path is None:
+        errors.append(f"template {template} not found")
+        return False
+
+    data = json.loads(template_path.read_text())
+    facts = data.get("facts") if isinstance(data.get("facts"), dict) else {}
+    facts.update(facts_patch or {})
+    data["kind"] = "instance"
+    data["template"] = template
+    data["sourceTemplate"] = template
+    data["state"] = "active"
+    data["facts"] = facts
+    data.setdefault("createdAt", now.isoformat().replace("+00:00", "Z"))
+    data["updatedAt"] = now.isoformat().replace("+00:00", "Z")
+    state_text = json.dumps(data, indent=2, sort_keys=True) + "\n"
+    state_path.parent.mkdir(parents=True, exist_ok=True)
+    state_path.write_text(state_text)
+    persist_goal(owner, repo, goal_id, state_text)
+    created.append(goal_id)
+    return True
+
+
 active = set(config["active"])
 created = []
 errors = []
@@ -254,40 +286,35 @@ now = now_utc()
 owner = config.get("owner")
 repo = config.get("repo")
 
+for goal_id in sorted(active):
+    try:
+        create_instance_from_template(goal_id, goal_id)
+    except Exception as err:
+        errors.append(f"{goal_id}: {err}")
+
 for schedule in config["schedules"]:
     every = schedule.get("every")
     if not every:
         active.add(schedule["template"])
+        try:
+            create_instance_from_template(
+                schedule["template"],
+                schedule["template"],
+                schedule.get("facts") or {},
+            )
+        except Exception as err:
+            errors.append(f"{schedule.get('template', '<unknown>')}: {err}")
         continue
     try:
         suffix = bucket_suffix(every, now)
         prefix = schedule.get("idPrefix") or schedule["template"]
         goal_id = f"{prefix}-{suffix}"
         active.add(goal_id)
-        state_path = instances_dir / goal_id / "state.json"
-        if state_path.exists():
-            continue
-
-        template_path = find_template(schedule["template"])
-        if template_path is None:
-            errors.append(f"template {schedule['template']} not found")
-            continue
-
-        data = json.loads(template_path.read_text())
-        facts = data.get("facts") if isinstance(data.get("facts"), dict) else {}
-        facts.update(schedule.get("facts") or {})
-        data["kind"] = "instance"
-        data["template"] = schedule["template"]
-        data["sourceTemplate"] = schedule["template"]
-        data["state"] = "active"
-        data["facts"] = facts
-        data.setdefault("createdAt", now.isoformat().replace("+00:00", "Z"))
-        data["updatedAt"] = now.isoformat().replace("+00:00", "Z")
-        state_text = json.dumps(data, indent=2, sort_keys=True) + "\n"
-        state_path.parent.mkdir(parents=True, exist_ok=True)
-        state_path.write_text(state_text)
-        persist_goal(owner, repo, goal_id, state_text)
-        created.append(goal_id)
+        create_instance_from_template(
+            schedule["template"],
+            goal_id,
+            schedule.get("facts") or {},
+        )
     except Exception as err:
         errors.append(f"{schedule.get('template', '<unknown>')}: {err}")
 
@@ -301,7 +328,7 @@ import sys
 
 result = json.loads(sys.argv[1])
 for goal_id in result.get("created", []):
-    print(f"[goal-scheduler] created scheduled instance {goal_id}")
+    print(f"[goal-scheduler] created goal instance {goal_id}")
 for error in result.get("errors", []):
     print(f"[goal-scheduler] schedule skipped: {error}")
 PY

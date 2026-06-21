@@ -1,0 +1,38 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "kody-company-health",
+  "state": "inactive",
+  "type": "standing",
+  "scheduleMode": "duty-cadence",
+  "title": "Kody company stays healthy",
+  "description": "Keep the Kody operating system, memory, delivery, and management duties healthy.",
+  "destination": {
+    "outcome": "Kody's company layer stays healthy and understandable.",
+    "evidence": []
+  },
+  "duties": [
+    "ceo-performance-review",
+    "company-graph",
+    "delivery-graph",
+    "duty-call",
+    "duty-review",
+    "health-check",
+    "job-gap-scan",
+    "kody-analyzer",
+    "kody-mem",
+    "kody-operator",
+    "kody-vibe",
+    "system-audit",
+    "task-leader",
+    "task-memorize",
+    "task-memory-extractor",
+    "task-verifier",
+    "work-briefing"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

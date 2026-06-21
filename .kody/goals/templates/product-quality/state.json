@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "product-quality",
+  "state": "inactive",
+  "type": "standing",
+  "scheduleMode": "duty-cadence",
+  "title": "Product quality stays good",
+  "description": "Keep QA, design review, previews, and product health visible.",
+  "destination": {
+    "outcome": "Product quality is checked regularly and regressions are visible.",
+    "evidence": []
+  },
+  "duties": [
+    "design-review",
+    "preview-health",
+    "qa",
+    "qa-engineer",
+    "qa-goal",
+    "qa-sweep",
+    "qa-verify",
+    "quality-watch"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

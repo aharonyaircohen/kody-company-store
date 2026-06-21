@@ -1,65 +1,73 @@
 # Activation
 
-The store is a catalog, not an auto-run list. Consumer repos decide which shared company model they activate from `kody.config.json`.
+The store is a catalog, not an auto-run list. Consumer repos decide which shared company model is active from `kody.config.json`.
 
 ```json
 {
   "company": {
-    "activeDuties": ["release"],
-    "activeGoals": ["web-release"]
+    "activeGoals": ["prs-stay-mergeable", "product-quality"]
   }
 }
 ```
 
-## Duties
-
-A store duty is an available standing responsibility. A duty may declare `every`, `staff`, and `executable`, but those fields do not make it run in every repo. They are used only after the consumer lists the duty under `company.activeDuties`.
-
-Rules:
-
-- Missing `company.activeDuties` means no store duties auto-run.
-- Empty `company.activeDuties` means no store duties auto-run.
-- Local repo duties remain repo-owned.
-- Do not add `disabled: true` to all store duties. Activation belongs to the consumer, not the catalog item.
-
 ## Goals
 
-Store goals are inactive templates. Consumer repos may also define local goal templates.
+Store goals are inactive templates. Consumer repos activate the company model through `company.activeGoals`.
+
+Standing company goals own scheduled duty decisions. A duty may declare `every`, `staff`, and `executable`, but the goal tick decides whether that duty is due, skipped, blocked, or selected.
+
+Default standing goals:
+
+- `prs-stay-mergeable`
+- `product-quality`
+- `codebase-health`
+- `release-safety`
+- `kody-company-health`
+
+Consumer repos may also define local goal templates.
 
 ```text
 .kody/goals/templates/<slug>/state.json
 .kody/goals/instances/<id>/state.json
 ```
 
-String activation keeps the old behavior: it activates existing instances by id or by template.
+String activation creates one stable runtime instance from a matching store/local template, or activates an existing instance by id.
 
 ```json
-{ "company": { "activeGoals": ["web-release"] } }
+{ "company": { "activeGoals": ["prs-stay-mergeable"] } }
 ```
 
-Scheduled activation creates a fresh instance from the template for each time bucket, persists it to the consumer repo's `kody-state` branch, then ticks that instance.
+Scheduled activation creates a fresh runtime instance from a template each time bucket, persists it to the consumer repo's `kody-state` branch, then ticks that instance.
 
 ```json
-{
-  "company": {
-    "activeGoals": [
-      { "template": "web-release", "every": "1w", "facts": { "issue": 123 } }
-    ]
-  }
-}
+{ "company": { "activeGoals": [{ "template": "release-safety", "every": "1w" }] } }
 ```
 
-Supported intervals are `Nm`, `Nh`, `Nd`, and `Nw`, such as `15m`, `2h`, `1d`, or `1w`.
+Supported intervals are `Nm`, `Nh`, `Nd`, and `Nw`, for example `15m`, `2h`, `1d`, and `1w`.
 
 Store goals must not contain repo-specific runtime history. Runtime goal progress belongs in the consumer repo's `kody-state` branch.
+
+## Duties
+
+Store duties are available responsibilities or commands. They are no longer the main scheduled fan-out surface.
+
+Rules:
+
+- Scheduled company behavior should be activated through `company.activeGoals`.
+- Duty cadence is reusable duty information; goal tick owns the scheduling decision.
+- Manual duty runs still work from the dashboard or workflow dispatch.
+- `company.activeDuties` is legacy compatibility; do not use it for new scheduled company behavior.
+- Local repo duties remain repo-owned.
+- Do not add `disabled: true` to all store duties.
+- Activation belongs in the consumer repo, not the catalog item.
 
 ## Mental Model
 
 ```text
 kody-store = menu
 consumer repo = decides what is enabled
-duty = available responsibility
-goal = available outcome template
+duty = available responsibility or command
+goal = operator promise that owns scheduled duty decisions
 activation = permission to run
-scheduled goal = template creates a new runtime instance per bucket
+scheduled goal = template creates new runtime instance per bucket
 ```
