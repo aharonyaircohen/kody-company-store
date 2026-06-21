@@ -2,7 +2,15 @@
   "name": "vercel-production-deploy",
   "role": "primitive",
   "describe": "Deploy main branch to Vercel Production.",
-  "inputs": [],
+  "inputs": [
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report production deployment evidence to."
+    }
+  ],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
@@ -29,6 +37,9 @@
       }
     ],
     "postflight": [
+      {
+        "script": "applyDutyReports"
+      },
       {
         "script": "appendCompanyActivity"
       }

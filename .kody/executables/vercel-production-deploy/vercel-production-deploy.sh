@@ -2,6 +2,7 @@
 set -euo pipefail
 
 ORIGINAL_BRANCH=""
+goal_id="${KODY_ARG_GOAL:-}"
 
 fail() {
   echo "FAILED: $1"
@@ -12,6 +13,31 @@ require_command() {
   if ! command -v "$1" >/dev/null 2>&1; then
     fail "Missing command: $1"
   fi
+}
+
+emit_goal_report() {
+  local evidence="$1"
+  shift
+  [[ -z "$goal_id" ]] && return 0
+  python3 - "$goal_id" "$evidence" "$@" <<'PY'
+import json
+import sys
+
+goal_id = sys.argv[1]
+evidence = sys.argv[2]
+facts = {}
+for pair in sys.argv[3:]:
+    key, value = pair.split("=", 1)
+    if value == "":
+        continue
+    facts[key] = int(value) if value.isdigit() else value
+
+print("KODY_DUTY_REPORT=" + json.dumps({
+    "target": {"type": "goal", "id": goal_id},
+    "evidence": {evidence: True},
+    "facts": facts,
+}, separators=(",", ":")))
+PY
 }
 
 require_command git
@@ -113,6 +139,8 @@ deployment_url="$(
     console.log(url.startsWith("http") ? url : `https://${url}`)
   ' "$tmp_json"
 )"
+
+emit_goal_report "productionDeployed" "productionDeploymentUrl=${deployment_url}" "productionBranch=${current_branch}"
 
 cat <<RESULT
 DONE
