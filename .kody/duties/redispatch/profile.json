@@ -4,5 +4,6 @@
   "action": "redispatch",
   "executable": "redispatch",
   "every": "30m",
-  "staff": "kody"
+  "staff": "kody",
+  "capabilityKind": "act"
 }

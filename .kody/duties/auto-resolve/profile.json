@@ -4,5 +4,6 @@
   "action": "auto-resolve",
   "executable": "auto-resolve",
   "every": "15m",
-  "staff": "kody"
+  "staff": "kody",
+  "capabilityKind": "act"
 }

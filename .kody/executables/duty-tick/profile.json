@@ -25,7 +25,11 @@
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "enableSubmitTool": true,
-    "tools": ["Bash", "Read", "mcp__kody-submit"],
+    "tools": [
+      "Bash",
+      "Read",
+      "mcp__kody-submit"
+    ],
     "hooks": [],
     "skills": [],
     "commands": [],
@@ -42,7 +46,11 @@
       },
       "verify": "gh auth status",
       "usage": "Use `gh` for all GitHub actions: `gh pr list ...` to enumerate candidate PRs, `gh pr comment <n> --body \"...\"` to issue a Kody command, `gh pr view <n> --json mergeable,statusCheckRollup,headRefOid` to inspect state, `gh api ...` for anything else. NEVER edit files in the working tree.",
-      "allowedUses": ["pr", "api", "issue"]
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue"
+      ]
     }
   ],
   "inputArtifacts": [],
@@ -74,5 +82,7 @@
         "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "duty-tick",
+  "capabilityKind": "act"
 }

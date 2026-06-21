@@ -50,5 +50,9 @@
       "PR_HEALTH_TRIAGE_FAILED",
       "AGENT_NOT_RUN"
     ]
-  }
+  },
+  "action": "pr-health-triage",
+  "capabilityKind": "act",
+  "staff": "cto",
+  "every": "15m"
 }

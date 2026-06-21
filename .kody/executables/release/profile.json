@@ -15,7 +15,11 @@
       "name": "bump",
       "flag": "--bump",
       "type": "enum",
-      "values": ["patch", "minor", "major"],
+      "values": [
+        "patch",
+        "minor",
+        "major"
+      ],
       "required": false,
       "describe": "Version bump increment. Default patch."
     },
@@ -30,7 +34,10 @@
       "name": "prefer",
       "flag": "--prefer",
       "type": "enum",
-      "values": ["ours", "theirs"],
+      "values": [
+        "ours",
+        "theirs"
+      ],
       "required": false,
       "describe": "On release/vX.Y.Z branch collision: 'ours' force-pushes; 'theirs' reuses the existing PR."
     }
@@ -62,14 +69,27 @@
           "description": "kody flow: release"
         }
       },
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "shell": "release.sh", "timeoutSec": 5400 },
-      { "script": "skipAgent" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "shell": "release.sh",
+        "timeoutSec": 5400
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": [
-      { "script": "recordOutcome" },
-      { "script": "saveTaskState" },
+      {
+        "script": "recordOutcome"
+      },
+      {
+        "script": "saveTaskState"
+      },
       {
         "script": "finishFlow",
         "with": {
@@ -78,7 +98,9 @@
           "color": "0e8a16",
           "description": "kody: release complete"
         },
-        "runWhen": { "data.action.type": "RELEASE_COMPLETED" }
+        "runWhen": {
+          "data.action.type": "RELEASE_COMPLETED"
+        }
       },
       {
         "script": "finishFlow",
@@ -88,8 +110,12 @@
           "color": "e11d21",
           "description": "kody: release flow failed"
         },
-        "runWhen": { "data.action.type": "RELEASE_FAILED" }
+        "runWhen": {
+          "data.action.type": "RELEASE_FAILED"
+        }
       }
     ]
-  }
+  },
+  "action": "release",
+  "capabilityKind": "act"
 }

@@ -30,10 +30,17 @@
   "cliTools": [
     {
       "name": "gh",
-      "install": { "required": true, "checkCommand": "command -v gh" },
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
       "verify": "gh auth status",
       "usage": "",
-      "allowedUses": ["api", "issue", "pr"]
+      "allowedUses": [
+        "api",
+        "issue",
+        "pr"
+      ]
     }
   ],
   "inputArtifacts": [],
@@ -51,5 +58,7 @@
       }
     ],
     "postflight": []
-  }
+  },
+  "action": "duty-scheduler",
+  "capabilityKind": "act"
 }

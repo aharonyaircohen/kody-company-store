@@ -1,16 +1,9 @@
 {
   "name": "task-leader",
   "role": "primitive",
-  "describe": "Task leader — orchestrates reviews, fixes, merges, and dispatches every 15 minutes.",
-  "inputs": [
-    {
-      "name": "issue",
-      "flag": "--issue",
-      "type": "int",
-      "required": true,
-      "describe": "GitHub issue number to work on."
-    }
-  ],
+  "kind": "oneshot",
+  "describe": "Task leader - orchestrates reviews, fixes, merges, and dispatches every 15 minutes.",
+  "inputs": [],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "bypassPermissions",
@@ -19,10 +12,12 @@
     "systemPromptAppend": null,
     "cacheable": true,
     "enableVerifyTool": false,
+    "enableSubmitTool": true,
     "verifyAttempts": 4,
     "tools": [
       "Read",
-      "Bash"
+      "Bash",
+      "mcp__kody-submit"
     ],
     "hooks": [],
     "skills": [
@@ -37,10 +32,10 @@
   "scripts": {
     "preflight": [
       {
-        "script": "buildSyntheticPlugin"
+        "script": "loadDutyState"
       },
       {
-        "script": "loadIssueContext"
+        "script": "buildSyntheticPlugin"
       },
       {
         "script": "composePrompt"
@@ -48,11 +43,21 @@
     ],
     "postflight": [
       {
-        "script": "parseAgentResult"
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
       },
       {
-        "script": "postAgentComment"
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "task-leader",
+  "capabilityKind": "act",
+  "staff": "kody",
+  "every": "15m"
 }

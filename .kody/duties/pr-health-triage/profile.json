@@ -2,12 +2,13 @@
   "name": "pr-health-triage",
   "describe": "PR Health Triage",
   "every": "15m",
-  "runner": "cto",
   "mentions": [
     "aguyaharonyair"
   ],
   "executables": [
     "pr-health-triage"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "act",
+  "staff": "cto"
 }

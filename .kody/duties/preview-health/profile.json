@@ -5,5 +5,8 @@
   "executable": "preview-health",
   "every": "15m",
   "staff": "cto",
-  "mentions": ["aguyaharonyair"]
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "capabilityKind": "act"
 }

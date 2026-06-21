@@ -30,12 +30,24 @@
   "outputArtifacts": [],
   "scripts": {
     "preflight": [
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "script": "planTaskJobs" },
-      { "script": "dispatchNextTaskJob" },
-      { "script": "skipAgent" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "planTaskJobs"
+      },
+      {
+        "script": "dispatchNextTaskJob"
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": []
-  }
+  },
+  "action": "task-jobs",
+  "capabilityKind": "act"
 }

@@ -41,7 +41,11 @@
       },
       "verify": "gh auth status",
       "usage": "Available to the tickScript via PATH; this executable shells out to `bash <tickScript>`. Scripts use `gh pr list`, `gh pr comment`, etc.",
-      "allowedUses": ["pr", "api", "issue"]
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue"
+      ]
     }
   ],
   "inputArtifacts": [],
@@ -68,5 +72,7 @@
         "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "duty-tick-scripted",
+  "capabilityKind": "act"
 }

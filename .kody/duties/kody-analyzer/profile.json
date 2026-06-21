@@ -3,6 +3,7 @@
   "describe": "kody-analyzer",
   "action": "kody-analyzer",
   "every": "manual",
-  "runner": "kody",
-  "executable": "kody-chat"
+  "executable": "kody-chat",
+  "capabilityKind": "observe",
+  "staff": "kody"
 }

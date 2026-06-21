@@ -31,13 +31,28 @@
   "outputArtifacts": [],
   "scripts": {
     "preflight": [
-      { "script": "loadGoalState" },
-      { "script": "advanceManagedGoal", "runWhen": { "data.goal.state": "active" } },
-      { "script": "saveManagedGoalState" },
-      { "script": "skipAgent" }
+      {
+        "script": "loadGoalState"
+      },
+      {
+        "script": "advanceManagedGoal",
+        "runWhen": {
+          "data.goal.state": "active"
+        }
+      },
+      {
+        "script": "saveManagedGoalState"
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": [
-      { "script": "commitGoalState" }
+      {
+        "script": "commitGoalState"
+      }
     ]
-  }
+  },
+  "action": "goal-manager",
+  "capabilityKind": "act"
 }

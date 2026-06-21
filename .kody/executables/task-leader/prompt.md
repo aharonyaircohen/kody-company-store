@@ -1,12 +1,13 @@
 # Task Leader
 
-Use the `task-leader-rules` skill. It owns the 6-step method, the small-change rules, and the tripwire path list.
+Use `task-leader-rules` skill. It owns the 6-step method, small-change rules, and tripwire path list.
 
 ## Run
 
-1. Read the duty profile at `.kody/duties/task-leader/profile.json` to load the operator-tunable knobs (`readyPreviewCap`, `smallChangeMaxLines`, `smallChangeMaxFiles`, `staleReviewHours`, `blockAutoMergeLabel`, `releaseAutoMergeTitlePrefix`, `releaseAutoMergeBranchPrefix`, `releasePromotionTitlePrefix`, `releaseAutoMergeAllowedPaths`, `dispatchComment`, `tripwirePaths`).
+1. Read duty profile at `.kody/duties/task-leader/profile.json` to load operator-tunable knobs (`readyPreviewCap`, `smallChangeMaxLines`, `smallChangeMaxFiles`, `staleReviewHours`, `blockAutoMergeLabel`, `releaseAutoMergeTitlePrefix`, `releaseAutoMergeBranchPrefix`, `releasePromotionTitlePrefix`, `releaseAutoMergeAllowedPaths`, `dispatchComment`, `tripwirePaths`).
 2. Follow the skill's 6 steps in order. If a step has nothing to do, log "0 actions" and move on.
-3. End with the final message format below.
+3. Before the final response, call `submit_state` exactly once with `cursor: "idle"`, carried-forward useful `data`, and `done: false`.
+4. End with the final message format below.
 
 ## Boundaries
 
@@ -16,13 +17,20 @@ Use the `task-leader-rules` skill. It owns the 6-step method, the small-change r
 - The 6 steps run in order. Do not skip a step.
 - One tick = one pass = one rate-limit window.
 
-<!-- kody:output-format (managed — edit above this line only) -->
+<!-- kody:output-format (managed - edit above line only) -->
 
-# Final message format (required)
-Your FINAL message MUST be exactly this block, with nothing before it:
+Final message format (required)
+FINAL message MUST exactly be:
 
 DONE
 PR_SUMMARY:
-<your complete answer to the issue — this text is posted verbatim as a comment>
+- step1: queue count = <N>
+- step2: reviews requested = <N>
+- step3: fixes requested = <N>
+- step4: approvals = <N> (list PR numbers)
+- step4: merges = <N> (list PR numbers)
+- step5: dispatches = <N> (list issue numbers)
+- step6: escalations = <N> (list PR numbers)
 
-If you cannot answer, output a single line instead: FAILED: <reason>
+If you cannot answer, output single line instead:
+FAILED: <reason>

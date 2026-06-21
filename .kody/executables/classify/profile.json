@@ -25,9 +25,14 @@
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "cacheable": true,
-    "tools": ["Read", "Bash"],
+    "tools": [
+      "Read",
+      "Bash"
+    ],
     "hooks": [],
-    "skills": ["issue-classification"],
+    "skills": [
+      "issue-classification"
+    ],
     "commands": [],
     "subagents": [],
     "plugins": [],
@@ -44,18 +49,38 @@
           "description": "kody: classifying the issue"
         }
       },
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "script": "classifyByLabel" },
-      { "script": "loadConventions" },
-      { "script": "buildSyntheticPlugin" },
-      { "script": "composePrompt" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "classifyByLabel"
+      },
+      {
+        "script": "loadConventions"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
     ],
     "postflight": [
-      { "script": "parseAgentResult" },
-      { "script": "recordClassification" },
-      { "script": "writeRunSummary" },
-      { "script": "dispatchClassified" }
+      {
+        "script": "parseAgentResult"
+      },
+      {
+        "script": "recordClassification"
+      },
+      {
+        "script": "writeRunSummary"
+      },
+      {
+        "script": "dispatchClassified"
+      }
     ]
   },
   "output": {
@@ -66,5 +91,9 @@
       "CLASSIFIED_AS_CHORE",
       "CLASSIFY_FAILED"
     ]
-  }
+  },
+  "action": "classify",
+  "capabilityKind": "act",
+  "staff": "kody",
+  "every": "manual"
 }

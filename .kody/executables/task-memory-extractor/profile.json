@@ -69,5 +69,9 @@
         "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "task-memory-extractor",
+  "capabilityKind": "act",
+  "staff": "coo",
+  "every": "30m"
 }

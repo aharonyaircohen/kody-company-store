@@ -364,6 +364,6 @@ If a step errors fatally, output:
 FAILED: <step name> - <error>
 ```
 
-When invoked through scheduled `duty-tick`, obey duty-tick output contract
-instead: call `submit_state` exactly once with `cursor: "idle"`, carried-forward
-`data`, and `done: false`.
+When invoked through the scheduled stateful executable or legacy `duty-tick`,
+call `submit_state` exactly once with `cursor: "idle"`, carried-forward `data`,
+and `done: false`.

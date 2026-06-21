@@ -43,5 +43,7 @@
       }
     ],
     "postflight": []
-  }
+  },
+  "action": "goal-scheduler",
+  "capabilityKind": "act"
 }

@@ -2,14 +2,18 @@
   "name": "dev-ci-health",
   "describe": "Dev CI health",
   "action": "dev-ci-health",
+  "executable": "dev-ci-health",
   "every": "15m",
   "staff": "cto",
-  "mentions": ["aguyaharonyair"],
+  "mentions": [
+    "aguyaharonyair"
+  ],
   "tools": [
     "read_check_runs",
     "ensure_issue",
     "dispatch_workflow",
     "ensure_comment"
   ],
-  "disabled": false
+  "disabled": false,
+  "capabilityKind": "act"
 }

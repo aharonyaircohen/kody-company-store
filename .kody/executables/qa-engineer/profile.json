@@ -128,5 +128,9 @@
         "script": "createQaGoal"
       }
     ]
-  }
+  },
+  "action": "qa-engineer",
+  "capabilityKind": "verify",
+  "staff": "qa",
+  "every": "manual"
 }

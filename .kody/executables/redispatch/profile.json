@@ -67,5 +67,9 @@
         "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "redispatch",
+  "capabilityKind": "act",
+  "staff": "kody",
+  "every": "30m"
 }

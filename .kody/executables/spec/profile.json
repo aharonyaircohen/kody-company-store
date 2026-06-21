@@ -44,24 +44,34 @@
           "description": "kody: orchestrating a multi-stage flow"
         }
       },
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "script": "skipAgent" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": [
       {
         "script": "startFlow",
-        "with": { "entry": "research", "target": "issue" }
+        "with": {
+          "entry": "research",
+          "target": "issue"
+        }
       },
-
       {
         "script": "dispatch",
-        "with": { "next": "plan", "target": "issue" },
+        "with": {
+          "next": "plan",
+          "target": "issue"
+        },
         "runWhen": {
           "data.taskState.core.lastOutcome.type": "RESEARCH_COMPLETED"
         }
       },
-
       {
         "script": "finishFlow",
         "with": {
@@ -70,9 +80,10 @@
           "color": "0e8a16",
           "description": "kody: spec/plan artifact ready"
         },
-        "runWhen": { "data.taskState.core.lastOutcome.type": "PLAN_COMPLETED" }
+        "runWhen": {
+          "data.taskState.core.lastOutcome.type": "PLAN_COMPLETED"
+        }
       },
-
       {
         "script": "finishFlow",
         "with": {
@@ -89,11 +100,20 @@
           ]
         }
       },
-
-      { "script": "persistFlowState" }
+      {
+        "script": "persistFlowState"
+      }
     ]
   },
   "output": {
-    "actionTypes": ["FLOW_STARTED", "FLOW_COMPLETED", "FLOW_ABORTED"]
-  }
+    "actionTypes": [
+      "FLOW_STARTED",
+      "FLOW_COMPLETED",
+      "FLOW_ABORTED"
+    ]
+  },
+  "action": "spec",
+  "capabilityKind": "act",
+  "staff": "kody",
+  "every": "manual"
 }

@@ -3,6 +3,7 @@
   "describe": "kody-operator",
   "action": "kody-operator",
   "every": "manual",
-  "runner": "kody",
-  "executable": "kody-chat"
+  "executable": "kody-chat",
+  "capabilityKind": "act",
+  "staff": "kody"
 }

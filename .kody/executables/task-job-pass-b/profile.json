@@ -31,13 +31,25 @@
   "outputArtifacts": [],
   "scripts": {
     "preflight": [
-      { "script": "loadIssueContext" },
-      { "script": "loadTaskState" },
-      { "script": "skipAgent" }
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "skipAgent"
+      }
     ],
     "postflight": [
-      { "script": "recordOutcome" },
-      { "script": "saveTaskState" }
+      {
+        "script": "recordOutcome"
+      },
+      {
+        "script": "saveTaskState"
+      }
     ]
-  }
+  },
+  "action": "task-job-pass-b",
+  "capabilityKind": "act"
 }

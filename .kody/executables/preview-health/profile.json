@@ -27,7 +27,12 @@
       },
       "verify": "gh auth status",
       "usage": "Reads open PRs, reads the CTO trust ledger, dispatches Kody workflows, and posts PR audit/recommendation comments.",
-      "allowedUses": ["pr", "api", "issue", "workflow"]
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue",
+        "workflow"
+      ]
     }
   ],
   "inputArtifacts": [],
@@ -44,5 +49,9 @@
       }
     ],
     "postflight": []
-  }
+  },
+  "action": "preview-health",
+  "capabilityKind": "act",
+  "staff": "cto",
+  "every": "15m"
 }

@@ -78,5 +78,9 @@
         "script": "appendCompanyActivity"
       }
     ]
-  }
+  },
+  "action": "auto-resolve",
+  "capabilityKind": "act",
+  "staff": "kody",
+  "every": "15m"
 }
