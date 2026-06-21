@@ -114,9 +114,9 @@ for ((i = 0; i < COUNT; i++)); do
     ACTIONS_TAKEN+=("marked stuck #$pr")
   elif [ "$action" = "sync" ]; then
     if [ "$DRY_RUN" != "1" ]; then
-      gh pr comment "$pr" --body '@kody sync' >/dev/null
+      gh workflow run kody.yml -f executable=sync -f issue_number="$pr" >/dev/null
     fi
-    ACTIONS_TAKEN+=("posted @kody sync on #$pr")
+    ACTIONS_TAKEN+=("dispatched sync on #$pr")
   fi
 done
 

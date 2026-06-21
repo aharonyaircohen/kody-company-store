@@ -71,12 +71,12 @@ for ((i = 0; i < COUNT; i++)); do
   fi
 
   if [ "$DRY_RUN" != "1" ]; then
-    gh pr comment "$pr" --body '@kody resolve' >/dev/null
+    gh workflow run kody.yml -f executable=resolve -f issue_number="$pr" >/dev/null
   fi
   new_entry=$(echo "$effective" | jq -c --arg s "$head" \
     '{lastSha:$s, attempts:((.attempts // 0)+1), stuck:false}')
   NEW_PERPR=$(echo "$NEW_PERPR" | jq -c --arg k "$pr" --argjson v "$new_entry" '. + {($k):$v}')
-  ACTIONS_TAKEN+=("posted @kody resolve on #$pr")
+  ACTIONS_TAKEN+=("dispatched resolve on #$pr")
   echo "| #$pr | ${head:0:8} | $prior_summary | resolve | conflicting, attempts=$((attempts + 1)) |"
 done
 
