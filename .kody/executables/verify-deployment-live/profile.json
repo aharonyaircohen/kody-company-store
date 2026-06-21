@@ -1,0 +1,70 @@
+{
+  "name": "verify-deployment-live",
+  "role": "utility",
+  "kind": "oneshot",
+  "describe": "Verify deployment URL responds with expected HTTP status.",
+  "inputs": [
+    {
+      "name": "url",
+      "flag": "--url",
+      "type": "string",
+      "required": true,
+      "describe": "Deployment URL to verify."
+    },
+    {
+      "name": "expected-status",
+      "flag": "--expected-status",
+      "type": "int",
+      "required": false,
+      "describe": "Expected HTTP status. Default 200."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report deployment evidence to."
+    },
+    {
+      "name": "evidence",
+      "flag": "--evidence",
+      "type": "string",
+      "required": false,
+      "describe": "Evidence key to set on the goal. Default deploymentLive."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "curl"
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "check.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "applyDutyReports"
+      }
+    ]
+  }
+}

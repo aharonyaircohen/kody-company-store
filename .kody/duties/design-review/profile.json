@@ -6,5 +6,6 @@
   "executables": [
     "design-review"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "verify"
 }

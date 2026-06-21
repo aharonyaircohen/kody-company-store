@@ -11,5 +11,6 @@
   "writesTo": [
     "dependency-graph",
     "docs-graph"
-  ]
+  ],
+  "capabilityKind": "observe"
 }

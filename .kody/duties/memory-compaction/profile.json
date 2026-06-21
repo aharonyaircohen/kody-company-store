@@ -12,5 +12,6 @@
   ],
   "writesTo": [
     "memory-compaction"
-  ]
+  ],
+  "capabilityKind": "observe"
 }

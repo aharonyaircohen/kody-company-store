@@ -4,5 +4,6 @@
   "action": "chore",
   "every": "manual",
   "runner": "kody",
-  "executable": "chore"
+  "executable": "chore",
+  "capabilityKind": "act"
 }

@@ -4,5 +4,6 @@
   "action": "bug",
   "every": "manual",
   "runner": "kody",
-  "executable": "bug"
+  "executable": "bug",
+  "capabilityKind": "act"
 }

@@ -2,5 +2,6 @@
   "name": "init",
   "action": "init",
   "executable": "init",
-  "describe": "Install Kody engine files in a repo."
+  "describe": "Install Kody engine files in a repo.",
+  "capabilityKind": "act"
 }

@@ -6,5 +6,6 @@
   "executables": [
     "system-audit"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

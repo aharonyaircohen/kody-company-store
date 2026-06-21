@@ -4,5 +4,6 @@
   "every": "1d",
   "runner": "cto",
   "executable": "quality-watch",
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

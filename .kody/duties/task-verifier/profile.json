@@ -8,5 +8,6 @@
   "runner": "kody",
   "backlogScopeRule": "open issues with zero labels",
   "sortOrder": "oldest first",
-  "onePerTick": "true"
+  "onePerTick": "true",
+  "capabilityKind": "verify"
 }

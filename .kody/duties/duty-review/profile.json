@@ -6,5 +6,6 @@
   "executables": [
     "duty-review"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "verify"
 }

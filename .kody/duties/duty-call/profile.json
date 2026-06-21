@@ -6,5 +6,6 @@
   "executables": [
     "duty-call"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

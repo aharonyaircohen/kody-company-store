@@ -9,5 +9,6 @@
   "executables": [
     "qa-sweep"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

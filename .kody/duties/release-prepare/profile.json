@@ -2,5 +2,6 @@
   "name": "release-prepare",
   "action": "release-prepare",
   "executable": "release-prepare",
-  "describe": "Prepare a release PR."
+  "describe": "Prepare a release PR.",
+  "capabilityKind": "act"
 }

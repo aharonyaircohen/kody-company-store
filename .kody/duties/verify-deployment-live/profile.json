@@ -1,0 +1,7 @@
+{
+  "name": "verify-deployment-live",
+  "action": "verify-deployment-live",
+  "executable": "verify-deployment-live",
+  "describe": "Verify a deployment URL responds with the expected status.",
+  "capabilityKind": "verify"
+}

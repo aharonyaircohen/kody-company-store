@@ -4,5 +4,6 @@
   "action": "review",
   "every": "manual",
   "runner": "kody",
-  "executable": "review"
+  "executable": "review",
+  "capabilityKind": "verify"
 }

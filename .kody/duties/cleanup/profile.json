@@ -4,5 +4,6 @@
   "every": "1d",
   "runner": "coo",
   "executable": "cleanup",
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

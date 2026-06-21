@@ -4,5 +4,6 @@
   "every": "7d",
   "runner": "cto",
   "executable": "code-health",
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

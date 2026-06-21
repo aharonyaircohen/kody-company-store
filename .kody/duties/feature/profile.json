@@ -4,5 +4,6 @@
   "action": "feature",
   "every": "manual",
   "runner": "kody",
-  "executable": "feature"
+  "executable": "feature",
+  "capabilityKind": "act"
 }

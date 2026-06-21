@@ -4,5 +4,6 @@
   "action": "revert",
   "every": "manual",
   "runner": "kody",
-  "executable": "revert"
+  "executable": "revert",
+  "capabilityKind": "act"
 }

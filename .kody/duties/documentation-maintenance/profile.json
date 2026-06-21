@@ -6,5 +6,6 @@
   "mentions": [
     "aguyaharonyair"
   ],
-  "executable": "documentation-maintenance"
+  "executable": "documentation-maintenance",
+  "capabilityKind": "observe"
 }

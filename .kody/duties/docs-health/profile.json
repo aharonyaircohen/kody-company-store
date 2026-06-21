@@ -6,5 +6,6 @@
   "mentions": [
     "aguyaharonyair"
   ],
-  "executable": "docs-health"
+  "executable": "docs-health",
+  "capabilityKind": "observe"
 }

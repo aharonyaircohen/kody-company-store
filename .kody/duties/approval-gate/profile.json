@@ -9,5 +9,6 @@
   "executables": [
     "approval-gate"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "verify"
 }

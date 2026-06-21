@@ -3,5 +3,6 @@
   "describe": "Check PR CI health and report readiness evidence to a managed goal.",
   "action": "ci-health",
   "executable": "ci-check",
-  "staff": "kody"
+  "staff": "kody",
+  "capabilityKind": "verify"
 }

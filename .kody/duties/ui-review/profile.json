@@ -5,5 +5,6 @@
   "executable": "ui-review",
   "every": "manual",
   "staff": "kody",
-  "runner": "kody"
+  "runner": "kody",
+  "capabilityKind": "verify"
 }

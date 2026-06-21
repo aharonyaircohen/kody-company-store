@@ -6,5 +6,6 @@
   "reviewer": "ceo",
   "executables": [
     "ceo-performance-review"
-  ]
+  ],
+  "capabilityKind": "verify"
 }

@@ -4,5 +4,6 @@
   "action": "fix-ci",
   "every": "manual",
   "runner": "kody",
-  "executable": "fix-ci"
+  "executable": "fix-ci",
+  "capabilityKind": "act"
 }

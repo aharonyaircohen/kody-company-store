@@ -6,5 +6,6 @@
   "executables": [
     "health-check"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "observe"
 }

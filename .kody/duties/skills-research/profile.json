@@ -5,5 +5,6 @@
   "runner": "cto",
   "executables": [
     "skills-research"
-  ]
+  ],
+  "capabilityKind": "observe"
 }

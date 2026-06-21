@@ -9,5 +9,6 @@
   "executables": [
     "qa"
   ],
-  "disabled": true
+  "disabled": true,
+  "capabilityKind": "verify"
 }

@@ -12,5 +12,6 @@
   ],
   "writesTo": [
     "company-graph"
-  ]
+  ],
+  "capabilityKind": "observe"
 }

@@ -4,5 +4,6 @@
   "action": "research",
   "every": "manual",
   "runner": "kody",
-  "executable": "research"
+  "executable": "research",
+  "capabilityKind": "observe"
 }

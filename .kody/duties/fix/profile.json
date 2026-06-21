@@ -4,5 +4,6 @@
   "action": "fix",
   "every": "manual",
   "runner": "kody",
-  "executable": "fix"
+  "executable": "fix",
+  "capabilityKind": "act"
 }
