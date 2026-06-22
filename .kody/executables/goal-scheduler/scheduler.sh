@@ -381,7 +381,7 @@ PY
 
   managed_active=$((managed_active + 1))
   echo "[goal-scheduler] -> tick $goal_id (goal-manager)"
-  if ! kody-engine goal-manager --goal "$goal_id"; then
+  if ! kody-engine exec goal-manager --goal "$goal_id"; then
     echo "[goal-scheduler] tick $goal_id failed (continuing)"
   fi
 done
