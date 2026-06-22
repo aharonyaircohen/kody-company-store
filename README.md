@@ -9,6 +9,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `.kody/agent-actions/` contains shared agentAction definitions, prompts, and supporting scripts.
 - `.kody/goals/templates/` contains shared agentGoal and agentLoop templates.
 - `.kody/agents/` contains shared agent identity identities.
+- `cms/` contains generic CMS contracts, adapters, examples, and tests.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
 
@@ -44,6 +45,7 @@ See [docs/activation.md](docs/activation.md) for the full activation contract.
 - `agentActions`: runnable agent/tool definitions under `.kody/agent-actions/<slug>/`
 - `goals`: managed agentGoal and agentLoop templates under `.kody/goals/templates/<slug>/state.json`
 - `agent`: agent identity files under `.kody/agents/<slug>.md`
+- `cms`: generic CMS adapter contracts and implementations under `cms/`
 
 ## What Does Not Belong Here
 
@@ -51,4 +53,4 @@ Do not commit consumer-specific runtime state to the store. This includes runs, 
 
 ## Maintenance
 
-This repo has no app build package command. It is a versioned asset store. Before changing shared assets, read [docs/maintenance.md](docs/maintenance.md) and validate edited JSON. The current default branch/ref is `stable`.
+This repo is a versioned asset store with a small test harness for Store-owned contracts. Before changing shared assets, read [docs/maintenance.md](docs/maintenance.md), validate edited JSON, and run the relevant tests. The current default branch/ref is `stable`.

@@ -8,7 +8,8 @@ Kody store assets live under roots declared in `kody-store.json`.
     "agent-responsibilities": ".kody/agent-responsibilities",
     "agent-actions": ".kody/agent-actions",
     "goals": ".kody/goals/templates",
-    "agent": ".kody/agents"
+    "agent": ".kody/agents",
+    "cms": "cms"
   }
 }
 ```
@@ -102,3 +103,23 @@ Scheduled activation creates a fresh runtime instance from the template:
 
 Shared store goals must not contain consumer secrets, run logs, or completed
 runtime history.
+
+## CMS
+
+Path:
+
+```text
+cms/
+```
+
+Common folders:
+
+- `contract/`: generic CMS config validation and operation generation.
+- `adapters/`: generic storage adapters such as `mongodb` and `github`.
+- `examples/`: state-repo config examples.
+- `tests/`: Store-owned adapter contract tests.
+
+CMS adapters are infrastructure capabilities, not consumer behavior. Consumer
+repos or their state repos own collection config, environment selection, and
+secret names. Store CMS assets must not contain raw database credentials or
+consumer-specific runtime data.

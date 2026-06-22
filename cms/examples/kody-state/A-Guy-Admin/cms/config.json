@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "A-Guy Admin CMS",
+  "environment": "dev",
+  "environmentFile": "environments/dev.json",
+  "defaultAdapter": "mongodb",
+  "writePolicy": "read-only",
+  "collections": [
+    "collections/lessons.json"
+  ]
+}

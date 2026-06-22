@@ -1,7 +1,8 @@
 # Maintenance
 
-This repo is a shared asset store, not an application package. Treat changes as
-contract changes for every consumer that resolves assets from the store.
+This repo is a shared asset store with a small test harness for Store-owned
+contracts. Treat changes as contract changes for every consumer that resolves
+assets from the store.
 
 ## Safe Edit Flow
 
@@ -40,6 +41,18 @@ Validate all asset profiles:
 find .kody -name profile.json -print0 | xargs -0 -n1 jq empty
 ```
 
+Validate CMS examples:
+
+```bash
+node cms/bin/cms.mjs validate cms/examples/kody-state/A-Guy-Admin/cms
+```
+
+Run Store contract tests:
+
+```bash
+npm test
+```
+
 ## Diff Review
 
 Useful paths to review before committing:
@@ -65,6 +78,7 @@ Use the existing layout for the asset kind:
 - AgentAction: `.kody/agent-actions/<slug>/profile.json`, plus prompt/script files.
 - Goal template: `.kody/goals/templates/<slug>/state.json`.
 - Agent: `.kody/agents/<slug>.md`.
+- CMS adapter: `cms/contract`, `cms/adapters/<adapter>`, plus focused tests.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
 reference it from agentResponsibilities, agentActions, scripts, or dashboards.

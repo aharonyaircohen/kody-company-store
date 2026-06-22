@@ -1,0 +1,7 @@
+{
+  "name": "dev",
+  "adapter": "mongodb",
+  "databaseUriSecret": "DATABASE_URL",
+  "databaseName": "A-Guy-Dev",
+  "writePolicy": "read-only"
+}

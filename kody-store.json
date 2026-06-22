@@ -11,6 +11,7 @@
     "agent-responsibilities": ".kody/agent-responsibilities",
     "agent-actions": ".kody/agent-actions",
     "goals": ".kody/goals/templates",
-    "agent": ".kody/agents"
+    "agent": ".kody/agents",
+    "cms": "cms"
   }
 }

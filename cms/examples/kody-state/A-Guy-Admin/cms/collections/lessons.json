@@ -1,0 +1,126 @@
+{
+  "name": "lessons",
+  "label": "Lessons",
+  "adapter": "mongodb",
+  "mcpName": "lesson",
+  "source": {
+    "collection": "lessons",
+    "idField": "_id"
+  },
+  "titleField": "title",
+  "operations": {
+    "list": true,
+    "get": true,
+    "search": true,
+    "create": false,
+    "update": false,
+    "delete": false
+  },
+  "defaultSort": [
+    {
+      "field": "updatedAt",
+      "direction": "desc"
+    }
+  ],
+  "fields": [
+    {
+      "name": "_id",
+      "type": "id",
+      "label": "ID",
+      "readOnly": true
+    },
+    {
+      "name": "title",
+      "type": "text",
+      "label": "Title",
+      "required": true
+    },
+    {
+      "name": "status",
+      "type": "select",
+      "label": "Status",
+      "options": [
+        "draft",
+        "published",
+        "archived"
+      ]
+    },
+    {
+      "name": "type",
+      "type": "select",
+      "label": "Type",
+      "options": [
+        "learning",
+        "practice",
+        "exam"
+      ]
+    },
+    {
+      "name": "chapter",
+      "type": "relation",
+      "label": "Chapter",
+      "target": "chapters",
+      "valueField": "_id",
+      "labelField": "title"
+    },
+    {
+      "name": "prerequisites",
+      "type": "relationMany",
+      "label": "Prerequisites",
+      "target": "lessons",
+      "valueField": "_id",
+      "labelField": "title"
+    },
+    {
+      "name": "order",
+      "type": "number",
+      "label": "Order"
+    },
+    {
+      "name": "isActive",
+      "type": "boolean",
+      "label": "Active"
+    },
+    {
+      "name": "updatedAt",
+      "type": "date",
+      "label": "Updated At",
+      "readOnly": true
+    }
+  ],
+  "filters": [
+    {
+      "field": "title",
+      "operators": [
+        "contains",
+        "equals"
+      ]
+    },
+    {
+      "field": "status",
+      "operators": [
+        "equals",
+        "in"
+      ]
+    },
+    {
+      "field": "type",
+      "operators": [
+        "equals",
+        "in"
+      ]
+    },
+    {
+      "field": "chapter",
+      "operators": [
+        "equals"
+      ]
+    },
+    {
+      "field": "isActive",
+      "operators": [
+        "equals"
+      ]
+    }
+  ]
+}
