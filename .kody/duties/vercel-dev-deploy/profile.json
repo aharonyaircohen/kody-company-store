@@ -4,7 +4,7 @@
   "action": "vercel-dev-deploy",
   "executable": "vercel-dev-deploy",
   "every": "manual",
-  "runner": "cto",
+  "agent": "cto",
   "reviewer": "cto",
   "mentions": [
     "aguyaharonyair"

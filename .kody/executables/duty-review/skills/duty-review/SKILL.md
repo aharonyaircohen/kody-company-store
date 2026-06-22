@@ -19,7 +19,7 @@ current structure.
 
 A healthy duty is short and has:
 
-- `profile.json` with `staff` and `executable` or `executables`
+- `profile.json` with `agent` and `executable` or `executables`
 - `duty.md` with a concise human-readable contract
 - a clear `Job`
 - a small `Executable` section
@@ -51,7 +51,7 @@ The executable should hold the method:
 ## Review Checklist
 
 - **Goal clarity:** The duty has one concrete, checkable job.
-- **Profile metadata:** `staff` and `executable` or `executables` are present and point to real repo objects.
+- **Profile metadata:** `agent` and `executable` or `executables` are present and point to real repo objects.
 - **Executable wiring:** The executable exists, has valid JSON, has a tiny prompt, and loads at least one skill unless it is deterministic.
 - **State model:** The duty does not define raw state keys or require the author to paste a state block. Runtime state belongs to the engine.
 - **No command recipe in duty:** Bash, `gh`, Python, and long step-by-step logic belong in executable skills or executable-owned scripts.

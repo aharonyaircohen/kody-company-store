@@ -72,6 +72,6 @@
   },
   "action": "dev-ci-health",
   "capabilityKind": "act",
-  "staff": "cto",
+  "agent": "cto",
   "every": "15m"
 }

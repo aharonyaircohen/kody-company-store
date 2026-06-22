@@ -3,7 +3,7 @@
   "describe": "PR Branch Sync",
   "action": "sync",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "sync",
   "capabilityKind": "act"
 }

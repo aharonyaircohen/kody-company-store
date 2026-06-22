@@ -5,4 +5,4 @@ Read + propose workflows. Use these when the user wants analysis, planning, or a
 - `report-advise` — read a report and recommend create-issue / attach-to-goal / no-action
 - `goal-planner` — decompose a goal into a concrete set of well-specced tasks (two passes, approval-gated)
 
-**Output shape:** use the persona's "deep question" shape — verdict + `### Findings` + `### What's missing or risky` — for any of these workflows.
+**Output shape:** use the agent identity's "deep question" shape — verdict + `### Findings` + `### What's missing or risky` — for any of these workflows.

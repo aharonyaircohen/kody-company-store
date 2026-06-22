@@ -4,6 +4,6 @@
   "action": "auto-sync",
   "executable": "auto-sync",
   "every": "15m",
-  "staff": "kody",
+  "agent": "kody",
   "capabilityKind": "act"
 }

@@ -43,7 +43,7 @@ Each item should say what it is, why it matters, and the next action.
 ## Restrictions
 
 - Do not create tasks.
-- Do not assign staff.
+- Do not assign agent.
 - Do not close issues.
 - Do not edit reports.
 - Do not solve findings.

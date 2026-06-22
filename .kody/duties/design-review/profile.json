@@ -2,7 +2,7 @@
   "name": "design-review",
   "describe": "Design Review",
   "every": "7d",
-  "runner": "ux-designer",
+  "agent": "ux-designer",
   "executables": [
     "design-review"
   ],

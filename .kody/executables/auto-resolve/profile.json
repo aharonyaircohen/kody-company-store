@@ -81,6 +81,6 @@
   },
   "action": "auto-resolve",
   "capabilityKind": "act",
-  "staff": "kody",
+  "agent": "kody",
   "every": "15m"
 }

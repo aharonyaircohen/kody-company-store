@@ -2,7 +2,7 @@
   "name": "qa",
   "describe": "QA Changelog Verification",
   "every": "30m",
-  "runner": "qa",
+  "agent": "qa",
   "mentions": [
     "aguyaharonyair"
   ],

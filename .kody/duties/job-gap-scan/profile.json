@@ -4,7 +4,7 @@
   "action": "job-gap-scan",
   "executable": "job-gap-scan",
   "every": "24h",
-  "staff": "ceo",
+  "agent": "ceo",
   "mentions": [
     "aguyaharonyair"
   ],

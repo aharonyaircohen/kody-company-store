@@ -5,5 +5,5 @@
   "every": "manual",
   "executable": "kody-chat",
   "capabilityKind": "act",
-  "staff": "kody"
+  "agent": "kody"
 }

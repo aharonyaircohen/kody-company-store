@@ -2,7 +2,7 @@
   "name": "health-check",
   "describe": "Kody Health Check",
   "every": "1d",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "health-check"
   ],

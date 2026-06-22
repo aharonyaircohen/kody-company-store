@@ -2,7 +2,7 @@
   "name": "ceo-performance-review",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Review every staff member by the duties they own and the evidence those duties produce.",
+  "describe": "Review every agent by the duties they own and the evidence those duties produce.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

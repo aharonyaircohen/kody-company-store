@@ -2,7 +2,7 @@
   "name": "company-graph",
   "describe": "Company Graph - derive and refresh the orchestration graph",
   "every": "manual",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "company-graph"
   ],

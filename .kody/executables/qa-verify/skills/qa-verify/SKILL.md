@@ -60,7 +60,7 @@ duty profile to pause it.
      ledger first:** read the `kody:cto-decisions` manifest issue
      (`gh issue list --label kody:cto-decisions --state all --json number` then
      `gh issue view <n> --json body`, parse the fenced JSON) and look at
-     `staff.qa.merge.mode`:
+     `agent.qa.merge.mode`:
      - **`mode === "auto"`** → squash-merge directly:
        `gh pr merge <pr> --squash --delete-branch`, post a one-line
        "✅ auto-merged (QA trust)" note. Clear `data.inflightPr`.
@@ -68,7 +68,7 @@ duty profile to pause it.
        PR so the operator gets a one-tap Approve. Clear `data.inflightPr`.
    - **Verdict CONCERNS** (`kody:ui-verified` but not a clean pass) → do NOT
      offer a one-tap merge. Post one **advisory** inbox note (`@`-mention +
-     `<!-- kody-staff: qa -->`, no merge/fix action) summarizing the concern so
+     `<!-- kody-agent: qa -->`, no merge/fix action) summarizing the concern so
      the operator decides. Clear `data.inflightPr`.
    - **Verdict FAIL** (`kody:ui-failed`) → post the **fix recommendation**
      (format below). Clear `data.inflightPr`.
@@ -98,7 +98,7 @@ duty profile to pause it.
 
 One comment, terse. It **MUST** `@`-mention the operator on the first line —
 that mention is the only thing that routes it into the dashboard inbox — and
-carry the `<!-- kody-staff: qa -->` line (the inbox reads it to show the
+carry the `<!-- kody-agent: qa -->` line (the inbox reads it to show the
 Approve/Reject buttons and to scope the trust ledger).
 
 **Merge rec (verdict PASS/CONCERNS):**
@@ -109,13 +109,13 @@ Approve/Reject buttons and to scope the trust ledger).
 PR #<pr> passed UI review (linked issue #<issue> verified on its preview).
 Approve to squash-merge it.
 
-<!-- kody-staff: qa -->
+<!-- kody-agent: qa -->
 ```
 
 The action verb `merge` on the marker line is what the inbox parses; **no
 `kody-cmd:` line** — `merge` is executed by the dashboard (the GitHub squash
 merge), not by an `@kody` command, and the engine never auto-merges. Approve
-records under `staff.qa.merge` in the ledger; after 10 clean approvals it
+records under `agent.qa.merge` in the ledger; after 10 clean approvals it
 graduates to `auto` and step 1 stops asking.
 
 **Fix rec (verdict FAIL):**
@@ -125,7 +125,7 @@ graduates to `auto` and step 1 stops asking.
 
 PR #<pr> still fails UI review: <one line — what ui-review found broken>.
 
-<!-- kody-staff: qa -->
+<!-- kody-agent: qa -->
 <!-- kody-cmd: @kody fix --pr <pr> "<concern>" -->
 ```
 

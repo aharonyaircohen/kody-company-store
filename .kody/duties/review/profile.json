@@ -3,7 +3,7 @@
   "describe": "PR Review",
   "action": "review",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "review",
   "capabilityKind": "verify"
 }

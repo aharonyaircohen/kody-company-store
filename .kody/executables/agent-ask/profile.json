@@ -1,21 +1,21 @@
 {
-  "name": "worker-ask",
+  "name": "agent-ask",
   "role": "primitive",
-  "describe": "Ad-hoc one-shot: run a staff persona against an inline message + context (from a dashboard @staff mention). Stateless — no duty folder, no state, no commit. Replies into the originating thread.",
+  "describe": "Ad-hoc one-shot: run an agent identity against an inline message + context (from a dashboard @agent mention). Stateless — no duty folder, no state, no commit. Replies into the originating thread.",
   "kind": "oneshot",
   "inputs": [
     {
-      "name": "worker",
-      "flag": "--worker",
+      "name": "agent",
+      "flag": "--agent",
       "type": "string",
       "required": true,
-      "describe": "Staff slug — basename (without .md) of the persona file under .kody/staff/."
+      "describe": "Agent slug — basename (without .md) of the agent identity file under .kody/agents/."
     },
     {
       "name": "thread",
       "flag": "--thread",
       "type": "string",
-      "describe": "Where to post the reply: `discussion:<n>` (or a bare number) for a Discussion, or `issue:<n>` for an issue/PR. When set, the worker answers as a comment on that thread."
+      "describe": "Where to post the reply: `discussion:<n>` (or a bare number) for a Discussion, or `issue:<n>` for an issue/PR. When set, the agent answers as a comment on that thread."
     },
     {
       "name": "message",
@@ -63,9 +63,9 @@
   "scripts": {
     "preflight": [
       {
-        "script": "loadWorkerAdhoc",
+        "script": "loadAgentAdhoc",
         "with": {
-          "workersDir": ".kody/staff"
+          "agentsDir": ".kody/agents"
         }
       },
       {
@@ -74,6 +74,6 @@
     ],
     "postflight": []
   },
-  "action": "worker-ask",
+  "action": "agent-ask",
   "capabilityKind": "act"
 }

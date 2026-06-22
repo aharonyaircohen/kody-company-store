@@ -3,7 +3,7 @@
   "describe": "PR Conflict Resolution",
   "action": "resolve",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "resolve",
   "capabilityKind": "act"
 }

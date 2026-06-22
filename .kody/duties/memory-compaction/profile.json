@@ -2,7 +2,7 @@
   "name": "memory-compaction",
   "describe": "Memory Compaction",
   "every": "7d",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "compact-memory"
   ],

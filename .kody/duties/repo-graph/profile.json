@@ -2,7 +2,7 @@
   "name": "repo-graph",
   "describe": "Repo Graph - refresh dependency and documentation topology reports",
   "every": "1d",
-  "runner": "cto",
+  "agent": "cto",
   "executable": "repo-graph",
   "readsFrom": [
     "dependency-graph",

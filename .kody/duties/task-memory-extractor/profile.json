@@ -4,6 +4,6 @@
   "action": "task-memory-extractor",
   "executable": "task-memory-extractor",
   "every": "30m",
-  "staff": "coo",
+  "agent": "coo",
   "capabilityKind": "act"
 }

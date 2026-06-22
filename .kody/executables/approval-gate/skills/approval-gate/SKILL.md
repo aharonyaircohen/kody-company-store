@@ -11,7 +11,7 @@ Runtime state is owned by the engine. Do not ask the duty author to configure ra
 
 ## Method
 
-> Executed by the **CTO** persona. Every 15 minutes, look at the **QA goals'
+> Executed by the **CTO** agent identity. Every 15 minutes, look at the **QA goals'
 > deliverable PRs**, verify each one passes a fresh QA pass, drop duplicates,
 > and — per the operator's trust ledger — either recommend the merge in the
 > inbox or (once the `merge` verb has graduated) auto-merge it. This is the
@@ -45,7 +45,7 @@ gh issue list --state open --label kody:cto-decisions --limit 5 --json number,bo
 
 Take the lowest-numbered match, find the fenced ```json block between
 `<!-- kody-cto-decisions:start -->`and`<!-- kody-cto-decisions:end -->`, and
-read `staff.cto.merge.mode`. `"auto"`→ the`merge`verb has **graduated** (you
+read `agent.cto.merge.mode`. `"auto"`→ the`merge`verb has **graduated** (you
 may dispatch it yourself this tick). Anything else —`"ask"`, missing, no
 ledger, parse failure, or any doubt → **not graduated**: recommend and wait.
 Fail safe. You only ever *read* `mode`; the dashboard owns the graduation math

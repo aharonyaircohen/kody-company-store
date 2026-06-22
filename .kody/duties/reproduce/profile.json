@@ -3,7 +3,7 @@
   "describe": "Bug Reproduction",
   "action": "reproduce",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "reproduce",
   "capabilityKind": "act"
 }

@@ -8,7 +8,7 @@ Treat documentation stewardship as one daily pass:
 2. Run the `docs-code` method to catch broad in-code documentation coverage gaps.
 3. Respect each skill's deduplication, one-action, and advisory-only limits.
 
-Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, staff, mentions, and safety limits.
+Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, agent, mentions, and safety limits.
 
 # Final message format (required)
 

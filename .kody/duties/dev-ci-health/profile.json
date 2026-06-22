@@ -4,7 +4,7 @@
   "action": "dev-ci-health",
   "executable": "dev-ci-health",
   "every": "15m",
-  "staff": "cto",
+  "agent": "cto",
   "mentions": [
     "aguyaharonyair"
   ],

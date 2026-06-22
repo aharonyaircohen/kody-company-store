@@ -3,7 +3,7 @@
   "describe": "Chore Implementation",
   "action": "chore",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "chore",
   "capabilityKind": "act"
 }

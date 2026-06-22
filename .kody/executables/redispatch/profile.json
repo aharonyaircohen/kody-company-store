@@ -70,6 +70,6 @@
   },
   "action": "redispatch",
   "capabilityKind": "act",
-  "staff": "kody",
+  "agent": "kody",
   "every": "30m"
 }

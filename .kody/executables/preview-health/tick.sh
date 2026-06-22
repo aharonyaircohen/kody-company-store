@@ -143,7 +143,7 @@ def read_ledger_modes():
         if not match:
             return modes
         ledger = json.loads(match.group(1))
-        cto = ledger.get("staff", {}).get("cto", {})
+        cto = ledger.get("agent", {}).get("cto", {})
         for verb in VERBS:
             if cto.get(verb, {}).get("mode") == "auto":
                 modes[verb] = "auto"

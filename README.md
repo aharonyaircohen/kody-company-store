@@ -8,7 +8,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `.kody/duties/` contains shared duty definitions.
 - `.kody/executables/` contains shared executable definitions, prompts, and supporting scripts.
 - `.kody/goals/templates/` contains shared objective and routine templates.
-- `.kody/staff/` contains shared staff personas.
+- `.kody/agents/` contains shared agent identity identities.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
 
@@ -43,7 +43,7 @@ See [docs/activation.md](docs/activation.md) for the full activation contract.
 - `duties`: available responsibilities and command wrappers under `.kody/duties/<slug>/`
 - `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
 - `goals`: managed objective and routine templates under `.kody/goals/templates/<slug>/state.json`
-- `staff`: persona files under `.kody/staff/<slug>.md`
+- `agent`: agent identity files under `.kody/agents/<slug>.md`
 
 ## What Does Not Belong Here
 

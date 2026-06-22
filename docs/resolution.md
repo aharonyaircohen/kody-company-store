@@ -5,9 +5,9 @@ Kody store assets are shared defaults. Local repo assets are overrides.
 Resolution order:
 
 1. Local `.kody/duties/<slug>`, `.kody/executables/<slug>`,
-   `.kody/goals/templates/<slug>/state.json`, or `.kody/staff/<slug>.md`
+   `.kody/goals/templates/<slug>/state.json`, or `.kody/agents/<slug>.md`
 2. Store `.kody/duties/<slug>`, `.kody/executables/<slug>`,
-   `.kody/goals/templates/<slug>/state.json`, or `.kody/staff/<slug>.md`
+   `.kody/goals/templates/<slug>/state.json`, or `.kody/agents/<slug>.md`
 3. Engine built-ins
 
 Resolution makes an asset available. Activation decides whether it runs.

@@ -1,7 +1,7 @@
 {
   "name": "job-live-verify",
   "role": "primitive",
-  "describe": "Live-test executable that verifies job reference injection, staff persona injection, synthetic skill loading, locked duty tools, and state postflight.",
+  "describe": "Live-test executable that verifies job reference injection, agent identity injection, synthetic skill loading, locked duty tools, and state postflight.",
   "kind": "oneshot",
   "dutyTools": ["ensure_issue", "ensure_comment"],
   "inputs": [],

@@ -4,7 +4,7 @@
   "action": "preview-health",
   "executable": "preview-health",
   "every": "15m",
-  "staff": "cto",
+  "agent": "cto",
   "mentions": [
     "aguyaharonyair"
   ],

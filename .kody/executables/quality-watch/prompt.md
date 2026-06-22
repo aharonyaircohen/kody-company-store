@@ -9,7 +9,7 @@ Treat quality watch as one daily coordination pass:
 3. Run the `flaky-test-quarantine` method for retry-pattern candidates.
 4. Respect each skill's deduplication, evidence, and one-issue/comment-per-tick limits.
 
-Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, staff, mentions, and safety limits.
+Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, agent, mentions, and safety limits.
 
 # Final message format (required)
 

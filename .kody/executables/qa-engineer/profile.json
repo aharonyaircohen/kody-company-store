@@ -131,6 +131,6 @@
   },
   "action": "qa-engineer",
   "capabilityKind": "verify",
-  "staff": "qa",
+  "agent": "qa",
   "every": "manual"
 }

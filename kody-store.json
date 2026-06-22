@@ -11,6 +11,6 @@
     "duties": ".kody/duties",
     "executables": ".kody/executables",
     "goals": ".kody/goals/templates",
-    "staff": ".kody/staff"
+    "agent": ".kody/agents"
   }
 }

@@ -2,7 +2,7 @@
 
 Use the `coverage-floor` skill.
 
-Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, staff, mentions, and safety limits.
+Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, agent, mentions, and safety limits.
 
 # Final message format (required)
 

@@ -1784,13 +1784,13 @@
         ]
       }
     },
-    "staff": {
+    "agent": {
       "selectedCount": 8,
       "duplicateSlugCount": 7,
       "selected": {
         "ceo": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/ceo.md",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/ceo.md",
           "hash": "acbc9853563f",
           "mtime": "2026-05-26T20:30:14.069Z",
           "copyCount": 4,
@@ -1798,7 +1798,7 @@
         },
         "coo": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/coo.md",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/coo.md",
           "hash": "005207566d5a",
           "mtime": "2026-05-26T20:30:14.072Z",
           "copyCount": 4,
@@ -1806,7 +1806,7 @@
         },
         "cto": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/cto.md",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/cto.md",
           "hash": "4f1196e5d125",
           "mtime": "2026-05-26T20:30:14.076Z",
           "copyCount": 4,
@@ -1814,7 +1814,7 @@
         },
         "kody": {
           "project": "A-Guy",
-          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/kody.md",
+          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/kody.md",
           "hash": "ac0824c45b32",
           "mtime": "2026-06-09T05:38:44.315Z",
           "copyCount": 4,
@@ -1822,7 +1822,7 @@
         },
         "qa": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/qa.md",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/qa.md",
           "hash": "e02756fa8579",
           "mtime": "2026-05-26T20:30:14.079Z",
           "copyCount": 4,
@@ -1830,7 +1830,7 @@
         },
         "tech-writer": {
           "project": "A-Guy",
-          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/tech-writer.md",
+          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/tech-writer.md",
           "hash": "f479f723620c",
           "mtime": "2026-06-09T05:38:44.315Z",
           "copyCount": 4,
@@ -1838,7 +1838,7 @@
         },
         "ux-designer": {
           "project": "A-Guy",
-          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/ux-designer.md",
+          "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/ux-designer.md",
           "hash": "35f252a65aa0",
           "mtime": "2026-06-09T05:38:44.315Z",
           "copyCount": 4,
@@ -1849,28 +1849,28 @@
         "ceo": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/ceo.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/ceo.md",
             "hash": "acbc9853563f",
             "mtime": "2026-05-26T20:30:14.069Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/ceo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/ceo.md",
             "hash": "844d0d476e84",
             "mtime": "2026-05-22T11:01:01.764Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/ceo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/ceo.md",
             "hash": "844d0d476e84",
             "mtime": "2026-05-22T11:01:01.764Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/ceo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/ceo.md",
             "hash": "844d0d476e84",
             "mtime": "2026-05-22T11:01:01.764Z",
             "selected": false
@@ -1879,28 +1879,28 @@
         "coo": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/coo.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/coo.md",
             "hash": "005207566d5a",
             "mtime": "2026-05-26T20:30:14.072Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/coo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/coo.md",
             "hash": "359eeda2967f",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/coo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/coo.md",
             "hash": "359eeda2967f",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/coo.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/coo.md",
             "hash": "359eeda2967f",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
@@ -1909,28 +1909,28 @@
         "cto": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/cto.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/cto.md",
             "hash": "4f1196e5d125",
             "mtime": "2026-05-26T20:30:14.076Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/cto.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/cto.md",
             "hash": "154742966d39",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/cto.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/cto.md",
             "hash": "154742966d39",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/cto.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/cto.md",
             "hash": "154742966d39",
             "mtime": "2026-05-22T11:01:01.765Z",
             "selected": false
@@ -1939,28 +1939,28 @@
         "kody": [
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/kody.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/kody.md",
             "hash": "ac0824c45b32",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": true
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/kody.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/kody.md",
             "hash": "ac0824c45b32",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/kody.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/kody.md",
             "hash": "ac0824c45b32",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/kody.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/kody.md",
             "hash": "8290b1a6fb3b",
             "mtime": "2026-06-02T12:26:07.372Z",
             "selected": false
@@ -1969,28 +1969,28 @@
         "qa": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/qa.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/qa.md",
             "hash": "e02756fa8579",
             "mtime": "2026-05-26T20:30:14.079Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/qa.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/qa.md",
             "hash": "0974642fb351",
             "mtime": "2026-05-22T11:02:24.684Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/qa.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/qa.md",
             "hash": "0974642fb351",
             "mtime": "2026-05-22T11:02:24.684Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/qa.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/qa.md",
             "hash": "0974642fb351",
             "mtime": "2026-05-22T11:02:24.684Z",
             "selected": false
@@ -1999,28 +1999,28 @@
         "tech-writer": [
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/tech-writer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/tech-writer.md",
             "hash": "f479f723620c",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": true
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/tech-writer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/tech-writer.md",
             "hash": "f479f723620c",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/tech-writer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/tech-writer.md",
             "hash": "f479f723620c",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/tech-writer.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/tech-writer.md",
             "hash": "f479f723620c",
             "mtime": "2026-05-27T17:03:49.168Z",
             "selected": false
@@ -2029,28 +2029,28 @@
         "ux-designer": [
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/staff/ux-designer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agents/ux-designer.md",
             "hash": "35f252a65aa0",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": true
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/staff/ux-designer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agents/ux-designer.md",
             "hash": "35f252a65aa0",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/staff/ux-designer.md",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agents/ux-designer.md",
             "hash": "35f252a65aa0",
             "mtime": "2026-06-09T05:38:44.315Z",
             "selected": false
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/staff/ux-designer.md",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agents/ux-designer.md",
             "hash": "6420dd0f624f",
             "mtime": "2026-05-26T20:30:14.083Z",
             "selected": false

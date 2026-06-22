@@ -5,5 +5,5 @@
   "every": "manual",
   "executable": "kody-chat",
   "capabilityKind": "observe",
-  "staff": "kody"
+  "agent": "kody"
 }

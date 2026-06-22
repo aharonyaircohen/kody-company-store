@@ -2,7 +2,7 @@
 
 ## Job
 
-Refresh the machine-readable graph of context, duties, staff, executables, reports, goals, and issue edges.
+Refresh the machine-readable graph of context, duties, agent, executables, reports, goals, and issue edges.
 
 ## Executable
 

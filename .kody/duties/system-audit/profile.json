@@ -2,7 +2,7 @@
   "name": "system-audit",
   "describe": "System Audit",
   "every": "30m",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "system-audit"
   ],

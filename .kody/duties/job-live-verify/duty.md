@@ -1,3 +1,3 @@
 # Job Live Verify
 
-Verify live job reference, staff, duty, executable, skill, and state wiring.
+Verify live job reference, agent, duty, executable, skill, and state wiring.

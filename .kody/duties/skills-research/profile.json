@@ -2,7 +2,7 @@
   "name": "skills-research",
   "describe": "Skills Research",
   "every": "7d",
-  "runner": "cto",
+  "agent": "cto",
   "executables": [
     "skills-research"
   ],

@@ -4,6 +4,6 @@
   "action": "auto-fix-ci",
   "executable": "auto-fix-ci",
   "every": "15m",
-  "staff": "kody",
+  "agent": "kody",
   "capabilityKind": "act"
 }

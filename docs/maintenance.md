@@ -53,7 +53,7 @@ Look especially for:
 - Secrets or tokens.
 - `.kody/runs/` or `.kody/sessions/` files.
 - Absolute local paths added to executable behavior.
-- Persona files that define job-specific commands instead of identity.
+- Agent identity files that define job-specific commands instead of identity.
 - Duties pointing at missing executable slugs.
 - Executables referencing unavailable scripts or CLI tools.
 
@@ -64,7 +64,7 @@ Use the existing layout for the asset kind:
 - Duty: `.kody/duties/<slug>/profile.json`, plus `duty.md` when needed.
 - Executable: `.kody/executables/<slug>/profile.json`, plus prompt/script files.
 - Goal template: `.kody/goals/templates/<slug>/state.json`.
-- Staff: `.kody/staff/<slug>.md`.
+- Agent: `.kody/agents/<slug>.md`.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
 reference it from duties, executables, scripts, or dashboards.

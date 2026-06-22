@@ -72,6 +72,6 @@
   },
   "action": "task-memory-extractor",
   "capabilityKind": "act",
-  "staff": "coo",
+  "agent": "coo",
   "every": "30m"
 }

@@ -28,7 +28,7 @@ skill that would be needed. Do not write the duty folder yourself.
 The issue should include:
 
 - proposed duty slug
-- staff owner
+- agent owner
 - cadence
 - stage template
 - executable slug
@@ -38,7 +38,7 @@ The issue should include:
 
 ## Tick Procedure
 
-1. Gather existing duties, staff, executables, reports, and memories.
+1. Gather existing duties, agent, executables, reports, and memories.
 2. Build a small candidate list of missing recurring responsibilities.
 3. Score each candidate by impact, confidence, noise risk, and implementation cost.
 4. Pick the best candidate that has not been rejected or recently dismissed.
@@ -48,7 +48,7 @@ The issue should include:
 
 ## Allowed Commands
 
-- `gh api` reads for `.kody/duties`, `.kody/staff`, `.kody/executables`, `.kody/reports`, and `.kody/memory`
+- `gh api` reads for `.kody/duties`, `.kody/agents`, `.kody/executables`, `.kody/reports`, and `.kody/memory`
 - `gh issue list`
 - `gh issue create`
 - `gh label create` when the proposal label is missing

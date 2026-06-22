@@ -11,8 +11,8 @@ Runtime state is owned by the engine. Do not ask the duty author to configure ra
 
 ## Method
 
-> Standing PR-health triage, executed by the **CTO** staff member
-> (`staff: cto`). Every 15 minutes, read the open pull requests, detect
+> Standing PR-health triage, executed by the **CTO** agent
+> (`agent: cto`). Every 15 minutes, read the open pull requests, detect
 > which ones need a mechanical repair, and — per the operator's trust
 > ledger — either recommend the repair or (once that verb has graduated)
 > dispatch it. Cadence is enforced by the engine via `every: 15m`; no
@@ -22,7 +22,7 @@ Runtime state is owned by the engine. Do not ask the duty author to configure ra
 
 Each tick, look at every open PR, pick at most one repair per PR (by the
 priority order below), and either recommend it or — if its verb has
-graduated in the trust ledger — dispatch it. The CTO persona defines only
+graduated in the trust ledger — dispatch it. The CTO agent identity defines only
 _who_ runs this; all authority, scope limits, and comment formats below
 belong to **this job**.
 

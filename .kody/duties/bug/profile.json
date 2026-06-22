@@ -3,7 +3,7 @@
   "describe": "Bug Fix",
   "action": "bug",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "bug",
   "capabilityKind": "act"
 }

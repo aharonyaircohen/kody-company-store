@@ -4,7 +4,7 @@
   "action": "vercel-production-deploy",
   "executable": "vercel-production-deploy",
   "every": "manual",
-  "staff": "cto",
+  "agent": "cto",
   "mentions": [
     "aguyaharonyair"
   ],

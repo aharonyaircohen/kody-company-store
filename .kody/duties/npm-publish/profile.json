@@ -4,6 +4,6 @@
   "action": "npm-publish",
   "executable": "npm-publish",
   "every": "manual",
-  "staff": "kody",
+  "agent": "kody",
   "capabilityKind": "act"
 }

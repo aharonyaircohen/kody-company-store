@@ -3,7 +3,7 @@
   "describe": "PR Feedback Fix",
   "action": "fix",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "fix",
   "capabilityKind": "act"
 }

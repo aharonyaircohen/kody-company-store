@@ -1,4 +1,4 @@
-Persistent memory management. Use this when the user gives feedback, corrects a choice, shares a project fact, or the persona's memory triggers fire.
+Persistent memory management. Use this when the user gives feedback, corrects a choice, shares a project fact, or the agent identity's memory triggers fire.
 
 **Skills:**
 - `memory` — apply the `.kody/memory/` index, use `recall` / `recall_search` / `list_memories` as needed, and `remember` / `update_memory` on every trigger

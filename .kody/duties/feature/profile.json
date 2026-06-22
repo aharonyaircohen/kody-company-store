@@ -3,7 +3,7 @@
   "describe": "Feature Implementation",
   "action": "feature",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "feature",
   "capabilityKind": "act"
 }

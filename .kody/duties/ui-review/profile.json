@@ -4,7 +4,7 @@
   "action": "ui-review",
   "executable": "ui-review",
   "every": "manual",
-  "staff": "kody",
-  "runner": "kody",
+  "agent": "kody",
+  "agent": "kody",
   "capabilityKind": "verify"
 }

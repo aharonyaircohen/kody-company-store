@@ -2,7 +2,7 @@
   "name": "task-memorize",
   "describe": "Task Memorize",
   "every": "30m",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "task-memorize"
   ],

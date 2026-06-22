@@ -10,7 +10,7 @@ Treat cleanup as one grouped housekeeping pass:
 4. Run the `dead-code-sweep` method for unused exports, files, and dependency cleanup candidates.
 5. Respect each skill's safety, deduplication, and one-action limits. Prefer a quiet no-op over speculative cleanup.
 
-Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, staff, mentions, and safety limits.
+Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, agent, mentions, and safety limits.
 
 # Final message format (required)
 

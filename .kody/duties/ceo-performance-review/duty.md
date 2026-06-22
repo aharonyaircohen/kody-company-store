@@ -2,7 +2,7 @@
 
 ## Job
 
-Review every staff member by the duties they own and the evidence those duties produce.
+Review every agent by the duties they own and the evidence those duties produce.
 
 ## Executable
 
@@ -19,6 +19,6 @@ Refresh `.kody/reports/ceo-performance-review.md`.
 ## Restrictions
 
 - Diagnostic only.
-- Do not edit duties, staff, issues, or PRs.
+- Do not edit duties, agent, issues, or PRs.
 - Do not dispatch work.
 - Keep the report stable when the evidence has not changed.

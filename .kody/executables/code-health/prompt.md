@@ -8,7 +8,7 @@ Treat code health as one weekly coordination pass:
 2. Run the `type-debt` method for TypeScript escape-hatch growth.
 3. Respect each skill's deduplication, evidence, and one-issue/comment-per-tick limits.
 
-Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, staff, mentions, and safety limits.
+Run only the work requested by the matching duty. Follow the duty profile metadata for cadence, agent, mentions, and safety limits.
 
 # Final message format (required)
 

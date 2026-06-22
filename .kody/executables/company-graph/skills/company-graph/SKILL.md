@@ -13,7 +13,7 @@ Build graph nodes for:
 
 - context files
 - duties
-- staff
+- agent
 - executables
 - scripts
 - skills
@@ -23,11 +23,11 @@ Build graph nodes for:
 
 Build graph edges for:
 
-- duty `staff` -> assigned staff
+- duty `agent` -> assigned agent
 - duty `executables` -> runnable executable
 - duty `reads_from` -> source context/report/duty
 - duty `writes_to` -> report
-- context `staff` -> audience staff
+- context `agent` -> audience agent
 - executable configured skills -> skill nodes
 - executable preflight scripts -> script nodes
 - issue `goal:*` labels -> goal nodes
@@ -37,7 +37,7 @@ Build graph edges for:
 Report:
 
 - graph snapshot counts and hash
-- orphan staff
+- orphan agent
 - stale context
 - disabled duties referenced by other duties
 - `.kody/` coverage gaps

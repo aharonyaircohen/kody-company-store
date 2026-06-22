@@ -1,0 +1,1 @@
+`.kody/agents/<slug>.md` — a pure reusable IDENTITY file (markdown body: intent, allowed commands, restrictions). Agents have no schedule, no state, no run/tick; they're agent identities referenced by other flows. Same gap loop and sufficiency bar as Create Kody duty. Show body, then call `create_kody_agent`.

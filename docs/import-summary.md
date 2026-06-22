@@ -14,7 +14,7 @@ Generated at: 2026-06-18T02:01:59.364Z
 - Duplicate slugs resolved by newest file mtime: 18
 - Selected by project: A-Guy-Web 12, Kody-Dashboard 51, kody2 4
 
-## Staff
+## Agent
 
 - Selected assets: 8
 - Duplicate slugs resolved by newest file mtime: 7

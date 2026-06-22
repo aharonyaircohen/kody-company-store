@@ -14,7 +14,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 
 Store goals are inactive objective or routine templates. Consumer repos activate the company model through `company.activeGoals`.
 
-Routines own scheduled duty decisions. A duty may declare `every`, `staff`, and `executable`, but the routine tick decides whether that duty is due, skipped, blocked, or selected.
+Routines own scheduled duty decisions. A duty may declare `every`, `agent`, and `executable`, but the routine tick decides whether that duty is due, skipped, blocked, or selected.
 
 Default routine templates:
 

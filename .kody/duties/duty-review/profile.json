@@ -2,7 +2,7 @@
   "name": "duty-review",
   "describe": "Duty Review",
   "every": "6h",
-  "runner": "coo",
+  "agent": "coo",
   "executables": [
     "duty-review"
   ],

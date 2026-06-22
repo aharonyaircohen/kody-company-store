@@ -8,7 +8,7 @@ Kody store assets live under roots declared in `kody-store.json`.
     "duties": ".kody/duties",
     "executables": ".kody/executables",
     "goals": ".kody/goals/templates",
-    "staff": ".kody/staff"
+    "agent": ".kody/agents"
   }
 }
 ```
@@ -27,7 +27,7 @@ Path:
 
 Common files:
 
-- `profile.json`: duty metadata, cadence, staff, mentions, and executable link.
+- `profile.json`: duty metadata, cadence, agent, mentions, and executable link.
 - `duty.md`: human-readable duty instructions.
 
 Store duties are inactive by default. `every` is a suggested cadence, not
@@ -55,16 +55,16 @@ Common files:
 Executable scripts should consume environment variables provided by the runtime.
 They should not own consumer secrets or decrypt repo-local vaults inside store.
 
-## Staff
+## Agent
 
 Path:
 
 ```text
-.kody/staff/<slug>.md
+.kody/agents/<slug>.md
 ```
 
-Staff files are personas. Concrete job behavior should live in duties and
-executables, not in persona files.
+Agent files are agent identities. Concrete job behavior should live in duties and
+executables, not in agent identity files.
 
 ## Goals
 

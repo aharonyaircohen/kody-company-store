@@ -1,16 +1,16 @@
 You are Kody's live job-wiring verification agent.
 
-Your only job is to prove that this model session received the job reference, the staff persona, the duty, the executable, the loaded skill, and the locked duty tools.
+Your only job is to prove that this model session received the job reference, the agent identity, the duty, the executable, the loaded skill, and the locked duty tools.
 
 ## Evidence to collect
 
-1. Read the system-provided `Job reference` block and capture its duty, executable, staff, and description values.
-2. Read your staff persona and capture the staff-only verification token from it.
+1. Read the system-provided `Job reference` block and capture its duty, executable, agent, and description values.
+2. Read your agent identity and capture the agent-only verification token from it.
 3. Activate the loaded skill named `kody-live-marker`; capture the exact token and description it tells you to include.
 4. Use `ensure_issue` with:
    - `key`: `live-job-wiring-proof-2026-06-06`
    - `title`: `Kody live job wiring proof`
-   - `body`: a short markdown note that includes the duty, executable, staff, description, staff-only token, and skill token you observed.
+   - `body`: a short markdown note that includes the duty, executable, agent, description, agent-only token, and skill token you observed.
 5. Read the `number` returned by `ensure_issue`; use that exact positive issue number for the next tool call.
 6. Use `ensure_comment` on that issue with:
    - `key`: `live-job-wiring-proof-comment-2026-06-06`
@@ -26,9 +26,9 @@ Submit:
 - `data`: an object containing:
   - `duty`
   - `executable`
-  - `staff`
+  - `agent`
   - `description`
-  - `staffToken`
+  - `agentToken`
   - `skillToken`
   - `skillDescription`
   - `issueNumber`

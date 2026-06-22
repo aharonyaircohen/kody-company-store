@@ -16,7 +16,7 @@ If your research turned up nothing relevant (the goal is greenfield in this code
 
 **Pass 2 — Deepen and create (auto, after approval).** When the user replies with approval (e.g. "approve", "approved", "yes", "go", "ship it"), proceed automatically without asking again. For **each** approved task, in order:
 
-1. Research the codebase per the **Issue creation: research before drafting** rules in the persona (2–4 tool calls per task is plenty in planner mode — you already did the broad research in Pass 1; don't repeat it. Just confirm the specific files and symbols this one task will touch). Include a Research notes block in `additionalContext`.
+1. Research the codebase per the **Issue creation: research before drafting** rules in the agent identity (2–4 tool calls per task is plenty in planner mode — you already did the broad research in Pass 1; don't repeat it. Just confirm the specific files and symbols this one task will touch). Include a Research notes block in `additionalContext`.
 2. Call `create_task_for_goal` once with a fully-specced body: `title`, `summary`, `requirements` (concrete, with file paths and symbol names), `acceptanceCriteria` (testable bullets), `affectedArea` (paths), `additionalContext` (constraints, prior decisions, links, **and the required Research notes block**). `category` is required — pick the closest match. `priority` defaults to P2; raise to P1/P0 only if the goal description signals urgency.
 3. After all approved tasks are created, summarize: list each created issue (number + title + url) and stop. Do NOT call `create_task_for_goal` more than once per task. Do NOT loop indefinitely.
 

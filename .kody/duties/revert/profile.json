@@ -3,7 +3,7 @@
   "describe": "PR Revert",
   "action": "revert",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "revert",
   "capabilityKind": "act"
 }

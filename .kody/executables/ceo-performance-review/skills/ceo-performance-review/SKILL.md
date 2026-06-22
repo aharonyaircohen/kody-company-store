@@ -1,6 +1,6 @@
 ---
 name: ceo-performance-review
-description: Review every staff member by the duties they own and the evidence those duties produce.
+description: Review every agent by the duties they own and the evidence those duties produce.
 ---
 
 # CEO Performance Review Skill
@@ -13,21 +13,21 @@ Runtime state is owned by the engine. Do not ask the duty author to configure ra
 
 ## Job
 
-A **weekly review of every staff member**, the way a company reviews its
-employees. The unit is the **person** (`.kody/staff/<slug>.md`), not the
+A **weekly review of every agent**, the way a company reviews its
+employees. The unit is the **person** (`.kody/agents/<slug>.md`), not the
 task — `duty-review` (COO) grades whether each _duty_ is well designed;
 this grades whether each _employee_ is actually **delivering the
 responsibilities they own**.
 
 An employee's "work" is the set of duties whose profile names them
-(`"staff": "<slug>"`). Their delivery quality is read from the **evidence those
+(`"agent": "<slug>"`). Their delivery quality is read from the **evidence those
 duties leave behind**: state files advancing on cadence, reports/comments
 that aren't stale or empty, output that's useful rather than churn or noise.
 
 This duty cannot measure subjective taste or judge free-form prose quality —
 it has no ground truth for "good." It measures the honest, observable thing:
 **are this person's responsibilities getting done, on time, with real
-output?** A staff member who owns no active duties is reported as _idle_, not
+output?** An agent who owns no active duties is reported as _idle_, not
 graded.
 
 Purely diagnostic: it never edits, re-kicks, or relabels anyone's duties.
@@ -35,7 +35,7 @@ Purely diagnostic: it never edits, re-kicks, or relabels anyone's duties.
 `.kody/reports/ceo-performance-review.md` each week, which the dashboard
 Reports page surfaces. Past weeks live in that file's git history.
 
-## Tick procedure (all staff, one report write)
+## Tick procedure (all agent, one report write)
 
 Cadence is the `"every": "7d"` duty profile value — the engine enforces it. Do **not**
 add a prose "skip if within 7 days" guard (that duplicates the schedule and
@@ -50,22 +50,22 @@ readout and the week-over-week delta.
 
    For A-Guy this resolves to `A-Guy-educ/A-Guy`, default branch `dev`.
 
-2. **Enumerate staff.** List every `<slug>.md` in `.kody/staff/`:
+2. **Enumerate agent.** List every `<slug>.md` in `.kody/agents/`:
 
    ```
-   gh api "/repos/$REPO/contents/.kody/staff" -q '.[].name'
+   gh api "/repos/$REPO/contents/.kody/agents" -q '.[].name'
    ```
 
    Drop non-`.md` files. Each remaining slug is one employee.
 
 3. **Map duties to employees.** List the duty folders and read each one's
-   `profile.json.staff` value so you know who owns what:
+   `profile.json.agent` value so you know who owns what:
 
    ```
    gh api "/repos/$REPO/contents/.kody/duties" -q '.[].name'
    ```
 
-   For each `<duty>/profile.json`, read `staff` and `disabled`. Group
+   For each `<duty>/profile.json`, read `agent` and `disabled`. Group
    duties by owner. A duty with `"disabled": true` is **owned but parked** —
    list it under the employee, but don't penalize the employee for its
    idleness (disabled is the operator's choice, not the employee's miss).
@@ -89,11 +89,11 @@ readout and the week-over-week delta.
 subjective quality._` line (**no timestamp** — `lastRunISO` lives in
    state, not the body, so a no-change week produces a byte-identical
    report). Then:
-   - A one-sentence headline at the highest level (e.g. "Three of six staff
+   - A one-sentence headline at the highest level (e.g. "Three of six agent
      delivered this week; tech-writer and ux-designer produced no output.").
    - A scoring table, one row per employee:
      ```
-     | Staff | Owned duties | Delivery | Consistency | Signal | Grade |
+     | Agent | Owned duties | Delivery | Consistency | Signal | Grade |
      |-------|-------------|----------|-------------|--------|-------|
      | qa    | 2 (1 active)| High     | Med         | High   | steady |
      ```
@@ -124,7 +124,7 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
 ## Allowed Commands
 
 - `gh repo view` — pin the repo.
-- `gh api` reads against `/repos/$REPO/contents/.kody/staff`,
+- `gh api` reads against `/repos/$REPO/contents/.kody/agents`,
   `/repos/$REPO/contents/.kody/duties`, individual duty bodies, their
   `.state.json` files, `.kody/reports/*`, and
   `/repos/$REPO/commits?path=...` for run history.
@@ -133,7 +133,7 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
 
 ## Restrictions
 
-- **Read-only on every staff file, duty, state file, PR, and issue.** The
+- **Read-only on every agent file, duty, state file, PR, and issue.** The
   **only** write is the single PUT to
   `.kody/reports/ceo-performance-review.md`. Never edit, re-kick, relabel,
   or "fix" anyone's duties — surface it on the report; the operator decides.
@@ -147,7 +147,7 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
   weren't delivered.
 - **Don't penalize disabled duties.** `disabled: true` is the operator's
   choice; list it, don't dock the owner for it.
-- **Idle ≠ failing.** A staff member who owns no active duties is _idle_
+- **Idle ≠ failing.** An agent who owns no active duties is _idle_
   (nothing to deliver), reported plainly, not graded `weak`.
 - **Honest unknown over a fabricated score.** Weak or contradictory
   signal → grade `unclear` and say why.

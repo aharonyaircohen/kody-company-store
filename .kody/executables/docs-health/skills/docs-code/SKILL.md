@@ -79,7 +79,7 @@ _Confirm or dismiss in the dashboard inbox. The writer will not edit code on its
 
 On approve, the Approve button posts the `kody-cmd` line verbatim, so it MUST
 be one line, ≤ 300 chars, and name a real engine verb. **Verify `chore --issue`
-in the engine README before enabling this duty** (per the persona's hard rule);
+in the engine README before enabling this duty** (per the agent identity's hard rule);
 use whatever form the engine actually takes for "open a PR from this issue".
 Never emit `@kody approve` — the engine has no `approve` verb.
 

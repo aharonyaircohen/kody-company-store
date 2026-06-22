@@ -2,7 +2,7 @@
   "name": "qa-sweep",
   "describe": "QA Sweep",
   "every": "1h",
-  "runner": "qa",
+  "agent": "qa",
   "mentions": [
     "aguyaharonyair"
   ],

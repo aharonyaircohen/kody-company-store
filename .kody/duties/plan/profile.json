@@ -3,7 +3,7 @@
   "describe": "Issue Planning",
   "action": "plan",
   "every": "manual",
-  "runner": "kody",
+  "agent": "kody",
   "executable": "plan",
   "capabilityKind": "act"
 }

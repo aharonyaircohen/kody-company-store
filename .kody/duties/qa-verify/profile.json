@@ -2,7 +2,7 @@
   "name": "qa-verify",
   "describe": "QA Fix Verification",
   "every": "30m",
-  "runner": "qa",
+  "agent": "qa",
   "executables": [
     "qa-verify"
   ],

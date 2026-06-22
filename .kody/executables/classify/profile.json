@@ -94,6 +94,6 @@
   },
   "action": "classify",
   "capabilityKind": "act",
-  "staff": "kody",
+  "agent": "kody",
   "every": "manual"
 }

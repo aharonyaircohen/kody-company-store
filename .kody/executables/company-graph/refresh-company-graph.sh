@@ -131,7 +131,7 @@ ref_id() {
       return 0
       ;;
     .kody/context/*|context/*) printf 'context:%s' "$slug"; return 0 ;;
-    .kody/staff/*|staff/*) printf 'staff:%s' "$slug"; return 0 ;;
+    .kody/agents/*|agent/*) printf 'agent:%s' "$slug"; return 0 ;;
     .kody/executables/*|executables/*) printf 'executable:%s' "$slug"; return 0 ;;
     .kody/scripts/*|scripts/*) printf 'script:%s' "$slug"; return 0 ;;
     .kody/reports/*|reports/*) printf 'report:%s' "$slug"; return 0 ;;
@@ -170,39 +170,39 @@ is_rate_limit() {
   grep -Eiq 'rate limit|secondary rate limit|API rate limit exceeded' "$1"
 }
 
-staff_slugs=()
-if compgen -G ".kody/staff/*.md" >/dev/null; then
-  for file in .kody/staff/*.md; do
+agent_slugs=()
+if compgen -G ".kody/agents/*.md" >/dev/null; then
+  for file in .kody/agents/*.md; do
     slug="$(slug_of "$file")"
-    staff_slugs+=("$slug")
+    agent_slugs+=("$slug")
     heading_count="$(grep -cE '^#{1,6} ' "$file" || true)"
     add_node "$(jq -nc \
-      --arg id "staff:$slug" \
+      --arg id "agent:$slug" \
       --arg slug "$slug" \
       --argjson headingCount "$heading_count" \
-      '{id: $id, type: "staff", slug: $slug, headingCount: $headingCount}')"
+      '{id: $id, type: "agent", slug: $slug, headingCount: $headingCount}')"
   done
 fi
 
 if compgen -G ".kody/context/*.md" >/dev/null; then
   for file in .kody/context/*.md; do
     slug="$(slug_of "$file")"
-    audience="$(list_json "$(fm_value "$file" staff)")"
+    audience="$(list_json "$(fm_value "$file" agent)")"
     heading_count="$(grep -cE '^#{1,6} ' "$file" || true)"
     add_node "$(jq -nc \
       --arg id "context:$slug" \
       --arg slug "$slug" \
-      --argjson staff "$audience" \
+      --argjson agent "$audience" \
       --argjson headingCount "$heading_count" \
-      '{id: $id, type: "context", slug: $slug, staff: $staff, headingCount: $headingCount}')"
+      '{id: $id, type: "context", slug: $slug, agent: $agent, headingCount: $headingCount}')"
 
     if jq -e 'index("*") != null' >/dev/null <<<"$audience"; then
-      for staff in "${staff_slugs[@]}"; do
-        add_edge "context:$slug" "staff:$staff" "audience"
+      for agent in "${agent_slugs[@]}"; do
+        add_edge "context:$slug" "agent:$agent" "audience"
       done
     else
-      while IFS= read -r staff; do
-        [[ -n "$staff" ]] && add_edge "context:$slug" "$(ref_id "$staff" staff)" "audience"
+      while IFS= read -r agent; do
+        [[ -n "$agent" ]] && add_edge "context:$slug" "$(ref_id "$agent" agent)" "audience"
       done < <(jq -r '.[]' <<<"$audience")
     fi
   done
@@ -218,7 +218,7 @@ if [[ -d ".kody/duties" ]]; then
       continue
     fi
 
-    staff="$(jq -r '.staff // ""' "$profile")"
+    agent="$(jq -r '.agent // ""' "$profile")"
     executables="$(jq -c '
       def list($x):
         if $x == null then []
@@ -248,14 +248,14 @@ if [[ -d ".kody/duties" ]]; then
     add_node "$(jq -nc \
       --arg id "duty:$slug" \
       --arg slug "$slug" \
-      --arg staff "$staff" \
+      --arg agent "$agent" \
       --argjson executables "$executables" \
       --argjson readsFrom "$reads_from" \
       --argjson writesTo "$writes_to" \
       --argjson disabled "$disabled" \
-      '{id: $id, type: "duty", slug: $slug, staff: $staff, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled}')"
+      '{id: $id, type: "duty", slug: $slug, agent: $agent, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled}')"
 
-    add_edge "duty:$slug" "$(ref_id "$staff" staff)" "assigned_to"
+    add_edge "duty:$slug" "$(ref_id "$agent" agent)" "assigned_to"
     while IFS= read -r executable; do
       [[ -n "$executable" ]] && add_edge "duty:$slug" "$(ref_id "$executable" executable)" "runs"
     done < <(jq -r '.[]' <<<"$executables")
@@ -291,7 +291,7 @@ if [[ -d ".kody/executables" ]]; then
     describe="$(jq -r '.describe // ""' "$profile")"
     role="$(jq -r '.role // ""' "$profile")"
     kind="$(jq -r '.kind // ""' "$profile")"
-    staff="$(jq -r '.staff // ""' "$profile")"
+    agent="$(jq -r '.agent // ""' "$profile")"
     skills="$(jq -c '[.claudeCode.skills[]? | select(type == "string" and length > 0)]' "$profile")"
     shell_scripts="$(jq -c '[.scripts.preflight[]? | .shell? | select(type == "string" and length > 0)]' "$profile")"
 
@@ -300,12 +300,12 @@ if [[ -d ".kody/executables" ]]; then
       --arg slug "$slug" \
       --arg role "$role" \
       --arg kind "$kind" \
-      --arg staff "$staff" \
+      --arg agent "$agent" \
       --arg describe "$describe" \
       --argjson skills "$skills" \
       --argjson shellScripts "$shell_scripts" \
-      '{id: $id, type: "executable", slug: $slug, role: $role, kind: $kind, staff: $staff, describe: $describe, skills: $skills, shellScripts: $shellScripts}')"
-    add_edge "executable:$slug" "$(ref_id "$staff" staff)" "runs_as"
+      '{id: $id, type: "executable", slug: $slug, role: $role, kind: $kind, agent: $agent, describe: $describe, skills: $skills, shellScripts: $shellScripts}')"
+    add_edge "executable:$slug" "$(ref_id "$agent" agent)" "runs_as"
 
     while IFS= read -r skill; do
       [[ -n "$skill" ]] || continue
@@ -389,7 +389,7 @@ done < <(jq -r '.[].to' "$EDGES" | sort -u)
 coverage_gaps="$(
   if [[ -d ".kody" ]]; then
     find .kody -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
-      | grep -Ev '^(context|duties|staff|executables|reports|scripts)$' \
+      | grep -Ev '^(context|duties|agent|executables|reports|scripts)$' \
       | sort \
       | jq -Rsc 'split("\n") | map(select(length > 0))'
   else
@@ -417,7 +417,7 @@ node_counts="$(jq -nc --argjson nodes "$nodes_sorted" --argjson goalIssues "$goa
   {
     context: count_type("context"),
     duties: count_type("duty"),
-    staff: count_type("staff"),
+    agent: count_type("agent"),
     executables: count_type("executable"),
     scripts: count_type("script"),
     skills: count_type("skill"),
@@ -434,11 +434,11 @@ while IFS=$'\t' read -r id slug; do
   if ! jq -e --arg id "$id" '
     any(.[]; .to == $id and (.relation == "assigned_to" or .relation == "runs_as" or .relation == "audience"))
   ' "$EDGES" >/dev/null; then
-    add_finding "company-graph.orphan-staff.$slug" "medium" \
+    add_finding "company-graph.orphan-agent.$slug" "medium" \
       "$slug - no duty, context, or executable references it" \
-      "$(jq -nc --arg staff "$slug" '{staff: $staff}')"
+      "$(jq -nc --arg agent "$slug" '{agent: $agent}')"
   fi
-done < <(jq -r '.[] | select(.type == "staff") | [.id, .slug] | @tsv' "$NODES")
+done < <(jq -r '.[] | select(.type == "agent") | [.id, .slug] | @tsv' "$NODES")
 
 while IFS=$'\t' read -r id slug; do
   if ! jq -e --arg id "$id" 'any(.[]; .to == $id and .relation == "reads_from")' "$EDGES" >/dev/null; then

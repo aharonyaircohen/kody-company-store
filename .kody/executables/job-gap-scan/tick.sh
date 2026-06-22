@@ -25,7 +25,7 @@ const catalogue = [
     effort: 'low',
     value: 'high',
     roi: 95,
-    markdown: '---\nevery: 24h\nstaff: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/executables/sentry-digest/tick.sh` before enabling it.\n',
+    markdown: '---\nevery: 24h\nagent: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/executables/sentry-digest/tick.sh` before enabling it.\n',
   },
   {
     slug: 'secret-leak-scan',
@@ -36,7 +36,7 @@ const catalogue = [
     effort: 'low',
     value: 'high',
     roi: 85,
-    markdown: '---\nevery: 24h\nstaff: kody\n---\n# secret-leak-scan\n\n## Job\n\nRun `gitleaks detect` daily against full history. Open one issue per finding type, offending file+line redacted.\n',
+    markdown: '---\nevery: 24h\nagent: kody\n---\n# secret-leak-scan\n\n## Job\n\nRun `gitleaks detect` daily against full history. Open one issue per finding type, offending file+line redacted.\n',
   },
   {
     slug: 'stale-pr-janitor',
@@ -47,7 +47,7 @@ const catalogue = [
     effort: 'low',
     value: 'medium',
     roi: 80,
-    markdown: '---\nevery: 24h\nstaff: kody\n---\n# stale-pr-janitor\n\n## Job\n\nComment single nudge on PRs idle >14 days; close (with comment) 30 days. Skip drafts any PR carrying `kody:*` lifecycle label.\n',
+    markdown: '---\nevery: 24h\nagent: kody\n---\n# stale-pr-janitor\n\n## Job\n\nComment single nudge on PRs idle >14 days; close (with comment) 30 days. Skip drafts any PR carrying `kody:*` lifecycle label.\n',
   },
   {
     slug: 'issue-auto-triage',
@@ -58,7 +58,7 @@ const catalogue = [
     effort: 'low',
     value: 'medium',
     roi: 78,
-    markdown: '---\non:\n  issues:\n    types: [opened]\nstaff: kody\n---\n# issue-auto-triage\n\n## Job\n\nWhen new issue opened, infer labels title+body apply them. Never close assign - labels only.\n',
+    markdown: '---\non:\n  issues:\n    types: [opened]\nagent: kody\n---\n# issue-auto-triage\n\n## Job\n\nWhen new issue opened, infer labels title+body apply them. Never close assign - labels only.\n',
   },
   {
     slug: 'bundle-size-diff',
@@ -69,7 +69,7 @@ const catalogue = [
     effort: 'medium',
     value: 'medium',
     roi: 70,
-    markdown: '---\non:\n  pull_request:\n    types: [opened, synchronize]\nstaff: kody\n---\n# bundle-size-diff\n\n## Job\n\nMeasure first-load JS before/after PR and comment delta. Flag regression >5%.\n',
+    markdown: '---\non:\n  pull_request:\n    types: [opened, synchronize]\nagent: kody\n---\n# bundle-size-diff\n\n## Job\n\nMeasure first-load JS before/after PR and comment delta. Flag regression >5%.\n',
   },
 ]
 
