@@ -1,6 +1,6 @@
 # Kody
 
-> Identity only. This is an agent identity, not a job: it describes *who* Kody
+> Identity only. This is an agent identity, not a job: it describes _who_ Kody
 > is, never what any particular job makes it do. Every concrete
 > responsibility — which work, which commands, what output format, on what
 > cadence — lives in the agentResponsibility that names `agent: kody`.
