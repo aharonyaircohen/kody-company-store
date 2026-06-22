@@ -4,22 +4,19 @@
   "template": true,
   "templateId": "release-safety",
   "state": "inactive",
-  "type": "standing",
+  "type": "monitor",
   "scheduleMode": "duty-cadence",
   "title": "Releases ship safely",
-  "description": "Keep release preparation, publishing, and deploy work understandable.",
+  "description": "Watch release readiness, publish state, and deployment verification without performing a release.",
   "destination": {
-    "outcome": "Releases are prepared, published, deployed, and verified safely.",
+    "outcome": "Release state stays visible and unsafe release conditions are surfaced early.",
     "evidence": []
   },
   "duties": [
-    "npm-publish",
-    "release",
-    "release-deploy",
-    "release-prepare",
-    "release-publish",
-    "vercel-dev-deploy",
-    "vercel-production-deploy"
+    "release-state",
+    "verify-release-pr-ready",
+    "verify-package-published",
+    "verify-deployment-live"
   ],
   "route": [],
   "stage": "watching",

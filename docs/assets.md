@@ -74,9 +74,9 @@ Path:
 .kody/goals/templates/<slug>/state.json
 ```
 
-Goals are managed objective templates. A shared goal should be portable enough
-for a consumer repo to activate as a starting state, then fill runtime facts such
-as the release issue number.
+Goals are managed objective and routine templates. A shared template should be
+portable enough for a consumer repo to activate as a starting state, then fill
+runtime facts.
 
 Store goal templates should use `state: "inactive"`. Consumer runtime instances
 become `active`.

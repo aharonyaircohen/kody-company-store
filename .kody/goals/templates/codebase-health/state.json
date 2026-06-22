@@ -4,7 +4,7 @@
   "template": true,
   "templateId": "codebase-health",
   "state": "inactive",
-  "type": "standing",
+  "type": "maintain",
   "scheduleMode": "duty-cadence",
   "title": "Codebase stays healthy",
   "description": "Keep code, docs, memory, and repo health from drifting.",

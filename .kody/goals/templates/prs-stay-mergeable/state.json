@@ -4,7 +4,7 @@
   "template": true,
   "templateId": "prs-stay-mergeable",
   "state": "inactive",
-  "type": "standing",
+  "type": "maintain",
   "scheduleMode": "duty-cadence",
   "title": "PRs stay mergeable",
   "description": "Keep pull requests current, green, and repairable.",

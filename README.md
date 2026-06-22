@@ -7,7 +7,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
 - `.kody/duties/` contains shared duty definitions.
 - `.kody/executables/` contains shared executable definitions, prompts, and supporting scripts.
-- `.kody/goals/templates/` contains shared managed goal templates.
+- `.kody/goals/templates/` contains shared objective and routine templates.
 - `.kody/staff/` contains shared staff personas.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
@@ -34,7 +34,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-Scheduled company behavior should be activated through goals. A duty may declare `every`, but the active goal tick decides whether that duty is due, skipped, blocked, or selected. A store goal is a reusable template until a consumer activates it or supplies repo facts. String activation creates one stable standing instance from the matching template. Scheduled goal activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
+Scheduled company behavior should be activated through routines. A duty may declare `every`, but the active routine tick decides whether that duty is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable routine instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
 
 See [docs/activation.md](docs/activation.md) for the full activation contract.
 
@@ -42,7 +42,7 @@ See [docs/activation.md](docs/activation.md) for the full activation contract.
 
 - `duties`: available responsibilities and command wrappers under `.kody/duties/<slug>/`
 - `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
-- `goals`: managed objective templates under `.kody/goals/templates/<slug>/state.json`
+- `goals`: managed objective and routine templates under `.kody/goals/templates/<slug>/state.json`
 - `staff`: persona files under `.kody/staff/<slug>.md`
 
 ## What Does Not Belong Here

@@ -4,7 +4,7 @@
   "template": true,
   "templateId": "product-quality",
   "state": "inactive",
-  "type": "standing",
+  "type": "monitor",
   "scheduleMode": "duty-cadence",
   "title": "Product quality stays good",
   "description": "Keep QA, design review, previews, and product health visible.",

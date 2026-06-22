@@ -10,13 +10,13 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-## Goals
+## Objectives and Routines
 
-Store goals are inactive templates. Consumer repos activate the company model through `company.activeGoals`.
+Store goals are inactive objective or routine templates. Consumer repos activate the company model through `company.activeGoals`.
 
-Standing company goals own scheduled duty decisions. A duty may declare `every`, `staff`, and `executable`, but the goal tick decides whether that duty is due, skipped, blocked, or selected.
+Routines own scheduled duty decisions. A duty may declare `every`, `staff`, and `executable`, but the routine tick decides whether that duty is due, skipped, blocked, or selected.
 
-Default standing goals:
+Default routine templates:
 
 - `prs-stay-mergeable`
 - `product-quality`
@@ -67,7 +67,7 @@ Rules:
 kody-store = menu
 consumer repo = decides what is enabled
 duty = available responsibility or command
-goal = operator promise that owns scheduled duty decisions
+objective/routine = operator promise that owns scheduled duty decisions
 activation = permission to run
-scheduled goal = template creates new runtime instance per bucket
+scheduled routine = template creates new runtime instance per bucket
 ```

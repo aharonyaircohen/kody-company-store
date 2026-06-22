@@ -4,7 +4,7 @@
   "template": true,
   "templateId": "kody-company-health",
   "state": "inactive",
-  "type": "standing",
+  "type": "maintain",
   "scheduleMode": "duty-cadence",
   "title": "Kody company stays healthy",
   "description": "Keep the Kody operating system, memory, delivery, and management duties healthy.",
