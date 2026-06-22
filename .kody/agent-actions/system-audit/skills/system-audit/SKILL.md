@@ -22,7 +22,7 @@ Check:
 - agentResponsibilities in `.kody/agent-responsibilities/<slug>/` (`profile.json` plus `agent-responsibility.md`)
 - agent in `.kody/agents/*.md`
 - agentActions in `.kody/agent-actions/*/`
-- reports in `.kody/reports/*.md`
+- reports in `reports/*.md`
 - context in `.kody/context/*.md`
 - runtime state/history when the engine exposes it
 
@@ -55,7 +55,7 @@ Check:
 ## Allowed Commands
 
 - `gh repo view`
-- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agents`, `.kody/agent-actions`, `.kody/reports`, `.kody/context`, and history/state when available
+- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agents`, `.kody/agent-actions`, `reports/` in the configured Kody state repo, `.kody/context`, and history/state when available
 - `gh issue list`, `gh issue create`, and `gh issue comment` only for the Kody system audit tracking issue
 
 ## Restrictions

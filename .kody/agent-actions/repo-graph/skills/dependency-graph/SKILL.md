@@ -5,7 +5,7 @@ description: Derive dependency structure from package manifests and lockfiles.
 
 # Dependency Graph Skill
 
-Use this skill when refreshing `.kody/reports/dependency-graph.md`.
+Use this skill when refreshing `reports/dependency-graph.md`.
 
 ## Model
 
@@ -35,7 +35,7 @@ Report:
 
 ## Boundaries
 
-- Write only `.kody/reports/dependency-graph.md`.
+- Write only `reports/dependency-graph.md`.
 - Do not edit dependency files.
 - Do not install packages.
 - Do not run package audits or upgrade commands.

@@ -5,7 +5,7 @@ description: Derive CI health from workflow runs and PR checks.
 
 # CI Health Graph Skill
 
-Use this skill when refreshing `.kody/reports/ci-health-graph.md`.
+Use this skill when refreshing `reports/ci-health-graph.md`.
 
 ## Model
 
@@ -36,7 +36,7 @@ Report:
 
 ## Boundaries
 
-- Write only `.kody/reports/ci-health-graph.md`.
+- Write only `reports/ci-health-graph.md`.
 - Do not edit the working tree.
 - Do not retry workflows.
 - Do not post comments, labels, PRs, or inbox pings.

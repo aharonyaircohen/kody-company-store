@@ -28,7 +28,7 @@ Consumer repos may also define local goal templates.
 
 ```text
 .kody/goals/templates/<slug>/state.json
-.kody/goals/instances/<id>/state.json
+<statePath>/goals/instances/<id>/state.json
 ```
 
 String activation creates one stable runtime instance from a matching store/local template, or activates an existing instance by id.
@@ -37,7 +37,7 @@ String activation creates one stable runtime instance from a matching store/loca
 { "company": { "activeGoals": ["prs-stay-mergeable"] } }
 ```
 
-Scheduled activation creates a fresh runtime instance from a template each time bucket, persists it to the consumer repo's `kody-state` branch, then ticks that instance.
+Scheduled activation creates a fresh runtime instance from a template each time bucket, persists it to the configured state repo, then ticks that instance.
 
 ```json
 { "company": { "activeGoals": [{ "template": "release-safety", "every": "1w" }] } }
@@ -45,7 +45,7 @@ Scheduled activation creates a fresh runtime instance from a template each time 
 
 Supported intervals are `Nm`, `Nh`, `Nd`, and `Nw`, for example `15m`, `2h`, `1d`, and `1w`.
 
-Store goals must not contain repo-specific runtime history. Runtime goal progress belongs in the consumer repo's `kody-state` branch.
+Store goals must not contain repo-specific runtime history. Runtime goal progress belongs in the configured state repo.
 
 ## AgentResponsibilities
 

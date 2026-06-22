@@ -5,7 +5,7 @@ description: Derive documentation topology from markdown files.
 
 # Docs Graph Skill
 
-Use this skill when refreshing `.kody/reports/docs-graph.md`.
+Use this skill when refreshing `reports/docs-graph.md`.
 
 ## Model
 
@@ -33,7 +33,7 @@ Report:
 
 ## Boundaries
 
-- Write only `.kody/reports/docs-graph.md`.
+- Write only `reports/docs-graph.md`.
 - Do not edit docs.
 - Do not fetch external links.
 - Do not move, rename, or delete files.

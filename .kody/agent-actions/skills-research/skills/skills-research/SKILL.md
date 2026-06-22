@@ -73,7 +73,7 @@ over long wishlists. Recommend only skills that improve real dashboard work:
 
 ## Report
 
-Write `.kody/reports/skills-research.md` on the `kody-state` branch with this
+Write `reports/skills-research.md` on the `kody-state` branch with this
 shape:
 
 ```md
@@ -124,7 +124,7 @@ If the report content is byte-identical to the existing report, skip the write.
 
 - Playwright MCP for browsing `skills.sh`
 - `curl` or `gh api` through Bash when needed
-- `gh api -X PUT` only for `.kody/reports/skills-research.md` on branch `kody-state`
+- `gh api -X PUT` only for `reports/skills-research.md` on branch `kody-state`
 
 ## Restrictions
 
@@ -134,4 +134,4 @@ If the report content is byte-identical to the existing report, skip the write.
 - Do not recommend skills without a clear agentAction placement.
 - Do not list already-installed skills as recommendations.
 - Do not list duplicate skills unless the report explains why they were skipped.
-- Only write `.kody/reports/skills-research.md`.
+- Only write `reports/skills-research.md`.

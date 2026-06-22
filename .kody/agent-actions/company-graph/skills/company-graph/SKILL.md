@@ -5,7 +5,7 @@ description: Derive the Kody company graph from repo-owned .kody files and repor
 
 # Company Graph Skill
 
-Use this skill when refreshing `.kody/reports/company-graph.md`.
+Use this skill when refreshing `reports/company-graph.md`.
 
 ## Model
 
@@ -45,7 +45,7 @@ Report:
 
 ## Boundaries
 
-- Write only `.kody/reports/company-graph.md`.
+- Write only `reports/company-graph.md`.
 - Do not edit the working tree.
 - Do not run `git`.
 - Do not post comments, labels, PRs, or inbox pings.

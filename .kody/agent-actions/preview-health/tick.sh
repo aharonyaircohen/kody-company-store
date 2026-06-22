@@ -25,9 +25,6 @@ MAX_ACTIONS_PER_TICK = 5
 FAIL_CONCLUSIONS = {"FAILURE", "TIMED_OUT", "ACTION_REQUIRED", "STARTUP_FAILURE"}
 RUNNING_STATUSES = {"IN_PROGRESS", "QUEUED"}
 STALE_THRESHOLD = 10
-STATE_BRANCH = "kody-state"
-
-
 def log(message):
     print(f"[preview-health] {message}", file=sys.stderr)
 
@@ -58,36 +55,16 @@ def repo_slug():
     return run_gh(["repo", "view", "--json", "nameWithOwner", "--jq", ".nameWithOwner"]).strip()
 
 
-def default_branch(slug):
-    configured = os.environ.get("KODY_CFG_GIT_DEFAULTBRANCH", "").strip()
-    if configured:
-        return configured
-    return run_gh(["repo", "view", slug, "--json", "defaultBranchRef", "--jq", ".defaultBranchRef.name"]).strip()
-
-
-def ensure_state_branch(slug):
-    if run_gh(["api", f"/repos/{slug}/git/ref/heads/{STATE_BRANCH}"], check=False).strip():
-        return
-    branch = default_branch(slug)
-    sha = run_gh(["api", f"/repos/{slug}/git/ref/heads/{branch}", "--jq", ".object.sha"]).strip()
-    payload = json.dumps({"ref": f"refs/heads/{STATE_BRANCH}", "sha": sha})
-    run_gh(["api", "--method", "POST", f"/repos/{slug}/git/refs", "--input", "-"], input_text=payload)
-
-
 def initial_state():
     return {"version": 1, "rev": 0, "cursor": "seed", "data": {}, "done": False}
 
 
-def load_state(slug, path):
-    result = run_gh(
-        ["api", f"/repos/{slug}/contents/{path}?ref={STATE_BRANCH}"],
-        check=False,
-    )
-    if not result.strip():
-        return {"path": path, "sha": None, "state": initial_state(), "created": True}
-    obj = json.loads(result)
-    raw = base64.b64decode(obj["content"]).decode("utf-8")
-    return {"path": path, "sha": obj.get("sha"), "state": json.loads(raw), "created": False}
+def load_state(_slug, path):
+    try:
+        state = json.loads(os.environ.get("KODY_JOB_STATE_JSON", "{}"))
+    except Exception:
+        state = initial_state()
+    return {"path": path, "sha": None, "state": state, "created": False}
 
 
 def state_unchanged(prev, next_state):
@@ -98,33 +75,12 @@ def state_unchanged(prev, next_state):
     )
 
 
-def save_state(slug, loaded, next_state):
+def save_state(_slug, loaded, next_state):
     if not loaded["created"] and state_unchanged(loaded["state"], next_state):
         return False
-    ensure_state_branch(slug)
-    body = json.dumps(next_state, indent=2) + "\n"
-    payload = {
-        "message": f"chore(jobs): update state for {os.environ['KODY_PREVIEW_HEALTH_DUTY']} (rev {next_state['rev']})",
-        "content": base64.b64encode(body.encode("utf-8")).decode("ascii"),
-        "branch": STATE_BRANCH,
-    }
-    if loaded.get("sha"):
-        payload["sha"] = loaded["sha"]
-    result = run_gh(
-        ["api", "--method", "PUT", f"/repos/{slug}/contents/{loaded['path']}", "--input", "-"],
-        input_text=json.dumps(payload),
-        check=False,
-    )
-    if result.strip():
-        return True
-    reloaded = load_state(slug, loaded["path"])
-    if not reloaded["created"] and state_unchanged(reloaded["state"], next_state):
-        return False
-    if reloaded.get("sha"):
-        payload["sha"] = reloaded["sha"]
-    else:
-        payload.pop("sha", None)
-    run_gh(["api", "--method", "PUT", f"/repos/{slug}/contents/{loaded['path']}", "--input", "-"], input_text=json.dumps(payload))
+    print("```kody-job-next-state")
+    print(json.dumps(next_state, indent=2))
+    print("```")
     return True
 
 

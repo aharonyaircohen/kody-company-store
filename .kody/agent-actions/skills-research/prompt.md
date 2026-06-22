@@ -2,7 +2,7 @@
 
 Use the `skills-research` skill.
 
-Research skills that could improve Kody Dashboard. Write the result to `.kody/reports/skills-research.md`.
+Research skills that could improve Kody Dashboard. Write the result to `reports/skills-research.md`.
 
 # Final message format (required)
 

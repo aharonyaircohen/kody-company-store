@@ -55,14 +55,14 @@ The agentAction should hold the method:
 - **AgentAction wiring:** The agentAction exists, has valid JSON, has a tiny prompt, and loads at least one skill unless it is deterministic.
 - **State model:** The agentResponsibility does not define raw state keys or require the author to paste a state block. Runtime state belongs to the engine.
 - **No command recipe in agentResponsibility:** Bash, `gh`, Python, and long step-by-step logic belong in agentAction skills or agentAction-owned scripts.
-- **Output path:** Reports go under `.kody/reports/`; durable human guidance goes under `.kody/context/`; hidden cursors stay in runtime state.
+- **Output path:** Reports go under `reports/`; durable human guidance goes under `.kody/context/`; hidden cursors stay in runtime state.
 - **Observed behavior:** For enabled agentResponsibilities, recent state/report/activity should roughly match the declared cadence. Disabled agentResponsibilities are reviewed for design only.
 - **One-action limit:** The method should not spam many comments, issues, or commits in one tick unless the agentAction explicitly batches a report write.
 
 ## Allowed Commands
 
 - `gh repo view`
-- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agent-actions`, `.kody/reports`, and state/history when available
+- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agent-actions`, `reports/` in the configured Kody state repo, and state/history when available
 - `gh issue list`, `gh issue create`, and `gh issue comment` only for the Kody agentResponsibility review tracking issue
 
 ## Restrictions

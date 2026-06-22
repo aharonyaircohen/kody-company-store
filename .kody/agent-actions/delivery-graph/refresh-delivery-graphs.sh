@@ -23,4 +23,4 @@ run_refresh() {
 run_refresh "CI health graph" "refresh-ci-health-graph.sh" "$@"
 run_refresh "PR graph" "refresh-pr-graph.sh" "$@"
 
-printf 'DONE\nCOMMIT_MSG: chore(reports): refresh delivery graphs\nPR_SUMMARY:\n- Refreshed .kody/reports/ci-health-graph.md.\n- Refreshed .kody/reports/pr-graph.md.\n'
+printf 'DONE\nCOMMIT_MSG: chore(reports): refresh delivery graphs\nPR_SUMMARY:\n- Refreshed reports/ci-health-graph.md.\n- Refreshed reports/pr-graph.md.\n'

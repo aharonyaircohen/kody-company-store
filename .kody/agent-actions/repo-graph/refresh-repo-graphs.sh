@@ -23,4 +23,4 @@ run_refresh() {
 run_refresh "Dependency graph" "refresh-dependency-graph.sh" "$@"
 run_refresh "Docs graph" "refresh-docs-graph.sh" "$@"
 
-printf 'DONE\nCOMMIT_MSG: chore(reports): refresh repo graphs\nPR_SUMMARY:\n- Refreshed .kody/reports/dependency-graph.md.\n- Refreshed .kody/reports/docs-graph.md.\n'
+printf 'DONE\nCOMMIT_MSG: chore(reports): refresh repo graphs\nPR_SUMMARY:\n- Refreshed reports/dependency-graph.md.\n- Refreshed reports/docs-graph.md.\n'

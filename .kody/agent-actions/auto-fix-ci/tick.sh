@@ -3,15 +3,10 @@
 
 set -euo pipefail
 
-STATE_FILE=".kody/agent-responsibilities/auto-fix-ci.state.json"
 NOW_ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 DRY_RUN="${KODY_DRY_RUN:-0}"
-
-if [ -f "$STATE_FILE" ]; then
-  PRIOR=$(jq -c '.data.perPr // {}' "$STATE_FILE")
-else
-  PRIOR='{}'
-fi
+STATE_JSON="${KODY_JOB_STATE_JSON:-{}}"
+PRIOR=$(jq -c '.data.perPr // {}' <<<"$STATE_JSON")
 
 PRS=$(gh pr list --state open --limit 200 \
   --json number,isDraft,headRefOid,statusCheckRollup,labels)

@@ -33,17 +33,16 @@ Daily digest of **tasks already assigned to Kody** — any open issue carrying a
 
    If every phase reports zero stuck issues, the body after the H1 is one line: `All Kody-assigned tasks were updated within the last 6h. ✨`. Skip empty phases — keep the report short.
 
-3. Write the report at the canonical path **`.kody/reports/health-check.md`** via `gh api`:
+3. Write the report at the canonical path **`reports/health-check.md`** via `gh api`:
 
    ```
    # If the file exists, fetch its sha first:
-   sha=$(gh api "/repos/<owner>/<repo>/contents/.kody/reports/health-check.md" -q .sha 2>/dev/null || true)
+   sha=$(gh api "/repos/<state.repo>/contents/<state.path>/reports/health-check.md" -q .sha 2>/dev/null || true)
 
    # Then PUT the new content (base64-encoded):
-   gh api -X PUT "/repos/<owner>/<repo>/contents/.kody/reports/health-check.md" \
+   gh api -X PUT "/repos/<state.repo>/contents/<state.path>/reports/health-check.md" \
      -f message="chore(health-check): refresh report" \
      -f content="$(printf '%s' "$REPORT_BODY" | base64)" \
-     -f branch="<defaultBranch>" \
      ${sha:+-f sha="$sha"}
    ```
 
@@ -56,13 +55,13 @@ Daily digest of **tasks already assigned to Kody** — any open issue carrying a
 ## Allowed Commands
 
 - `gh issue list`, `gh issue view` — to read scan input.
-- `gh api -X PUT` against `.kody/reports/health-check.md` only — to write the report. Permitted by the global agent-responsibility-tick contract.
+- `gh api -X PUT` against `reports/health-check.md` only — to write the report. Permitted by the global agent-responsibility-tick contract.
 
 ## Restrictions
 
 - **Never** edit, close, label, or re-kick the issues being scanned. Read-only on the scanned issues.
 - **Never** create or comment on issues from this job. Output is the report file only.
-- **Never** write any other file. The contract permits exactly one path: `.kody/reports/health-check.md`.
+- **Never** write any other file. The contract permits exactly one path: `reports/health-check.md`.
 - Maximum **one** PUT per tick.
 - "Stuck" threshold is **6 hours** since `updatedAt`. It's set here in the body — don't infer it from data.
 - `kody:done` is **never** included in the scan. That's a terminal state.

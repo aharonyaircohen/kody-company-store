@@ -34,7 +34,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-Scheduled company behavior should be activated through agentLoops. A agentResponsibility may declare `every`, but the active agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable agentLoop instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
+Scheduled company behavior should be activated through agentLoops. A agentResponsibility may declare `every`, but the active agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable agentLoop instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket in the configured state repo.
 
 See [docs/activation.md](docs/activation.md) for the full activation contract.
 

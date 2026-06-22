@@ -2,7 +2,7 @@
   "name": "company-graph",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive the company orchestration graph from .kody files and refresh .kody/reports/company-graph.md.",
+  "describe": "Derive the company orchestration graph from .kody files and refresh reports/company-graph.md.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

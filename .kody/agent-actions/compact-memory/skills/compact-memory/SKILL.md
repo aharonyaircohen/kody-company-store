@@ -5,7 +5,7 @@ description: Analyze `.kody/memory/` and task memory recommendations, then write
 
 # Compact Memory Skill
 
-Use this skill when refreshing `.kody/reports/memory-compaction.md`.
+Use this skill when refreshing `reports/memory-compaction.md`.
 
 ## Job
 
@@ -28,7 +28,7 @@ Write a report that proposes safe compaction. Do not edit memory files.
 
 ## Output
 
-Write only `.kody/reports/memory-compaction.md` on `kody-state`.
+Write only `reports/memory-compaction.md` in the configured state repo.
 
 The report should include:
 

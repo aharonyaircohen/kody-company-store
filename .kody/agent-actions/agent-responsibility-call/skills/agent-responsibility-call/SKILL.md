@@ -48,7 +48,7 @@ The issue should include:
 
 ## Allowed Commands
 
-- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agents`, `.kody/agent-actions`, `.kody/reports`, and `.kody/memory`
+- `gh api` reads for `.kody/agent-responsibilities`, `.kody/agents`, `.kody/agent-actions`, `reports/` in the configured Kody state repo, and `.kody/memory`
 - `gh issue list`
 - `gh issue create`
 - `gh label create` when the proposal label is missing

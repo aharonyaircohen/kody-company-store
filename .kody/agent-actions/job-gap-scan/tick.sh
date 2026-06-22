@@ -9,9 +9,7 @@ const cp = require('child_process')
 const root = process.cwd()
 const agentResponsibilitiesDir = path.join(root, '.kody', 'agent-responsibilities')
 const memoryDir = path.join(root, '.kody', 'memory')
-const reportsDir = path.join(root, '.kody', 'reports')
-const statePath = path.join(agentResponsibilitiesDir, 'job-gap-scan.state.json')
-const reportPath = path.join(reportsDir, 'job-gap-scan.md')
+const reportFile = 'reports/job-gap-scan.md'
 const dryRun = process.env.KODY_DRY_RUN === '1' || process.env.JOB_GAP_SCAN_DRY_RUN === '1'
 const noCommit = process.env.KODY_NO_COMMIT === '1' || process.env.JOB_GAP_SCAN_NO_COMMIT === '1'
 
@@ -85,15 +83,34 @@ function emitNextState(state, cursor) {
 
 function loadState() {
   try {
-    return JSON.parse(fs.readFileSync(statePath, 'utf8'))
+    return JSON.parse(process.env.KODY_JOB_STATE_JSON || '{}').data || {}
   } catch {
     return {}
   }
 }
 
-function saveState(state) {
-  fs.mkdirSync(path.dirname(statePath), { recursive: true })
-  fs.writeFileSync(statePath, `${JSON.stringify(state, null, 2)}\n`)
+function gh(args) {
+  const result = cp.spawnSync('gh', args, { encoding: 'utf8' })
+  if (result.status !== 0) {
+    throw new Error((result.stderr || result.stdout || `gh ${args.join(' ')} failed`).trim())
+  }
+  return result.stdout
+}
+
+function stateRepoTarget() {
+  const consumerRepo = gh(['repo', 'view', '--json', 'nameWithOwner', '-q', '.nameWithOwner']).trim()
+  const [owner, repoName] = consumerRepo.split('/')
+  let config = {}
+  try {
+    config = JSON.parse(fs.readFileSync(path.join(root, 'kody.config.json'), 'utf8'))
+  } catch {}
+  const stateRepo = config.state?.repo || config.stateRepo || `${owner}/kody-state`
+  const rawPath = config.state?.path || config.statePath || repoName
+  const statePath = String(rawPath || '').replace(/^\/+|\/+$/g, '')
+  return {
+    repo: stateRepo,
+    path: `${statePath ? `${statePath}/` : ''}${reportFile}`,
+  }
 }
 
 function readVerdicts() {
@@ -156,33 +173,36 @@ function normalizedReport(text) {
   return text.replace(/^_Last updated:.*$/gm, '').trim()
 }
 
-function reportUnchanged(report) {
-  if (!fs.existsSync(reportPath)) return false
-  return normalizedReport(fs.readFileSync(reportPath, 'utf8')) === normalizedReport(report)
+function readRemoteReport(target) {
+  try {
+    const json = JSON.parse(gh(['api', `/repos/${target.repo}/contents/${target.path}`]))
+    return {
+      sha: json.sha || '',
+      text: Buffer.from(String(json.content || '').replace(/\n/g, ''), 'base64').toString('utf8'),
+    }
+  } catch {
+    return { sha: '', text: '' }
+  }
 }
 
-function commitAndPush(slug) {
-  const paths = ['.kody/agent-responsibilities/job-gap-scan.state.json', '.kody/reports/job-gap-scan.md']
-  let result = cp.spawnSync('git', ['-C', root, 'add', '--', ...paths], { encoding: 'utf8' })
-  if (result.status !== 0) {
-    log(`git add failed: ${result.stderr.trim()}`)
-    return false
-  }
-  result = cp.spawnSync('git', ['-C', root, 'status', '--porcelain', '--', ...paths], { encoding: 'utf8' })
-  if (!result.stdout.trim()) return false
-  const subject = `chore(agentResponsibilities): Refresh job-gap-scan report (${slug ? `propose ${slug}` : 'no eligible proposals'})`
-  const body = 'Overwrites `.kody/reports/job-gap-scan.md` and bumps `.kody/agent-responsibilities/job-gap-scan.state.json`. Advisory only - operator decides Approve/Reject/Dismiss.'
-  result = cp.spawnSync('git', ['-C', root, 'commit', '-m', subject, '-m', body], { encoding: 'utf8' })
-  if (result.status !== 0) {
-    log(`git commit failed: ${result.stderr.trim()}`)
-    return false
-  }
-  result = cp.spawnSync('git', ['-C', root, 'push', 'origin', 'HEAD'], { encoding: 'utf8' })
-  if (result.status !== 0) {
-    log(`git push failed: ${result.stderr.trim()}`)
-    return false
-  }
-  return true
+function reportUnchanged(report, target) {
+  return normalizedReport(readRemoteReport(target).text) === normalizedReport(report)
+}
+
+function writeRemoteReport(report, target) {
+  const remote = readRemoteReport(target)
+  const args = [
+    'api',
+    '-X',
+    'PUT',
+    `/repos/${target.repo}/contents/${target.path}`,
+    '-f',
+    'message=chore(reports): refresh job-gap-scan',
+    '-f',
+    `content=${Buffer.from(report, 'utf8').toString('base64')}`,
+  ]
+  if (remote.sha) args.push('-f', `sha=${remote.sha}`)
+  gh(args)
 }
 
 const state = loadState()
@@ -230,28 +250,26 @@ if (chosen) {
 const report = `# Job Gap Scan\n\n_Cadence: daily - one proposed agentResponsibility per cycle, advisory only._\n\n_Last updated: ${now.toISOString()}_\n\n${chosen ? renderCurrent(chosen) : renderCaughtUp()}\n${renderHistory(state, verdicts)}`
 
 if (dryRun) {
-  log('dry run complete (skipped report/state write + commit)')
+  log('dry run complete (skipped report write)')
   console.log(report)
   emitNextState(state, chosen?.slug || 'caught-up')
   process.exit(0)
 }
 
-if (proposalAlreadyRecorded && reportUnchanged(report)) {
-  log('tick complete: no substantive change (skipped write + commit)')
+const target = stateRepoTarget()
+if (proposalAlreadyRecorded && reportUnchanged(report, target)) {
+  log('tick complete: no substantive change (skipped report write)')
   emitNextState(state, chosen?.slug || 'caught-up')
   process.exit(0)
 }
 
 state.lastRunISO = now.toISOString()
-saveState(state)
-fs.mkdirSync(reportsDir, { recursive: true })
-fs.writeFileSync(reportPath, report)
 if (noCommit) {
-  log('tick complete (commit suppressed)')
+  log('tick complete (state repo report write suppressed)')
   emitNextState(state, chosen?.slug || 'caught-up')
   process.exit(0)
 }
-if (commitAndPush(chosen?.slug || null)) log('tick complete: report + state committed')
-else log('tick complete: nothing commit')
+writeRemoteReport(report, target)
+log(`tick complete: report written to ${target.repo}/${target.path}`)
 emitNextState(state, chosen?.slug || 'caught-up')
 NODE

@@ -2,7 +2,7 @@
   "name": "docs-graph",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive documentation topology from markdown files, then refresh .kody/reports/docs-graph.md.",
+  "describe": "Derive documentation topology from markdown files, then refresh reports/docs-graph.md.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

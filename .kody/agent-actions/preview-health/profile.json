@@ -40,15 +40,24 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "tick.sh",
+        "script": "runScheduledAgentActionTick",
         "with": {
           "jobsDir": ".kody/agent-responsibilities",
-          "agentResponsibility": "preview-health"
+          "slug": "preview-health",
+          "shell": "tick.sh",
+          "fenceLabel": "kody-job-next-state"
         },
         "timeoutSec": 300
       }
     ],
-    "postflight": []
+    "postflight": [
+      {
+        "script": "writeJobStateFile",
+        "with": {
+          "jobsDir": ".kody/agent-responsibilities"
+        }
+      }
+    ]
   },
   "action": "preview-health",
   "capabilityKind": "act",

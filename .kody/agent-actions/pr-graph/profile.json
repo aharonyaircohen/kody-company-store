@@ -2,7 +2,7 @@
   "name": "pr-graph",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive pull request flow from GitHub PR metadata, then refresh .kody/reports/pr-graph.md.",
+  "describe": "Derive pull request flow from GitHub PR metadata, then refresh reports/pr-graph.md.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

@@ -32,7 +32,7 @@ graded.
 
 Purely diagnostic: it never edits, re-kicks, or relabels anyone's agentResponsibilities.
 **Output is a report file, not an inbox comment** — it overwrites
-`.kody/reports/ceo-performance-review.md` each week, which the dashboard
+`reports/ceo-performance-review.md` in the configured Kody state repo each week, which the dashboard
 Reports page surfaces. Past weeks live in that file's git history.
 
 ## Tick procedure (all agent, one report write)
@@ -72,8 +72,8 @@ readout and the week-over-week delta.
 
 4. **Gather each employee's delivery evidence.** For every _active_ agentResponsibility
    they own:
-   - **State history:** `gh api "/repos/$REPO/commits?path=.kody/agent-responsibilities/<slug>.state.json&per_page=10"` when the engine exposes agentResponsibility state history — is the agentResponsibility advancing roughly on its cadence, or frozen?
-   - **Output:** any tracking issue the agentResponsibility posts to, or `.kody/reports/<slug>.md` — did it produce real findings this week, or is it stale/empty? Repeated byte-identical no-op comments count as **churn**, not delivery.
+   - **State history:** configured Kody state repo `agent-responsibilities/<slug>/state.json` history when available — is the agentResponsibility advancing roughly on its cadence, or frozen?
+   - **Output:** any tracking issue the agentResponsibility posts to, or `reports/<slug>.md` in the configured Kody state repo — did it produce real findings this week, or is it stale/empty? Repeated byte-identical no-op comments count as **churn**, not delivery.
 
 5. **Grade each employee** on three observable axes, each Low / Med / High:
    - **Delivery** — did their active agentResponsibilities actually run and produce output this week? (No active agentResponsibilities → _idle_, ungraded.)
@@ -104,12 +104,12 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
      (`- Changes since last week: tech-writer steady→strong; coo strong→weak.`).
 
 7. **Write the report** at the canonical path
-   **`.kody/reports/ceo-performance-review.md`** via `gh api` (fetch the
+   **`reports/ceo-performance-review.md` in the configured Kody state repo** via `gh api` (fetch the
    prior sha so the PUT overwrites in place):
 
    ```
-   sha=$(gh api "/repos/$REPO/contents/.kody/reports/ceo-performance-review.md" -q .sha 2>/dev/null || true)
-   gh api -X PUT "/repos/$REPO/contents/.kody/reports/ceo-performance-review.md" \
+   sha=$(gh api "/repos/$STATE_REPO/contents/$STATE_PATH/reports/ceo-performance-review.md" -q .sha 2>/dev/null || true)
+   gh api -X PUT "/repos/$STATE_REPO/contents/$STATE_PATH/reports/ceo-performance-review.md" \
      -f message="chore(ceo-performance-review): refresh report" \
      -f content="$(printf '%s' "$REPORT_BODY" | base64)" \
      -f branch="<defaultBranch>" \
@@ -126,16 +126,16 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
 - `gh repo view` — pin the repo.
 - `gh api` reads against `/repos/$REPO/contents/.kody/agents`,
   `/repos/$REPO/contents/.kody/agent-responsibilities`, individual agentResponsibility bodies, their
-  `.state.json` files, `.kody/reports/*`, and
+  state repo state files, state repo `reports/*`, and
   `/repos/$REPO/commits?path=...` for run history.
-- `gh api -X PUT` against `.kody/reports/ceo-performance-review.md` **only** —
+- `gh api -X PUT` against `reports/ceo-performance-review.md` in the configured Kody state repo **only** —
   to write the report. Permitted by the global agent-responsibility-tick contract.
 
 ## Restrictions
 
 - **Read-only on every agent file, agentResponsibility, state file, PR, and issue.** The
   **only** write is the single PUT to
-  `.kody/reports/ceo-performance-review.md`. Never edit, re-kick, relabel,
+  `reports/ceo-performance-review.md` in the configured Kody state repo. Never edit, re-kick, relabel,
   or "fix" anyone's agentResponsibilities — surface it on the report; the operator decides.
 - **One report write per tick.** Never open issues or post comments — this
   agentResponsibility has no inbox surface by design.

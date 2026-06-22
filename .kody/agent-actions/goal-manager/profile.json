@@ -1,7 +1,7 @@
 {
   "name": "goal-manager",
   "role": "primitive",
-  "describe": "One deterministic tick for a managed goal: read destination/evidence/agent-responsibilities/route from .kody/goals/instances/<id>/state.json, dispatch the agentResponsibility for the first missing evidence, or mark the goal done. No agent.",
+  "describe": "One deterministic tick for a managed goal: read destination/evidence/agent-responsibilities/route from <statePath>/goals/instances/<id>/state.json, dispatch the agentResponsibility for the first missing evidence, or mark the goal done. No agent.",
   "kind": "oneshot",
   "inputs": [
     {
@@ -9,7 +9,7 @@
       "flag": "--goal",
       "type": "string",
       "required": true,
-      "describe": "Goal id — directory name under .kody/goals/instances/."
+      "describe": "Goal id — directory name under <statePath>/goals/instances/ in the configured state repo."
     }
   ],
   "claudeCode": {

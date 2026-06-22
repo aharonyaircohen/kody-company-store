@@ -2,7 +2,7 @@
   "name": "dependency-graph",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive dependency structure from package manifests and lockfiles, then refresh .kody/reports/dependency-graph.md.",
+  "describe": "Derive dependency structure from package manifests and lockfiles, then refresh reports/dependency-graph.md.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

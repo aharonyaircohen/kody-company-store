@@ -71,7 +71,7 @@ A agentResponsibility MAY (optionally — only if its body asks for it) write a 
 markdown report file at the canonical path:
 
 ```
-.kody/reports/{{dutySlug}}.md
+<state.path>/reports/{{agentResponsibilitySlug}}.md
 ```
 
-Only that exact path. Only via `gh api -X PUT /repos/<owner>/<repo>/contents/.kody/reports/{{dutySlug}}.md` (with base64 content + `sha` of the existing file when updating). All other writes — code files, other report paths, other slugs — remain forbidden. The dashboard's `/reports` page surfaces these files automatically; this is the canonical channel for a agentResponsibility's diagnostic output when an issue comment isn't expressive enough.
+Only that exact path in the configured Kody state repo. Resolve it from `kody.config.json` (`state.repo`, `state.path`) with defaults `<owner>/kody-state` and `<repo>`, then use `gh api -X PUT /repos/<state.repo>/contents/<state.path>/reports/{{agentResponsibilitySlug}}.md` (with base64 content + `sha` of the existing file when updating). All other writes — code files, other report paths, other slugs — remain forbidden. The dashboard's `/reports` page surfaces these files automatically; this is the canonical channel for a agentResponsibility's diagnostic output when an issue comment isn't expressive enough.

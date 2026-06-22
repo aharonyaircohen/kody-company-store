@@ -3,17 +3,12 @@
 
 set -euo pipefail
 
-STATE_FILE=".kody/agent-responsibilities/auto-sync.state.json"
 NOW_ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 NOW_EPOCH=$(date -u -j -f "%Y-%m-%dT%H:%M:%SZ" "$NOW_ISO" +%s 2>/dev/null || date -u -d "$NOW_ISO" +%s)
 DRY_RUN="${KODY_DRY_RUN:-0}"
 OWNER_REPO=$(gh repo view --json nameWithOwner -q .nameWithOwner)
-
-if [ -f "$STATE_FILE" ]; then
-  PRIOR=$(jq -c '.data.perPr // {}' "$STATE_FILE")
-else
-  PRIOR='{}'
-fi
+STATE_JSON="${KODY_JOB_STATE_JSON:-{}}"
+PRIOR=$(jq -c '.data.perPr // {}' <<<"$STATE_JSON")
 
 PRS=$(gh pr list \
   --state open --limit 200 \

@@ -6,8 +6,10 @@ if [[ "${1:-}" == "--dry-run" ]]; then
   DRY_RUN=1
 fi
 
-REPORT_PATH=".kody/reports/company-graph.md"
-STATE_BRANCH="kody-state"
+REPORT_SLUG="company-graph"
+REPORT_FILE="reports/${REPORT_SLUG}.md"
+STATE_REPO=""
+REPORT_PATH=""
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 
@@ -25,6 +27,20 @@ fail() {
 }
 
 command -v jq >/dev/null 2>&1 || fail "jq is required"
+
+resolve_state_report_target() {
+  local consumer_repo owner name config state_path
+  consumer_repo="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
+  owner="${consumer_repo%%/*}"
+  name="${consumer_repo#*/}"
+  config="{}"
+  [[ -f kody.config.json ]] && config="$(cat kody.config.json)"
+  STATE_REPO="$(jq -r --arg default "$owner/kody-state" '.state.repo // .stateRepo // $default' <<<"$config")"
+  state_path="$(jq -r --arg default "$name" '.state.path // .statePath // $default' <<<"$config")"
+  state_path="${state_path#/}"
+  state_path="${state_path%/}"
+  REPORT_PATH="${state_path:+$state_path/}$REPORT_FILE"
+}
 
 slug_of() {
   local name
@@ -134,7 +150,7 @@ ref_id() {
     .kody/agents/*|agent/*) printf 'agent:%s' "$slug"; return 0 ;;
     .kody/agent-actions/*|agentActions/*) printf 'agentAction:%s' "$slug"; return 0 ;;
     .kody/scripts/*|scripts/*) printf 'script:%s' "$slug"; return 0 ;;
-    .kody/reports/*|reports/*) printf 'report:%s' "$slug"; return 0 ;;
+    reports/*) printf 'report:%s' "$slug"; return 0 ;;
   esac
   if [[ -n "$preferred" ]]; then
     printf '%s:%s' "$preferred" "$slug"
@@ -330,14 +346,6 @@ if [[ -d ".kody/agent-actions" ]]; then
   done < <(find .kody/agent-actions -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
-if compgen -G ".kody/reports/*.md" >/dev/null; then
-  for file in .kody/reports/*.md; do
-    slug="$(slug_of "$file")"
-    add_node "$(jq -nc --arg id "report:$slug" --arg slug "$slug" \
-      '{id: $id, type: "report", slug: $slug}')"
-  done
-fi
-
 rate_limited=0
 goal_issues='[]'
 if command -v gh >/dev/null 2>&1; then
@@ -503,11 +511,10 @@ if [[ "$DRY_RUN" == "1" ]]; then
 fi
 
 command -v gh >/dev/null 2>&1 || fail "gh is required"
-repo="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
-branch="$STATE_BRANCH"
+resolve_state_report_target
 
 read_remote_report() {
-  gh api "/repos/$repo/contents/$REPORT_PATH?ref=$branch" 2>/dev/null || true
+  gh api "/repos/$STATE_REPO/contents/$REPORT_PATH" 2>/dev/null || true
 }
 
 remote_json="$(read_remote_report)"
@@ -537,10 +544,9 @@ put_report() {
   local args=(
     api
     -X PUT
-    "/repos/$repo/contents/$REPORT_PATH"
+    "/repos/$STATE_REPO/contents/$REPORT_PATH"
     -f "message=chore(reports): refresh company-graph"
     -f "content=$content"
-    -f "branch=$branch"
   )
   if [[ -n "$sha" ]]; then
     args+=(-f "sha=$sha")
@@ -570,4 +576,4 @@ if ! put_report "$remote_sha" 2>"$TMP_DIR/put.err"; then
   fi
 fi
 
-printf 'DONE\nCOMMIT_MSG: chore(reports): refresh company-graph\nPR_SUMMARY:\n- Refreshed .kody/reports/company-graph.md.\n- Findings: %s.\n' "$finding_count"
+printf 'DONE\nCOMMIT_MSG: chore(reports): refresh company-graph\nPR_SUMMARY:\n- Refreshed %s in %s.\n- Findings: %s.\n' "$REPORT_PATH" "$STATE_REPO" "$finding_count"

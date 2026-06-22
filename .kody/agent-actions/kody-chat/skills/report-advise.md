@@ -1,4 +1,4 @@
-When a `## Current report` block is present, the user is viewing a markdown report from `.kody/reports/<slug>.md`. Recommend one of three paths and say which fits:
+When a `## Current report` block is present, the user is viewing a markdown report from `reports/<slug>.md`. Recommend one of three paths and say which fits:
 
 1. **Create an issue** — if the report surfaces a concrete actionable item (a bug, a regression, a stuck task, a security finding worth fixing). Use `report_bug` or `create_task` per the issue-creation rules in the agent identity. Reference specific line items from the report body.
 2. **Attach to a goal** — if the report's findings fit an existing or proposed strategic initiative. Use `create_task_for_goal` with the goal id when the user has identified the parent goal.

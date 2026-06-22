@@ -8,7 +8,6 @@ const cp = require('child_process')
 const dryRun = true
 const liveTestLabel = 'kody:test-redispatch'
 const excludeLabels = new Set(['kody:stuck', 'kody:no-redispatch', 'kody:stalled'])
-const stateFile = '.kody/agent-responsibilities/redispatch.state.json'
 const dryRunLogCap = 50
 const fortyMinSecs = 40 * 60
 const now = new Date()
@@ -32,7 +31,7 @@ function ghJson(args) {
 
 function loadPriorState() {
   try {
-    const raw = JSON.parse(fs.readFileSync(stateFile, 'utf8'))
+    const raw = JSON.parse(process.env.KODY_JOB_STATE_JSON || '{}')
     return [(raw.data && raw.data.perIssue) || {}, (raw.data && raw.data.dryRunLog) || []]
   } catch {
     return [{}, []]

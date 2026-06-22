@@ -2,7 +2,7 @@
   "name": "ci-health-graph",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive CI health from GitHub workflow runs and PR checks, then refresh .kody/reports/ci-health-graph.md.",
+  "describe": "Derive CI health from GitHub workflow runs and PR checks, then refresh reports/ci-health-graph.md.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

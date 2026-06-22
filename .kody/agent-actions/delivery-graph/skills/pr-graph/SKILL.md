@@ -5,7 +5,7 @@ description: Derive pull request flow from GitHub PR metadata.
 
 # PR Graph Skill
 
-Use this skill when refreshing `.kody/reports/pr-graph.md`.
+Use this skill when refreshing `reports/pr-graph.md`.
 
 ## Model
 
@@ -39,6 +39,6 @@ Report:
 
 ## Boundaries
 
-- Write only `.kody/reports/pr-graph.md`.
+- Write only `reports/pr-graph.md`.
 - Do not edit the working tree.
 - Do not merge, close, label, comment on, or review PRs.

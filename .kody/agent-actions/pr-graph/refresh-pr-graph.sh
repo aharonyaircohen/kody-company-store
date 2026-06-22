@@ -7,8 +7,9 @@ if [[ "${1:-}" == "--dry-run" ]]; then
 fi
 
 REPORT_SLUG="pr-graph"
-REPORT_PATH=".kody/reports/${REPORT_SLUG}.md"
-STATE_BRANCH="kody-state"
+REPORT_FILE="reports/${REPORT_SLUG}.md"
+STATE_REPO=""
+REPORT_PATH=""
 STALE_DAYS=7
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
@@ -30,6 +31,20 @@ fail() {
 
 command -v jq >/dev/null 2>&1 || fail "jq is required"
 command -v gh >/dev/null 2>&1 || fail "gh is required"
+
+resolve_state_report_target() {
+  local consumer_repo owner name config state_path
+  consumer_repo="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
+  owner="${consumer_repo%%/*}"
+  name="${consumer_repo#*/}"
+  config="{}"
+  [[ -f kody.config.json ]] && config="$(cat kody.config.json)"
+  STATE_REPO="$(jq -r --arg default "$owner/kody-state" '.state.repo // .stateRepo // $default' <<<"$config")"
+  state_path="$(jq -r --arg default "$name" '.state.path // .statePath // $default' <<<"$config")"
+  state_path="${state_path#/}"
+  state_path="${state_path%/}"
+  REPORT_PATH="${state_path:+$state_path/}$REPORT_FILE"
+}
 
 hash_stdin() {
   if command -v sha256sum >/dev/null 2>&1; then
@@ -290,11 +305,10 @@ if [[ "$DRY_RUN" == "1" ]]; then
   exit 0
 fi
 
-repo="$(gh repo view --json nameWithOwner -q .nameWithOwner)"
-branch="$STATE_BRANCH"
+resolve_state_report_target
 
 read_remote_report() {
-  gh api "/repos/$repo/contents/$REPORT_PATH?ref=$branch" 2>/dev/null || true
+  gh api "/repos/$STATE_REPO/contents/$REPORT_PATH" 2>/dev/null || true
 }
 
 remote_json="$(read_remote_report)"
@@ -317,14 +331,13 @@ content="$(base64 <"$REPORT_BODY" | tr -d '\n')"
 args=(
   api
   -X PUT
-  "/repos/$repo/contents/$REPORT_PATH"
+  "/repos/$STATE_REPO/contents/$REPORT_PATH"
   -f "message=chore(reports): refresh ${REPORT_SLUG}"
   -f "content=$content"
-  -f "branch=$branch"
 )
 if [[ -n "$remote_sha" ]]; then
   args+=(-f "sha=$remote_sha")
 fi
 
 gh "${args[@]}" >/dev/null
-printf 'DONE\nCOMMIT_MSG: chore(reports): refresh %s\nPR_SUMMARY:\n- Refreshed .kody/reports/%s.md.\n- Findings: %s.\n' "$REPORT_SLUG" "$REPORT_SLUG" "$finding_count"
+printf 'DONE\nCOMMIT_MSG: chore(reports): refresh %s\nPR_SUMMARY:\n- Refreshed %s in %s.\n- Findings: %s.\n' "$REPORT_SLUG" "$REPORT_PATH" "$STATE_REPO" "$finding_count"
