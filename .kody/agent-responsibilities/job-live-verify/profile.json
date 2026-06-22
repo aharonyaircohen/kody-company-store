@@ -1,0 +1,7 @@
+{
+  "name": "job-live-verify",
+  "action": "job-live-verify",
+  "agentAction": "job-live-verify",
+  "describe": "Verify live job wiring.",
+  "capabilityKind": "verify"
+}

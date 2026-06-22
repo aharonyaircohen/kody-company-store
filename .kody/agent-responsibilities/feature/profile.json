@@ -1,0 +1,9 @@
+{
+  "name": "feature",
+  "describe": "Feature Implementation",
+  "action": "feature",
+  "every": "manual",
+  "agent": "kody",
+  "agentAction": "feature",
+  "capabilityKind": "act"
+}

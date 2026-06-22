@@ -1,9 +1,0 @@
-{
-  "name": "code-health",
-  "describe": "Code Health - architecture and type-debt signals",
-  "every": "7d",
-  "agent": "cto",
-  "executable": "code-health",
-  "disabled": true,
-  "capabilityKind": "observe"
-}

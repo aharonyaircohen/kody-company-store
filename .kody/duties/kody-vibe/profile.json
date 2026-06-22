@@ -1,9 +1,0 @@
-{
-  "name": "kody-vibe",
-  "describe": "kody-vibe",
-  "action": "kody-vibe",
-  "every": "manual",
-  "executable": "kody-chat",
-  "capabilityKind": "act",
-  "agent": "kody"
-}

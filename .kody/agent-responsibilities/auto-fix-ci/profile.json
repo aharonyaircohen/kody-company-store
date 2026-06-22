@@ -1,0 +1,9 @@
+{
+  "name": "auto-fix-ci",
+  "describe": "Auto fix failing CI",
+  "action": "auto-fix-ci",
+  "agentAction": "auto-fix-ci",
+  "every": "15m",
+  "agent": "kody",
+  "capabilityKind": "act"
+}

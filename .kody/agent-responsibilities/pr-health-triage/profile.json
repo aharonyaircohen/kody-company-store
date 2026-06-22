@@ -1,0 +1,14 @@
+{
+  "name": "pr-health-triage",
+  "describe": "PR Health Triage",
+  "every": "15m",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "agentActions": [
+    "pr-health-triage"
+  ],
+  "disabled": true,
+  "capabilityKind": "act",
+  "agent": "cto"
+}

@@ -1,0 +1,11 @@
+{
+  "name": "documentation-maintenance",
+  "describe": "Documentation Maintenance - discover product surfaces and keep the repo documented",
+  "every": "7d",
+  "agent": "tech-writer",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "agentAction": "documentation-maintenance",
+  "capabilityKind": "observe"
+}

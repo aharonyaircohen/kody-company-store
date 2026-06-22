@@ -5,19 +5,19 @@
   "templateId": "kody-company-health",
   "state": "inactive",
   "type": "maintain",
-  "scheduleMode": "duty-cadence",
+  "scheduleMode": "agentLoop",
   "title": "Kody company stays healthy",
-  "description": "Keep the Kody operating system, memory, delivery, and management duties healthy.",
+  "description": "Keep the Kody operating system, memory, delivery, and management agentResponsibilities healthy.",
   "destination": {
     "outcome": "Kody's company layer stays healthy and understandable.",
     "evidence": []
   },
-  "duties": [
+  "agentResponsibilities": [
     "ceo-performance-review",
     "company-graph",
     "delivery-graph",
-    "duty-call",
-    "duty-review",
+    "agent-responsibility-call",
+    "agent-responsibility-review",
     "health-check",
     "job-gap-scan",
     "kody-analyzer",

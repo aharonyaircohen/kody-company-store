@@ -1,9 +1,0 @@
-{
-  "name": "feature",
-  "describe": "Feature Implementation",
-  "action": "feature",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "feature",
-  "capabilityKind": "act"
-}

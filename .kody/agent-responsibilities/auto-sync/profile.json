@@ -1,0 +1,9 @@
+{
+  "name": "auto-sync",
+  "describe": "Auto sync stale PR branches",
+  "action": "auto-sync",
+  "agentAction": "auto-sync",
+  "every": "15m",
+  "agent": "kody",
+  "capabilityKind": "act"
+}

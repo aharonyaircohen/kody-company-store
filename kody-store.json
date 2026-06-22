@@ -8,8 +8,8 @@
     "engine-builtins"
   ],
   "assetRoots": {
-    "duties": ".kody/duties",
-    "executables": ".kody/executables",
+    "agent-responsibilities": ".kody/agent-responsibilities",
+    "agent-actions": ".kody/agent-actions",
     "goals": ".kody/goals/templates",
     "agent": ".kody/agents"
   }

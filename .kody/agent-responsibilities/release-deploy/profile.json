@@ -1,0 +1,7 @@
+{
+  "name": "release-deploy",
+  "action": "release-deploy",
+  "agentAction": "release-deploy",
+  "describe": "Deploy or promote a release.",
+  "capabilityKind": "act"
+}

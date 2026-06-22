@@ -1,0 +1,9 @@
+{
+  "name": "npm-publish",
+  "describe": "Publish the current package version to npm",
+  "action": "npm-publish",
+  "agentAction": "npm-publish",
+  "every": "manual",
+  "agent": "kody",
+  "capabilityKind": "act"
+}

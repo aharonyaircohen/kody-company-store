@@ -1,0 +1,10 @@
+{
+  "name": "qa-verify",
+  "describe": "QA Fix Verification",
+  "every": "30m",
+  "agent": "qa",
+  "agentActions": [
+    "qa-verify"
+  ],
+  "capabilityKind": "verify"
+}

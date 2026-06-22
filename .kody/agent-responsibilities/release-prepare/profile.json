@@ -1,0 +1,7 @@
+{
+  "name": "release-prepare",
+  "action": "release-prepare",
+  "agentAction": "release-prepare",
+  "describe": "Prepare a release PR.",
+  "capabilityKind": "act"
+}

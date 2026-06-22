@@ -1,9 +1,0 @@
-{
-  "name": "bug",
-  "describe": "Bug Fix",
-  "action": "bug",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "bug",
-  "capabilityKind": "act"
-}

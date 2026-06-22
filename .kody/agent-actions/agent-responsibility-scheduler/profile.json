@@ -1,0 +1,62 @@
+{
+  "name": "agent-responsibility-scheduler",
+  "role": "watch",
+  "describe": "Explicit agentResponsibility tick helper. Scheduled agentResponsibility fan-out is owned by goal-scheduler; this only runs when a agentResponsibility slug is provided.",
+  "kind": "scheduled",
+  "schedule": "*/5 * * * *",
+  "inputs": [
+    {
+      "name": "agentResponsibility",
+      "flag": "--agentResponsibility",
+      "type": "string",
+      "required": false,
+      "describe": "Optional agentResponsibility slug run instead scanning every due agentResponsibility."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "",
+      "allowedUses": [
+        "api",
+        "issue",
+        "pr"
+      ]
+    }
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "dispatchAgentResponsibilityFileTicks",
+        "with": {
+          "jobsDir": ".kody/agent-responsibilities",
+          "targetAgentAction": "agent-responsibility-tick",
+          "slugArg": "agentResponsibility",
+          "requireExplicitAgentResponsibility": true
+        }
+      }
+    ],
+    "postflight": []
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "name": "reproduce",
-  "describe": "Bug Reproduction",
-  "action": "reproduce",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "reproduce",
-  "capabilityKind": "act"
-}

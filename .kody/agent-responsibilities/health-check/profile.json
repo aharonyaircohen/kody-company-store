@@ -1,0 +1,11 @@
+{
+  "name": "health-check",
+  "describe": "Kody Health Check",
+  "every": "1d",
+  "agent": "coo",
+  "agentActions": [
+    "health-check"
+  ],
+  "disabled": true,
+  "capabilityKind": "observe"
+}

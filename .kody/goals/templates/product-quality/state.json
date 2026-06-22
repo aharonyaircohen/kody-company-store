@@ -5,14 +5,14 @@
   "templateId": "product-quality",
   "state": "inactive",
   "type": "monitor",
-  "scheduleMode": "duty-cadence",
+  "scheduleMode": "agentLoop",
   "title": "Product quality stays good",
   "description": "Keep QA, design review, previews, and product health visible.",
   "destination": {
     "outcome": "Product quality is checked regularly and regressions are visible.",
     "evidence": []
   },
-  "duties": [
+  "agentResponsibilities": [
     "design-review",
     "preview-health",
     "qa",

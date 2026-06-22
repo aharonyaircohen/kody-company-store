@@ -1,7 +1,0 @@
-{
-  "name": "release-merge",
-  "action": "release-merge",
-  "executable": "release-merge",
-  "describe": "Merge a prepared release PR after checks pass.",
-  "capabilityKind": "act"
-}

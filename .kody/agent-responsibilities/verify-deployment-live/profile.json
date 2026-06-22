@@ -1,0 +1,7 @@
+{
+  "name": "verify-deployment-live",
+  "action": "verify-deployment-live",
+  "agentAction": "verify-deployment-live",
+  "describe": "Verify a deployment URL responds with the expected status.",
+  "capabilityKind": "verify"
+}

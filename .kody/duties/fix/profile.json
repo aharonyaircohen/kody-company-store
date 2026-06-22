@@ -1,9 +1,0 @@
-{
-  "name": "fix",
-  "describe": "PR Feedback Fix",
-  "action": "fix",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "fix",
-  "capabilityKind": "act"
-}

@@ -5,14 +5,14 @@
   "templateId": "codebase-health",
   "state": "inactive",
   "type": "maintain",
-  "scheduleMode": "duty-cadence",
+  "scheduleMode": "agentLoop",
   "title": "Codebase stays healthy",
   "description": "Keep code, docs, memory, and repo health from drifting.",
   "destination": {
     "outcome": "The codebase stays maintainable and drift is found early.",
     "evidence": []
   },
-  "duties": [
+  "agentResponsibilities": [
     "cleanup",
     "code-health",
     "docs-health",

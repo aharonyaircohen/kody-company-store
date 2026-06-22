@@ -5,8 +5,8 @@ Kody store assets live under roots declared in `kody-store.json`.
 ```json
 {
   "assetRoots": {
-    "duties": ".kody/duties",
-    "executables": ".kody/executables",
+    "agent-responsibilities": ".kody/agent-responsibilities",
+    "agent-actions": ".kody/agent-actions",
     "goals": ".kody/goals/templates",
     "agent": ".kody/agents"
   }
@@ -17,42 +17,42 @@ The slug is the lookup key.
 
 Availability is separate from activation. See [activation.md](activation.md).
 
-## Duties
+## AgentResponsibilities
 
 Path:
 
 ```text
-.kody/duties/<slug>/
+.kody/agent-responsibilities/<slug>/
 ```
 
 Common files:
 
-- `profile.json`: duty metadata, cadence, agent, mentions, and executable link.
-- `duty.md`: human-readable duty instructions.
+- `profile.json`: agentResponsibility metadata, cadence, agent, mentions, and agentAction link.
+- `agent-responsibility.md`: human-readable agentResponsibility instructions.
 
-Store duties are inactive by default. `every` is a suggested cadence, not
-permission to run in every repo. A consumer activates store duties in
+Store agentResponsibilities are inactive by default. `every` is a suggested cadence, not
+permission to run in every repo. A consumer activates store agentResponsibilities in
 `kody.config.json`:
 
 ```json
-{ "company": { "activeDuties": ["release"] } }
+{ "company": { "activeAgentResponsibilities": ["release"] } }
 ```
 
-## Executables
+## AgentActions
 
 Path:
 
 ```text
-.kody/executables/<slug>/
+.kody/agent-actions/<slug>/
 ```
 
 Common files:
 
-- `profile.json`: executable metadata and runtime contract.
-- `prompt.md`: prompt used by the executable.
+- `profile.json`: agentAction metadata and runtime contract.
+- `prompt.md`: prompt used by the agentAction.
 - `*.sh`: optional helper scripts.
 
-Executable scripts should consume environment variables provided by the runtime.
+AgentAction scripts should consume environment variables provided by the runtime.
 They should not own consumer secrets or decrypt repo-local vaults inside store.
 
 ## Agent
@@ -63,8 +63,8 @@ Path:
 .kody/agents/<slug>.md
 ```
 
-Agent files are agent identities. Concrete job behavior should live in duties and
-executables, not in agent identity files.
+Agent files are agent identities. Concrete job behavior should live in agentResponsibilities and
+agentActions, not in agent identity files.
 
 ## Goals
 
@@ -74,7 +74,7 @@ Path:
 .kody/goals/templates/<slug>/state.json
 ```
 
-Goals are managed objective and routine templates. A shared template should be
+Goals are managed agentGoal and agentLoop templates. A shared template should be
 portable enough for a consumer repo to activate as a starting state, then fill
 runtime facts.
 

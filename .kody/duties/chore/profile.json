@@ -1,9 +1,0 @@
-{
-  "name": "chore",
-  "describe": "Chore Implementation",
-  "action": "chore",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "chore",
-  "capabilityKind": "act"
-}

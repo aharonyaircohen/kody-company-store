@@ -1,0 +1,40 @@
+{
+  "name": "task-leader",
+  "describe": "Task Leader",
+  "action": "task-leader",
+  "agentAction": "task-leader",
+  "every": "15m",
+  "agent": "kody",
+  "agent": "kody",
+  "readyPreviewCap": "15",
+  "smallChangeMaxLines": "200",
+  "smallChangeMaxFiles": "20",
+  "staleReviewHours": "4",
+  "blockAutoMergeLabel": "status:needs-review",
+  "releaseAutoMergeTitlePrefix": "chore(release):",
+  "releaseAutoMergeBranchPrefix": "release/v",
+  "releasePromotionTitlePrefix": "chore(release): promote",
+  "releaseAutoMergeAllowedPaths": {
+    "item": [
+      "package.json",
+      "pnpm-lock.yaml",
+      "CHANGELOG.md"
+    ]
+  },
+  "dispatchComment": "@kody",
+  "tripwirePaths": {
+    "item": [
+      "db/",
+      "migrations/",
+      "prisma/",
+      "schema/",
+      "models/",
+      ".github/",
+      "Dockerfile",
+      "package.json",
+      "auth/",
+      "middleware/"
+    ]
+  },
+  "capabilityKind": "act"
+}

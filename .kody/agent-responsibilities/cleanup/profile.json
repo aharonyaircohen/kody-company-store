@@ -1,0 +1,9 @@
+{
+  "name": "cleanup",
+  "describe": "Cleanup - branches, empty goals, dependency nudges, and dead-code signals",
+  "every": "1d",
+  "agent": "coo",
+  "agentAction": "cleanup",
+  "disabled": true,
+  "capabilityKind": "observe"
+}

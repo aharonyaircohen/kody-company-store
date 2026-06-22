@@ -1,9 +1,0 @@
-{
-  "name": "kody-mem",
-  "describe": "kody-mem",
-  "action": "kody-mem",
-  "every": "manual",
-  "executable": "kody-chat",
-  "capabilityKind": "act",
-  "agent": "kody"
-}

@@ -4,9 +4,9 @@ Kody store assets are shared defaults. Local repo assets are overrides.
 
 Resolution order:
 
-1. Local `.kody/duties/<slug>`, `.kody/executables/<slug>`,
+1. Local `.kody/agent-responsibilities/<slug>`, `.kody/agent-actions/<slug>`,
    `.kody/goals/templates/<slug>/state.json`, or `.kody/agents/<slug>.md`
-2. Store `.kody/duties/<slug>`, `.kody/executables/<slug>`,
+2. Store `.kody/agent-responsibilities/<slug>`, `.kody/agent-actions/<slug>`,
    `.kody/goals/templates/<slug>/state.json`, or `.kody/agents/<slug>.md`
 3. Engine built-ins
 
@@ -16,19 +16,19 @@ See [activation.md](activation.md) for the full activation contract.
 
 ## Activation
 
-Consumer repos activate store duties and goals in `kody.config.json`:
+Consumer repos activate store agentResponsibilities and goals in `kody.config.json`:
 
 ```json
 {
   "company": {
-    "activeDuties": ["release"],
+    "activeAgentResponsibilities": ["release"],
     "activeGoals": ["web-release"]
   }
 }
 ```
 
-Missing or empty activation lists mean no store duties or goals auto-run. Local
-repo duties and goals remain repo-owned.
+Missing or empty activation lists mean no store agentResponsibilities or goals auto-run. Local
+repo agentResponsibilities and goals remain repo-owned.
 
 ## Store Scope
 

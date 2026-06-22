@@ -1,0 +1,14 @@
+{
+  "name": "qa-sweep",
+  "describe": "QA Sweep",
+  "every": "1h",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "agentActions": [
+    "qa-sweep"
+  ],
+  "disabled": true,
+  "capabilityKind": "observe"
+}

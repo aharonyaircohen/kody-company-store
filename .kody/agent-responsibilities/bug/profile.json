@@ -1,0 +1,9 @@
+{
+  "name": "bug",
+  "describe": "Bug Fix",
+  "action": "bug",
+  "every": "manual",
+  "agent": "kody",
+  "agentAction": "bug",
+  "capabilityKind": "act"
+}

@@ -1,0 +1,9 @@
+{
+  "name": "sync",
+  "describe": "PR Branch Sync",
+  "action": "sync",
+  "every": "manual",
+  "agent": "kody",
+  "agentAction": "sync",
+  "capabilityKind": "act"
+}

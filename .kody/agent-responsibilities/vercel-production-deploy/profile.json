@@ -1,0 +1,12 @@
+{
+  "name": "vercel-production-deploy",
+  "describe": "vercel prod deploy",
+  "action": "vercel-production-deploy",
+  "agentAction": "vercel-production-deploy",
+  "every": "manual",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "capabilityKind": "act"
+}

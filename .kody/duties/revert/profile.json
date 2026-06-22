@@ -1,9 +1,0 @@
-{
-  "name": "revert",
-  "describe": "PR Revert",
-  "action": "revert",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "revert",
-  "capabilityKind": "act"
-}

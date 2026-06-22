@@ -1,0 +1,9 @@
+{
+  "name": "redispatch",
+  "describe": "Redispatch stalled Kody work",
+  "action": "redispatch",
+  "agentAction": "redispatch",
+  "every": "30m",
+  "agent": "kody",
+  "capabilityKind": "act"
+}

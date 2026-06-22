@@ -1,0 +1,17 @@
+{
+  "name": "company-graph",
+  "describe": "Company Graph - derive and refresh the orchestration graph",
+  "every": "manual",
+  "agent": "coo",
+  "agentActions": [
+    "company-graph"
+  ],
+  "readsFrom": [
+    "orchestration-conventions",
+    "company-graph"
+  ],
+  "writesTo": [
+    "company-graph"
+  ],
+  "capabilityKind": "observe"
+}

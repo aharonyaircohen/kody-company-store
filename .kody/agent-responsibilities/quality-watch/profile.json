@@ -1,0 +1,9 @@
+{
+  "name": "quality-watch",
+  "describe": "Quality Watch - security, coverage, and flaky-test signals",
+  "every": "1d",
+  "agent": "cto",
+  "agentAction": "quality-watch",
+  "disabled": true,
+  "capabilityKind": "observe"
+}

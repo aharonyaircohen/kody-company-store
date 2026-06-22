@@ -5,14 +5,14 @@
   "templateId": "release-safety",
   "state": "inactive",
   "type": "monitor",
-  "scheduleMode": "duty-cadence",
+  "scheduleMode": "agentLoop",
   "title": "Releases ship safely",
   "description": "Watch release readiness, publish state, and deployment verification without performing a release.",
   "destination": {
     "outcome": "Release state stays visible and unsafe release conditions are surfaced early.",
     "evidence": []
   },
-  "duties": [
+  "agentResponsibilities": [
     "release-state",
     "verify-release-pr-ready",
     "verify-package-published",

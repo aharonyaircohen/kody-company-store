@@ -1,9 +1,0 @@
-{
-  "name": "review",
-  "describe": "PR Review",
-  "action": "review",
-  "every": "manual",
-  "agent": "kody",
-  "executable": "review",
-  "capabilityKind": "verify"
-}

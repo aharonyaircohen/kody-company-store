@@ -51,26 +51,26 @@ git diff -- README.md docs/ kody-store.json .kody/
 Look especially for:
 
 - Secrets or tokens.
-- `.kody/runs/` or `.kody/sessions/` files.
-- Absolute local paths added to executable behavior.
+- `.kody/agent-runs/` or `.kody/sessions/` files.
+- Absolute local paths added to agentAction behavior.
 - Agent identity files that define job-specific commands instead of identity.
-- Duties pointing at missing executable slugs.
-- Executables referencing unavailable scripts or CLI tools.
+- AgentResponsibilities pointing at missing agentAction slugs.
+- AgentActions referencing unavailable scripts or CLI tools.
 
 ## Adding A Shared Asset
 
 Use the existing layout for the asset kind:
 
-- Duty: `.kody/duties/<slug>/profile.json`, plus `duty.md` when needed.
-- Executable: `.kody/executables/<slug>/profile.json`, plus prompt/script files.
+- AgentResponsibility: `.kody/agent-responsibilities/<slug>/profile.json`, plus `agent-responsibility.md` when needed.
+- AgentAction: `.kody/agent-actions/<slug>/profile.json`, plus prompt/script files.
 - Goal template: `.kody/goals/templates/<slug>/state.json`.
 - Agent: `.kody/agents/<slug>.md`.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
-reference it from duties, executables, scripts, or dashboards.
+reference it from agentResponsibilities, agentActions, scripts, or dashboards.
 
-Store duties and goals must be safe as inactive catalog entries. Do not add
-`disabled: true` to every shared duty; activation belongs in the consumer repo's
+Store agentResponsibilities and goals must be safe as inactive catalog entries. Do not add
+`disabled: true` to every shared agentResponsibility; activation belongs in the consumer repo's
 `kody.config.json`. Store goal templates should start with `state: "inactive"`.
 
 See [activation.md](activation.md) for the full activation contract.

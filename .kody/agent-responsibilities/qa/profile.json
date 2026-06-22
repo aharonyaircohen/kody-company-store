@@ -1,0 +1,14 @@
+{
+  "name": "qa",
+  "describe": "QA Changelog Verification",
+  "every": "30m",
+  "agent": "qa",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "agentActions": [
+    "qa"
+  ],
+  "disabled": true,
+  "capabilityKind": "verify"
+}

@@ -1,7 +1,0 @@
-{
-  "name": "release-state",
-  "action": "release-state",
-  "executable": "release-state",
-  "describe": "Observe release version, release PR, tag, and package state.",
-  "capabilityKind": "observe"
-}

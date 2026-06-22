@@ -1,0 +1,8 @@
+{
+  "name": "ci-health",
+  "describe": "Check PR CI health and report readiness evidence to a managed goal.",
+  "action": "ci-health",
+  "agentAction": "ci-check",
+  "agent": "kody",
+  "capabilityKind": "verify"
+}

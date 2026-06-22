@@ -5,14 +5,14 @@
   "templateId": "prs-stay-mergeable",
   "state": "inactive",
   "type": "maintain",
-  "scheduleMode": "duty-cadence",
+  "scheduleMode": "agentLoop",
   "title": "PRs stay mergeable",
   "description": "Keep pull requests current, green, and repairable.",
   "destination": {
     "outcome": "Pull requests stay mergeable and blocked PRs are surfaced quickly.",
     "evidence": []
   },
-  "duties": [
+  "agentResponsibilities": [
     "approval-gate",
     "auto-fix-ci",
     "auto-resolve",

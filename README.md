@@ -5,9 +5,9 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 ## What's Here
 
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
-- `.kody/duties/` contains shared duty definitions.
-- `.kody/executables/` contains shared executable definitions, prompts, and supporting scripts.
-- `.kody/goals/templates/` contains shared objective and routine templates.
+- `.kody/agent-responsibilities/` contains shared agentResponsibility definitions.
+- `.kody/agent-actions/` contains shared agentAction definitions, prompts, and supporting scripts.
+- `.kody/goals/templates/` contains shared agentGoal and agentLoop templates.
 - `.kody/agents/` contains shared agent identity identities.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
@@ -34,15 +34,15 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-Scheduled company behavior should be activated through routines. A duty may declare `every`, but the active routine tick decides whether that duty is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable routine instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
+Scheduled company behavior should be activated through agentLoops. A agentResponsibility may declare `every`, but the active agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable agentLoop instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket on the consumer repo's `kody-state` branch.
 
 See [docs/activation.md](docs/activation.md) for the full activation contract.
 
 ## Asset Kinds
 
-- `duties`: available responsibilities and command wrappers under `.kody/duties/<slug>/`
-- `executables`: runnable agent/tool definitions under `.kody/executables/<slug>/`
-- `goals`: managed objective and routine templates under `.kody/goals/templates/<slug>/state.json`
+- `agentResponsibilities`: available responsibilities and command wrappers under `.kody/agent-responsibilities/<slug>/`
+- `agentActions`: runnable agent/tool definitions under `.kody/agent-actions/<slug>/`
+- `goals`: managed agentGoal and agentLoop templates under `.kody/goals/templates/<slug>/state.json`
 - `agent`: agent identity files under `.kody/agents/<slug>.md`
 
 ## What Does Not Belong Here

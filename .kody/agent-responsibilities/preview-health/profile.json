@@ -1,0 +1,12 @@
+{
+  "name": "preview-health",
+  "describe": "Preview health",
+  "action": "preview-health",
+  "agentAction": "preview-health",
+  "every": "15m",
+  "agent": "cto",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "capabilityKind": "act"
+}

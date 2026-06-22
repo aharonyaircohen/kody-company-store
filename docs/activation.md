@@ -10,13 +10,13 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-## Objectives and Routines
+## AgentGoals and AgentLoops
 
-Store goals are inactive objective or routine templates. Consumer repos activate the company model through `company.activeGoals`.
+Store goals are inactive agentGoal or agentLoop templates. Consumer repos activate the company model through `company.activeGoals`.
 
-Routines own scheduled duty decisions. A duty may declare `every`, `agent`, and `executable`, but the routine tick decides whether that duty is due, skipped, blocked, or selected.
+AgentLoops own scheduled agentResponsibility decisions. A agentResponsibility may declare `every`, `agent`, and `agentAction`, but the agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected.
 
-Default routine templates:
+Default agentLoop templates:
 
 - `prs-stay-mergeable`
 - `product-quality`
@@ -47,18 +47,18 @@ Supported intervals are `Nm`, `Nh`, `Nd`, and `Nw`, for example `15m`, `2h`, `1d
 
 Store goals must not contain repo-specific runtime history. Runtime goal progress belongs in the consumer repo's `kody-state` branch.
 
-## Duties
+## AgentResponsibilities
 
-Store duties are available responsibilities or commands. They are no longer the main scheduled fan-out surface.
+Store agentResponsibilities are available responsibilities or commands. They are no longer the main scheduled fan-out surface.
 
 Rules:
 
 - Scheduled company behavior should be activated through `company.activeGoals`.
-- Duty cadence is reusable duty information; goal tick owns the scheduling decision.
-- Manual duty runs still work from the dashboard or workflow dispatch.
-- `company.activeDuties` is legacy compatibility; do not use it for new scheduled company behavior.
-- Local repo duties remain repo-owned.
-- Do not add `disabled: true` to all store duties.
+- AgentResponsibility cadence is reusable agentResponsibility information; goal tick owns the scheduling decision.
+- Manual agentResponsibility runs still work from the dashboard or workflow dispatch.
+- `company.activeAgentResponsibilities` is legacy compatibility; do not use it for new scheduled company behavior.
+- Local repo agentResponsibilities remain repo-owned.
+- Do not add `disabled: true` to all store agentResponsibilities.
 - Activation belongs in the consumer repo, not the catalog item.
 
 ## Mental Model
@@ -66,8 +66,8 @@ Rules:
 ```text
 kody-store = menu
 consumer repo = decides what is enabled
-duty = available responsibility or command
-objective/routine = operator promise that owns scheduled duty decisions
+agentResponsibility = available responsibility or command
+agentGoal/agentLoop = operator promise that owns scheduled agentResponsibility decisions
 activation = permission to run
-scheduled routine = template creates new runtime instance per bucket
+scheduled agentLoop = template creates new runtime instance per bucket
 ```

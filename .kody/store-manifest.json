@@ -4,13 +4,13 @@
   "storeRoot": "/Users/aguy/projects/kody-store",
   "selection": "newest-file-mtime-per-kind-and-slug",
   "kinds": {
-    "duties": {
+    "agent-responsibilities": {
       "selectedCount": 56,
       "duplicateSlugCount": 19,
       "selected": {
         "approval-gate": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/approval-gate",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/approval-gate",
           "hash": "643bc853a978",
           "mtime": "2026-06-14T18:02:49.731Z",
           "copyCount": 1,
@@ -18,7 +18,7 @@
         },
         "auto-fix-ci": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/auto-fix-ci",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/auto-fix-ci",
           "hash": "411a3cf7a150",
           "mtime": "2026-06-16T03:00:19.852Z",
           "copyCount": 1,
@@ -26,7 +26,7 @@
         },
         "auto-resolve": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/auto-resolve",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/auto-resolve",
           "hash": "ab4800a98fc1",
           "mtime": "2026-06-16T03:00:19.852Z",
           "copyCount": 1,
@@ -34,7 +34,7 @@
         },
         "auto-sync": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/auto-sync",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/auto-sync",
           "hash": "7246df6b6905",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 1,
@@ -42,7 +42,7 @@
         },
         "bug": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/bug",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/bug",
           "hash": "59135633fe1d",
           "mtime": "2026-06-14T18:02:49.731Z",
           "copyCount": 2,
@@ -50,7 +50,7 @@
         },
         "ceo-performance-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/ceo-performance-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/ceo-performance-review",
           "hash": "33ee95ce3777",
           "mtime": "2026-06-14T18:02:49.731Z",
           "copyCount": 1,
@@ -58,7 +58,7 @@
         },
         "chore": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/chore",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/chore",
           "hash": "cd7d39f07036",
           "mtime": "2026-06-14T18:02:49.732Z",
           "copyCount": 2,
@@ -66,7 +66,7 @@
         },
         "classify": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/classify",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/classify",
           "hash": "4ffc09e343ae",
           "mtime": "2026-06-14T18:02:49.732Z",
           "copyCount": 2,
@@ -74,7 +74,7 @@
         },
         "cleanup": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/cleanup",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/cleanup",
           "hash": "23c9e857626a",
           "mtime": "2026-06-15T10:12:05.042Z",
           "copyCount": 1,
@@ -82,7 +82,7 @@
         },
         "code-health": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/code-health",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/code-health",
           "hash": "516c39b7c30d",
           "mtime": "2026-06-15T08:22:41.529Z",
           "copyCount": 1,
@@ -90,7 +90,7 @@
         },
         "company-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/company-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/company-graph",
           "hash": "8557b8c49151",
           "mtime": "2026-06-14T18:02:49.733Z",
           "copyCount": 1,
@@ -98,7 +98,7 @@
         },
         "delivery-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/delivery-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/delivery-graph",
           "hash": "d19f186a1276",
           "mtime": "2026-06-15T08:16:14.541Z",
           "copyCount": 1,
@@ -106,7 +106,7 @@
         },
         "design-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/design-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/design-review",
           "hash": "0706df375141",
           "mtime": "2026-06-14T18:02:49.734Z",
           "copyCount": 1,
@@ -114,7 +114,7 @@
         },
         "dev-ci-health": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/dev-ci-health",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/dev-ci-health",
           "hash": "daadaa535ec1",
           "mtime": "2026-06-16T21:06:30.796Z",
           "copyCount": 2,
@@ -122,23 +122,23 @@
         },
         "docs-health": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/docs-health",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/docs-health",
           "hash": "1e9c01fbd4a3",
           "mtime": "2026-06-15T08:20:50.567Z",
           "copyCount": 1,
           "variantCount": 1
         },
-        "duty-call": {
+        "agentResponsibility-call": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/duty-call",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/agentResponsibility-call",
           "hash": "e663875c476a",
           "mtime": "2026-06-14T18:02:49.736Z",
           "copyCount": 1,
           "variantCount": 1
         },
-        "duty-review": {
+        "agentResponsibility-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/duty-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/agentResponsibility-review",
           "hash": "08325ef4392a",
           "mtime": "2026-06-14T18:02:49.736Z",
           "copyCount": 1,
@@ -146,7 +146,7 @@
         },
         "feature": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/feature",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/feature",
           "hash": "9129a008a2c7",
           "mtime": "2026-06-14T18:02:49.737Z",
           "copyCount": 2,
@@ -154,7 +154,7 @@
         },
         "fix": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/fix",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/fix",
           "hash": "74ccc39c953e",
           "mtime": "2026-06-14T18:02:49.737Z",
           "copyCount": 2,
@@ -162,7 +162,7 @@
         },
         "fix-ci": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/fix-ci",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/fix-ci",
           "hash": "944bd0ff07f3",
           "mtime": "2026-06-14T18:02:49.737Z",
           "copyCount": 2,
@@ -170,7 +170,7 @@
         },
         "health-check": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/health-check",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/health-check",
           "hash": "0c7551b5c136",
           "mtime": "2026-06-14T18:02:49.738Z",
           "copyCount": 1,
@@ -178,7 +178,7 @@
         },
         "job-gap-scan": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/job-gap-scan",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/job-gap-scan",
           "hash": "2af193d469f0",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 1,
@@ -186,7 +186,7 @@
         },
         "kody-analyzer": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/kody-analyzer",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/kody-analyzer",
           "hash": "5b698bd7b30c",
           "mtime": "2026-06-17T20:17:57.201Z",
           "copyCount": 1,
@@ -194,7 +194,7 @@
         },
         "kody-mem": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/kody-mem",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/kody-mem",
           "hash": "d74368211691",
           "mtime": "2026-06-17T20:56:05.320Z",
           "copyCount": 1,
@@ -202,7 +202,7 @@
         },
         "kody-operator": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/kody-operator",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/kody-operator",
           "hash": "a17a2260411b",
           "mtime": "2026-06-17T20:17:57.202Z",
           "copyCount": 1,
@@ -210,7 +210,7 @@
         },
         "kody-vibe": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/kody-vibe",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/kody-vibe",
           "hash": "202b5c001bd9",
           "mtime": "2026-06-17T20:17:57.202Z",
           "copyCount": 1,
@@ -218,7 +218,7 @@
         },
         "memory-compaction": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/memory-compaction",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/memory-compaction",
           "hash": "591cf4871086",
           "mtime": "2026-06-14T18:02:49.739Z",
           "copyCount": 1,
@@ -226,7 +226,7 @@
         },
         "plan": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/plan",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/plan",
           "hash": "5f801490ec3b",
           "mtime": "2026-06-14T18:02:49.739Z",
           "copyCount": 2,
@@ -234,7 +234,7 @@
         },
         "pr-health-triage": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/pr-health-triage",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/pr-health-triage",
           "hash": "7f8036b325e9",
           "mtime": "2026-06-14T18:02:49.740Z",
           "copyCount": 1,
@@ -242,7 +242,7 @@
         },
         "preview-health": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/preview-health",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/preview-health",
           "hash": "16d6d7dac468",
           "mtime": "2026-06-15T20:49:58.250Z",
           "copyCount": 1,
@@ -250,7 +250,7 @@
         },
         "qa": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/qa",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/qa",
           "hash": "f686f465ecd8",
           "mtime": "2026-06-14T18:02:49.741Z",
           "copyCount": 1,
@@ -258,7 +258,7 @@
         },
         "qa-engineer": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/qa-engineer",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/qa-engineer",
           "hash": "134c815c5bd9",
           "mtime": "2026-06-14T18:02:49.740Z",
           "copyCount": 2,
@@ -266,7 +266,7 @@
         },
         "qa-sweep": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/qa-sweep",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/qa-sweep",
           "hash": "1bf9b50a2fea",
           "mtime": "2026-06-14T18:02:49.740Z",
           "copyCount": 1,
@@ -274,7 +274,7 @@
         },
         "qa-verify": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/qa-verify",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/qa-verify",
           "hash": "28d1eac31884",
           "mtime": "2026-06-14T18:02:49.740Z",
           "copyCount": 1,
@@ -282,7 +282,7 @@
         },
         "quality-watch": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/quality-watch",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/quality-watch",
           "hash": "6eecc58cf0dd",
           "mtime": "2026-06-15T08:22:41.528Z",
           "copyCount": 1,
@@ -290,7 +290,7 @@
         },
         "redispatch": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/redispatch",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/redispatch",
           "hash": "6c892d026786",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 2,
@@ -298,7 +298,7 @@
         },
         "release": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/src/duties/release",
+          "sourcePath": "/Users/aguy/projects/kody2/src/agent-responsibilities/release",
           "hash": "d883c5435ddd",
           "mtime": "2026-06-18T05:24:56.000Z",
           "copyCount": 1,
@@ -306,7 +306,7 @@
         },
         "repo-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/repo-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/repo-graph",
           "hash": "54b9a6835a5a",
           "mtime": "2026-06-15T08:16:14.542Z",
           "copyCount": 1,
@@ -314,7 +314,7 @@
         },
         "reproduce": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/reproduce",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/reproduce",
           "hash": "fe63362b5e73",
           "mtime": "2026-06-14T18:02:49.742Z",
           "copyCount": 2,
@@ -322,7 +322,7 @@
         },
         "research": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/research",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/research",
           "hash": "d8b6595c212b",
           "mtime": "2026-06-14T18:02:49.742Z",
           "copyCount": 2,
@@ -330,7 +330,7 @@
         },
         "resolve": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/resolve",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/resolve",
           "hash": "9e908572fff7",
           "mtime": "2026-06-14T18:02:49.742Z",
           "copyCount": 1,
@@ -338,7 +338,7 @@
         },
         "revert": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/revert",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/revert",
           "hash": "92dca532dc40",
           "mtime": "2026-06-14T18:02:49.742Z",
           "copyCount": 1,
@@ -346,7 +346,7 @@
         },
         "review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/review",
           "hash": "bc0601779125",
           "mtime": "2026-06-14T18:02:49.742Z",
           "copyCount": 2,
@@ -354,7 +354,7 @@
         },
         "skills-research": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/skills-research",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/skills-research",
           "hash": "2520226fffd6",
           "mtime": "2026-06-14T18:02:49.743Z",
           "copyCount": 1,
@@ -362,7 +362,7 @@
         },
         "spec": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/spec",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/spec",
           "hash": "d2eaafcd74c1",
           "mtime": "2026-06-14T18:02:49.743Z",
           "copyCount": 2,
@@ -370,7 +370,7 @@
         },
         "sync": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/sync",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/sync",
           "hash": "a49e4de0f2f8",
           "mtime": "2026-06-14T18:02:49.743Z",
           "copyCount": 1,
@@ -378,7 +378,7 @@
         },
         "system-audit": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/system-audit",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/system-audit",
           "hash": "8072c9a06d1c",
           "mtime": "2026-06-14T18:02:49.743Z",
           "copyCount": 1,
@@ -386,7 +386,7 @@
         },
         "task-leader": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/task-leader",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/task-leader",
           "hash": "6f3e52c17b2a",
           "mtime": "2026-06-15T20:38:25.046Z",
           "copyCount": 2,
@@ -394,7 +394,7 @@
         },
         "task-memorize": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/task-memorize",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/task-memorize",
           "hash": "248a575de38a",
           "mtime": "2026-06-14T18:02:49.743Z",
           "copyCount": 1,
@@ -402,7 +402,7 @@
         },
         "task-memory-extractor": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/task-memory-extractor",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/task-memory-extractor",
           "hash": "57273ece7f6e",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 1,
@@ -410,7 +410,7 @@
         },
         "task-verifier": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/task-verifier",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/task-verifier",
           "hash": "0e8935e20484",
           "mtime": "2026-06-14T20:23:19.785Z",
           "copyCount": 1,
@@ -418,7 +418,7 @@
         },
         "ui-review": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/ui-review",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/ui-review",
           "hash": "9578de7735fd",
           "mtime": "2026-06-15T13:46:17.431Z",
           "copyCount": 3,
@@ -426,7 +426,7 @@
         },
         "vercel-dev-deploy": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/vercel-dev-deploy",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/vercel-dev-deploy",
           "hash": "6906e71fc47f",
           "mtime": "2026-06-15T12:46:40.208Z",
           "copyCount": 2,
@@ -434,7 +434,7 @@
         },
         "vercel-production-deploy": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/vercel-production-deploy",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/vercel-production-deploy",
           "hash": "b864581a98d5",
           "mtime": "2026-06-16T04:19:12.419Z",
           "copyCount": 2,
@@ -442,7 +442,7 @@
         },
         "work-briefing": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/work-briefing",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/work-briefing",
           "hash": "879abb91e288",
           "mtime": "2026-06-14T18:02:49.744Z",
           "copyCount": 1,
@@ -453,14 +453,14 @@
         "bug": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/bug",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/bug",
             "hash": "59135633fe1d",
             "mtime": "2026-06-14T18:02:49.731Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/bug",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/bug",
             "hash": "98a5367af333",
             "mtime": "2026-06-12T16:34:18.050Z",
             "selected": false
@@ -469,14 +469,14 @@
         "chore": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/chore",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/chore",
             "hash": "cd7d39f07036",
             "mtime": "2026-06-14T18:02:49.732Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/chore",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/chore",
             "hash": "6eac6c54c819",
             "mtime": "2026-06-12T16:34:18.050Z",
             "selected": false
@@ -485,14 +485,14 @@
         "classify": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/classify",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/classify",
             "hash": "4ffc09e343ae",
             "mtime": "2026-06-14T18:02:49.732Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/classify",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/classify",
             "hash": "7310d9d99b82",
             "mtime": "2026-06-12T16:34:18.051Z",
             "selected": false
@@ -501,14 +501,14 @@
         "dev-ci-health": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/dev-ci-health",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/dev-ci-health",
             "hash": "daadaa535ec1",
             "mtime": "2026-06-16T21:06:30.796Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/dev-ci-health",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/dev-ci-health",
             "hash": "56e72f3d864c",
             "mtime": "2026-06-14T18:02:49.734Z",
             "selected": false
@@ -517,14 +517,14 @@
         "feature": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/feature",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/feature",
             "hash": "9129a008a2c7",
             "mtime": "2026-06-14T18:02:49.737Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/feature",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/feature",
             "hash": "d4370b932e71",
             "mtime": "2026-06-12T16:34:18.051Z",
             "selected": false
@@ -533,14 +533,14 @@
         "fix": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/fix",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/fix",
             "hash": "74ccc39c953e",
             "mtime": "2026-06-14T18:02:49.737Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/fix",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/fix",
             "hash": "028c4c1c2640",
             "mtime": "2026-06-12T16:34:37.536Z",
             "selected": false
@@ -549,14 +549,14 @@
         "fix-ci": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/fix-ci",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/fix-ci",
             "hash": "944bd0ff07f3",
             "mtime": "2026-06-14T18:02:49.737Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/fix-ci",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/fix-ci",
             "hash": "93ad65460cd9",
             "mtime": "2026-06-12T16:34:37.537Z",
             "selected": false
@@ -565,14 +565,14 @@
         "plan": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/plan",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/plan",
             "hash": "5f801490ec3b",
             "mtime": "2026-06-14T18:02:49.739Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/plan",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/plan",
             "hash": "47f6d7e5a9f3",
             "mtime": "2026-06-12T16:34:18.051Z",
             "selected": false
@@ -581,14 +581,14 @@
         "qa-engineer": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/qa-engineer",
             "hash": "134c815c5bd9",
             "mtime": "2026-06-14T18:02:49.740Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/qa-engineer",
             "hash": "abd5d838a423",
             "mtime": "2026-06-12T16:34:18.052Z",
             "selected": false
@@ -597,14 +597,14 @@
         "redispatch": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/redispatch",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/redispatch",
             "hash": "6c892d026786",
             "mtime": "2026-06-16T03:00:19.853Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/redispatch",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/redispatch",
             "hash": "d93b4f91cb5f",
             "mtime": "2026-06-14T18:02:49.741Z",
             "selected": false
@@ -613,21 +613,21 @@
         "release": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/release",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/release",
             "hash": "866669e42591",
             "mtime": "2026-06-15T12:59:27.700Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/release",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/release",
             "hash": "866669e42591",
             "mtime": "2026-06-15T04:02:33.941Z",
             "selected": false
           },
           {
             "project": "kody2",
-            "sourcePath": "/Users/aguy/projects/kody2/.kody/duties/release",
+            "sourcePath": "/Users/aguy/projects/kody2/.kody/agent-responsibilities/release",
             "hash": "1d62e8dd4396",
             "mtime": "2026-06-14T13:01:38.315Z",
             "selected": false
@@ -636,14 +636,14 @@
         "reproduce": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/reproduce",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/reproduce",
             "hash": "fe63362b5e73",
             "mtime": "2026-06-14T18:02:49.742Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/reproduce",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/reproduce",
             "hash": "f884031e23f1",
             "mtime": "2026-06-12T16:34:18.052Z",
             "selected": false
@@ -652,14 +652,14 @@
         "research": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/research",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/research",
             "hash": "d8b6595c212b",
             "mtime": "2026-06-14T18:02:49.742Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/research",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/research",
             "hash": "739a121b925e",
             "mtime": "2026-06-12T16:34:18.052Z",
             "selected": false
@@ -668,14 +668,14 @@
         "review": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/review",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/review",
             "hash": "bc0601779125",
             "mtime": "2026-06-14T18:02:49.742Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/review",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/review",
             "hash": "81a3da336ac8",
             "mtime": "2026-06-12T16:34:18.052Z",
             "selected": false
@@ -684,14 +684,14 @@
         "spec": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/spec",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/spec",
             "hash": "d2eaafcd74c1",
             "mtime": "2026-06-14T18:02:49.743Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/spec",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/spec",
             "hash": "6525106c084b",
             "mtime": "2026-06-12T16:34:18.053Z",
             "selected": false
@@ -700,14 +700,14 @@
         "task-leader": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/task-leader",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/task-leader",
             "hash": "6f3e52c17b2a",
             "mtime": "2026-06-15T20:38:25.046Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/task-leader",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/task-leader",
             "hash": "808f905a12a2",
             "mtime": "2026-06-14T20:23:19.784Z",
             "selected": false
@@ -716,21 +716,21 @@
         "ui-review": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/ui-review",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/ui-review",
             "hash": "9578de7735fd",
             "mtime": "2026-06-15T13:46:17.431Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/ui-review",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/ui-review",
             "hash": "ff817b09d8dd",
             "mtime": "2026-06-14T18:02:49.744Z",
             "selected": false
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/duties/ui-review",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-responsibilities/ui-review",
             "hash": "16eaf74e6475",
             "mtime": "2026-06-12T16:34:18.053Z",
             "selected": false
@@ -739,14 +739,14 @@
         "vercel-dev-deploy": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/vercel-dev-deploy",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/vercel-dev-deploy",
             "hash": "6906e71fc47f",
             "mtime": "2026-06-15T12:46:40.208Z",
             "selected": true
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/vercel-dev-deploy",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/vercel-dev-deploy",
             "hash": "6906e71fc47f",
             "mtime": "2026-06-15T12:39:49.377Z",
             "selected": false
@@ -755,14 +755,14 @@
         "vercel-production-deploy": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/duties/vercel-production-deploy",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-responsibilities/vercel-production-deploy",
             "hash": "b864581a98d5",
             "mtime": "2026-06-16T04:19:12.419Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/duties/vercel-production-deploy",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-responsibilities/vercel-production-deploy",
             "hash": "3ff679823f7c",
             "mtime": "2026-06-15T12:46:40.219Z",
             "selected": false
@@ -770,13 +770,13 @@
         ]
       }
     },
-    "executables": {
+    "agent-actions": {
       "selectedCount": 67,
       "duplicateSlugCount": 18,
       "selected": {
         "approval-gate": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/approval-gate",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/approval-gate",
           "hash": "04d93aa7e793",
           "mtime": "2026-06-14T18:02:49.745Z",
           "copyCount": 1,
@@ -784,7 +784,7 @@
         },
         "architecture-audit": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/architecture-audit",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/architecture-audit",
           "hash": "3e7e2d46c163",
           "mtime": "2026-06-14T18:02:49.746Z",
           "copyCount": 1,
@@ -792,7 +792,7 @@
         },
         "auto-fix-ci": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/auto-fix-ci",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/auto-fix-ci",
           "hash": "1d6a1f04eb44",
           "mtime": "2026-06-16T03:00:19.852Z",
           "copyCount": 1,
@@ -800,7 +800,7 @@
         },
         "auto-resolve": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/auto-resolve",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/auto-resolve",
           "hash": "7ded74c5de8d",
           "mtime": "2026-06-16T03:00:19.852Z",
           "copyCount": 1,
@@ -808,7 +808,7 @@
         },
         "auto-sync": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/auto-sync",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/auto-sync",
           "hash": "13dd01c6cf41",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 1,
@@ -816,7 +816,7 @@
         },
         "bug": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/bug",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/bug",
           "hash": "ebf72115cd97",
           "mtime": "2026-06-14T18:02:49.746Z",
           "copyCount": 4,
@@ -824,7 +824,7 @@
         },
         "ceo-performance-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/ceo-performance-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/ceo-performance-review",
           "hash": "b4f335b33e20",
           "mtime": "2026-06-14T18:02:49.747Z",
           "copyCount": 1,
@@ -832,7 +832,7 @@
         },
         "chore": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/chore",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/chore",
           "hash": "7efd745394c9",
           "mtime": "2026-06-14T18:02:49.755Z",
           "copyCount": 4,
@@ -840,7 +840,7 @@
         },
         "ci-health-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/ci-health-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/ci-health-graph",
           "hash": "2471098ca396",
           "mtime": "2026-06-14T18:02:49.756Z",
           "copyCount": 1,
@@ -848,7 +848,7 @@
         },
         "classify": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/classify",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/classify",
           "hash": "f6dc8c81f785",
           "mtime": "2026-06-14T18:02:49.756Z",
           "copyCount": 4,
@@ -856,7 +856,7 @@
         },
         "cleanup": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/cleanup",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/cleanup",
           "hash": "5113ccddfcac",
           "mtime": "2026-06-15T10:12:05.042Z",
           "copyCount": 1,
@@ -864,7 +864,7 @@
         },
         "code-health": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/code-health",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/code-health",
           "hash": "dbbd676bf386",
           "mtime": "2026-06-15T08:22:41.529Z",
           "copyCount": 1,
@@ -872,7 +872,7 @@
         },
         "compact-memory": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/compact-memory",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/compact-memory",
           "hash": "8b9fe2820161",
           "mtime": "2026-06-14T18:02:49.757Z",
           "copyCount": 1,
@@ -880,7 +880,7 @@
         },
         "company-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/company-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/company-graph",
           "hash": "ed1bdd02cedb",
           "mtime": "2026-06-14T18:02:49.758Z",
           "copyCount": 1,
@@ -888,7 +888,7 @@
         },
         "coverage-floor": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/coverage-floor",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/coverage-floor",
           "hash": "4a7d22f33f88",
           "mtime": "2026-06-14T18:02:49.758Z",
           "copyCount": 1,
@@ -896,7 +896,7 @@
         },
         "dead-code-sweep": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/dead-code-sweep",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/dead-code-sweep",
           "hash": "efe2035ceb78",
           "mtime": "2026-06-14T18:02:49.759Z",
           "copyCount": 1,
@@ -904,7 +904,7 @@
         },
         "delivery-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/delivery-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/delivery-graph",
           "hash": "e5cb80eb2cc5",
           "mtime": "2026-06-15T08:17:21.243Z",
           "copyCount": 1,
@@ -912,7 +912,7 @@
         },
         "dependency-bump": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/dependency-bump",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/dependency-bump",
           "hash": "52782c4b6a75",
           "mtime": "2026-06-14T18:02:49.759Z",
           "copyCount": 1,
@@ -920,7 +920,7 @@
         },
         "dependency-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/dependency-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/dependency-graph",
           "hash": "3c387c3badae",
           "mtime": "2026-06-14T18:02:49.759Z",
           "copyCount": 1,
@@ -928,7 +928,7 @@
         },
         "design-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/design-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/design-review",
           "hash": "ac41b24af430",
           "mtime": "2026-06-14T18:02:49.760Z",
           "copyCount": 1,
@@ -936,7 +936,7 @@
         },
         "dev-ci-health": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/dev-ci-health",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/dev-ci-health",
           "hash": "ebdd6ec393b5",
           "mtime": "2026-06-14T18:02:49.760Z",
           "copyCount": 1,
@@ -944,7 +944,7 @@
         },
         "docs-code": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/docs-code",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/docs-code",
           "hash": "14877c023842",
           "mtime": "2026-06-14T18:02:49.760Z",
           "copyCount": 1,
@@ -952,7 +952,7 @@
         },
         "docs-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/docs-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/docs-graph",
           "hash": "ce3f22b02875",
           "mtime": "2026-06-14T18:02:49.761Z",
           "copyCount": 1,
@@ -960,7 +960,7 @@
         },
         "docs-health": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/docs-health",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/docs-health",
           "hash": "e65f1fe06d77",
           "mtime": "2026-06-15T08:20:50.567Z",
           "copyCount": 1,
@@ -968,23 +968,23 @@
         },
         "docs-readme": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/docs-readme",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/docs-readme",
           "hash": "0b1c8b23ec00",
           "mtime": "2026-06-14T18:02:49.761Z",
           "copyCount": 1,
           "variantCount": 1
         },
-        "duty-call": {
+        "agentResponsibility-call": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/duty-call",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/agentResponsibility-call",
           "hash": "ec929ba06c95",
           "mtime": "2026-06-14T18:02:49.761Z",
           "copyCount": 1,
           "variantCount": 1
         },
-        "duty-review": {
+        "agentResponsibility-review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/duty-review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/agentResponsibility-review",
           "hash": "da0bb889fa11",
           "mtime": "2026-06-14T18:02:49.762Z",
           "copyCount": 1,
@@ -992,7 +992,7 @@
         },
         "extract-design-system": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/extract-design-system",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/extract-design-system",
           "hash": "fd06154191d8",
           "mtime": "2026-06-14T18:02:49.762Z",
           "copyCount": 1,
@@ -1000,7 +1000,7 @@
         },
         "feature": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/feature",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/feature",
           "hash": "52823ed6f922",
           "mtime": "2026-06-14T18:02:49.763Z",
           "copyCount": 4,
@@ -1008,7 +1008,7 @@
         },
         "fix": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/fix",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/fix",
           "hash": "59cc29e62302",
           "mtime": "2026-06-14T18:02:49.764Z",
           "copyCount": 4,
@@ -1016,7 +1016,7 @@
         },
         "fix-ci": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/fix-ci",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/fix-ci",
           "hash": "2f01cd742410",
           "mtime": "2026-06-14T18:02:49.763Z",
           "copyCount": 4,
@@ -1024,7 +1024,7 @@
         },
         "flaky-test-quarantine": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/flaky-test-quarantine",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/flaky-test-quarantine",
           "hash": "1e644e7a3945",
           "mtime": "2026-06-14T18:02:49.764Z",
           "copyCount": 1,
@@ -1032,7 +1032,7 @@
         },
         "health-check": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/health-check",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/health-check",
           "hash": "4ce4538056c1",
           "mtime": "2026-06-14T18:02:49.764Z",
           "copyCount": 1,
@@ -1040,7 +1040,7 @@
         },
         "job-gap-scan": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/job-gap-scan",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/job-gap-scan",
           "hash": "7cae45798d88",
           "mtime": "2026-06-16T03:26:11.734Z",
           "copyCount": 1,
@@ -1048,7 +1048,7 @@
         },
         "kody-chat": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/kody-chat",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/kody-chat",
           "hash": "dc6a1c83fc7a",
           "mtime": "2026-06-17T20:54:46.332Z",
           "copyCount": 1,
@@ -1056,7 +1056,7 @@
         },
         "plan": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/plan",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/plan",
           "hash": "5b0549de78e0",
           "mtime": "2026-06-14T18:02:49.766Z",
           "copyCount": 4,
@@ -1064,7 +1064,7 @@
         },
         "pr-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/pr-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/pr-graph",
           "hash": "cc56e43d4489",
           "mtime": "2026-06-14T18:02:49.766Z",
           "copyCount": 1,
@@ -1072,7 +1072,7 @@
         },
         "pr-health-triage": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/pr-health-triage",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/pr-health-triage",
           "hash": "98599080e04d",
           "mtime": "2026-06-14T18:02:49.766Z",
           "copyCount": 1,
@@ -1080,7 +1080,7 @@
         },
         "preview-health": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/preview-health",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/preview-health",
           "hash": "e3ec288623f9",
           "mtime": "2026-06-16T02:57:37.238Z",
           "copyCount": 1,
@@ -1088,7 +1088,7 @@
         },
         "qa": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/qa",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/qa",
           "hash": "b15ff80c5c8b",
           "mtime": "2026-06-14T18:02:49.769Z",
           "copyCount": 1,
@@ -1096,7 +1096,7 @@
         },
         "qa-engineer": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/qa-engineer",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/qa-engineer",
           "hash": "2c1b2a2f2a0a",
           "mtime": "2026-06-14T18:02:49.768Z",
           "copyCount": 4,
@@ -1104,7 +1104,7 @@
         },
         "qa-sweep": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/qa-sweep",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/qa-sweep",
           "hash": "0032c2fb70fe",
           "mtime": "2026-06-14T18:02:49.769Z",
           "copyCount": 1,
@@ -1112,7 +1112,7 @@
         },
         "qa-verify": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/qa-verify",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/qa-verify",
           "hash": "2b6c2a24c0fd",
           "mtime": "2026-06-14T18:02:49.769Z",
           "copyCount": 1,
@@ -1120,7 +1120,7 @@
         },
         "quality-watch": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/quality-watch",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/quality-watch",
           "hash": "80c9f9478f11",
           "mtime": "2026-06-15T08:22:41.529Z",
           "copyCount": 1,
@@ -1128,7 +1128,7 @@
         },
         "redispatch": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/redispatch",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/redispatch",
           "hash": "4d2f8497cd11",
           "mtime": "2026-06-16T03:00:19.853Z",
           "copyCount": 2,
@@ -1136,7 +1136,7 @@
         },
         "release": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/src/executables/release",
+          "sourcePath": "/Users/aguy/projects/kody2/src/agent-actions/release",
           "hash": "c2b063f10e1c",
           "mtime": "2026-06-18T05:24:56.000Z",
           "copyCount": 1,
@@ -1144,7 +1144,7 @@
         },
         "release-deploy": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/.kody/executables/release-deploy",
+          "sourcePath": "/Users/aguy/projects/kody2/.kody/agent-actions/release-deploy",
           "hash": "4d55dd534636",
           "mtime": "2026-06-14T13:01:38.315Z",
           "copyCount": 1,
@@ -1152,7 +1152,7 @@
         },
         "release-merge": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/.kody/executables/release-merge",
+          "sourcePath": "/Users/aguy/projects/kody2/.kody/agent-actions/release-merge",
           "hash": "73cb4abf3b47",
           "mtime": "2026-06-14T13:01:38.315Z",
           "copyCount": 1,
@@ -1160,7 +1160,7 @@
         },
         "release-prepare": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/.kody/executables/release-prepare",
+          "sourcePath": "/Users/aguy/projects/kody2/.kody/agent-actions/release-prepare",
           "hash": "830f9d82a8a8",
           "mtime": "2026-06-14T13:01:38.316Z",
           "copyCount": 1,
@@ -1168,7 +1168,7 @@
         },
         "release-publish": {
           "project": "kody2",
-          "sourcePath": "/Users/aguy/projects/kody2/.kody/executables/release-publish",
+          "sourcePath": "/Users/aguy/projects/kody2/.kody/agent-actions/release-publish",
           "hash": "0d6b29d51c41",
           "mtime": "2026-06-14T13:01:38.316Z",
           "copyCount": 1,
@@ -1176,7 +1176,7 @@
         },
         "repo-graph": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/repo-graph",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/repo-graph",
           "hash": "9ee6f0a04838",
           "mtime": "2026-06-15T08:17:21.243Z",
           "copyCount": 1,
@@ -1184,7 +1184,7 @@
         },
         "reproduce": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/reproduce",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/reproduce",
           "hash": "9b9b14e6625f",
           "mtime": "2026-06-14T18:02:49.772Z",
           "copyCount": 4,
@@ -1192,7 +1192,7 @@
         },
         "research": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/research",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/research",
           "hash": "2b8fc9ecce66",
           "mtime": "2026-06-14T18:02:49.772Z",
           "copyCount": 4,
@@ -1200,7 +1200,7 @@
         },
         "review": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/review",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/review",
           "hash": "53952aec3e0a",
           "mtime": "2026-06-14T18:02:49.773Z",
           "copyCount": 4,
@@ -1208,7 +1208,7 @@
         },
         "security-audit": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/security-audit",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/security-audit",
           "hash": "5f2e4a6827c0",
           "mtime": "2026-06-14T18:02:49.773Z",
           "copyCount": 1,
@@ -1216,7 +1216,7 @@
         },
         "skills-research": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/skills-research",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/skills-research",
           "hash": "b9ec7c105b5c",
           "mtime": "2026-06-14T18:02:49.773Z",
           "copyCount": 1,
@@ -1224,7 +1224,7 @@
         },
         "spec": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/spec",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/spec",
           "hash": "a62deceb0557",
           "mtime": "2026-06-14T18:02:49.773Z",
           "copyCount": 4,
@@ -1232,7 +1232,7 @@
         },
         "system-audit": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/system-audit",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/system-audit",
           "hash": "eac5c07db43e",
           "mtime": "2026-06-14T18:02:49.774Z",
           "copyCount": 1,
@@ -1240,7 +1240,7 @@
         },
         "task-leader": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/task-leader",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/task-leader",
           "hash": "7e302448bbea",
           "mtime": "2026-06-17T20:08:59.769Z",
           "copyCount": 2,
@@ -1248,7 +1248,7 @@
         },
         "task-memorize": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/task-memorize",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/task-memorize",
           "hash": "cfa171e9f2a9",
           "mtime": "2026-06-14T18:02:49.774Z",
           "copyCount": 1,
@@ -1256,7 +1256,7 @@
         },
         "task-memory-extractor": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/task-memory-extractor",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/task-memory-extractor",
           "hash": "a11cbd97822e",
           "mtime": "2026-06-16T03:26:54.798Z",
           "copyCount": 1,
@@ -1264,7 +1264,7 @@
         },
         "task-verifier": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/task-verifier",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/task-verifier",
           "hash": "7826476c630f",
           "mtime": "2026-06-14T20:23:19.786Z",
           "copyCount": 1,
@@ -1272,7 +1272,7 @@
         },
         "type-debt": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/type-debt",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/type-debt",
           "hash": "d950f14fe21b",
           "mtime": "2026-06-14T18:02:49.774Z",
           "copyCount": 1,
@@ -1280,7 +1280,7 @@
         },
         "ui-review": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/ui-review",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/ui-review",
           "hash": "238ef9ff0432",
           "mtime": "2026-06-17T20:24:32.215Z",
           "copyCount": 4,
@@ -1288,7 +1288,7 @@
         },
         "vercel-dev-deploy": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/vercel-dev-deploy",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/vercel-dev-deploy",
           "hash": "7d3a68851822",
           "mtime": "2026-06-16T04:38:57.608Z",
           "copyCount": 2,
@@ -1296,7 +1296,7 @@
         },
         "vercel-production-deploy": {
           "project": "A-Guy-Web",
-          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/vercel-production-deploy",
+          "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/vercel-production-deploy",
           "hash": "fc11187ae3b1",
           "mtime": "2026-06-16T04:38:57.608Z",
           "copyCount": 2,
@@ -1304,7 +1304,7 @@
         },
         "work-briefing": {
           "project": "Kody-Dashboard",
-          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/work-briefing",
+          "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/work-briefing",
           "hash": "876aeddf0ba8",
           "mtime": "2026-06-14T18:02:49.776Z",
           "copyCount": 1,
@@ -1315,28 +1315,28 @@
         "bug": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/bug",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/bug",
             "hash": "ebf72115cd97",
             "mtime": "2026-06-14T18:02:49.746Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/bug",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/bug",
             "hash": "4bc11f69a0a5",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/bug",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/bug",
             "hash": "4bc11f69a0a5",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/bug",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/bug",
             "hash": "4bc11f69a0a5",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
@@ -1345,28 +1345,28 @@
         "chore": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/chore",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/chore",
             "hash": "7efd745394c9",
             "mtime": "2026-06-14T18:02:49.755Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/chore",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/chore",
             "hash": "3c6cad46df33",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/chore",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/chore",
             "hash": "3c6cad46df33",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/chore",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/chore",
             "hash": "3c6cad46df33",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
@@ -1375,28 +1375,28 @@
         "classify": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/classify",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/classify",
             "hash": "f6dc8c81f785",
             "mtime": "2026-06-14T18:02:49.756Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/classify",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/classify",
             "hash": "5302cbb4a104",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/classify",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/classify",
             "hash": "5302cbb4a104",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/classify",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/classify",
             "hash": "5302cbb4a104",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
@@ -1405,28 +1405,28 @@
         "feature": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/feature",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/feature",
             "hash": "52823ed6f922",
             "mtime": "2026-06-14T18:02:49.763Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/feature",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/feature",
             "hash": "641889cab9e9",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/feature",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/feature",
             "hash": "641889cab9e9",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/feature",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/feature",
             "hash": "641889cab9e9",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
@@ -1435,28 +1435,28 @@
         "fix": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/fix",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/fix",
             "hash": "59cc29e62302",
             "mtime": "2026-06-14T18:02:49.764Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/fix",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/fix",
             "hash": "043a9c0039af",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/fix",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/fix",
             "hash": "043a9c0039af",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/fix",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/fix",
             "hash": "043a9c0039af",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
@@ -1465,28 +1465,28 @@
         "fix-ci": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/fix-ci",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/fix-ci",
             "hash": "2f01cd742410",
             "mtime": "2026-06-14T18:02:49.763Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/fix-ci",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/fix-ci",
             "hash": "ae53b7e3333c",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/fix-ci",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/fix-ci",
             "hash": "ae53b7e3333c",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/fix-ci",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/fix-ci",
             "hash": "ae53b7e3333c",
             "mtime": "2026-06-09T05:38:44.303Z",
             "selected": false
@@ -1495,28 +1495,28 @@
         "plan": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/plan",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/plan",
             "hash": "5b0549de78e0",
             "mtime": "2026-06-14T18:02:49.766Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/plan",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/plan",
             "hash": "aba60f64c004",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/plan",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/plan",
             "hash": "aba60f64c004",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/plan",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/plan",
             "hash": "aba60f64c004",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
@@ -1525,28 +1525,28 @@
         "qa-engineer": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/qa-engineer",
             "hash": "2c1b2a2f2a0a",
             "mtime": "2026-06-14T18:02:49.768Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/qa-engineer",
             "hash": "dabed8aa35b1",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/qa-engineer",
             "hash": "dabed8aa35b1",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/qa-engineer",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/qa-engineer",
             "hash": "dabed8aa35b1",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
@@ -1555,14 +1555,14 @@
         "redispatch": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/redispatch",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/redispatch",
             "hash": "4d2f8497cd11",
             "mtime": "2026-06-16T03:00:19.853Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/redispatch",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/redispatch",
             "hash": "1681b296669e",
             "mtime": "2026-06-14T18:02:49.770Z",
             "selected": false
@@ -1571,14 +1571,14 @@
         "release": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/release",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/release",
             "hash": "51651bb5891c",
             "mtime": "2026-06-15T19:33:34.929Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/release",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/release",
             "hash": "ca86c5ce4e74",
             "mtime": "2026-06-15T04:05:29.495Z",
             "selected": false
@@ -1587,28 +1587,28 @@
         "reproduce": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/reproduce",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/reproduce",
             "hash": "9b9b14e6625f",
             "mtime": "2026-06-14T18:02:49.772Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/reproduce",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/reproduce",
             "hash": "84ec1b378953",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/reproduce",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/reproduce",
             "hash": "84ec1b378953",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/reproduce",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/reproduce",
             "hash": "84ec1b378953",
             "mtime": "2026-06-09T05:38:44.304Z",
             "selected": false
@@ -1617,28 +1617,28 @@
         "research": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/research",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/research",
             "hash": "2b8fc9ecce66",
             "mtime": "2026-06-14T18:02:49.772Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/research",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/research",
             "hash": "9c4c08a5ac3c",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/research",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/research",
             "hash": "9c4c08a5ac3c",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/research",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/research",
             "hash": "9c4c08a5ac3c",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
@@ -1647,28 +1647,28 @@
         "review": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/review",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/review",
             "hash": "53952aec3e0a",
             "mtime": "2026-06-14T18:02:49.773Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/review",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/review",
             "hash": "b2a0c4fee02a",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/review",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/review",
             "hash": "b2a0c4fee02a",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/review",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/review",
             "hash": "b2a0c4fee02a",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
@@ -1677,28 +1677,28 @@
         "spec": [
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/spec",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/spec",
             "hash": "a62deceb0557",
             "mtime": "2026-06-14T18:02:49.773Z",
             "selected": true
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/spec",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/spec",
             "hash": "f2e1a692e541",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/spec",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/spec",
             "hash": "f2e1a692e541",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/spec",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/spec",
             "hash": "f2e1a692e541",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
@@ -1707,14 +1707,14 @@
         "task-leader": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/task-leader",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/task-leader",
             "hash": "7e302448bbea",
             "mtime": "2026-06-17T20:08:59.769Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/task-leader",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/task-leader",
             "hash": "42c794ea4910",
             "mtime": "2026-06-14T20:23:19.785Z",
             "selected": false
@@ -1723,28 +1723,28 @@
         "ui-review": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/ui-review",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/ui-review",
             "hash": "238ef9ff0432",
             "mtime": "2026-06-17T20:24:32.215Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/ui-review",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/ui-review",
             "hash": "b6c5612ec57a",
             "mtime": "2026-06-14T18:02:49.775Z",
             "selected": false
           },
           {
             "project": "A-Guy",
-            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/executables/ui-review",
+            "sourcePath": "/Users/aguy/projects/A-Guy/.kody/agent-actions/ui-review",
             "hash": "e7dca7a03bce",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
           },
           {
             "project": "A-Guy-Admin",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/executables/ui-review",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Admin/.kody/agent-actions/ui-review",
             "hash": "e7dca7a03bce",
             "mtime": "2026-06-09T05:38:44.305Z",
             "selected": false
@@ -1753,14 +1753,14 @@
         "vercel-dev-deploy": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/vercel-dev-deploy",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/vercel-dev-deploy",
             "hash": "7d3a68851822",
             "mtime": "2026-06-16T04:38:57.608Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/vercel-dev-deploy",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/vercel-dev-deploy",
             "hash": "63e1cbc83239",
             "mtime": "2026-06-15T12:46:40.238Z",
             "selected": false
@@ -1769,14 +1769,14 @@
         "vercel-production-deploy": [
           {
             "project": "A-Guy-Web",
-            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/executables/vercel-production-deploy",
+            "sourcePath": "/Users/aguy/projects/A-Guy-Web/.kody/agent-actions/vercel-production-deploy",
             "hash": "fc11187ae3b1",
             "mtime": "2026-06-16T04:38:57.608Z",
             "selected": true
           },
           {
             "project": "Kody-Dashboard",
-            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/executables/vercel-production-deploy",
+            "sourcePath": "/Users/aguy/projects/Kody-Dashboard/.kody/agent-actions/vercel-production-deploy",
             "hash": "2c2c99796331",
             "mtime": "2026-06-15T12:46:40.252Z",
             "selected": false
