@@ -31,6 +31,8 @@ from pathlib import Path
 local_templates_dir = Path(sys.argv[1])
 store_templates_dir = Path(sys.argv[2])
 template_roots = [local_templates_dir, store_templates_dir]
+instances_dir = Path(".kody/goals/instances")
+LOCAL_MODE = os.environ.get("KODY_GOAL_SCHEDULER_SKIP_PERSIST") == "1"
 
 SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 INTERVAL = re.compile(r"^(\d+)([mhdw])$")
@@ -91,6 +93,8 @@ def active_goal_config(config: dict) -> tuple[set[str], list[dict]]:
             entry["every"] = every.strip()
         if isinstance(item.get("idPrefix"), str) and item["idPrefix"].strip():
             entry["idPrefix"] = item["idPrefix"].strip()
+        if isinstance(item.get("facts"), dict):
+            entry["facts"] = item["facts"]
         schedules.append(entry)
     return active, schedules
 
@@ -138,6 +142,8 @@ def find_template(template: str) -> Path | None:
 
 
 def state_target(config: dict) -> tuple[str, str]:
+    if LOCAL_MODE:
+        return "__local__", ""
     github = config.get("github") if isinstance(config.get("github"), dict) else {}
     owner = github.get("owner")
     repo = github.get("repo")
@@ -155,6 +161,10 @@ def state_file_path(state_base: str, goal_id: str) -> str:
     return f"{prefix}goals/instances/{goal_id}/state.json"
 
 
+def local_goal_path(goal_id: str) -> Path:
+    return instances_dir / goal_id / "state.json"
+
+
 def read_remote_json(state_repo: str, path: str) -> dict | None:
     try:
         meta = json.loads(gh(["api", f"/repos/{state_repo}/contents/{path}"]))
@@ -170,11 +180,16 @@ def read_remote_json(state_repo: str, path: str) -> dict | None:
 
 
 def remote_goal_exists(state_repo: str, state_base: str, goal_id: str) -> bool:
+    if LOCAL_MODE:
+        return local_goal_path(goal_id).exists()
     return read_remote_json(state_repo, state_file_path(state_base, goal_id)) is not None
 
 
 def persist_goal(state_repo: str, state_base: str, goal_id: str, state_text: str) -> None:
-    if os.environ.get("KODY_GOAL_SCHEDULER_SKIP_PERSIST") == "1":
+    if LOCAL_MODE:
+        target = local_goal_path(goal_id)
+        target.parent.mkdir(parents=True, exist_ok=True)
+        target.write_text(state_text)
         return
     path = state_file_path(state_base, goal_id)
     if remote_goal_exists(state_repo, state_base, goal_id):
@@ -220,6 +235,10 @@ def create_instance_from_template(
 
 
 def list_goal_ids(state_repo: str, state_base: str) -> list[str]:
+    if LOCAL_MODE:
+        if not instances_dir.exists():
+            return []
+        return sorted(path.name for path in instances_dir.iterdir() if (path / "state.json").exists())
     base = f"{state_base}/goals/instances" if state_base else "goals/instances"
     try:
         entries = json.loads(gh(["api", f"/repos/{state_repo}/contents/{base}"]))
@@ -232,8 +251,21 @@ def list_goal_ids(state_repo: str, state_base: str) -> list[str]:
     return sorted(entry["name"] for entry in entries if entry.get("type") == "dir" and isinstance(entry.get("name"), str))
 
 
+def read_goal_state(state_repo: str, state_base: str, goal_id: str) -> dict | None:
+    if LOCAL_MODE:
+        path = local_goal_path(goal_id)
+        if not path.exists():
+            return None
+        return json.loads(path.read_text())
+    return read_remote_json(state_repo, state_file_path(state_base, goal_id))
+
+
 config = load_config()
 active, schedules = active_goal_config(config)
+if not active and not schedules:
+    print("[goal-scheduler] no company.activeGoals configured")
+    print("KODY_SKIP_AGENT=true")
+    raise SystemExit(0)
 state_repo, state_base = state_target(config)
 now = now_utc()
 created: list[str] = []
@@ -257,7 +289,8 @@ for schedule in schedules:
         goal_id = f"{prefix}-{suffix}"
         active.add(goal_id)
         active.add(schedule["template"])
-        if create_instance_from_template(state_repo, state_base, schedule["template"], goal_id, now, {"schedule": every}):
+        facts = schedule.get("facts") if isinstance(schedule.get("facts"), dict) else {}
+        if create_instance_from_template(state_repo, state_base, schedule["template"], goal_id, now, facts):
             created.append(goal_id)
     except Exception as err:
         errors.append(f"{schedule['template']}: {err}")
@@ -277,7 +310,7 @@ active_count = 0
 managed_active = 0
 for goal_id in goal_ids:
     try:
-        data = read_remote_json(state_repo, state_file_path(state_base, goal_id))
+        data = read_goal_state(state_repo, state_base, goal_id)
     except Exception as err:
         print(f"[goal-scheduler] skip {goal_id}: failed to read state ({err})")
         continue

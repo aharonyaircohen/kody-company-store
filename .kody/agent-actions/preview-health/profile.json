@@ -46,8 +46,7 @@
           "slug": "preview-health",
           "shell": "tick.sh",
           "fenceLabel": "kody-job-next-state"
-        },
-        "timeoutSec": 300
+        }
       }
     ],
     "postflight": [
