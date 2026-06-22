@@ -29,6 +29,12 @@ print("KODY_DUTY_REPORT=" + json.dumps({
     "evidence": {evidence: evidence_value},
     "facts": facts,
 }, separators=(",", ":")))
+print("KODY_DUTY_RESULT=" + json.dumps({
+    "version": 1,
+    "status": "pass" if evidence_value else "fail",
+    "summary": f"{evidence} {'passed' if evidence_value else 'failed'}",
+    "facts": facts,
+}, separators=(",", ":")))
 PY
 }
 

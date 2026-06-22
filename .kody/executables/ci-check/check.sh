@@ -18,6 +18,7 @@ timeout_seconds="${KODY_ARG_TIMEOUT_SECONDS:-0}"
 poll_seconds="${KODY_ARG_POLL_SECONDS:-30}"
 
 fail() {
+  emit_duty_result "blocked" "$1"
   echo "KODY_REASON=$1"
   echo "KODY_SKIP_AGENT=true"
   exit "${2:-1}"
@@ -44,6 +45,32 @@ for pair in sys.argv[4:]:
 print("KODY_DUTY_REPORT=" + json.dumps({
     "target": {"type": "goal", "id": goal_id},
     "evidence": {evidence: evidence_value},
+    "facts": facts,
+}, separators=(",", ":")))
+PY
+}
+
+emit_duty_result() {
+  local status="$1"
+  local summary="$2"
+  shift 2
+  python3 - "$status" "$summary" "$@" <<'PY'
+import json
+import sys
+
+status = sys.argv[1]
+summary = sys.argv[2]
+facts = {}
+for pair in sys.argv[3:]:
+    key, value = pair.split("=", 1)
+    if value == "":
+        continue
+    facts[key] = int(value) if value.isdigit() else value
+
+print("KODY_DUTY_RESULT=" + json.dumps({
+    "version": 1,
+    "status": status,
+    "summary": summary,
     "facts": facts,
 }, separators=(",", ":")))
 PY
@@ -114,25 +141,28 @@ while true; do
   detail=$(json_field "$summary" detail)
 
   case "$status" in
-    green)
-      emit_goal_report "true" "pr=${pr}" "ciStatus=green" "ciChecks=${checks}"
-      echo "KODY_REASON=CI green on PR #${pr} (${checks} checks)"
-      echo "KODY_SKIP_AGENT=true"
-      exit 0
-      ;;
-    failed)
-      emit_goal_report "false" "pr=${pr}" "ciStatus=failed" "ciChecks=${checks}" "ciFailed=${failed}" "ciDetail=${detail}"
-      echo "KODY_REASON=CI failed on PR #${pr}: ${detail}"
-      echo "KODY_SKIP_AGENT=true"
-      exit 0
+  green)
+    emit_goal_report "true" "pr=${pr}" "ciStatus=green" "ciChecks=${checks}"
+    emit_duty_result "pass" "CI green on PR #${pr} (${checks} checks)" "pr=${pr}" "ciStatus=green" "ciChecks=${checks}"
+    echo "KODY_REASON=CI green on PR #${pr} (${checks} checks)"
+    echo "KODY_SKIP_AGENT=true"
+    exit 0
+    ;;
+  failed)
+    emit_goal_report "false" "pr=${pr}" "ciStatus=failed" "ciChecks=${checks}" "ciFailed=${failed}" "ciDetail=${detail}"
+    emit_duty_result "fail" "CI failed on PR #${pr}: ${detail}" "pr=${pr}" "ciStatus=failed" "ciChecks=${checks}" "ciFailed=${failed}" "ciDetail=${detail}"
+    echo "KODY_REASON=CI failed on PR #${pr}: ${detail}"
+    echo "KODY_SKIP_AGENT=true"
+    exit 0
       ;;
   esac
 
-  if (( $(date +%s) >= deadline )); then
-    emit_goal_report "false" "pr=${pr}" "ciStatus=pending" "ciChecks=${checks}" "ciPending=${pending}" "ciDetail=${detail}"
-    echo "KODY_REASON=CI pending on PR #${pr}${detail:+: ${detail}}"
-    echo "KODY_SKIP_AGENT=true"
-    exit 0
+if (( $(date +%s) >= deadline )); then
+  emit_goal_report "false" "pr=${pr}" "ciStatus=pending" "ciChecks=${checks}" "ciPending=${pending}" "ciDetail=${detail}"
+  emit_duty_result "blocked" "CI pending on PR #${pr}${detail:+: ${detail}}" "pr=${pr}" "ciStatus=pending" "ciChecks=${checks}" "ciPending=${pending}" "ciDetail=${detail}"
+  echo "KODY_REASON=CI pending on PR #${pr}${detail:+: ${detail}}"
+  echo "KODY_SKIP_AGENT=true"
+  exit 0
   fi
 
   sleep "$poll_seconds"
