@@ -138,12 +138,24 @@ export function buildMongoQuery(collection, filters = {}) {
 
 function normalizeMongoDocument(doc, collection) {
   const idField = getCollectionIdField(collection)
-  const normalized = { ...doc }
-  if (normalized[idField] !== undefined) normalized[idField] = String(normalized[idField])
+  const normalized = normalizeMongoValue(doc)
   if (idField !== "id" && normalized.id === undefined && normalized[idField] !== undefined) {
     normalized.id = String(normalized[idField])
   }
   return normalized
+}
+
+function normalizeMongoValue(value) {
+  if (value === null || value === undefined) return value
+  if (value instanceof Date) return value.toISOString()
+  if (typeof value?.toHexString === "function") return value.toHexString()
+  if (Array.isArray(value)) return value.map((item) => normalizeMongoValue(item))
+  if (value && typeof value === "object") {
+    return Object.fromEntries(
+      Object.entries(value).map(([key, item]) => [key, normalizeMongoValue(item)]),
+    )
+  }
+  return value
 }
 
 function buildMongoSort(sort = []) {

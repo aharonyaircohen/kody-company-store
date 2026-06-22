@@ -24,7 +24,14 @@ describe("Mongo CMS adapter", () => {
     const db = new FakeDb({
       lessons: [
         { _id: "1", title: "B", status: "draft", order: 2 },
-        { _id: "2", title: "A", status: "published", order: 1 },
+        {
+          _id: fakeObjectId("2"),
+          title: "A",
+          status: "published",
+          order: 1,
+          chapter: fakeObjectId("chapter-1"),
+          updatedAt: new Date("2026-06-18T14:16:38.000Z"),
+        },
       ],
     })
     const adapter = createMongoCmsAdapter({ config, db })
@@ -34,7 +41,15 @@ describe("Mongo CMS adapter", () => {
     })
 
     assert.equal(result.total, 1)
-    assert.deepEqual(result.docs[0], { _id: "2", id: "2", title: "A", status: "published", order: 1 })
+    assert.deepEqual(result.docs[0], {
+      _id: "2",
+      id: "2",
+      title: "A",
+      status: "published",
+      order: 1,
+      chapter: "chapter-1",
+      updatedAt: "2026-06-18T14:16:38.000Z",
+    })
   })
 
   it("searches with the same safe filter path as list", async () => {
@@ -155,4 +170,8 @@ function matchesQuery(doc, query) {
     if (expected?.$regex) return new RegExp(expected.$regex, expected.$options).test(doc[field])
     return doc[field] === expected
   })
+}
+
+function fakeObjectId(value) {
+  return { toHexString: () => value }
 }
