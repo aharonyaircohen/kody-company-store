@@ -114,6 +114,5 @@
   },
   "action": "spec",
   "capabilityKind": "act",
-  "agent": "kody",
-  "every": "manual"
+  "agent": "kody"
 }

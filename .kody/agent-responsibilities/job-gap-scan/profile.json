@@ -3,7 +3,6 @@
   "describe": "Job gap scan",
   "action": "job-gap-scan",
   "agentAction": "job-gap-scan",
-  "every": "24h",
   "agent": "ceo",
   "mentions": [
     "aguyaharonyair"

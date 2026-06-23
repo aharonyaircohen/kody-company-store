@@ -2,7 +2,6 @@
   "name": "plan",
   "describe": "Issue Planning",
   "action": "plan",
-  "every": "manual",
   "agent": "kody",
   "agentAction": "plan",
   "capabilityKind": "act"

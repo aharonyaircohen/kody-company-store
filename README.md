@@ -7,6 +7,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
 - `.kody/agent-responsibilities/` contains shared agentResponsibility definitions.
 - `.kody/agent-actions/` contains shared agentAction definitions, prompts, and supporting scripts.
+- `.kody/commands/` contains shared Dashboard slash commands.
 - `.kody/goals/templates/` contains shared agentGoal and agentLoop templates.
 - `.kody/agents/` contains shared agent identity identities.
 - `cms/` contains generic CMS contracts, adapters, examples, and tests.
@@ -35,7 +36,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 }
 ```
 
-Scheduled company behavior should be activated through agentLoops. A agentResponsibility may declare `every`, but the active agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable agentLoop instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket in the configured state repo.
+Scheduled company behavior should be activated through agentGoals or agentLoops. Responsibilities do not declare cadence; the active goal/loop tick decides which responsibility runs. A store template is reusable until a consumer activates it or supplies repo facts. String activation creates one stable agentLoop instance from the matching template. Scheduled activation uses object form, `{ "template": "release-safety", "every": "1w" }`, to create one runtime instance per time bucket in the configured state repo.
 
 See [docs/activation.md](docs/activation.md) for the full activation contract.
 
@@ -43,6 +44,7 @@ See [docs/activation.md](docs/activation.md) for the full activation contract.
 
 - `agentResponsibilities`: available responsibilities and command wrappers under `.kody/agent-responsibilities/<slug>/`
 - `agentActions`: runnable agent/tool definitions under `.kody/agent-actions/<slug>/`
+- `commands`: Dashboard slash command templates under `.kody/commands/<slug>.md`
 - `goals`: managed agentGoal and agentLoop templates under `.kody/goals/templates/<slug>/state.json`
 - `agent`: agent identity files under `.kody/agents/<slug>.md`
 - `cms`: generic CMS adapter contracts and implementations under `cms/`

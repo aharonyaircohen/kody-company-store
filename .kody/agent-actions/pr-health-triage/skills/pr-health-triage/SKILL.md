@@ -15,8 +15,8 @@ Runtime state is owned by the engine. Do not ask the agentResponsibility author 
 > (`agent: cto`). Every 15 minutes, read the open pull requests, detect
 > which ones need a mechanical repair, and — per the operator's trust
 > ledger — either recommend the repair or (once that verb has graduated)
-> dispatch it. Cadence is enforced by the engine via `every: 15m`; no
-> prose cadence guard needed.
+> dispatch it. Schedule is enforced by the owning goal/loop; no
+> prose skip guard is needed.
 
 ## Job
 

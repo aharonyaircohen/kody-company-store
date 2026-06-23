@@ -1,7 +1,6 @@
 {
   "name": "agent-responsibility-review",
   "describe": "AgentResponsibility Review",
-  "every": "6h",
   "agent": "coo",
   "agentActions": [
     "agent-responsibility-review"

@@ -1,7 +1,6 @@
 {
   "name": "pr-health-triage",
   "describe": "PR Health Triage",
-  "every": "15m",
   "mentions": [
     "aguyaharonyair"
   ],

@@ -76,6 +76,7 @@ Use the existing layout for the asset kind:
 
 - AgentResponsibility: `.kody/agent-responsibilities/<slug>/profile.json`, plus `agent-responsibility.md` when needed.
 - AgentAction: `.kody/agent-actions/<slug>/profile.json`, plus prompt/script files.
+- Command: `.kody/commands/<slug>.md`.
 - Goal template: `.kody/goals/templates/<slug>/state.json`.
 - Agent: `.kody/agents/<slug>.md`.
 - CMS adapter: `cms/contract`, `cms/adapters/<adapter>`, plus focused tests.
@@ -84,8 +85,9 @@ Choose stable slugs. Renaming a slug is a breaking change for consumers that
 reference it from agentResponsibilities, agentActions, scripts, or dashboards.
 
 Store agentResponsibilities and goals must be safe as inactive catalog entries. Do not add
-`disabled: true` to every shared agentResponsibility; activation belongs in the consumer repo's
-`kody.config.json`. Store goal templates should start with `state: "inactive"`.
+`disabled: true` or cadence fields to shared agentResponsibilities; activation belongs in
+the consumer repo's `kody.config.json`. Store goal templates should start with
+`state: "inactive"`.
 
 See [activation.md](activation.md) for the full activation contract.
 

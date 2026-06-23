@@ -1,7 +1,6 @@
 {
   "name": "approval-gate",
   "describe": "Approval Gate",
-  "every": "15m",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

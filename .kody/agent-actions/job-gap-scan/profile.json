@@ -9,7 +9,7 @@
       "flag": "--agentResponsibility",
       "type": "string",
       "required": true,
-      "describe": "Scheduled agentResponsibility slug whose sidecar state is loaded and updated."
+      "describe": "Runtime agentResponsibility slug whose sidecar state is loaded and updated."
     }
   ],
   "claudeCode": {

@@ -3,8 +3,6 @@
   "describe": "Task Leader",
   "action": "task-leader",
   "agentAction": "task-leader",
-  "every": "15m",
-  "agent": "kody",
   "agent": "kody",
   "readyPreviewCap": "15",
   "smallChangeMaxLines": "200",

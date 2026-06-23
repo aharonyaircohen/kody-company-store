@@ -1,7 +1,6 @@
 {
   "name": "task-memorize",
   "describe": "Task Memorize",
-  "every": "30m",
   "agent": "coo",
   "agentActions": [
     "task-memorize"

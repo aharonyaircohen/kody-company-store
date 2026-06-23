@@ -29,7 +29,7 @@ The issue should include:
 
 - proposed agentResponsibility slug
 - agent owner
-- cadence
+- goal/loop schedule that would run it
 - stage template
 - agentAction slug
 - expected report/comment/output

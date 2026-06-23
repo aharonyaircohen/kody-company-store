@@ -1,7 +1,6 @@
 {
   "name": "memory-compaction",
   "describe": "Memory Compaction",
-  "every": "7d",
   "agent": "coo",
   "agentActions": [
     "compact-memory"

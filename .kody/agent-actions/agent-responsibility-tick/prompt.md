@@ -10,7 +10,7 @@ The agentResponsibility below assigns you, agent **`{{agentSlug}}`**, as its exe
 
 ## The agentResponsibility
 
-Slug **`{{dutySlug}}`** — *{{dutyTitle}}*, assigned to agent **`{{agentSlug}}`**, running on agentAction **`{{executableSlug}}`**. The agentResponsibility body below is authoritative for *what* to do, *when* (cadence), allowed commands, and state schema. It is human-edited — re-read it every tick. Execute it **as** the agent identity above.
+Slug **`{{dutySlug}}`** — *{{dutyTitle}}*, assigned to agent **`{{agentSlug}}`**, running on agentAction **`{{executableSlug}}`**. The agentResponsibility body below is authoritative for *what* to do, allowed commands, and state schema. The owning goal or loop decides when this runs. It is human-edited — re-read it every tick. Execute it **as** the agent identity above.
 
 **Addressing the operator.** When the agentResponsibility body tells you to @-mention the operator (e.g. the first line of an inbox recommendation), the exact handle(s) to use are: {{mentions}}. Copy that string **verbatim** — never invent, abbreviate, guess, or retype a GitHub username. A wrong handle silently fails to route to the operator's inbox, so the recommendation is lost. If the line above is blank, the agentResponsibility declared no operator; post without a mention.
 
@@ -30,7 +30,7 @@ This is the state you wrote at the end of the previous tick (or `null` if this i
 
 ## What to do on this tick
 
-`forceRun = {{args.force}}` — set to `true` when an operator clicked "Run now" on the dashboard. When `forceRun` is `true`, ignore the agentResponsibility body's `**Cadence guard.**` paragraph (or any equivalent "skip if last run was within X" rule) and execute the work as if the guard had passed. All other body rules — allowed commands, restrictions, state schema — still apply. Force only overrides cadence.
+`forceRun = {{args.force}}` — set to `true` when an operator clicked "Run now" on the dashboard. When `forceRun` is `true`, treat this as an operator-requested execution. All body rules — allowed commands, restrictions, state schema — still apply.
 
 1. **Check `done`.** If the prior state has `done: true`, emit the same state back unchanged and exit without any action.
 2. **Re-read the agentResponsibility body.** It may have changed since the last tick.

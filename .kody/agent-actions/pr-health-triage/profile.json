@@ -53,6 +53,5 @@
   },
   "action": "pr-health-triage",
   "capabilityKind": "act",
-  "agent": "cto",
-  "every": "15m"
+  "agent": "cto"
 }

@@ -2,7 +2,6 @@
   "name": "research",
   "describe": "Issue Research",
   "action": "research",
-  "every": "manual",
   "agent": "kody",
   "agentAction": "research",
   "capabilityKind": "observe"

@@ -1,7 +1,6 @@
 {
   "name": "design-review",
   "describe": "Design Review",
-  "every": "7d",
   "agent": "ux-designer",
   "agentActions": [
     "design-review"

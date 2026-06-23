@@ -3,8 +3,6 @@
   "describe": "Task Verifier",
   "action": "task-verifier",
   "agentAction": "task-verifier",
-  "every": "1h",
-  "agent": "kody",
   "agent": "kody",
   "backlogScopeRule": "open issues with zero labels",
   "sortOrder": "oldest first",

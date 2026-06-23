@@ -2,7 +2,6 @@
   "name": "resolve",
   "describe": "PR Conflict Resolution",
   "action": "resolve",
-  "every": "manual",
   "agent": "kody",
   "agentAction": "resolve",
   "capabilityKind": "act"

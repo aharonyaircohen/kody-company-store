@@ -2,7 +2,7 @@
 
 Use the `approval-gate` skill.
 
-Run only the work requested by the matching agentResponsibility. Follow the agentResponsibility profile metadata for cadence, agent, mentions, and safety limits.
+Run only the work requested by the matching agentResponsibility. Follow the agentResponsibility profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)
 

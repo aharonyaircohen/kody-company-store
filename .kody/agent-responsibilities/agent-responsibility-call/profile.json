@@ -1,7 +1,6 @@
 {
   "name": "agent-responsibility-call",
   "describe": "AgentResponsibility Call",
-  "every": "1d",
   "agent": "ceo",
   "agentActions": [
     "agent-responsibility-call"

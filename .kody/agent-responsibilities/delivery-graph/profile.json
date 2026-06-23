@@ -1,7 +1,6 @@
 {
   "name": "delivery-graph",
   "describe": "Delivery Graph - refresh CI and PR flow reports",
-  "every": "1h",
   "agent": "coo",
   "agentAction": "delivery-graph",
   "readsFrom": [

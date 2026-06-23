@@ -7,6 +7,7 @@ Kody store assets live under roots declared in `kody-store.json`.
   "assetRoots": {
     "agent-responsibilities": ".kody/agent-responsibilities",
     "agent-actions": ".kody/agent-actions",
+    "commands": ".kody/commands",
     "goals": ".kody/goals/templates",
     "agent": ".kody/agents",
     "cms": "cms"
@@ -28,15 +29,15 @@ Path:
 
 Common files:
 
-- `profile.json`: agentResponsibility metadata, cadence, agent, mentions, and agentAction link.
+- `profile.json`: agentResponsibility metadata, agent, mentions, and agentAction link.
 - `agent-responsibility.md`: human-readable agentResponsibility instructions.
 
-Store agentResponsibilities are inactive by default. `every` is a suggested cadence, not
-permission to run in every repo. A consumer activates store agentResponsibilities in
+Store agentResponsibilities are inactive by default. They do not own cadence.
+A consumer activates scheduled company behavior through goal/loop templates in
 `kody.config.json`:
 
 ```json
-{ "company": { "activeAgentResponsibilities": ["release"] } }
+{ "company": { "activeGoals": ["release-safety"] } }
 ```
 
 ## AgentActions
@@ -55,6 +56,21 @@ Common files:
 
 AgentAction scripts should consume environment variables provided by the runtime.
 They should not own consumer secrets or decrypt repo-local vaults inside store.
+
+## Commands
+
+Path:
+
+```text
+.kody/commands/<slug>.md
+```
+
+Commands are Dashboard slash command templates. Frontmatter stores the menu
+description and argument hint; the body is the prompt template expanded by
+KodyChat.
+
+Consumer repo commands override store commands by slug. Store commands must not
+contain repo-specific runtime state, generated output, or secrets.
 
 ## Agent
 

@@ -31,7 +31,7 @@ never revisits.
    close the tracking issue, clear `data.openIssue`.
 4. **Open, ≥ 2h old, no report** → comment the stall, close it, clear state
    (the next eligible tick re-runs). A stuck sweep must never wedge the agentResponsibility.
-5. **Otherwise** (cadence guard passed, none open) → open a tracking issue and
+5. **Otherwise** (no active sweep is open) → open a tracking issue and
    dispatch with no scope:
    ```
    gh issue create --title "QA sweep $(date -u +%Y-%m-%d)" --label kody:qa-sweep \

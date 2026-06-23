@@ -3,8 +3,6 @@
   "describe": "UI Review",
   "action": "ui-review",
   "agentAction": "ui-review",
-  "every": "manual",
-  "agent": "kody",
   "agent": "kody",
   "capabilityKind": "verify"
 }

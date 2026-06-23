@@ -3,7 +3,6 @@
   "describe": "Deploy Vercel dev preview",
   "action": "vercel-dev-deploy",
   "agentAction": "vercel-dev-deploy",
-  "every": "manual",
   "agent": "cto",
   "reviewer": "cto",
   "mentions": [

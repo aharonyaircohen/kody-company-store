@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "test": "node --test \"cms/tests/*.test.mjs\"",
+    "test": "node --test \"cms/tests/*.test.mjs\" \"tests/*.test.mjs\"",
     "cms:validate": "node cms/bin/cms.mjs validate",
     "cms:tools": "node cms/bin/cms.mjs tools"
   }

@@ -1,7 +1,6 @@
 {
   "name": "docs-health",
   "describe": "Docs Health - catch documentation drift and coverage gaps",
-  "every": "1d",
   "agent": "tech-writer",
   "mentions": [
     "aguyaharonyair"

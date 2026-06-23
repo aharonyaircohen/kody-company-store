@@ -3,7 +3,6 @@
   "describe": "Dev CI health",
   "action": "dev-ci-health",
   "agentAction": "dev-ci-health",
-  "every": "15m",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

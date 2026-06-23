@@ -1,7 +1,6 @@
 {
   "name": "system-audit",
   "describe": "System Audit",
-  "every": "30m",
   "agent": "coo",
   "agentActions": [
     "system-audit"

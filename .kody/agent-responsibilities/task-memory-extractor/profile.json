@@ -3,7 +3,6 @@
   "describe": "Task memory extractor",
   "action": "task-memory-extractor",
   "agentAction": "task-memory-extractor",
-  "every": "30m",
   "agent": "coo",
   "capabilityKind": "act"
 }

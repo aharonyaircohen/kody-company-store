@@ -14,7 +14,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 
 Store goals are inactive agentGoal or agentLoop templates. Consumer repos activate the company model through `company.activeGoals`.
 
-AgentLoops own scheduled agentResponsibility decisions. A agentResponsibility may declare `every`, `agent`, and `agentAction`, but the agentLoop tick decides whether that agentResponsibility is due, skipped, blocked, or selected.
+AgentLoops own when responsibilities run. A agentResponsibility declares `agent` and `agentAction`; the agentLoop tick decides which responsibility runs.
 
 Default agentLoop templates:
 
@@ -54,7 +54,7 @@ Store agentResponsibilities are available responsibilities or commands. They are
 Rules:
 
 - Scheduled company behavior should be activated through `company.activeGoals`.
-- AgentResponsibility cadence is reusable agentResponsibility information; goal tick owns the scheduling decision.
+- AgentResponsibilities do not own cadence; goal/loop ticks own the scheduling decision.
 - Manual agentResponsibility runs still work from the dashboard or workflow dispatch.
 - `company.activeAgentResponsibilities` is legacy compatibility; do not use it for new scheduled company behavior.
 - Local repo agentResponsibilities remain repo-owned.
@@ -67,7 +67,7 @@ Rules:
 kody-store = menu
 consumer repo = decides what is enabled
 agentResponsibility = available responsibility or command
-agentGoal/agentLoop = operator promise that owns scheduled agentResponsibility decisions
+agentGoal/agentLoop = operator promise that owns when responsibilities run
 activation = permission to run
 scheduled agentLoop = template creates new runtime instance per bucket
 ```

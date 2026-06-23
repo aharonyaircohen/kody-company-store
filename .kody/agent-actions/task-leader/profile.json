@@ -58,6 +58,5 @@
   },
   "action": "task-leader",
   "capabilityKind": "act",
-  "agent": "kody",
-  "every": "15m"
+  "agent": "kody"
 }

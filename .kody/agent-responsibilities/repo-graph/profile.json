@@ -1,7 +1,6 @@
 {
   "name": "repo-graph",
   "describe": "Repo Graph - refresh dependency and documentation topology reports",
-  "every": "1d",
   "agent": "cto",
   "agentAction": "repo-graph",
   "readsFrom": [

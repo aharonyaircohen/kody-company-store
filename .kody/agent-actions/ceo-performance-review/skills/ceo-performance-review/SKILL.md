@@ -21,7 +21,7 @@ responsibilities they own**.
 
 An employee's "work" is the set of agentResponsibilities whose profile names them
 (`"agent": "<slug>"`). Their delivery quality is read from the **evidence those
-agentResponsibilities leave behind**: state files advancing on cadence, reports/comments
+agentResponsibilities leave behind**: state files advancing when their goal/loop runs, reports/comments
 that aren't stale or empty, output that's useful rather than churn or noise.
 
 This agentResponsibility cannot measure subjective taste or judge free-form prose quality —
@@ -37,10 +37,9 @@ Reports page surfaces. Past weeks live in that file's git history.
 
 ## Tick procedure (all agent, one report write)
 
-Cadence is the `"every": "7d"` agentResponsibility profile value — the engine enforces it. Do **not**
-add a prose "skip if within 7 days" guard (that duplicates the schedule and
-has caused regressions). State is recorded only for the dashboard "next run"
-readout and the week-over-week delta.
+The running goal/loop owns cadence. Do **not** add a prose "skip if within
+7 days" guard inside the responsibility; that duplicates scheduling and has
+caused regressions. State is recorded for the week-over-week delta.
 
 1. **Pin the repo.** `gh`'s default repo is not guaranteed here:
 
@@ -72,12 +71,12 @@ readout and the week-over-week delta.
 
 4. **Gather each employee's delivery evidence.** For every _active_ agentResponsibility
    they own:
-   - **State history:** configured Kody state repo `agent-responsibilities/<slug>/state.json` history when available — is the agentResponsibility advancing roughly on its cadence, or frozen?
+   - **State history:** configured Kody state repo `agent-responsibilities/<slug>/state.json` history when available — is the agentResponsibility advancing when its goal/loop runs, or frozen?
    - **Output:** any tracking issue the agentResponsibility posts to, or `reports/<slug>.md` in the configured Kody state repo — did it produce real findings this week, or is it stale/empty? Repeated byte-identical no-op comments count as **churn**, not delivery.
 
 5. **Grade each employee** on three observable axes, each Low / Med / High:
    - **Delivery** — did their active agentResponsibilities actually run and produce output this week? (No active agentResponsibilities → _idle_, ungraded.)
-   - **Consistency** — did state advance on roughly the promised cadence, or are runs missed / frozen?
+   - **Consistency** — did state advance when the owning goal/loop ran, or are runs missed / frozen?
    - **Signal** — is the output useful (real findings, advancing work) versus churn / empty no-ops / noise?
      Roll the three into a one-word **Grade**: `strong` / `steady` / `weak` /
      `idle`. When the signal is genuinely ambiguous, say so and grade
@@ -142,7 +141,7 @@ subjective quality._` line (**no timestamp** — `lastRunISO` lives in
 - **No timestamp in the report body.** `lastRunISO` lives in state, so an
   unchanged week is byte-identical (skip-PUT on no diff is free).
 - **Measure delivery, not taste.** Grade only what the evidence shows
-  (ran / produced / on cadence). Never claim an employee's output is
+  (ran / produced / kept up with its goal or loop). Never claim an employee's output is
   "good" or "bad" in substance — claim their responsibilities were or
   weren't delivered.
 - **Don't penalize disabled agentResponsibilities.** `disabled: true` is the operator's

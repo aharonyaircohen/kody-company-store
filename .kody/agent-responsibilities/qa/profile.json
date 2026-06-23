@@ -1,7 +1,6 @@
 {
   "name": "qa",
   "describe": "QA Changelog Verification",
-  "every": "30m",
   "agent": "qa",
   "mentions": [
     "aguyaharonyair"

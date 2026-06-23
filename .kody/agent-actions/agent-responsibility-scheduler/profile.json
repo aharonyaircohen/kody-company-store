@@ -1,16 +1,15 @@
 {
   "name": "agent-responsibility-scheduler",
   "role": "watch",
-  "describe": "Explicit agentResponsibility tick helper. Scheduled agentResponsibility fan-out is owned by goal-scheduler; this only runs when a agentResponsibility slug is provided.",
-  "kind": "scheduled",
-  "schedule": "*/5 * * * *",
+  "describe": "Compatibility agentResponsibility helper. Goals and loops own responsibility fan-out; this helper does not create schedule.",
+  "kind": "oneshot",
   "inputs": [
     {
       "name": "agentResponsibility",
       "flag": "--agentResponsibility",
       "type": "string",
       "required": false,
-      "describe": "Optional agentResponsibility slug run instead scanning every due agentResponsibility."
+      "describe": "Optional agentResponsibility slug for legacy explicit runs. Scheduled fan-out belongs to goals and loops."
     }
   ],
   "claudeCode": {
