@@ -27,6 +27,7 @@ import subprocess
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
+from urllib.parse import urlparse
 
 local_templates_dir = Path(sys.argv[1])
 store_templates_dir = Path(sys.argv[2])
@@ -134,26 +135,39 @@ def bucket_suffix(every: str, now: datetime) -> str:
 
 
 def find_template(template: str) -> Path | None:
-    for root in template_roots:
-        candidate = root / template / "state.json"
-        if candidate.exists():
-            return candidate
-    return None
+  for root in template_roots:
+    candidate = root / template / "state.json"
+    if candidate.exists():
+      return candidate
+  return None
+
+
+def normalize_state_repo(raw: object, field: str = "state.repo") -> str:
+  value = str(raw or "").strip()
+  if value.startswith(("http://", "https://")):
+    parsed = urlparse(value)
+    if parsed.scheme != "https" or parsed.netloc != "github.com":
+      raise RuntimeError(f"kody.config.json: {field} must be a GitHub repository URL")
+    value = parsed.path.strip("/").removesuffix(".git")
+  parts = value.split("/")
+  if len(parts) != 2 or not all(parts) or not all(SLUG.match(part) for part in parts):
+    raise RuntimeError(f"kody.config.json: {field} must be owner/repo or https://github.com/owner/repo")
+  return value
 
 
 def state_target(config: dict) -> tuple[str, str]:
-    if LOCAL_MODE:
-        return "__local__", ""
+  if LOCAL_MODE:
+    return "__local__", ""
     github = config.get("github") if isinstance(config.get("github"), dict) else {}
     owner = github.get("owner")
     repo = github.get("repo")
     if not isinstance(owner, str) or not owner or not isinstance(repo, str) or not repo:
         name_with_owner = gh(["repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner"]).strip()
         owner, repo = name_with_owner.split("/", 1)
-    state = config.get("state") if isinstance(config.get("state"), dict) else {}
-    state_repo = state.get("repo") or config.get("stateRepo") or f"{owner}/kody-state"
-    state_path = state.get("path") or config.get("statePath") or repo
-    return str(state_repo).strip(), str(state_path).strip().strip("/")
+  state = config.get("state") if isinstance(config.get("state"), dict) else {}
+  state_repo = state.get("repo") or config.get("stateRepo") or f"{owner}/kody-state"
+  state_path = state.get("path") or config.get("statePath") or repo
+  return normalize_state_repo(state_repo), str(state_path).strip().strip("/")
 
 
 def state_file_path(state_base: str, goal_id: str) -> str:
