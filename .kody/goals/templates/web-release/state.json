@@ -9,12 +9,12 @@
     "outcome": "Release is prepared, merged to main, and deployed to Vercel production.",
     "evidence": ["releasePrExists", "mainMerged", "productionDeployed"]
   },
-  "agentResponsibilities": ["release", "release-merge", "vercel-production-deploy"],
+  "agentResponsibilities": ["release-prepare", "release-merge", "vercel-production-deploy"],
   "route": [
     {
       "stage": "release",
       "evidence": "releasePrExists",
-      "agentResponsibility": "release",
+      "agentResponsibility": "release-prepare",
       "agentAction": "release-prepare",
       "args": {
         "issue": { "fact": "issue" },
