@@ -28,6 +28,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
 
 local_templates_dir = Path(sys.argv[1])
 store_templates_dir = Path(sys.argv[2])
@@ -37,6 +38,7 @@ LOCAL_MODE = os.environ.get("KODY_GOAL_SCHEDULER_SKIP_PERSIST") == "1"
 
 SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
 INTERVAL = re.compile(r"^(\d+)([mhdw])$")
+PREFERRED_TIME = re.compile(r"^([01]\d|2[0-3]):[0-5]\d$")
 MANAGED_KEYS = ("type", "destination", "agentResponsibilities", "route", "facts", "blockers")
 
 
@@ -94,10 +96,25 @@ def active_goal_config(config: dict) -> tuple[set[str], list[dict]]:
             entry["every"] = every.strip()
         if isinstance(item.get("idPrefix"), str) and item["idPrefix"].strip():
             entry["idPrefix"] = item["idPrefix"].strip()
+        preferred = parse_preferred_run_time(item.get("preferredRunTime"))
+        if preferred:
+            entry["preferredRunTime"] = preferred
         if isinstance(item.get("facts"), dict):
             entry["facts"] = item["facts"]
         schedules.append(entry)
     return active, schedules
+
+
+def parse_preferred_run_time(raw: object) -> dict | None:
+    if not isinstance(raw, dict):
+        return None
+    time = raw.get("time")
+    timezone_name = raw.get("timezone")
+    if not isinstance(time, str) or not PREFERRED_TIME.match(time.strip()):
+        return None
+    if not isinstance(timezone_name, str) or not timezone_name.strip():
+        return None
+    return {"time": time.strip(), "timezone": timezone_name.strip()}
 
 
 def now_utc() -> datetime:
@@ -132,6 +149,26 @@ def bucket_suffix(every: str, now: datetime) -> str:
     if amount == 1 and unit == "h":
         return now.strftime("%Y-%m-%dT%H")
     return f"b{int(now.timestamp()) // interval_seconds(every)}"
+
+
+def preferred_schedule_now(schedule: dict, now: datetime) -> tuple[bool, str, datetime]:
+    preferred = schedule.get("preferredRunTime")
+    if not isinstance(preferred, dict):
+        return True, "", now
+    timezone_name = preferred.get("timezone")
+    time = preferred.get("time")
+    if not isinstance(timezone_name, str) or not isinstance(time, str):
+        return False, "invalid preferredRunTime", now
+    try:
+        local_now = now.astimezone(ZoneInfo(timezone_name))
+    except Exception:
+        return False, f"invalid preferred timezone: {timezone_name}", now
+    hour, minute = [int(part) for part in time.split(":", 1)]
+    current_minute = local_now.hour * 60 + local_now.minute
+    preferred_minute = hour * 60 + minute
+    if current_minute < preferred_minute:
+        return False, f"waiting preferred time {time} {timezone_name}", local_now
+    return True, "", local_now
 
 
 def find_template(template: str) -> Path | None:
@@ -298,11 +335,14 @@ for schedule in schedules:
         active.add(schedule["template"])
         continue
     try:
-        suffix = bucket_suffix(every, now)
+        due, reason, schedule_now = preferred_schedule_now(schedule, now)
+        if not due:
+            print(f"[goal-scheduler] skip {schedule['template']}: {reason}")
+            continue
+        suffix = bucket_suffix(every, schedule_now)
         prefix = schedule.get("idPrefix") or schedule["template"]
         goal_id = f"{prefix}-{suffix}"
         active.add(goal_id)
-        active.add(schedule["template"])
         facts = schedule.get("facts") if isinstance(schedule.get("facts"), dict) else {}
         if create_instance_from_template(state_repo, state_base, schedule["template"], goal_id, now, facts):
             created.append(goal_id)
