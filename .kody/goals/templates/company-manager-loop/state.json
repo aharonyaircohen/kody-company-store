@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "company-manager-loop",
+  "state": "inactive",
+  "type": "agentLoop",
+  "scheduleMode": "agentLoop",
+  "title": "CTO manages company intent",
+  "description": "CTO reads active intents and manages the goals/loops portfolio.",
+  "destination": {
+    "outcome": "Agency goals and loops stay aligned with active company intents.",
+    "evidence": []
+  },
+  "agentResponsibilities": ["company-manager"],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

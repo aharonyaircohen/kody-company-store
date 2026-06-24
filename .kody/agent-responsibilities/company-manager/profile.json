@@ -1,0 +1,9 @@
+{
+  "name": "company-manager",
+  "describe": "CTO Company Manager - read intents and manage the goals/loops portfolio",
+  "action": "company-manager",
+  "agentAction": "company-manager",
+  "every": "1d",
+  "agent": "cto",
+  "capabilityKind": "act"
+}
