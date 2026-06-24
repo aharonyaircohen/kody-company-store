@@ -5,7 +5,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 ```json
 {
   "company": {
-    "activeGoals": ["prs-stay-mergeable", "product-quality"]
+    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality"]
   }
 }
 ```
@@ -19,6 +19,7 @@ AgentLoops own when responsibilities run. A agentResponsibility declares `agent`
 Default agentLoop templates:
 
 - `prs-stay-mergeable`
+- `ci-health`
 - `product-quality`
 - `codebase-health`
 - `release-safety`

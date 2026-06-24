@@ -2,19 +2,18 @@
   "version": 1,
   "kind": "template",
   "template": true,
-  "templateId": "prs-stay-mergeable",
+  "templateId": "ci-health",
   "state": "inactive",
   "type": "maintain",
   "scheduleMode": "agentLoop",
-  "title": "PRs stay mergeable",
-  "description": "Keep pull requests current, green, and repairable.",
+  "title": "CI stays healthy",
+  "description": "Watch branch CI and surface broken builds quickly.",
   "destination": {
-    "outcome": "Pull requests stay mergeable and blocked PRs are surfaced quickly.",
+    "outcome": "Branch CI failures are detected and routed before they block delivery.",
     "evidence": []
   },
   "agentResponsibilities": [
-    "pr-health-triage",
-    "redispatch"
+    "dev-ci-health"
   ],
   "route": [],
   "stage": "watching",

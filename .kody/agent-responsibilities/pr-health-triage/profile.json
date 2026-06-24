@@ -7,7 +7,7 @@
   "agentActions": [
     "pr-health-triage"
   ],
-  "disabled": true,
+  "disabled": false,
   "capabilityKind": "act",
   "agent": "cto"
 }

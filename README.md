@@ -31,7 +31,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 ```json
 {
   "company": {
-    "activeGoals": ["prs-stay-mergeable", "product-quality"]
+    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality"]
   }
 }
 ```
