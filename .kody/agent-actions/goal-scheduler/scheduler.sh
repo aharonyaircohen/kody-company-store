@@ -311,6 +311,29 @@ def read_goal_state(state_repo: str, state_base: str, goal_id: str) -> dict | No
     return read_remote_json(state_repo, state_file_path(state_base, goal_id))
 
 
+def schedule_prefix(schedule: dict) -> str:
+    return str(schedule.get("idPrefix") or schedule["template"])
+
+
+def schedule_key(schedule: dict) -> tuple[str, str]:
+    return schedule["template"], schedule_prefix(schedule)
+
+
+def goal_template(data: dict) -> str | None:
+    template = data.get("template") or data.get("sourceTemplate") or data.get("templateId")
+    return template if isinstance(template, str) else None
+
+
+def is_managed_goal(data: dict) -> bool:
+    return all(key in data for key in MANAGED_KEYS)
+
+
+def is_scheduled_instance(goal_id: str, data: dict, schedule: dict) -> bool:
+    template = goal_template(data)
+    prefix = schedule_prefix(schedule)
+    return template == schedule["template"] and goal_id.startswith(f"{prefix}-")
+
+
 config = load_config()
 active, schedules = active_goal_config(config)
 if not active and not schedules:
@@ -321,6 +344,28 @@ state_repo, state_base = state_target(config)
 now = now_utc()
 created: list[str] = []
 errors: list[str] = []
+goal_ids = list_goal_ids(state_repo, state_base)
+goal_state_cache: dict[str, dict | None] = {}
+scheduled_recurring = [schedule for schedule in schedules if schedule.get("every")]
+
+
+def cached_goal_state(goal_id: str) -> dict | None:
+    if goal_id not in goal_state_cache:
+        goal_state_cache[goal_id] = read_goal_state(state_repo, state_base, goal_id)
+    return goal_state_cache[goal_id]
+
+
+scheduled_active: dict[tuple[str, str], set[str]] = {}
+for goal_id in goal_ids:
+    try:
+        data = cached_goal_state(goal_id)
+    except Exception:
+        continue
+    if not isinstance(data, dict) or data.get("state") != "active" or not is_managed_goal(data):
+        continue
+    for schedule in scheduled_recurring:
+        if is_scheduled_instance(goal_id, data, schedule):
+            scheduled_active.setdefault(schedule_key(schedule), set()).add(goal_id)
 
 for goal_id in sorted(active):
     try:
@@ -340,7 +385,15 @@ for schedule in schedules:
             print(f"[goal-scheduler] skip {schedule['template']}: {reason}")
             continue
         suffix = bucket_suffix(every, schedule_now)
-        prefix = schedule.get("idPrefix") or schedule["template"]
+        prefix = schedule_prefix(schedule)
+        running = scheduled_active.get(schedule_key(schedule), set())
+        if running:
+            active.update(running)
+            print(
+                f"[goal-scheduler] skip {schedule['template']}: "
+                f"active scheduled instance already running ({', '.join(sorted(running))})"
+            )
+            continue
         goal_id = f"{prefix}-{suffix}"
         active.add(goal_id)
         facts = schedule.get("facts") if isinstance(schedule.get("facts"), dict) else {}
@@ -354,7 +407,7 @@ for goal_id in created:
 for error in errors:
     print(f"[goal-scheduler] schedule skipped: {error}")
 
-goal_ids = list_goal_ids(state_repo, state_base)
+goal_ids = sorted(set(goal_ids) | set(created))
 if not goal_ids:
     print("[goal-scheduler] no goal instances yet")
     print("KODY_SKIP_AGENT=true")
@@ -364,18 +417,22 @@ active_count = 0
 managed_active = 0
 for goal_id in goal_ids:
     try:
-        data = read_goal_state(state_repo, state_base, goal_id)
+        data = cached_goal_state(goal_id)
     except Exception as err:
         print(f"[goal-scheduler] skip {goal_id}: failed to read state ({err})")
         continue
     if not isinstance(data, dict):
         continue
-    template = data.get("template") or data.get("sourceTemplate") or data.get("templateId")
-    activated = goal_id in active or (isinstance(template, str) and template in active)
+    template = goal_template(data)
+    activated = (
+        goal_id in active
+        or (isinstance(template, str) and template in active)
+        or any(is_scheduled_instance(goal_id, data, schedule) for schedule in scheduled_recurring)
+    )
     if not activated or data.get("state") != "active":
         continue
     active_count += 1
-    managed = all(key in data for key in MANAGED_KEYS)
+    managed = is_managed_goal(data)
     if not managed:
         print(f"[goal-scheduler] skip {goal_id}: legacy goal files are not managed-goal instances")
         continue
