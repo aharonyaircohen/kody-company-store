@@ -334,6 +334,23 @@ def is_scheduled_instance(goal_id: str, data: dict, schedule: dict) -> bool:
     return template == schedule["template"] and goal_id.startswith(f"{prefix}-")
 
 
+def parse_state_time(value: object) -> float:
+    if not isinstance(value, str) or not value:
+        return 0
+    try:
+        raw = value[:-1] + "+00:00" if value.endswith("Z") else value
+        return datetime.fromisoformat(raw).timestamp()
+    except Exception:
+        return 0
+
+
+def scheduled_instance_sort_key(goal_id: str) -> tuple[float, str]:
+    data = goal_state_cache.get(goal_id)
+    if not isinstance(data, dict):
+        return 0, goal_id
+    return parse_state_time(data.get("createdAt") or data.get("updatedAt")), goal_id
+
+
 config = load_config()
 active, schedules = active_goal_config(config)
 if not active and not schedules:
@@ -366,6 +383,10 @@ for goal_id in goal_ids:
     for schedule in scheduled_recurring:
         if is_scheduled_instance(goal_id, data, schedule):
             scheduled_active.setdefault(schedule_key(schedule), set()).add(goal_id)
+scheduled_selected = {
+    key: {sorted(ids, key=scheduled_instance_sort_key)[0]} for key, ids in scheduled_active.items() if ids
+}
+selected_scheduled_ids = {goal_id for ids in scheduled_selected.values() for goal_id in ids}
 
 for goal_id in sorted(active):
     try:
@@ -386,7 +407,7 @@ for schedule in schedules:
             continue
         suffix = bucket_suffix(every, schedule_now)
         prefix = schedule_prefix(schedule)
-        running = scheduled_active.get(schedule_key(schedule), set())
+        running = scheduled_selected.get(schedule_key(schedule), set())
         if running:
             active.update(running)
             print(
@@ -427,7 +448,7 @@ for goal_id in goal_ids:
     activated = (
         goal_id in active
         or (isinstance(template, str) and template in active)
-        or any(is_scheduled_instance(goal_id, data, schedule) for schedule in scheduled_recurring)
+        or goal_id in selected_scheduled_ids
     )
     if not activated or data.get("state") != "active":
         continue
