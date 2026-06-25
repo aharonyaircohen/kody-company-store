@@ -28,6 +28,7 @@ import sys
 from datetime import datetime, timezone
 from pathlib import Path
 from urllib.parse import urlparse
+from zoneinfo import ZoneInfo
 
 local_templates_dir = Path(sys.argv[1])
 store_templates_dir = Path(sys.argv[2])
@@ -96,6 +97,12 @@ def active_goal_config(config: dict) -> tuple[set[str], list[dict]]:
             entry["idPrefix"] = item["idPrefix"].strip()
         if isinstance(item.get("facts"), dict):
             entry["facts"] = item["facts"]
+        preferred = item.get("preferredRunTime")
+        if isinstance(preferred, dict):
+            time_value = preferred.get("time")
+            timezone_value = preferred.get("timezone")
+            if isinstance(time_value, str) and isinstance(timezone_value, str):
+                entry["preferredRunTime"] = {"time": time_value, "timezone": timezone_value}
         schedules.append(entry)
     return active, schedules
 
@@ -116,6 +123,27 @@ def interval_seconds(every: str) -> int:
     amount = int(match.group(1))
     unit = match.group(2)
     return amount * {"m": 60, "h": 3600, "d": 86400, "w": 604800}[unit]
+
+def preferred_runtime_wait_reason(schedule: dict, now: datetime) -> str | None:
+    preferred = schedule.get("preferredRunTime")
+    if not isinstance(preferred, dict):
+        return None
+    time_value = preferred.get("time")
+    timezone_value = preferred.get("timezone")
+    if not isinstance(time_value, str) or not isinstance(timezone_value, str):
+        return None
+    match = re.match(r"^([01]\d|2[0-3]):([0-5]\d)$", time_value)
+    if not match:
+        return f"invalid preferred time: {time_value}"
+    try:
+        local = now.astimezone(ZoneInfo(timezone_value))
+    except Exception:
+        return f"invalid preferred timezone: {timezone_value}"
+    preferred_minute = int(match.group(1)) * 60 + int(match.group(2))
+    current_minute = local.hour * 60 + local.minute
+    if current_minute < preferred_minute:
+        return f"waiting preferred time {time_value} {timezone_value}"
+    return None
 
 
 def bucket_suffix(every: str, now: datetime) -> str:
@@ -367,6 +395,12 @@ for schedule in schedules:
         suffix = bucket_suffix(every, now)
         prefix = schedule_prefix(schedule)
         running = scheduled_selected.get(schedule_key(schedule), set())
+        wait_reason = preferred_runtime_wait_reason(schedule, now)
+        if wait_reason:
+            if running:
+                active.update(running)
+            print(f"[goal-scheduler] skip {schedule['template']}: {wait_reason}")
+            continue
         if running:
             active.update(running)
             print(
