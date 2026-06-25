@@ -3,10 +3,12 @@ set -euo pipefail
 
 ORIGINAL_BRANCH=""
 goal_id="${KODY_ARG_GOAL:-}"
+failure_reported=0
 
 fail() {
-  echo "FAILED: $1"
-  exit 1
+echo "FAILED: $1"
+emit_goal_failure "$1" || true
+exit 1
 }
 
 require_command() {
@@ -45,6 +47,33 @@ print("KODY_AGENT_RESPONSIBILITY_RESULT=" + json.dumps({
 }, separators=(",", ":")))
 PY
 }
+
+emit_goal_failure() {
+local summary="$1"
+[[ -z "$goal_id" ]] && return 0
+[[ "$failure_reported" = "1" ]] && return 0
+failure_reported=1
+command -v python3 >/dev/null 2>&1 || return 0
+python3 - "$summary" <<'PY'
+import json
+import sys
+
+summary = sys.argv[1]
+print("KODY_AGENT_RESPONSIBILITY_RESULT=" + json.dumps({
+    "version": 1,
+    "status": "fail",
+    "summary": summary,
+    "facts": {},
+}, separators=(",", ":")))
+PY
+}
+
+on_error() {
+local status="$1"
+emit_goal_failure "Vercel production deploy failed with exit ${status}" || true
+}
+
+trap 'on_error "$?"' ERR
 
 require_command git
 require_command node
@@ -135,7 +164,9 @@ if [ -n "$SCOPE" ]; then
 fi
 
 echo "Deploying ${current_branch} to Vercel production..."
-"${vercel_cmd[@]}" deploy --prod --yes --format=json "${vercel_args[@]}" | tee "$tmp_json"
+if ! "${vercel_cmd[@]}" deploy --prod --yes --format=json "${vercel_args[@]}" | tee "$tmp_json"; then
+fail "Vercel production deploy command failed"
+fi
 
 deployment_url="$(
   # shellcheck disable=SC2016
