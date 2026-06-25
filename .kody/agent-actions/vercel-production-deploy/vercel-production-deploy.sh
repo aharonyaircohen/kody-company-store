@@ -95,15 +95,15 @@ export VERCEL_ORG_ID VERCEL_PROJECT_ID
 
 token="${VERCEL_ACCESS_TOKEN:-${VERCEL_TOKEN:-}}"
 if [ -z "$token" ]; then
-  fail "VERCEL_ACCESS_TOKEN is required"
+  fail "Kody secret VERCEL_ACCESS_TOKEN is required"
 fi
 
 if [ -z "$VERCEL_ORG_ID" ]; then
-  fail "VERCEL_ORG_ID is required"
+  fail "Kody secret VERCEL_ORG_ID is required"
 fi
 
 if [ -z "$VERCEL_PROJECT_ID" ]; then
-  fail "VERCEL_PROJECT_ID is required"
+  fail "Kody secret VERCEL_PROJECT_ID is required"
 fi
 
 ORIGINAL_BRANCH="$(git branch --show-current)"

@@ -1,7 +1,7 @@
 {
   "name": "vercel-production-deploy",
   "role": "primitive",
-  "describe": "Deploy main branch to Vercel Production.",
+  "describe": "Deploy main branch to Vercel Production. Requires Kody secrets VERCEL_ACCESS_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID.",
   "inputs": [
     {
       "name": "goal",
