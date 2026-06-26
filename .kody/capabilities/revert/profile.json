@@ -118,6 +118,5 @@
     ]
   },
   "action": "revert",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

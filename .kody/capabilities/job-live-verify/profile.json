@@ -53,6 +53,5 @@
       }
     ]
   },
-  "action": "job-live-verify",
-  "capabilityKind": "verify"
+  "action": "job-live-verify"
 }

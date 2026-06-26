@@ -50,7 +50,6 @@
     ]
   },
   "agent": "cto",
-  "capabilityKind": "observe",
   "readsFrom": [
     "dependency-graph",
     "docs-graph"

@@ -115,6 +115,5 @@
     ]
   },
   "action": "resolve",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

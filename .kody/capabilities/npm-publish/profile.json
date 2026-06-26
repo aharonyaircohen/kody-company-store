@@ -95,6 +95,5 @@
     ]
   },
   "action": "npm-publish",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

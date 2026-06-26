@@ -124,6 +124,5 @@
     ]
   },
   "action": "reproduce",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

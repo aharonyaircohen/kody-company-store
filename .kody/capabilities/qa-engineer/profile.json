@@ -130,6 +130,5 @@
     ]
   },
   "action": "qa-engineer",
-  "capabilityKind": "verify",
   "agent": "qa"
 }

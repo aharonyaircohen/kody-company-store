@@ -65,6 +65,5 @@
     ]
   },
   "action": "company-manager",
-  "capabilityKind": "act",
   "agent": "cto"
 }

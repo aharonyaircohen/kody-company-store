@@ -93,6 +93,5 @@
     ]
   },
   "action": "classify",
-  "capabilityKind": "act",
   "agent": "kody"
 }

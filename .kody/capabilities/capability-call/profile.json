@@ -52,7 +52,6 @@
     ]
   },
   "agent": "ceo",
-  "capabilityKind": "observe",
   "implementations": [
     "capability-call"
   ]

@@ -59,7 +59,6 @@
     ]
   },
   "action": "preview-health",
-  "capabilityKind": "act",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

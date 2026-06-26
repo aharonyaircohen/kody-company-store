@@ -52,7 +52,6 @@
     ]
   },
   "agent": "coo",
-  "capabilityKind": "observe",
   "implementations": [
     "health-check"
   ]

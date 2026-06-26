@@ -60,6 +60,5 @@
       }
     ]
   },
-  "action": "verify-release-pr-ready",
-  "capabilityKind": "verify"
+  "action": "verify-release-pr-ready"
 }

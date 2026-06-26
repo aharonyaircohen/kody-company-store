@@ -52,7 +52,6 @@
     ]
   },
   "action": "pr-health-triage",
-  "capabilityKind": "act",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

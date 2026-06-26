@@ -1,7 +1,6 @@
 {
   "action": "kody-operator",
   "agent": "kody",
-  "capabilityKind": "act",
   "describe": "kody-operator",
   "implementation": "kody-chat",
   "name": "kody-operator"

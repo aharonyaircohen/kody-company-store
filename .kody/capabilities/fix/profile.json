@@ -106,6 +106,5 @@
     ]
   },
   "action": "fix",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

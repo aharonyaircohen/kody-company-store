@@ -82,6 +82,5 @@
       }
     ]
   },
-  "action": "release-deploy",
-  "capabilityKind": "act"
+  "action": "release-deploy"
 }

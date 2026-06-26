@@ -53,6 +53,5 @@
       "AGENT_NOT_RUN"
     ]
   },
-  "agent": "cto",
-  "capabilityKind": "observe"
+  "agent": "cto"
 }

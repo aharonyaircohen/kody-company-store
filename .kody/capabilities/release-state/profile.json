@@ -62,6 +62,5 @@
       }
     ]
   },
-  "action": "release-state",
-  "capabilityKind": "observe"
+  "action": "release-state"
 }

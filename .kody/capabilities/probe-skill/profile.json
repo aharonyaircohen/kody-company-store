@@ -59,6 +59,5 @@
       }
     ]
   },
-  "action": "probe-skill",
-  "capabilityKind": "verify"
+  "action": "probe-skill"
 }

@@ -1,7 +1,6 @@
 {
   "action": "kody-mem",
   "agent": "kody",
-  "capabilityKind": "act",
   "describe": "kody-mem",
   "implementation": "kody-chat",
   "name": "kody-mem"

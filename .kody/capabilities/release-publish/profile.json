@@ -82,6 +82,5 @@
       }
     ]
   },
-  "action": "release-publish",
-  "capabilityKind": "act"
+  "action": "release-publish"
 }

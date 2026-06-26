@@ -52,7 +52,6 @@
     ]
   },
   "agent": "ceo",
-  "capabilityKind": "verify",
   "implementations": [
     "ceo-performance-review"
   ]

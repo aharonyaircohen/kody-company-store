@@ -65,6 +65,5 @@
     ],
     "postflight": []
   },
-  "action": "preview-build",
-  "capabilityKind": "act"
+  "action": "preview-build"
 }

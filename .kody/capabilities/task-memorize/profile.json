@@ -67,7 +67,6 @@
     ]
   },
   "agent": "coo",
-  "capabilityKind": "act",
   "implementations": [
     "task-memorize"
   ]

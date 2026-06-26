@@ -58,6 +58,5 @@
       "MERGE_SKIPPED"
     ]
   },
-  "action": "merge",
-  "capabilityKind": "act"
+  "action": "merge"
 }

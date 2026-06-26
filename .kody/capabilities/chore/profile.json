@@ -81,6 +81,5 @@
     ]
   },
   "action": "chore",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

@@ -113,6 +113,5 @@
     ]
   },
   "action": "spec",
-  "capabilityKind": "act",
   "agent": "kody"
 }

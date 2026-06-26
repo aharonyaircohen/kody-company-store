@@ -52,7 +52,6 @@
     ]
   },
   "agent": "ux-designer",
-  "capabilityKind": "verify",
   "implementations": [
     "design-review"
   ]

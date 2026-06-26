@@ -80,6 +80,5 @@
     ]
   },
   "action": "auto-fix-ci",
-  "capabilityKind": "act",
   "agent": "kody"
 }

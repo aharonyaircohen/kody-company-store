@@ -48,6 +48,5 @@
     "postflight": []
   },
   "action": "sync",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

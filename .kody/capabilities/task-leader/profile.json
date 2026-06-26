@@ -57,6 +57,5 @@
     ]
   },
   "action": "task-leader",
-  "capabilityKind": "act",
   "agent": "kody"
 }

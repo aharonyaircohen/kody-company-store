@@ -54,6 +54,5 @@
       "AGENT_NOT_RUN"
     ]
   },
-  "agent": "coo",
-  "capabilityKind": "observe"
+  "agent": "coo"
 }

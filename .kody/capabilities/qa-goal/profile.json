@@ -65,6 +65,5 @@
     ],
     "postflight": []
   },
-  "action": "qa-goal",
-  "capabilityKind": "verify"
+  "action": "qa-goal"
 }

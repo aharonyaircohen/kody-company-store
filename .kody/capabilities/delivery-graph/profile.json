@@ -48,7 +48,6 @@
     ]
   },
   "agent": "coo",
-  "capabilityKind": "observe",
   "readsFrom": [
     "ci-health-graph",
     "pr-graph"

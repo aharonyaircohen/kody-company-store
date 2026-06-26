@@ -67,6 +67,5 @@
       }
     ]
   },
-  "action": "verify-deployment-live",
-  "capabilityKind": "verify"
+  "action": "verify-deployment-live"
 }

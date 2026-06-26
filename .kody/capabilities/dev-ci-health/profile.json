@@ -71,7 +71,6 @@
     ]
   },
   "action": "dev-ci-health",
-  "capabilityKind": "act",
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"

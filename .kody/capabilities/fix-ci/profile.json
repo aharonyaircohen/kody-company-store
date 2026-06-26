@@ -79,6 +79,5 @@
     ]
   },
   "action": "fix-ci",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

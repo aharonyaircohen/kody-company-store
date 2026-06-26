@@ -108,6 +108,5 @@
     ]
   },
   "action": "release-prepare",
-  "capabilityKind": "act",
   "describe": "Prepare a release PR."
 }

@@ -1,7 +1,6 @@
 {
   "action": "kody-vibe",
   "agent": "kody",
-  "capabilityKind": "act",
   "describe": "kody-vibe",
   "implementation": "kody-chat",
   "name": "kody-vibe"

@@ -67,6 +67,5 @@
       }
     ]
   },
-  "action": "verify-package-published",
-  "capabilityKind": "verify"
+  "action": "verify-package-published"
 }

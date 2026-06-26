@@ -145,6 +145,5 @@
     ]
   },
   "action": "research",
-  "agent": "kody",
-  "capabilityKind": "observe"
+  "agent": "kody"
 }

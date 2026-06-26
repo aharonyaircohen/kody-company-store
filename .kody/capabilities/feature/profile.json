@@ -99,6 +99,5 @@
     ]
   },
   "action": "feature",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

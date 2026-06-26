@@ -1,6 +1,5 @@
 {
   "agent": "coo",
-  "capabilityKind": "observe",
   "implementations": [
     "compact-memory"
   ],

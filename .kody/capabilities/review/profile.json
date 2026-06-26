@@ -99,6 +99,5 @@
     ]
   },
   "action": "review",
-  "agent": "kody",
-  "capabilityKind": "verify"
+  "agent": "kody"
 }

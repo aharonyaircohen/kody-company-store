@@ -81,6 +81,5 @@
     ]
   },
   "action": "auto-sync",
-  "capabilityKind": "act",
   "agent": "kody"
 }

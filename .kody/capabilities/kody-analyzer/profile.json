@@ -1,7 +1,6 @@
 {
   "action": "kody-analyzer",
   "agent": "kody",
-  "capabilityKind": "observe",
   "describe": "kody-analyzer",
   "implementation": "kody-chat",
   "name": "kody-analyzer"

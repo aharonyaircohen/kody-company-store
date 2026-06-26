@@ -55,7 +55,6 @@
   "mentions": [
     "aguyaharonyair"
   ],
-  "capabilityKind": "observe",
   "implementations": [
     "qa-sweep"
   ]

@@ -74,6 +74,5 @@
     ],
     "postflight": []
   },
-  "action": "agent-ask",
-  "capabilityKind": "act"
+  "action": "agent-ask"
 }

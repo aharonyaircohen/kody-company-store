@@ -71,6 +71,5 @@
       "VERIFY_FAILED"
     ]
   },
-  "action": "plan-verify",
-  "capabilityKind": "verify"
+  "action": "plan-verify"
 }

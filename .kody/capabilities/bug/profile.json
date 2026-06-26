@@ -94,6 +94,5 @@
     ]
   },
   "action": "bug",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

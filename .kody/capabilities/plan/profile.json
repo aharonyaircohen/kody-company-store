@@ -77,6 +77,5 @@
     ]
   },
   "action": "plan",
-  "agent": "kody",
-  "capabilityKind": "act"
+  "agent": "kody"
 }

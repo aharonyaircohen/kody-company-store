@@ -33,6 +33,5 @@
     ],
     "postflight": []
   },
-  "action": "init",
-  "capabilityKind": "act"
+  "action": "init"
 }
