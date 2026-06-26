@@ -2,12 +2,15 @@
 
 ## Job
 
-Run the bug workflow end-to-end: reproduce the reported failure, fix it, verify it, then open a pull request with evidence.
+Run the full Bug Flow end-to-end: reproduce the reported failure, plan the fix, implement it, review the pull request, then fix review findings when needed.
 
 ## Workflow
 
 1. `reproduce` — write and commit a focused failing test that proves the bug.
-2. `run` — fix the bug using the reproduced failure artifact, run verification, and open or update the pull request.
+2. `plan` — produce the implementation plan from the reproduced failure.
+3. `run` — fix the bug using the reproduced failure artifact, run verification, and open or update the pull request.
+4. `review` — review the pull request.
+5. `fix` — run only when review reports concerns or a blocking failure.
 
 ## Output
 

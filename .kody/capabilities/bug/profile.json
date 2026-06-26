@@ -1,18 +1,39 @@
 {
   "name": "bug",
   "action": "bug",
-  "describe": "Run the bug workflow: reproduce the reported failure, then fix and verify it.",
+  "describe": "Run the full Bug Flow: reproduce the failure, plan the fix, implement it, review the PR, and fix review findings when needed.",
   "capabilityKind": "act",
   "agent": "kody",
   "workflow": {
     "steps": [
       {
         "capability": "reproduce",
+        "target": "issue",
         "reason": "Reproduce the reported bug with a focused failing test and preserve the failure signature."
       },
       {
+        "capability": "plan",
+        "target": "issue",
+        "reason": "Create the implementation plan from the reproduced failure and issue context."
+      },
+      {
         "capability": "run",
-        "reason": "Fix the bug using the reproduced failure artifact, then verify the focused test and full quality gates."
+        "target": "issue",
+        "reason": "Implement the fix, verify it, and open or update the pull request."
+      },
+      {
+        "capability": "review",
+        "target": "pr",
+        "continueOn": ["REVIEW_FAIL"],
+        "reason": "Review the generated pull request before calling the bug flow complete."
+      },
+      {
+        "capability": "fix",
+        "target": "pr",
+        "runWhen": {
+          "lastOutcome.type": ["REVIEW_CONCERNS", "REVIEW_FAIL"]
+        },
+        "reason": "Apply review feedback when the review reports concerns or a blocking failure."
       }
     ]
   }

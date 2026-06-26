@@ -2,11 +2,13 @@
 
 ## Job
 
-Complete a maintenance chore issue end-to-end and open a pull request when needed.
+Run the Chore Flow end-to-end: complete the scoped maintenance change, review the pull request, then fix review findings when needed.
 
-## Executable
+## Workflow
 
-Run the `chore` executable. Its chore session skill owns the detailed method.
+1. `run` — complete the scoped chore, verify it, and open or update the pull request.
+2. `review` — review the pull request.
+3. `fix` — run only when review reports concerns or a blocking failure.
 
 ## Output
 
@@ -14,7 +16,7 @@ A verified maintenance change or a clear no-change result.
 
 ## Allowed Commands
 
-- Run the `chore` executable.
+- Run the `chore` workflow.
 
 ## Restrictions
 

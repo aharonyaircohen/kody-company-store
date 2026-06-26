@@ -2,11 +2,15 @@
 
 ## Job
 
-Implement a feature, enhancement, or refactor issue end-to-end and open a pull request.
+Run the Feature Flow end-to-end: research the requested change, plan it, implement it, review the pull request, then fix review findings when needed.
 
-## Executable
+## Workflow
 
-Run the `feature` executable. Its skills and scripts own the detailed implementation method.
+1. `research` — understand the feature/refactor request and relevant repo context.
+2. `plan` — produce the implementation plan.
+3. `run` — implement the plan, verify it, and open or update the pull request.
+4. `review` — review the pull request.
+5. `fix` — run only when review reports concerns or a blocking failure.
 
 ## Output
 
@@ -14,7 +18,7 @@ A verified branch and pull request linked to the source issue.
 
 ## Allowed Commands
 
-- Run the `feature` executable.
+- Run the `feature` workflow.
 
 ## Restrictions
 
