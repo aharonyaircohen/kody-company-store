@@ -2,11 +2,12 @@
 
 ## Job
 
-Reproduce and fix a bug issue end-to-end, then open a pull request with verification evidence.
+Run the bug workflow end-to-end: reproduce the reported failure, fix it, verify it, then open a pull request with evidence.
 
-## Executable
+## Workflow
 
-Run the `bug` executable. Its systematic debugging skill owns the detailed repair method.
+1. `reproduce` — write and commit a focused failing test that proves the bug.
+2. `run` — fix the bug using the reproduced failure artifact, run verification, and open or update the pull request.
 
 ## Output
 
@@ -14,7 +15,7 @@ A verified fix branch and pull request linked to the source issue.
 
 ## Allowed Commands
 
-- Run the `bug` executable.
+- Run the `bug` workflow.
 
 ## Restrictions
 
