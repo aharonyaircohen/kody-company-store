@@ -1,13 +1,13 @@
 ---
 name: skills-research
-description: Research skills from skills.sh and recommend which Kody Dashboard agentActions should use them.
+description: Research skills from skills.sh and recommend which Kody Dashboard executables should use them.
 ---
 
 # Skills Research Skill
 
-Use this skill when the `skills-research` agentAction runs from the matching agentResponsibility.
+Use this skill when the `skills-research` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -24,28 +24,28 @@ Start with:
 
 Also read local context before recommending placement:
 
-- `.kody/agent-actions/*/profile.json`
-- `.kody/agent-actions/*/skills/*/SKILL.md`
-- `docs/agent-actions.md`
-- `docs/agent-responsibilities.md`
+- `.kody/executables/*/profile.json`
+- `.kody/executables/*/skills/*/SKILL.md`
+- `docs/executables.md`
+- `docs/capabilities.md`
 
 ## Evaluation
 
-First inventory existing skills from `.kody/agent-actions/*/skills/*/SKILL.md`
-and `.kody/agent-actions/*/profile.json`.
+First inventory existing skills from `.kody/executables/*/skills/*/SKILL.md`
+and `.kody/executables/*/profile.json`.
 
 Then remove:
 
-- skills already installed in the right agentAction
+- skills already installed in the right executable
 - skills that overlap an existing skill without adding a clear new capability
-- broad “nice to have” skills with no immediate agentAction placement
+- broad “nice to have” skills with no immediate executable placement
 - skills that should be local repo knowledge instead of external guidance
 
 For each remaining gap, record:
 
 - skill name and URL
 - what it helps with
-- which agentAction should use it
+- which executable should use it
 - why it belongs there
 - risk or review note
 - install priority: high, medium, low
@@ -67,9 +67,9 @@ over long wishlists. Recommend only skills that improve real dashboard work:
 - Add build/design skills to `feature` and sometimes `plan`.
 - Add UI audit skills to `ui-review` and sometimes `review`.
 - Add browser/testing skills to `qa-engineer` and `ui-review`.
-- Add CI skills to `fix-ci` and CI-related agentResponsibilities.
-- Add security skills to `review` or a security agentAction.
-- Create a new agentAction only when the skill is itself a runnable action.
+- Add CI skills to `fix-ci` and CI-related capabilities.
+- Add security skills to `review` or a security executable.
+- Create a new executable only when the skill is itself a runnable action.
 
 ## Report
 
@@ -85,7 +85,7 @@ reviewArea: engineering-capability
 findings:
   - id: missing-vitest-skill
     severity: medium
-    title: Add Vitest skill to test-writing agentActions
+    title: Add Vitest skill to test-writing executables
     linkedUrl: https://www.skills.sh/antfu/skills/vitest
 ---
 
@@ -129,9 +129,9 @@ If the report content is byte-identical to the existing report, skip the write.
 ## Restrictions
 
 - Do not install skills.
-- Do not edit agentActions, agentResponsibilities, docs, or source files.
+- Do not edit executables, capabilities, docs, or source files.
 - Do not open issues or PRs.
-- Do not recommend skills without a clear agentAction placement.
+- Do not recommend skills without a clear executable placement.
 - Do not list already-installed skills as recommendations.
 - Do not list duplicate skills unless the report explains why they were skipped.
 - Only write `reports/skills-research.md`.

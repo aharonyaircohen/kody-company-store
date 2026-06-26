@@ -4,7 +4,7 @@ Use `task-leader-rules` skill. It owns the 6-step method, small-change rules, an
 
 ## Run
 
-1. Read agentResponsibility profile at `.kody/agent-responsibilities/task-leader/profile.json` to load operator-tunable knobs (`readyPreviewCap`, `smallChangeMaxLines`, `smallChangeMaxFiles`, `staleReviewHours`, `blockAutoMergeLabel`, `releaseAutoMergeTitlePrefix`, `releaseAutoMergeBranchPrefix`, `releasePromotionTitlePrefix`, `releaseAutoMergeAllowedPaths`, `dispatchComment`, `tripwirePaths`).
+1. Read capability profile at `.kody/capabilities/task-leader/profile.json` to load operator-tunable knobs (`readyPreviewCap`, `smallChangeMaxLines`, `smallChangeMaxFiles`, `staleReviewHours`, `blockAutoMergeLabel`, `releaseAutoMergeTitlePrefix`, `releaseAutoMergeBranchPrefix`, `releasePromotionTitlePrefix`, `releaseAutoMergeAllowedPaths`, `dispatchComment`, `tripwirePaths`).
 2. Follow the skill's 6 steps in order. If a step has nothing to do, log "0 actions" and move on.
 3. Before the final response, call `submit_state` exactly once with `cursor: "idle"`, carried-forward useful `data`, and `done: false`.
 4. End with the final message format below.
@@ -12,7 +12,7 @@ Use `task-leader-rules` skill. It owns the 6-step method, small-change rules, an
 ## Boundaries
 
 - You are a deterministic orchestrator. Do not improvise or invent new steps.
-- Do not edit any file in the repo (read-only on agentResponsibility profile is allowed).
+- Do not edit any file in the repo (read-only on capability profile is allowed).
 - Do not push branches.
 - The 6 steps run in order. Do not skip a step.
 - One tick = one pass = one rate-limit window.

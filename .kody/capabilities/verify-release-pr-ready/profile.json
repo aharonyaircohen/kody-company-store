@@ -56,7 +56,7 @@
     ],
     "postflight": [
       {
-        "script": "applyAgentResponsibilityReports"
+        "script": "applyCapabilityReports"
       }
     ]
   },

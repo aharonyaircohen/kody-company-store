@@ -28,13 +28,15 @@ describe("Store capabilities", () => {
     }
   });
 
-  it("keeps legacy roots as temporary compatibility mirrors only", async () => {
+  it("does not expose legacy action or removed capability roots", async () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
     const roots = manifest.assetRoots;
+    const removedCapabilityRoot = ["agent", "respon", "sibilities"].join("-");
+    const oldActionsRoot = ["agent", "actions"].join("-");
 
-    assert.equal(roots["agent-responsibilities"], ".kody/agent-responsibilities");
-    assert.equal(roots["agent-actions"], ".kody/agent-actions");
-    assert.equal(existsSync(new URL("../.kody/agent-responsibilities/", import.meta.url)), true);
-    assert.equal(existsSync(new URL("../.kody/agent-actions/", import.meta.url)), true);
+    assert.equal(roots[removedCapabilityRoot], undefined);
+    assert.equal(roots[oldActionsRoot], undefined);
+    assert.equal(existsSync(new URL(`../.kody/${removedCapabilityRoot}/`, import.meta.url)), false);
+    assert.equal(existsSync(new URL(`../.kody/${oldActionsRoot}/`, import.meta.url)), false);
   });
 });

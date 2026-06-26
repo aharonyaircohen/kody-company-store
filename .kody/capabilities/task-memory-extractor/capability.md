@@ -2,13 +2,13 @@
 
 ## Job
 
-Every tick, run the local `task-memory-extractor` agentAction tick:
+Every tick, run the local `task-memory-extractor` executable tick:
 
 ```bash
-bash .kody/agent-actions/task-memory-extractor/tick.sh
+bash .kody/executables/task-memory-extractor/tick.sh
 ```
 
-The agentAction is the source of truth for scanning `.kody/tasks/*/memory-recs.json`, writing high-confidence memory files, updating `INDEX.md`, marking tasks extracted, and committing any promoted memory.
+The executable is the source of truth for scanning `.kody/tasks/*/memory-recs.json`, writing high-confidence memory files, updating `INDEX.md`, marking tasks extracted, and committing any promoted memory.
 
 ## Restrictions
 

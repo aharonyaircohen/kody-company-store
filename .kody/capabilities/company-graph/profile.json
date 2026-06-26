@@ -48,7 +48,7 @@
   },
   "agent": "coo",
   "capabilityKind": "observe",
-  "agentActions": [
+  "implementations": [
     "company-graph"
   ],
   "readsFrom": [

@@ -38,7 +38,7 @@
     ],
     "postflight": [
       {
-        "script": "applyAgentResponsibilityReports"
+        "script": "applyCapabilityReports"
       },
       {
         "script": "appendCompanyActivity"

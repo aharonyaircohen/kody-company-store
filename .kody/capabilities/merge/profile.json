@@ -2,7 +2,7 @@
   "name": "merge",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Self-gating squash-merge of an open PR into its base. Deterministic, no agent: merges only when GitHub reports the PR CLEAN (mergeable + required checks/reviews satisfied); otherwise refuses and comments why. Used by the CTO qa-merge agentResponsibility once a QA-goal PR has graduated.",
+  "describe": "Self-gating squash-merge of an open PR into its base. Deterministic, no agent: merges only when GitHub reports the PR CLEAN (mergeable + required checks/reviews satisfied); otherwise refuses and comments why. Used by the CTO qa-merge capability once a QA-goal PR has graduated.",
   "inputs": [
     {
       "name": "pr",

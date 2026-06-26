@@ -6,9 +6,9 @@ Create or assemble Kody agency model definitions from an operator request.
 
 ## Instructions
 
-Use the `agent-factory` agentAction for model reasoning and state-repo PR creation.
+Use the `agent-factory` executable for model reasoning and state-repo PR creation.
 
-The agentResponsibility owns the public action name and the review boundary. The agentAction owns reading the request issue, producing the structured bundle, and opening the configured state-repo PR.
+The capability owns the public action name and the review boundary. The executable owns reading the request issue, producing the structured bundle, and opening the configured state-repo PR.
 
 ## Boundaries
 

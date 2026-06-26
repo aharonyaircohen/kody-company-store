@@ -30,7 +30,7 @@
   "cliTools": [
     "gh"
   ],
-  "agentResponsibilityTools": [
+  "capabilityTools": [
     "read_check_runs",
     "ensure_issue",
     "dispatch_workflow",
@@ -39,7 +39,7 @@
   "scripts": {
     "preflight": [
       {
-        "script": "loadAgentResponsibilityState"
+        "script": "loadCapabilityState"
       },
       {
         "script": "buildSyntheticPlugin"

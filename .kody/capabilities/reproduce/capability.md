@@ -4,9 +4,9 @@
 
 Reproduce a bug and capture the failure signature without fixing it.
 
-## AgentAction
+## Executable
 
-Run the `reproduce` agentAction. Its bug reproduction skill owns the detailed method.
+Run the `reproduce` executable. Its bug reproduction skill owns the detailed method.
 
 ## Output
 
@@ -14,10 +14,10 @@ A failing test or reproduction notes that prove the bug.
 
 ## Allowed Commands
 
-- Run the `reproduce` agentAction.
+- Run the `reproduce` executable.
 
 ## Restrictions
 
-- Do not fix the bug from this agentResponsibility.
-- Preserve the failure signal for a later fix agentResponsibility.
+- Do not fix the bug from this capability.
+- Preserve the failure signal for a later fix capability.
 - Report clearly if the bug cannot be reproduced.

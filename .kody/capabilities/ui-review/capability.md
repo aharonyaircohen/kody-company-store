@@ -2,15 +2,15 @@
 
 ## Job
 
-Run the `ui-review` agentAction for a pull request.
+Run the `ui-review` executable for a pull request.
 
-## AgentAction
+## Executable
 
 Run `ui-review` with the PR number supplied by the dispatch comment.
 
 ## Allowed Commands
 
-- Run `ui-review` agentAction.
+- Run `ui-review` executable.
 
 ## Restrictions
 

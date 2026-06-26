@@ -53,7 +53,7 @@
   },
   "agent": "ux-designer",
   "capabilityKind": "verify",
-  "agentActions": [
+  "implementations": [
     "design-review"
   ]
 }

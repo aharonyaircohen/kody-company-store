@@ -1,8 +1,0 @@
-{
-  "name": "bug",
-  "describe": "Bug Fix",
-  "action": "bug",
-  "agent": "kody",
-  "agentAction": "bug",
-  "capabilityKind": "act"
-}

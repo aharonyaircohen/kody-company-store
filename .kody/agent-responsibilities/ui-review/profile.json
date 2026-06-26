@@ -1,8 +1,0 @@
-{
-  "name": "ui-review",
-  "describe": "UI Review",
-  "action": "ui-review",
-  "agentAction": "ui-review",
-  "agent": "kody",
-  "capabilityKind": "verify"
-}

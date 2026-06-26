@@ -1,3 +1,3 @@
 # Probe Skill
 
-Run the probe skill test agentAction.
+Run the probe skill test executable.

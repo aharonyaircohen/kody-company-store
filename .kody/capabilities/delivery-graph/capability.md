@@ -4,9 +4,9 @@
 
 Refresh the hourly delivery context reports: CI health and pull request flow.
 
-## AgentAction
+## Executable
 
-Run the `delivery-graph` agentAction. It owns the CI health and PR graph refresh steps.
+Run the `delivery-graph` executable. It owns the CI health and PR graph refresh steps.
 
 ## Output
 
@@ -14,7 +14,7 @@ Refresh `.kody/reports/ci-health-graph.md` and `.kody/reports/pr-graph.md`.
 
 ## Allowed Commands
 
-- Run the `delivery-graph` agentAction.
+- Run the `delivery-graph` executable.
 
 ## Restrictions
 

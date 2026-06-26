@@ -4,9 +4,9 @@
 
 Run a periodic design-health sweep for visual coherence, usability, and accessibility risks.
 
-## AgentAction
+## Executable
 
-Run the `design-review` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `design-review` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,11 +14,11 @@ A tracking issue or nudge for the design sweep.
 
 ## Allowed Commands
 
-- Run the `design-review` agentAction.
+- Run the `design-review` executable.
 
 ## Restrictions
 
 - Do not edit UI directly.
-- Do not open PRs from the agentResponsibility.
+- Do not open PRs from the capability.
 - At most one tracking issue or comment per tick.
 - Report concrete user-visible issues only.

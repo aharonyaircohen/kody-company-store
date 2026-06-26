@@ -56,7 +56,7 @@
     "aguyaharonyair"
   ],
   "capabilityKind": "verify",
-  "agentActions": [
+  "implementations": [
     "approval-gate"
   ]
 }

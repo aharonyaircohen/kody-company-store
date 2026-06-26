@@ -10,7 +10,7 @@ Treat cleanup as one grouped housekeeping pass:
 4. Run the `dead-code-sweep` method for unused exports, files, and dependency cleanup candidates.
 5. Respect each skill's safety, deduplication, and one-action limits. Prefer a quiet no-op over speculative cleanup.
 
-Run only the work requested by the matching agentResponsibility. Follow the agentResponsibility profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
+Run only the work requested by the matching capability. Follow the capability profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)
 

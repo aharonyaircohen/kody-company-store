@@ -1,7 +1,0 @@
-{
-  "name": "preview-build",
-  "action": "preview-build",
-  "agentAction": "preview-build",
-  "describe": "Build and publish a per-PR preview.",
-  "capabilityKind": "act"
-}

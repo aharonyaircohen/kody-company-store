@@ -4,9 +4,9 @@
 
 Review open PRs for conflicts, failed CI, or stale branches, then recommend or dispatch the trusted repair.
 
-## AgentAction
+## Executable
 
-Run the `pr-health-triage` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `pr-health-triage` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A PR repair recommendation or trusted repair dispatch.
 
 ## Allowed Commands
 
-- Run the `pr-health-triage` agentAction.
+- Run the `pr-health-triage` executable.
 
 ## Restrictions
 

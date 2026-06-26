@@ -68,7 +68,7 @@
   },
   "agent": "coo",
   "capabilityKind": "act",
-  "agentActions": [
+  "implementations": [
     "task-memorize"
   ]
 }

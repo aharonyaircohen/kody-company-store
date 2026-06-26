@@ -4,9 +4,9 @@
 
 Review QA goal PRs. Verify each candidate, reject duplicates or failed fixes, and recommend or dispatch merge only when the trust ledger allows it.
 
-## AgentAction
+## Executable
 
-Run the `approval-gate` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `approval-gate` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ Inbox recommendation, QA verification dispatch, or trusted merge dispatch on the
 
 ## Allowed Commands
 
-- Run the `approval-gate` agentAction.
+- Run the `approval-gate` executable.
 
 ## Restrictions
 

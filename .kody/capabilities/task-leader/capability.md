@@ -1,6 +1,6 @@
 # Task Leader
 
-## AgentResponsibility
+## Capability
 
 Every 15 minutes, coordinate the work pipeline:
 
@@ -10,7 +10,7 @@ Every 15 minutes, coordinate the work pipeline:
 - dispatch the next verified backlog task
 - escalate stale PRs to the operator
 
-Read and follow `.kody/agent-actions/task-leader/skills/task-leader-rules/SKILL.md` exactly.
+Read and follow `.kody/executables/task-leader/skills/task-leader-rules/SKILL.md` exactly.
 That rules file owns the 6-step method, normal small-PR gate, release version PR gate, release promotion PR gate, and final output format.
 
 ## Allowed Commands
@@ -28,12 +28,12 @@ That rules file owns the 6-step method, normal small-PR gate, release version PR
 
 ## Restrictions
 
-- Stay within the agentResponsibility's purpose and `task-leader-rules`.
-- Do not perform actions outside the contract defined by this agentResponsibility.
+- Stay within the capability's purpose and `task-leader-rules`.
+- Do not perform actions outside the contract defined by this capability.
 - Do not bypass the auto-merge gates defined by `task-leader-rules`: normal PRs require both reviews and small-change checks; release lanes must satisfy their dedicated release gates.
 - One tick = one pass = one rate-limit window. Do not loop.
 - Do not edit source files or push branches.
 
 ## State
 
-Evergreen agentResponsibility. Keep `cursor` as `"idle"`, carry forward any useful `data`, and keep `done` as `false`.
+Evergreen capability. Keep `cursor` as `"idle"`, carry forward any useful `data`, and keep `done` as `false`.

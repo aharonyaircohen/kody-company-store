@@ -75,7 +75,7 @@
   },
   "agent": "cto",
   "capabilityKind": "observe",
-  "agentActions": [
+  "implementations": [
     "skills-research"
   ]
 }

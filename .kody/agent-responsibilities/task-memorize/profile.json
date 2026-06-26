@@ -1,9 +1,0 @@
-{
-  "name": "task-memorize",
-  "describe": "Task Memorize",
-  "agent": "coo",
-  "agentActions": [
-    "task-memorize"
-  ],
-  "capabilityKind": "act"
-}

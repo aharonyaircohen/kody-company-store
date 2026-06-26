@@ -1,7 +1,0 @@
-{
-  "name": "qa-goal",
-  "action": "qa-goal",
-  "agentAction": "qa-goal",
-  "describe": "Run a QA goal.",
-  "capabilityKind": "verify"
-}

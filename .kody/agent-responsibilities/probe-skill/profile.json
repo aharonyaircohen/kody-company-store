@@ -1,7 +1,0 @@
-{
-  "name": "probe-skill",
-  "action": "probe-skill",
-  "agentAction": "probe-skill",
-  "describe": "Run the probe skill test agentAction.",
-  "capabilityKind": "verify"
-}

@@ -5,11 +5,11 @@
   "describe": "Promote high-confidence task memory recommendations into .kody/memory.",
   "inputs": [
     {
-      "name": "agentResponsibility",
-      "flag": "--agentResponsibility",
+      "name": "capability",
+      "flag": "--capability",
       "type": "string",
       "required": true,
-      "describe": "Runtime agentResponsibility slug whose sidecar state is loaded and updated."
+      "describe": "Runtime capability slug whose sidecar state is loaded and updated."
     }
   ],
   "claudeCode": {
@@ -49,10 +49,10 @@
   "scripts": {
     "preflight": [
       {
-        "script": "runScheduledAgentActionTick",
+        "script": "runScheduledExecutableTick",
         "with": {
-          "jobsDir": ".kody/agent-responsibilities",
-          "slugArg": "agentResponsibility",
+          "jobsDir": ".kody/capabilities",
+          "slugArg": "capability",
           "shell": "tick.sh",
           "fenceLabel": "kody-job-next-state"
         }
@@ -62,7 +62,7 @@
       {
         "script": "writeJobStateFile",
         "with": {
-          "jobsDir": ".kody/agent-responsibilities"
+          "jobsDir": ".kody/capabilities"
         }
       },
       {

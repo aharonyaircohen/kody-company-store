@@ -9,8 +9,6 @@
   ],
   "assetRoots": {
     "capabilities": ".kody/capabilities",
-    "agent-responsibilities": ".kody/agent-responsibilities",
-    "agent-actions": ".kody/agent-actions",
     "commands": ".kody/commands",
     "goals": ".kody/goals/templates",
     "agent": ".kody/agents",

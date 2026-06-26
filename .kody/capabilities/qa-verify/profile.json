@@ -53,7 +53,7 @@
   },
   "agent": "qa",
   "capabilityKind": "verify",
-  "agentActions": [
+  "implementations": [
     "qa-verify"
   ]
 }

@@ -1,8 +1,0 @@
-{
-  "name": "redispatch",
-  "describe": "Redispatch stalled Kody work",
-  "action": "redispatch",
-  "agentAction": "redispatch",
-  "agent": "kody",
-  "capabilityKind": "act"
-}

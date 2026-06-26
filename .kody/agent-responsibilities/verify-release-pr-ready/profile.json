@@ -1,7 +1,0 @@
-{
-  "name": "verify-release-pr-ready",
-  "action": "verify-release-pr-ready",
-  "agentAction": "verify-release-pr-ready",
-  "describe": "Verify a release PR exists, is open, not draft, and has green checks.",
-  "capabilityKind": "verify"
-}

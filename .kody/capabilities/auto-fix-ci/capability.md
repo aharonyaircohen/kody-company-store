@@ -2,13 +2,13 @@
 
 ## Job
 
-Every tick, run the local `auto-fix-ci` agentAction tick:
+Every tick, run the local `auto-fix-ci` executable tick:
 
 ```bash
-bash .kody/agent-actions/auto-fix-ci/tick.sh
+bash .kody/executables/auto-fix-ci/tick.sh
 ```
 
-The agentAction is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.
+The executable is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.
 
 ## Restrictions
 
@@ -16,4 +16,4 @@ The agentAction is the source of truth for PR selection, attempt limits, stuck l
 - Skip pending CI.
 - Do not issue more than two `@kody fix-ci` comments per head SHA.
 - After two failed attempts on a head SHA, mark `kody:stuck-ci`.
-- Keep state in `.kody/agent-responsibilities/auto-fix-ci.state.json`.
+- Keep state in `.kody/capabilities/auto-fix-ci.state.json`.

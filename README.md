@@ -6,8 +6,6 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
 - `.kody/capabilities/` contains canonical shared capabilities (`profile.json` + `capability.md`).
-- `.kody/agent-responsibilities/` contains legacy shared agentResponsibility definitions.
-- `.kody/agent-actions/` contains legacy shared agentAction definitions, prompts, and supporting scripts.
 - `.kody/commands/` contains shared Dashboard slash commands.
 - `.kody/goals/templates/` contains shared agentGoal and agentLoop templates.
 - `.kody/agents/` contains shared agent identity identities.
@@ -51,8 +49,6 @@ See [docs/activation.md](docs/activation.md) for the full activation contract.
 ## Asset Kinds
 
 - `capabilities`: canonical reusable capabilities under `.kody/capabilities/<slug>/`
-- `agentResponsibilities`: legacy responsibility definitions and command wrappers under `.kody/agent-responsibilities/<slug>/`
-- `agentActions`: legacy runnable agent/tool definitions under `.kody/agent-actions/<slug>/`
 - `commands`: Dashboard slash command templates under `.kody/commands/<slug>.md`
 - `goals`: managed agentGoal and agentLoop templates under `.kody/goals/templates/<slug>/state.json`
 - `agent`: agent identity files under `.kody/agents/<slug>.md`

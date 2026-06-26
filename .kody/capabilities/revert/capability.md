@@ -4,9 +4,9 @@
 
 Revert a merged pull request when explicitly requested.
 
-## AgentAction
+## Executable
 
-Run the `revert` agentAction. The engine owns the implementation details.
+Run the `revert` executable. The engine owns the implementation details.
 
 ## Output
 
@@ -14,7 +14,7 @@ A revert branch or pull request that undoes the target merge.
 
 ## Allowed Commands
 
-- Run the `revert` agentAction.
+- Run the `revert` executable.
 
 ## Restrictions
 

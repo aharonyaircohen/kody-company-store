@@ -1,4 +1,4 @@
-The spec agentAction is a no-agent orchestrator.
+The spec executable is a no-agent orchestrator.
 
 It advances the spec workflow through `profile.json` postflight transitions.
-No model prompt is sent for this agentAction.
+No model prompt is sent for this executable.

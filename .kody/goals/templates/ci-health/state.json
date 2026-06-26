@@ -12,7 +12,7 @@
     "outcome": "Branch CI failures are detected and routed before they block delivery.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "dev-ci-health"
   ],
   "route": [],

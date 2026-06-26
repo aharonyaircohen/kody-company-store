@@ -12,7 +12,7 @@
     "outcome": "Release state stays visible and unsafe release conditions are surfaced early.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "release-state",
     "verify-release-pr-ready",
     "verify-package-published",

@@ -32,7 +32,7 @@
   "scripts": {
     "preflight": [
       {
-        "script": "loadAgentResponsibilityState"
+        "script": "loadCapabilityState"
       },
       {
         "script": "buildSyntheticPlugin"

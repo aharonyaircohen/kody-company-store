@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic agentAction-local tick for auto-fix-ci.
+# Deterministic executable-local tick for auto-fix-ci.
 
 set -euo pipefail
 
@@ -67,7 +67,7 @@ for ((i = 0; i < COUNT; i++)); do
   fi
 
   if [ "$DRY_RUN" != "1" ]; then
-    gh workflow run kody.yml -f agentAction=fix-ci -f issue_number="$pr" >/dev/null
+    gh workflow run kody.yml -f capability=fix-ci -f issue_number="$pr" >/dev/null
   fi
   new_entry=$(echo "$effective" | jq -c --arg s "$head" \
     '{lastSha:$s, attempts:((.attempts // 0)+1), stuck:false}')

@@ -1,6 +1,6 @@
 # Preview health
 
-Scheduled CTO agentResponsibility for open pull-request health.
+Scheduled CTO capability for open pull-request health.
 
 ## Policy
 
@@ -13,8 +13,8 @@ Scheduled CTO agentResponsibility for open pull-request health.
 
 ## State
 
-The agentAction persists dedupe state in this agentResponsibility's sidecar state file:
-`.kody/agent-responsibilities/preview-health.state.json`.
+The executable persists dedupe state in this capability's sidecar state file:
+`.kody/capabilities/preview-health.state.json`.
 
 State entries are keyed by PR number and fingerprinted as `<verb>|<headRefOid>`,
 so the same repair is not repeated for the same PR commit.

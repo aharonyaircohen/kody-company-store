@@ -4,9 +4,9 @@
 
 Verify shipped but unverified changelog entries against the live app.
 
-## AgentAction
+## Executable
 
-Run the `qa` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `qa` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A changelog QA marker update and inbox recommendation when a result needs attent
 
 ## Allowed Commands
 
-- Run the `qa` agentAction.
+- Run the `qa` executable.
 
 ## Restrictions
 

@@ -53,7 +53,7 @@
   },
   "agent": "coo",
   "capabilityKind": "observe",
-  "agentActions": [
+  "implementations": [
     "system-audit"
   ]
 }

@@ -12,7 +12,7 @@
     "outcome": "The codebase stays maintainable and drift is found early.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "cleanup",
     "code-health",
     "docs-health",

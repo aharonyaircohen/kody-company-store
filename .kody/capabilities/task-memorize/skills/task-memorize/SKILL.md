@@ -5,9 +5,9 @@ description: Turn task and execution experience into durable `.kody/memory/` ent
 
 # Task Memorize Skill
 
-Use this skill when the `task-memorize` agentAction runs from the matching agentResponsibility.
+Use this skill when the `task-memorize` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -35,7 +35,7 @@ becomes permanent memory.
 
 ## Tick procedure — REQUIRED
 
-The agentAction method:
+The executable method:
 
 1. Glob task artifacts and session logs.
 2. For each task without a `.memorized` marker:

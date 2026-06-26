@@ -1,7 +1,0 @@
-{
-  "name": "verify-package-published",
-  "action": "verify-package-published",
-  "agentAction": "verify-package-published",
-  "describe": "Verify a package version is published to npm.",
-  "capabilityKind": "verify"
-}

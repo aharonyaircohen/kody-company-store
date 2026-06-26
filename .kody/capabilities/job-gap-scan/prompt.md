@@ -1,3 +1,3 @@
 # Job Gap Scan
 
-Deterministic agentAction. `tick.sh`, which proposes one missing high-ROI agentResponsibility, updates `reports/job-gap-scan.md`, updates agentResponsibility state, and commits when not in dry-run or no-commit mode.
+Deterministic executable. `tick.sh`, which proposes one missing high-ROI capability, updates `reports/job-gap-scan.md`, updates capability state, and commits when not in dry-run or no-commit mode.

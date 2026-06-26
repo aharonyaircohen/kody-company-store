@@ -4,9 +4,9 @@
 
 Refresh the daily repository topology reports: dependency graph and documentation graph.
 
-## AgentAction
+## Executable
 
-Run the `repo-graph` agentAction. It owns the dependency and docs graph refresh steps.
+Run the `repo-graph` executable. It owns the dependency and docs graph refresh steps.
 
 ## Output
 
@@ -14,7 +14,7 @@ Refresh `.kody/reports/dependency-graph.md` and `.kody/reports/docs-graph.md`.
 
 ## Allowed Commands
 
-- Run the `repo-graph` agentAction.
+- Run the `repo-graph` executable.
 
 ## Restrictions
 

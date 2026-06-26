@@ -1,7 +1,7 @@
 {
   "name": "plan-verify",
   "role": "utility",
-  "describe": "Live-test agentAction. Loads kody-live-marker skill, /kody-live-probe command, kody-live-trace hook, and the bundled test-plugin. Asks the agent to emit confirmation tokens for each feature so Kody can validate plugin wiring end-to-end.",
+  "describe": "Live-test implementation. Loads kody-live-marker skill, /kody-live-probe command, kody-live-trace hook, and the bundled test-plugin. Asks the agent to emit confirmation tokens for each feature so Kody can validate plugin wiring end-to-end.",
   "inputs": [
     {
       "name": "issue",

@@ -7,17 +7,17 @@
   "type": "maintain",
   "scheduleMode": "agentLoop",
   "title": "Kody company stays healthy",
-  "description": "Keep the Kody operating system, memory, delivery, and management agentResponsibilities healthy.",
+  "description": "Keep the Kody operating system, memory, delivery, and management capabilities healthy.",
   "destination": {
     "outcome": "Kody's company layer stays healthy and understandable.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "ceo-performance-review",
     "company-graph",
     "delivery-graph",
-    "agent-responsibility-call",
-    "agent-responsibility-review",
+    "capability-call",
+    "capability-review",
     "health-check",
     "job-gap-scan",
     "kody-analyzer",

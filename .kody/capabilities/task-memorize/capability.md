@@ -4,9 +4,9 @@
 
 Turn task and execution experience into durable `.kody/memory/` entries.
 
-## AgentAction
+## Executable
 
-Run the `task-memorize` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `task-memorize` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ New or updated memory files and index entries when high-confidence lessons exist
 
 ## Allowed Commands
 
-- Run the `task-memorize` agentAction.
+- Run the `task-memorize` executable.
 
 ## Restrictions
 

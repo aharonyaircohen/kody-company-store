@@ -4,15 +4,15 @@
 
 Deploy the `main` branch to Vercel Production using the project's production configuration.
 
-## AgentAction
+## Executable
 
-Run the `vercel-production-deploy` agentAction.
+Run the `vercel-production-deploy` executable.
 
 `VERCEL_ACCESS_TOKEN` comes from `.kody/secrets.enc`. Non-secret deploy config comes from `.kody/variables.json`.
 
 ## Allowed Commands
 
-- Run the `vercel-production-deploy` agentAction.
+- Run the `vercel-production-deploy` executable.
 
 ## Restrictions
 

@@ -4,7 +4,7 @@
 #
 # Secrets:
 # - NPM_TOKEN must be present in the environment.
-#   Kody loads secrets before agentActions run; this script must not read or
+#   Kody loads secrets before executables run; this script must not read or
 #   decrypt .kody/secrets.enc directly.
 #
 # Inputs:

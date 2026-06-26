@@ -1,9 +1,9 @@
 {
   "name": "job-live-verify",
   "role": "primitive",
-  "describe": "Live-test agentAction that verifies job reference injection, agent identity injection, synthetic skill loading, locked agentResponsibility tools, and state postflight.",
+  "describe": "Live-test implementation that verifies job reference injection, agent identity injection, synthetic skill loading, locked capability tools, and state postflight.",
   "kind": "oneshot",
-  "agentResponsibilityTools": [
+  "capabilityTools": [
     "ensure_issue",
     "ensure_comment"
   ],
@@ -32,7 +32,7 @@
   "scripts": {
     "preflight": [
       {
-        "script": "loadAgentResponsibilityState"
+        "script": "loadCapabilityState"
       },
       {
         "script": "buildSyntheticPlugin"

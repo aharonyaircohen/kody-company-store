@@ -5,9 +5,9 @@ description: Watch the `dev` branch CI and open or reuse one tracking issue when
 
 # Dev CI Health Skill
 
-Use this skill when the `dev-ci-health` agentAction runs from the matching agentResponsibility.
+Use this skill when the `dev-ci-health` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -45,12 +45,12 @@ idempotent, so a re-tick reuses the one open issue instead of creating another.
    code defect, make the smallest change that helps — or none, and say so.
    ```
 
-3. **Dispatch the fix:** `dispatch_workflow({ agentAction: "run", issueNumber: <number> })`.
+3. **Dispatch the fix:** `dispatch_workflow({ executable: "run", issueNumber: <number> })`.
 
 4. **Notify once:** `ensure_comment({ issue: <number>, key: "dev-ci-red:dispatched", body: "🧭 CTO auto-ran — dispatched @kody run (failing: <names>). The fix lands as a PR into dev; its own CI must pass before merge." })`.
 
 5. **`submit_state`** with `{ cursor: "idle", data: {}, done: false }`.
 
 The reused issue (`key: "dev-ci-red"`) is the entire dedup — while it is open,
-`ensure_issue` returns `created: false` and the agentResponsibility stops. The fix PR closes it
+`ensure_issue` returns `created: false` and the capability stops. The fix PR closes it
 on merge; only then does a later tick open a fresh one.

@@ -1,8 +1,0 @@
-{
-  "name": "fix-ci",
-  "describe": "PR CI Fix",
-  "action": "fix-ci",
-  "agent": "kody",
-  "agentAction": "fix-ci",
-  "capabilityKind": "act"
-}

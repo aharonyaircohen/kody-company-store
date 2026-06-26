@@ -1,8 +1,0 @@
-{
-  "name": "plan",
-  "describe": "Issue Planning",
-  "action": "plan",
-  "agent": "kody",
-  "agentAction": "plan",
-  "capabilityKind": "act"
-}

@@ -1,8 +1,0 @@
-{
-  "name": "revert",
-  "describe": "PR Revert",
-  "action": "revert",
-  "agent": "kody",
-  "agentAction": "revert",
-  "capabilityKind": "act"
-}

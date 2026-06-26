@@ -31,10 +31,10 @@ Do not edit code, workflow YAML, arbitrary files, or goal completion state.
 ## Action schemas
 
 - `note`: `{"kind":"note","intentId":"intent-id","message":"short note"}`
-- `createManagedGoal`: include `kind`, `intentId`, `id`, `outcome`, `evidence`, `agentResponsibilities`, `route`, `reason`
-- `createAgentLoop`: include `kind`, `intentId`, `id`, `outcome`, `every`, `agentResponsibilities`, `reason`
+- `createManagedGoal`: include `kind`, `intentId`, `id`, `outcome`, `evidence`, `capabilities`, `route`, `reason`
+- `createAgentLoop`: include `kind`, `intentId`, `id`, `outcome`, `every`, `capabilities`, `reason`
 - `setGoalLifecycle`: include `kind`, `intentId`, `id`, `state`, `reason`
-- `updateIntentPortfolio`: include `kind`, `intentId`, optional `goals`, `loops`, `responsibilities`, `reason`
+- `updateIntentPortfolio`: include `kind`, `intentId`, optional `goals`, `loops`, `capabilities`, `reason`
 
 ## Decision rules
 

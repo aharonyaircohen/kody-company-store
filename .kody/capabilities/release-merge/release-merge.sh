@@ -41,12 +41,12 @@ for pair in sys.argv[3:]:
         continue
     facts[key] = int(value) if value.isdigit() else value
 
-print("KODY_AGENT_RESPONSIBILITY_REPORT=" + json.dumps({
+print("KODY_CAPABILITY_REPORT=" + json.dumps({
     "target": {"type": "goal", "id": goal_id},
     "evidence": {evidence: True},
     "facts": facts,
 }, separators=(",", ":")))
-print("KODY_AGENT_RESPONSIBILITY_RESULT=" + json.dumps({
+print("KODY_CAPABILITY_RESULT=" + json.dumps({
     "version": 1,
     "status": "pass",
     "summary": f"{evidence} reported",

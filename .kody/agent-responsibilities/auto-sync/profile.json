@@ -1,8 +1,0 @@
-{
-  "name": "auto-sync",
-  "describe": "Auto sync stale PR branches",
-  "action": "auto-sync",
-  "agentAction": "auto-sync",
-  "agent": "kody",
-  "capabilityKind": "act"
-}

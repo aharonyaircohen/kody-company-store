@@ -4,7 +4,7 @@ description: Summarize what needs attention
 
 Run Work Briefing.
 
-First call `read_agentAction` slug `work-briefing` follow its `work-briefing` skill. If not available, use method below directly.
+First call `read_capability` slug `work-briefing` and follow its `work-briefing` skill. If not available, use method below directly.
 
 Use available read-only tools gather current state:
 

@@ -12,7 +12,7 @@
     "outcome": "Pull requests stay mergeable and blocked PRs are surfaced quickly.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "pr-health-triage",
     "redispatch"
   ],

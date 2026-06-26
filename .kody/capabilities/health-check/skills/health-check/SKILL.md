@@ -5,9 +5,9 @@ description: Report Kody-assigned tasks that have not been updated within the ex
 
 # Kody Health Check Skill
 
-Use this skill when the `health-check` agentAction runs from the matching agentResponsibility.
+Use this skill when the `health-check` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -55,7 +55,7 @@ Daily digest of **tasks already assigned to Kody** — any open issue carrying a
 ## Allowed Commands
 
 - `gh issue list`, `gh issue view` — to read scan input.
-- `gh api -X PUT` against `reports/health-check.md` only — to write the report. Permitted by the global agent-responsibility-tick contract.
+- `gh api -X PUT` against `reports/health-check.md` only — to write the report. Permitted by the global capability-tick contract.
 
 ## Restrictions
 

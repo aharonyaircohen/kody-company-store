@@ -8,8 +8,8 @@ Use this skill when acting as CTO company manager.
 - CTO company-manager loop = portfolio orchestration.
 - Goal = one concrete outcome.
 - AgentLoop = recurring attention.
-- AgentResponsibility = reusable capability.
-- AgentAction = concrete execution.
+- Capability = reusable capability.
+- Executable = concrete execution.
 
 ## Method
 

@@ -4,9 +4,9 @@
 
 Read active company intents and keep the agency portfolio aligned with them.
 
-## AgentAction
+## Executable
 
-Run `company-manager` agentAction. It loads active intents, current goals/loops, asks CTO for a structured portfolio decision, validates the decision, applies allowed changes, and records an intent decision log.
+Run `company-manager` executable. It loads active intents, current goals/loops, asks CTO for a structured portfolio decision, validates the decision, applies allowed changes, and records an intent decision log.
 
 ## Output
 
@@ -14,7 +14,7 @@ Update intent-linked goals and loops only through the structured company-manager
 
 ## Allowed Commands
 
-- Run `company-manager` agentAction.
+- Run `company-manager` executable.
 
 ## Restrictions
 

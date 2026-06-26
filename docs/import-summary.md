@@ -2,17 +2,10 @@
 
 Generated at: 2026-06-18T02:01:59.364Z
 
-## AgentResponsibilities
+## Capabilities
 
-- Selected assets: 56
-- Duplicate slugs resolved by newest file mtime: 19
-- Selected by project: A-Guy-Web 12, Kody-Dashboard 43, kody2 1
-
-## AgentActions
-
-- Selected assets: 67
-- Duplicate slugs resolved by newest file mtime: 18
-- Selected by project: A-Guy-Web 12, Kody-Dashboard 51, kody2 4
+- Selected assets: 100
+- Legacy split roots removed after capability migration.
 
 ## Agent
 

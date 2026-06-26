@@ -5,9 +5,9 @@ description: Review QA goal PRs. Verify each candidate, reject duplicates or fai
 
 # Approval Gate Skill
 
-Use this skill when the `approval-gate` agentAction runs from the matching agentResponsibility.
+Use this skill when the `approval-gate` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -109,7 +109,7 @@ it'll comment why and you'll retry on a later tick.
 
 ## Comment formats
 
-**Operator handle.** The engine substitutes `{{mentions}}` (this agentResponsibility's
+**Operator handle.** The engine substitutes `{{mentions}}` (this capability's
 profile `mentions` list) on the first line. Use the literal `{{mentions}}`
 token — never hardcode a handle.
 

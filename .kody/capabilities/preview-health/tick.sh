@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-jobs_dir="${1:-.kody/agent-responsibilities}"
-agentResponsibility="${2:-preview-health}"
+jobs_dir="${1:-.kody/capabilities}"
+capability="${2:-preview-health}"
 
 export KODY_PREVIEW_HEALTH_JOBS_DIR="$jobs_dir"
-export KODY_PREVIEW_HEALTH_DUTY="$agentResponsibility"
+export KODY_PREVIEW_HEALTH_DUTY="$capability"
 
 python3 <<'PY'
 import base64
@@ -139,9 +139,9 @@ def detect_repair(slug, pr):
     return None
 
 
-def duty_operator(jobs_dir, agentResponsibility):
+def duty_operator(jobs_dir, capability):
     try:
-        with open(os.path.join(os.getcwd(), jobs_dir, agentResponsibility, "profile.json"), "r", encoding="utf-8") as f:
+        with open(os.path.join(os.getcwd(), jobs_dir, capability, "profile.json"), "r", encoding="utf-8") as f:
             profile = json.load(f)
         mentions = profile.get("mentions", [])
         return mentions[0] if isinstance(mentions, list) and mentions else ""
@@ -173,10 +173,10 @@ def recommend(pr_number, verb, reason, operator):
 
 def auto_run(pr_number, verb, reason):
     if os.environ.get("KODY_DRY_RUN") == "1":
-        log(f"[dry-run] would dispatch kody.yml agentAction={verb} issue_number={pr_number}")
+        log(f"[dry-run] would dispatch kody.yml capability={verb} issue_number={pr_number}")
     else:
         try:
-            run_gh(["workflow", "run", "kody.yml", "-f", f"agentAction={verb}", "-f", f"issue_number={pr_number}"])
+            run_gh(["workflow", "run", "kody.yml", "-f", f"capability={verb}", "-f", f"issue_number={pr_number}"])
         except Exception as err:
             log(f"workflow_dispatch failed #{pr_number} ({verb}): {err}")
             return False
@@ -195,11 +195,11 @@ def print_row(pr, verb, fp, action, note):
 def main():
     slug = repo_slug()
     jobs_dir = os.environ["KODY_PREVIEW_HEALTH_JOBS_DIR"].rstrip("/")
-    agentResponsibility = os.environ["KODY_PREVIEW_HEALTH_DUTY"]
-    state_path = f"{jobs_dir}/{agentResponsibility}/state.json"
+    capability = os.environ["KODY_PREVIEW_HEALTH_DUTY"]
+    state_path = f"{jobs_dir}/{capability}/state.json"
     loaded = load_state(slug, state_path)
     modes = read_ledger_modes()
-    operator = duty_operator(jobs_dir, agentResponsibility)
+    operator = duty_operator(jobs_dir, capability)
 
     prs = json.loads(
         run_gh([

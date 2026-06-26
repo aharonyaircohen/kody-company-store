@@ -5,7 +5,7 @@ description: Summarize reports, tasks, reviews, running work, waiting items, and
 
 # Work Briefing Skill
 
-Use this skill when the user asks what is on the table, asks for a briefing, runs `/briefing`, or the `work-briefing` agentAction runs.
+Use this skill when the user asks what is on the table, asks for a briefing, runs `/briefing`, or the `work-briefing` executable runs.
 
 ## Method
 

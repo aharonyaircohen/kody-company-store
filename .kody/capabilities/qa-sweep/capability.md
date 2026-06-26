@@ -4,9 +4,9 @@
 
 Run broad exploratory QA against the live app and summarize actionable findings.
 
-## AgentAction
+## Executable
 
-Run the `qa-sweep` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `qa-sweep` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A QA report and, when needed, an inbox recommendation.
 
 ## Allowed Commands
 
-- Run the `qa-sweep` agentAction.
+- Run the `qa-sweep` executable.
 
 ## Restrictions
 

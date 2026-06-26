@@ -3,5 +3,6 @@
   "agent": "kody",
   "capabilityKind": "verify",
   "describe": "Check PR CI health and report readiness evidence to a managed goal.",
-  "agentAction": "ci-check"
+  "implementation": "ci-check",
+  "name": "ci-health"
 }

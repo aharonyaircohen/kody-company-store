@@ -4,9 +4,9 @@
 
 Complete a maintenance chore issue end-to-end and open a pull request when needed.
 
-## AgentAction
+## Executable
 
-Run the `chore` agentAction. Its chore session skill owns the detailed method.
+Run the `chore` executable. Its chore session skill owns the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A verified maintenance change or a clear no-change result.
 
 ## Allowed Commands
 
-- Run the `chore` agentAction.
+- Run the `chore` executable.
 
 ## Restrictions
 

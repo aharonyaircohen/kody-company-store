@@ -139,16 +139,16 @@ ref_id() {
   fi
   slug="$(basename "${clean%.md}")"
   case "$clean" in
-    .kody/agent-responsibilities/*|agentResponsibilities/*)
+    .kody/capabilities/*|capabilities/*)
       rest="${clean#./}"
-      rest="${rest#.kody/agent-responsibilities/}"
-      rest="${rest#agentResponsibilities/}"
-      printf 'agentResponsibility:%s' "${rest%%/*}"
+      rest="${rest#.kody/capabilities/}"
+      rest="${rest#capabilities/}"
+      printf 'capability:%s' "${rest%%/*}"
       return 0
       ;;
     .kody/context/*|context/*) printf 'context:%s' "$slug"; return 0 ;;
     .kody/agents/*|agent/*) printf 'agent:%s' "$slug"; return 0 ;;
-    .kody/agent-actions/*|agentActions/*) printf 'agentAction:%s' "$slug"; return 0 ;;
+    .kody/executables/*|executables/*) printf 'executable:%s' "$slug"; return 0 ;;
     .kody/scripts/*|scripts/*) printf 'script:%s' "$slug"; return 0 ;;
     reports/*) printf 'report:%s' "$slug"; return 0 ;;
   esac
@@ -224,24 +224,24 @@ if compgen -G ".kody/context/*.md" >/dev/null; then
   done
 fi
 
-if [[ -d ".kody/agent-responsibilities" ]]; then
+if [[ -d ".kody/capabilities" ]]; then
   while IFS= read -r dir; do
     slug="$(basename "$dir")"
     profile="$dir/profile.json"
-    body="$dir/agent-responsibility.md"
+    body="$dir/capability.md"
     [[ -f "$profile" && -f "$body" ]] || continue
     if ! jq empty "$profile" >/dev/null 2>&1; then
       continue
     fi
 
     agent="$(jq -r '.agent // ""' "$profile")"
-    agentActions="$(jq -c '
+    executables="$(jq -c '
       def list($x):
         if $x == null then []
         elif ($x | type) == "array" then [$x[] | select(type == "string" and length > 0)]
         elif ($x | type) == "string" and ($x | length) > 0 then [$x]
         else [] end;
-      (list(.agentAction) + list(.agentActions)) | unique
+      (list(.executable) + list(.executables)) | unique
     ' "$profile")"
     reads_from="$(jq -c '
       def list($x):
@@ -262,26 +262,26 @@ if [[ -d ".kody/agent-responsibilities" ]]; then
     disabled="$(jq -r 'if .disabled == true then "true" else "false" end' "$profile")"
 
     add_node "$(jq -nc \
-      --arg id "agentResponsibility:$slug" \
+      --arg id "capability:$slug" \
       --arg slug "$slug" \
       --arg agent "$agent" \
-      --argjson agentActions "$agentActions" \
+      --argjson executables "$executables" \
       --argjson readsFrom "$reads_from" \
       --argjson writesTo "$writes_to" \
       --argjson disabled "$disabled" \
-      '{id: $id, type: "agentResponsibility", slug: $slug, agent: $agent, agentActions: $agentActions, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled}')"
+      '{id: $id, type: "capability", slug: $slug, agent: $agent, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled}')"
 
-    add_edge "agentResponsibility:$slug" "$(ref_id "$agent" agent)" "assigned_to"
-    while IFS= read -r agentAction; do
-      [[ -n "$agentAction" ]] && add_edge "agentResponsibility:$slug" "$(ref_id "$agentAction" agentAction)" "runs"
-    done < <(jq -r '.[]' <<<"$agentActions")
+    add_edge "capability:$slug" "$(ref_id "$agent" agent)" "assigned_to"
+    while IFS= read -r executable; do
+      [[ -n "$executable" ]] && add_edge "capability:$slug" "$(ref_id "$executable" executable)" "runs"
+    done < <(jq -r '.[]' <<<"$executables")
     while IFS= read -r source; do
-      [[ -n "$source" ]] && add_edge "agentResponsibility:$slug" "$(ref_id "$source" context)" "reads_from"
+      [[ -n "$source" ]] && add_edge "capability:$slug" "$(ref_id "$source" context)" "reads_from"
     done < <(jq -r '.[]' <<<"$reads_from")
     while IFS= read -r target; do
-      [[ -n "$target" ]] && add_edge "agentResponsibility:$slug" "$(ref_id "$target" report)" "writes_to"
+      [[ -n "$target" ]] && add_edge "capability:$slug" "$(ref_id "$target" report)" "writes_to"
     done < <(jq -r '.[]' <<<"$writes_to")
-  done < <(find .kody/agent-responsibilities -mindepth 1 -maxdepth 1 -type d | sort)
+  done < <(find .kody/capabilities -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
 if [[ -d ".kody/scripts" ]]; then
@@ -295,7 +295,7 @@ if [[ -d ".kody/scripts" ]]; then
   done < <(find .kody/scripts -maxdepth 1 -type f | sort)
 fi
 
-if [[ -d ".kody/agent-actions" ]]; then
+if [[ -d ".kody/executables" ]]; then
   while IFS= read -r dir; do
     slug="$(basename "$dir")"
     profile="$dir/profile.json"
@@ -312,7 +312,7 @@ if [[ -d ".kody/agent-actions" ]]; then
     shell_scripts="$(jq -c '[.scripts.preflight[]? | .shell? | select(type == "string" and length > 0)]' "$profile")"
 
     add_node "$(jq -nc \
-      --arg id "agentAction:$slug" \
+      --arg id "executable:$slug" \
       --arg slug "$slug" \
       --arg role "$role" \
       --arg kind "$kind" \
@@ -320,8 +320,8 @@ if [[ -d ".kody/agent-actions" ]]; then
       --arg describe "$describe" \
       --argjson skills "$skills" \
       --argjson shellScripts "$shell_scripts" \
-      '{id: $id, type: "agentAction", slug: $slug, role: $role, kind: $kind, agent: $agent, describe: $describe, skills: $skills, shellScripts: $shellScripts}')"
-    add_edge "agentAction:$slug" "$(ref_id "$agent" agent)" "runs_as"
+      '{id: $id, type: "executable", slug: $slug, role: $role, kind: $kind, agent: $agent, describe: $describe, skills: $skills, shellScripts: $shellScripts}')"
+    add_edge "executable:$slug" "$(ref_id "$agent" agent)" "runs_as"
 
     while IFS= read -r skill; do
       [[ -n "$skill" ]] || continue
@@ -329,9 +329,9 @@ if [[ -d ".kody/agent-actions" ]]; then
         --arg id "skill:$slug/$skill" \
         --arg slug "$slug/$skill" \
         --arg name "$skill" \
-        --arg path ".kody/agent-actions/$slug/skills/$skill/SKILL.md" \
-        '{id: $id, type: "skill", slug: $slug, name: $name, path: $path, scope: "agentAction"}')"
-      add_edge "agentAction:$slug" "skill:$slug/$skill" "uses_skill"
+        --arg path ".kody/executables/$slug/skills/$skill/SKILL.md" \
+        '{id: $id, type: "skill", slug: $slug, name: $name, path: $path, scope: "executable"}')"
+      add_edge "executable:$slug" "skill:$slug/$skill" "uses_skill"
     done < <(jq -r '.[]' <<<"$skills")
 
     while IFS= read -r script; do
@@ -339,11 +339,11 @@ if [[ -d ".kody/agent-actions" ]]; then
       add_node "$(jq -nc \
         --arg id "script:$slug/$script" \
         --arg slug "$slug/$script" \
-        --arg path ".kody/agent-actions/$slug/$script" \
-        '{id: $id, type: "script", slug: $slug, path: $path, scope: "agentAction"}')"
-      add_edge "agentAction:$slug" "script:$slug/$script" "runs_preflight"
+        --arg path ".kody/executables/$slug/$script" \
+        '{id: $id, type: "script", slug: $slug, path: $path, scope: "executable"}')"
+      add_edge "executable:$slug" "script:$slug/$script" "runs_preflight"
     done < <(jq -r '.[]' <<<"$shell_scripts")
-  done < <(find .kody/agent-actions -mindepth 1 -maxdepth 1 -type d | sort)
+  done < <(find .kody/executables -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
 rate_limited=0
@@ -397,7 +397,7 @@ done < <(jq -r '.[].to' "$EDGES" | sort -u)
 coverage_gaps="$(
   if [[ -d ".kody" ]]; then
     find .kody -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
-      | grep -Ev '^(context|agentResponsibilities|agent|agentActions|reports|scripts)$' \
+      | grep -Ev '^(context|capabilities|agent|executables|reports|scripts)$' \
       | sort \
       | jq -Rsc 'split("\n") | map(select(length > 0))'
   else
@@ -424,9 +424,9 @@ node_counts="$(jq -nc --argjson nodes "$nodes_sorted" --argjson goalIssues "$goa
   def count_type($t): [$nodes[] | select(.type == $t)] | length;
   {
     context: count_type("context"),
-    agentResponsibilities: count_type("agentResponsibility"),
+    capabilities: count_type("capability"),
     agent: count_type("agent"),
-    agentActions: count_type("agentAction"),
+    executables: count_type("executable"),
     scripts: count_type("script"),
     skills: count_type("skill"),
     reports: count_type("report"),
@@ -443,7 +443,7 @@ while IFS=$'\t' read -r id slug; do
     any(.[]; .to == $id and (.relation == "assigned_to" or .relation == "runs_as" or .relation == "audience"))
   ' "$EDGES" >/dev/null; then
     add_finding "company-graph.orphan-agent.$slug" "medium" \
-      "$slug - no agentResponsibility, context, or agentAction references it" \
+      "$slug - no capability, context, or executable references it" \
       "$(jq -nc --arg agent "$slug" '{agent: $agent}')"
   fi
 done < <(jq -r '.[] | select(.type == "agent") | [.id, .slug] | @tsv' "$NODES")
@@ -451,14 +451,14 @@ done < <(jq -r '.[] | select(.type == "agent") | [.id, .slug] | @tsv' "$NODES")
 while IFS=$'\t' read -r id slug; do
   if ! jq -e --arg id "$id" 'any(.[]; .to == $id and .relation == "reads_from")' "$EDGES" >/dev/null; then
     add_finding "company-graph.stale-context.$slug" "low" \
-      "$slug - not declared as reads_from by any agentResponsibility" \
+      "$slug - not declared as reads_from by any capability" \
       "$(jq -nc --arg context "$slug" '{context: $context}')"
   fi
 done < <(jq -r '.[] | select(.type == "context") | [.id, .slug] | @tsv' "$NODES")
 
 while IFS=$'\t' read -r id slug; do
   referenced_by="$(jq -r --arg id "$id" '
-    [.[] | select(.to == $id and .relation == "reads_from") | (.from | sub("^agentResponsibility:"; ""))]
+    [.[] | select(.to == $id and .relation == "reads_from") | (.from | sub("^capability:"; ""))]
     | unique
     | join(",")
   ' "$EDGES")"
@@ -466,10 +466,10 @@ while IFS=$'\t' read -r id slug; do
     data="$(jq -nc --arg slug "$slug" --arg refs "$referenced_by" \
       '{slug: $slug, referencedBy: ($refs | split(",") | map(select(length > 0)))}')"
     add_finding "company-graph.disabled-but-referenced.$slug" "high" \
-      "$slug - disabled but named in another agentResponsibility's reads_from" \
+      "$slug - disabled but named in another capability's reads_from" \
       "$data"
   fi
-done < <(jq -r '.[] | select(.type == "agentResponsibility" and .disabled == true) | [.id, .slug] | @tsv' "$NODES")
+done < <(jq -r '.[] | select(.type == "capability" and .disabled == true) | [.id, .slug] | @tsv' "$NODES")
 
 while IFS= read -r subfolder; do
   [[ -n "$subfolder" ]] || continue

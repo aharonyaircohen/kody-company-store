@@ -9,13 +9,13 @@
     "outcome": "Release is prepared, merged to main, and deployed to Vercel production.",
     "evidence": ["releasePrExists", "mainMerged", "productionDeployed"]
   },
-  "agentResponsibilities": ["release-prepare", "release-merge", "vercel-production-deploy"],
+  "capabilities": ["release-prepare", "release-merge", "vercel-production-deploy"],
   "route": [
     {
       "stage": "release",
       "evidence": "releasePrExists",
-      "agentResponsibility": "release-prepare",
-      "agentAction": "release-prepare",
+      "capability": "release-prepare",
+      "executable": "release-prepare",
       "args": {
         "issue": { "fact": "issue" },
         "goal": { "fact": "goalId" }
@@ -24,8 +24,8 @@
     {
       "stage": "merge",
       "evidence": "mainMerged",
-      "agentResponsibility": "release-merge",
-      "agentAction": "release-merge",
+      "capability": "release-merge",
+      "executable": "release-merge",
       "args": {
         "pr": { "fact": "releasePr" },
         "issue": { "fact": "issue" },
@@ -35,8 +35,8 @@
     {
       "stage": "publish",
       "evidence": "productionDeployed",
-      "agentResponsibility": "vercel-production-deploy",
-      "agentAction": "vercel-production-deploy",
+      "capability": "vercel-production-deploy",
+      "executable": "vercel-production-deploy",
       "args": { "goal": { "fact": "goalId" } }
     }
   ],

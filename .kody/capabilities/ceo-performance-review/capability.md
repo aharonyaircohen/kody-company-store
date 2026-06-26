@@ -2,11 +2,11 @@
 
 ## Job
 
-Review every agent by the agentResponsibilities they own and the evidence those agentResponsibilities produce.
+Review every agent by the capabilities they own and the evidence those capabilities produce.
 
-## AgentAction
+## Executable
 
-Run the `ceo-performance-review` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `ceo-performance-review` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,11 +14,11 @@ Refresh `.kody/reports/ceo-performance-review.md`.
 
 ## Allowed Commands
 
-- Run the `ceo-performance-review` agentAction.
+- Run the `ceo-performance-review` executable.
 
 ## Restrictions
 
 - Diagnostic only.
-- Do not edit agentResponsibilities, agent, issues, or PRs.
+- Do not edit capabilities, agent, issues, or PRs.
 - Do not dispatch work.
 - Keep the report stable when the evidence has not changed.

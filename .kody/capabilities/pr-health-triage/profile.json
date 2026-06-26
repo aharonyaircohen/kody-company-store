@@ -57,7 +57,7 @@
   "mentions": [
     "aguyaharonyair"
   ],
-  "agentActions": [
+  "implementations": [
     "pr-health-triage"
   ]
 }

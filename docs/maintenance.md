@@ -65,28 +65,26 @@ Look especially for:
 
 - Secrets or tokens.
 - `.kody/agent-runs/` or `.kody/sessions/` files.
-- Absolute local paths added to agentAction behavior.
+- Absolute local paths added to capability behavior.
 - Agent identity files that define job-specific commands instead of identity.
-- AgentResponsibilities pointing at missing agentAction slugs.
-- AgentActions referencing unavailable scripts or CLI tools.
+- Capabilities referencing unavailable scripts or CLI tools.
 
 ## Adding A Shared Asset
 
 Use the existing layout for the asset kind:
 
-- AgentResponsibility: `.kody/agent-responsibilities/<slug>/profile.json`, plus `agent-responsibility.md` when needed.
-- AgentAction: `.kody/agent-actions/<slug>/profile.json`, plus prompt/script files.
+- Capability: `.kody/capabilities/<slug>/profile.json`, plus `capability.md`.
 - Command: `.kody/commands/<slug>.md`.
 - Goal template: `.kody/goals/templates/<slug>/state.json`.
 - Agent: `.kody/agents/<slug>.md`.
 - CMS adapter: `cms/contract`, `cms/adapters/<adapter>`, plus focused tests.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
-reference it from agentResponsibilities, agentActions, scripts, or dashboards.
+reference it from capabilities, scripts, or dashboards.
 
-Store agentResponsibilities and goals must be safe as inactive catalog entries. Do not add
-`disabled: true` or cadence fields to shared agentResponsibilities; activation belongs in
-the consumer repo's `kody.config.json`. Store goal templates should start with
+Store capabilities and goals must be safe as inactive catalog entries. Do not
+add `disabled: true` to all shared capabilities; activation belongs in the
+consumer repo's `kody.config.json`. Store goal templates should start with
 `state: "inactive"`.
 
 See [activation.md](activation.md) for the full activation contract.

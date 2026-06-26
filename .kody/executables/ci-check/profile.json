@@ -1,0 +1,72 @@
+{
+  "name": "ci-check",
+  "role": "utility",
+  "kind": "oneshot",
+  "describe": "Check GitHub CI status for a PR and optionally report the result to a managed goal. No agent.",
+  "inputs": [
+    {
+      "name": "pr",
+      "flag": "--pr",
+      "type": "int",
+      "required": true,
+      "describe": "Pull request number to check."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report CI evidence to."
+    },
+    {
+      "name": "evidence",
+      "flag": "--evidence",
+      "type": "string",
+      "required": false,
+      "describe": "Evidence key to set on the goal. Default ciGreen."
+    },
+    {
+      "name": "timeout-seconds",
+      "flag": "--timeout-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Maximum time to wait for pending checks before reporting not-green. Default 0."
+    },
+    {
+      "name": "poll-seconds",
+      "flag": "--poll-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Seconds between CI polls while waiting. Default 30."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "check.sh"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "applyCapabilityReports"
+      }
+    ]
+  }
+}

@@ -1,9 +1,0 @@
-{
-  "name": "work-briefing",
-  "describe": "Work Briefing",
-  "agent": "coo",
-  "agentActions": [
-    "work-briefing"
-  ],
-  "capabilityKind": "observe"
-}

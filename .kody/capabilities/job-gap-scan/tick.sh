@@ -7,7 +7,7 @@ const path = require('path')
 const cp = require('child_process')
 
 const root = process.cwd()
-const agentResponsibilitiesDir = path.join(root, '.kody', 'agent-responsibilities')
+const capabilitiesDir = path.join(root, '.kody', 'capabilities')
 const memoryDir = path.join(root, '.kody', 'memory')
 const reportFile = 'reports/job-gap-scan.md'
 const dryRun = process.env.KODY_DRY_RUN === '1' || process.env.JOB_GAP_SCAN_DRY_RUN === '1'
@@ -23,7 +23,7 @@ const catalogue = [
     effort: 'low',
     value: 'high',
     roi: 95,
-    markdown: '---\nevery: 24h\nagent: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/agent-actions/sentry-digest/tick.sh` before enabling it.\n',
+    markdown: '---\nevery: 24h\nagent: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/executables/sentry-digest/tick.sh` before enabling it.\n',
   },
   {
     slug: 'secret-leak-scan',
@@ -51,7 +51,7 @@ const catalogue = [
     slug: 'issue-auto-triage',
     title: 'Issue auto-triage',
     headline: 'Label new issues content (`type:bug/feat/docs`, `area:*`) so inbox sorted without operator effort.',
-    why: 'Triage today manual or absent - most projects pay tax forever; one agentResponsibility zeroes it out.',
+    why: 'Triage today manual or absent - most projects pay tax forever; one capability zeroes it out.',
     risk: 'low',
     effort: 'low',
     value: 'medium',
@@ -138,11 +138,11 @@ function readVerdicts() {
   return out
 }
 
-function existingAgentResponsibilitySlugs() {
-  if (!fs.existsSync(agentResponsibilitiesDir)) return new Set()
+function existingCapabilitySlugs() {
+  if (!fs.existsSync(capabilitiesDir)) return new Set()
   const slugs = new Set()
-  for (const name of fs.readdirSync(agentResponsibilitiesDir)) {
-    const full = path.join(agentResponsibilitiesDir, name)
+  for (const name of fs.readdirSync(capabilitiesDir)) {
+    const full = path.join(capabilitiesDir, name)
     if (fs.statSync(full).isDirectory()) slugs.add(name)
     if (name.endsWith('.md')) slugs.add(name.replace(/\.md$/, ''))
   }
@@ -150,11 +150,11 @@ function existingAgentResponsibilitySlugs() {
 }
 
 function renderCurrent(c) {
-  return `## Current proposal\n\n**${c.slug}** - ${c.headline}\n\n### Why now\n\n${c.why}\n\n### Scoring\n\n| # | Item | Risk | Effort | Value | ROI |\n|---|------|------|--------|-------|-----|\n| 1 | ${c.title} | ${c.risk} | ${c.effort} | ${c.value} | ${c.roi} |\n\n### Draft agentResponsibility markdown\n\nIf approved, operator (or executor) would commit following \`.kody/agent-responsibilities/${c.slug}.md\`. This starting point, not final spec.\n\n\`\`\`\`markdown\n${c.markdown}\`\`\`\`\n\n### Verdict path\n\nApprove -> create agentResponsibility markdown above. Reject -> permanent - CEO will not surface slug again. Dismiss -> cooling-off 30 days, then eligible re-surface if signal grows.\n`
+  return `## Current proposal\n\n**${c.slug}** - ${c.headline}\n\n### Why now\n\n${c.why}\n\n### Scoring\n\n| # | Item | Risk | Effort | Value | ROI |\n|---|------|------|--------|-------|-----|\n| 1 | ${c.title} | ${c.risk} | ${c.effort} | ${c.value} | ${c.roi} |\n\n### Draft capability markdown\n\nIf approved, operator (or executor) would commit following \`.kody/capabilities/${c.slug}.md\`. This starting point, not final spec.\n\n\`\`\`\`markdown\n${c.markdown}\`\`\`\`\n\n### Verdict path\n\nApprove -> create capability markdown above. Reject -> permanent - CEO will not surface slug again. Dismiss -> cooling-off 30 days, then eligible re-surface if signal grows.\n`
 }
 
 function renderCaughtUp() {
-  return '## Current proposal\n\nAll caught up - no eligible new agentResponsibility proposal this cycle.\n'
+  return '## Current proposal\n\nAll caught up - no eligible new capability proposal this cycle.\n'
 }
 
 function renderHistory(state, verdicts) {
@@ -208,13 +208,13 @@ function writeRemoteReport(report, target) {
 const state = loadState()
 state.proposed ||= {}
 const verdicts = readVerdicts()
-const existing = existingAgentResponsibilitySlugs()
+const existing = existingCapabilitySlugs()
 const now = new Date()
 const eligible = []
 
 for (const candidate of catalogue) {
   if (existing.has(candidate.slug)) {
-    log(`skip ${candidate.slug}: already in .kody/agent-responsibilities/`)
+    log(`skip ${candidate.slug}: already in .kody/capabilities/`)
     continue
   }
   const verdict = verdicts[candidate.slug]
@@ -247,7 +247,7 @@ if (chosen) {
   log('no eligible proposals')
 }
 
-const report = `# Job Gap Scan\n\n_Cadence: daily - one proposed agentResponsibility per cycle, advisory only._\n\n_Last updated: ${now.toISOString()}_\n\n${chosen ? renderCurrent(chosen) : renderCaughtUp()}\n${renderHistory(state, verdicts)}`
+const report = `# Job Gap Scan\n\n_Cadence: daily - one proposed capability per cycle, advisory only._\n\n_Last updated: ${now.toISOString()}_\n\n${chosen ? renderCurrent(chosen) : renderCaughtUp()}\n${renderHistory(state, verdicts)}`
 
 if (dryRun) {
   log('dry run complete (skipped report write)')

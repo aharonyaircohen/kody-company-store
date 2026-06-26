@@ -8,7 +8,7 @@ Treat code health as one weekly coordination pass:
 2. Run the `type-debt` method for TypeScript escape-hatch growth.
 3. Respect each skill's deduplication, evidence, and one-issue/comment-per-tick limits.
 
-Run only the work requested by the matching agentResponsibility. Follow the agentResponsibility profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
+Run only the work requested by the matching capability. Follow the capability profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)
 

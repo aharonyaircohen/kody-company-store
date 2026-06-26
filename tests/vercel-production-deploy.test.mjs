@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { describe, it } from "node:test";
 
 const scriptPath = new URL(
-  "../.kody/agent-actions/vercel-production-deploy/vercel-production-deploy.sh",
+  "../.kody/capabilities/vercel-production-deploy/vercel-production-deploy.sh",
   import.meta.url,
 );
 
@@ -29,10 +29,10 @@ describe("vercel-production-deploy", () => {
       assert.equal(result.status, 1);
       const line = result.stdout
         .split(/\r?\n/)
-        .find((entry) => entry.startsWith("KODY_AGENT_RESPONSIBILITY_RESULT="));
+        .find((entry) => entry.startsWith("KODY_CAPABILITY_RESULT="));
       assert.ok(line, "failure result side-channel should be emitted");
 
-      const payload = JSON.parse(line.replace("KODY_AGENT_RESPONSIBILITY_RESULT=", ""));
+      const payload = JSON.parse(line.replace("KODY_CAPABILITY_RESULT=", ""));
       assert.equal(payload.status, "fail");
       assert.match(payload.summary, /VERCEL_ORG_ID/);
     } finally {

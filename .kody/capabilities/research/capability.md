@@ -4,9 +4,9 @@
 
 Investigate an issue and report relevant facts, options, and risks.
 
-## AgentAction
+## Executable
 
-Run the `research` agentAction. Its research skill owns the detailed method.
+Run the `research` executable. Its research skill owns the detailed method.
 
 ## Output
 
@@ -14,10 +14,10 @@ A concise research result for the target issue.
 
 ## Allowed Commands
 
-- Run the `research` agentAction.
+- Run the `research` executable.
 
 ## Restrictions
 
 - Do not edit files.
 - Separate verified facts from recommendations.
-- Do not dispatch implementation work from this agentResponsibility.
+- Do not dispatch implementation work from this capability.

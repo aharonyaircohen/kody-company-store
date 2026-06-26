@@ -1,7 +1,7 @@
 {
   "agent": "coo",
   "capabilityKind": "observe",
-  "agentActions": [
+  "implementations": [
     "compact-memory"
   ],
   "readsFrom": [
@@ -11,5 +11,6 @@
   "writesTo": [
     "memory-compaction"
   ],
-  "describe": "Memory Compaction"
+  "describe": "Memory Compaction",
+  "name": "memory-compaction"
 }

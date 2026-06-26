@@ -1,7 +1,0 @@
-{
-  "name": "init",
-  "action": "init",
-  "agentAction": "init",
-  "describe": "Install Kody engine files in a repo.",
-  "capabilityKind": "act"
-}

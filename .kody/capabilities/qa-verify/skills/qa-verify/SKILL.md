@@ -5,9 +5,9 @@ description: Re-check delivery PRs against their previews before merge and route
 
 # QA Fix Verification Skill
 
-Use this skill when the `qa-verify` agentAction runs from the matching agentResponsibility.
+Use this skill when the `qa-verify` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -17,10 +17,10 @@ Re-check **fix and feature PRs against their own preview** before they merge,
 then route the result to the inbox for a one-tap merge. A change is only truly
 delivered when the _changed screen actually works_ — a reported bug is gone, or
 a requested feature works as described — not when the author's self-written test
-goes green. This agentResponsibility:
+goes green. This capability:
 
 1. Dispatches **`ui-review`** on each open delivery PR (the engine's global
-   auto-dispatch on preview-success is off by design, so this agentResponsibility is the
+   auto-dispatch on preview-success is off by design, so this capability is the
    controlled trigger — one at a time). ui-review reads the PR diff + the linked
    issue, browses the changed routes on the preview, and posts a
    PASS / CONCERNS / FAIL verdict. The dashboard stamps `kody:ui-verified`
@@ -47,7 +47,7 @@ no linked issue.
 
 Live (no `disabled` flag) — this repo is already set up (`LOGIN_USER` +
 `LOGIN_PASSWORD`, `.kody/context/*.md` QA flows). Add `disabled: true` to the
-agentResponsibility profile to pause it.
+capability profile to pause it.
 
 **Per tick (one action max):**
 
@@ -75,7 +75,7 @@ agentResponsibility profile to pause it.
    - **No verdict yet, dispatched < 90 min ago** → emit
      `cursor: awaiting-result`, exit.
    - **No verdict, ≥ 90 min** → clear `data.inflightPr` (the next tick
-     re-dispatches). A stuck review must never wedge the agentResponsibility.
+     re-dispatches). A stuck review must never wedge the capability.
 
    Exit after resolving — that is your single mutation this tick.
 
@@ -91,7 +91,7 @@ agentResponsibility profile to pause it.
       `@kody` PR comment (the webhook's bot-author guard silently drops
       those). `ui-review` reads everything it needs from the PR diff +
       linked issue, so no extra flags are required:
-      `gh workflow run kody.yml -f agentAction=ui-review -f issue_number=<pr>`
+      `gh workflow run kody.yml -f capability=ui-review -f issue_number=<pr>`
    2. Set `data.inflightPr = <pr>`, `data.inflightSinceISO = now`.
 
 ## Inbox recommendation formats
@@ -143,7 +143,7 @@ Approve re-opens work on the existing PR branch with the concern as feedback.
 
 - **Advisory until trusted.** Dispatching `ui-review` is read-only. The merge
   and fix recs are recommendations the operator confirms — **the only time this
-  agentResponsibility merges on its own is when the ledger has already graduated `qa.merge` to
+  capability merges on its own is when the ledger has already graduated `qa.merge` to
   `auto` (10 human approvals).** Never approve a PR review, never edit code.
 - **One review in flight at a time.** If `data.inflightPr` is set, never
   dispatch a second `ui-review` this tick.

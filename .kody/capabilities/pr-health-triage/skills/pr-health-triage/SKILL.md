@@ -5,9 +5,9 @@ description: Review open PRs for conflicts, failed CI, or stale branches, then r
 
 # PR Health Triage Skill
 
-Use this skill when the `pr-health-triage` agentAction runs from the matching agentResponsibility.
+Use this skill when the `pr-health-triage` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
@@ -117,10 +117,10 @@ is always `@kody <verb> --pr <n>`.
 
 ## Comment formats
 
-**Operator handle.** The engine substitutes `{{mentions}}` (the agentResponsibility profile's
+**Operator handle.** The engine substitutes `{{mentions}}` (the capability profile's
 `mentions` list) on the recommendation's first line. Use the literal
 token `{{mentions}}` below — never hardcode a handle or read it from config;
-future operators only change the agentResponsibility's `mentions:` list in the dashboard.
+future operators only change the capability's `mentions:` list in the dashboard.
 
 **Recommendation** (verb not graduated). One terse, machine-greppable
 comment. It MUST `@`-mention the operator on the first line (that mention

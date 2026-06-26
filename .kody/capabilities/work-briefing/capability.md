@@ -4,9 +4,9 @@
 
 Summarize what needs attention across reports, tasks, reviews, running work, waiting items, and recent failures.
 
-## AgentAction
+## Executable
 
-Run the `work-briefing` agentAction. Its skill owns the detailed method.
+Run the `work-briefing` executable. Its skill owns the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A short, prioritized briefing for the user.
 
 ## Allowed Commands
 
-- Run the `work-briefing` agentAction.
+- Run the `work-briefing` executable.
 
 ## Restrictions
 

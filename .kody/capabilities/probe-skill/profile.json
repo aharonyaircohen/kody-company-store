@@ -1,7 +1,7 @@
 {
   "name": "probe-skill",
   "role": "utility",
-  "describe": "Live-test agentAction. Loads the agentAction-local 'probe-skill-marker' skill (resolved from src/agent-actions/probe-skill/skills/, NOT the central catalog) and asks the agent to emit the skill's token back as an issue comment. Validates the new local-skill resolution path in buildSyntheticPlugin end-to-end.",
+  "describe": "Live-test implementation. Loads the implementation-local 'probe-skill-marker' skill (resolved from src/capabilities/probe-skill/skills/, NOT the central catalog) and asks the agent to emit the skill's token back as an issue comment. Validates the new local-skill resolution path in buildSyntheticPlugin end-to-end.",
   "inputs": [
     {
       "name": "issue",
@@ -15,7 +15,7 @@
     "model": "inherit",
     "permissionMode": "default",
     "maxTurns": 12,
-    "systemPromptAppend": "You are running Kody's agentAction-local skill live verification. Emit the token exactly as the skill instructs.",
+    "systemPromptAppend": "You are running Kody's implementation-local skill live verification. Emit the token exactly as the skill instructs.",
     "tools": [
       "Read",
       "Grep",

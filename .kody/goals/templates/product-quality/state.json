@@ -12,7 +12,7 @@
     "outcome": "Product quality is checked regularly and regressions are visible.",
     "evidence": []
   },
-  "agentResponsibilities": [
+  "capabilities": [
     "design-review",
     "preview-health",
     "qa",

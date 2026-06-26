@@ -26,12 +26,12 @@ Issue body:
 Task: diagnose the failing check(s) and open a PR into `dev` to make them green. Keep it minimal; if the failure is flaky or scanner-config rather than a code defect, make the smallest helpful change, or none and say so.
 ```
 
-3. **Try to dispatch fix:** `dispatch_workflow({ agentAction: "run", issueNumber: <number> })`.
-   - Tool only fires when agentResponsibility is trusted (Auto).
-   - If the agentResponsibility is in Ask mode, it dispatches nothing and returns a not-trusted refusal. Read result.
+3. **Try to dispatch fix:** `dispatch_workflow({ executable: "run", issueNumber: <number> })`.
+   - Tool only fires when capability is trusted (Auto).
+   - If the capability is in Ask mode, it dispatches nothing and returns a not-trusted refusal. Read result.
 4. **Notify once, per outcome:**
    - **Dispatched (Auto)** -> `ensure_comment({ issue: <number>, key: "dev-ci-red:dispatched", body: "CTO auto-ran - dispatched @kody run (failing: <names>). The fix lands as a PR into dev; its own CI must pass before merge." })`.
-   - **Not dispatched (Ask)** -> `ensure_comment({ issue: <number>, key: "dev-ci-red:awaiting", body: "dev CI failing (<names>). Awaiting operator - grant agentResponsibility Auto on dashboard Trust page to auto-dispatch fix." })`.
+   - **Not dispatched (Ask)** -> `ensure_comment({ issue: <number>, key: "dev-ci-red:awaiting", body: "dev CI failing (<names>). Awaiting operator - grant capability Auto on dashboard Trust page to auto-dispatch fix." })`.
    - Do not dispatch in Ask mode.
 5. **Submit state** with:
 
@@ -46,4 +46,4 @@ Task: diagnose the failing check(s) and open a PR into `dev` to make them green.
 }
 ```
 
-The reused issue (`key: "dev-ci-red"`) is the whole dedup mechanism. While it is open, `ensure_issue` returns `created: false` and the agentResponsibility stops. The fix PR closes it on merge; only then can a later tick open a fresh one.
+The reused issue (`key: "dev-ci-red"`) is the whole dedup mechanism. While it is open, `ensure_issue` returns `created: false` and the capability stops. The fix PR closes it on merge; only then can a later tick open a fresh one.

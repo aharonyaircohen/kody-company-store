@@ -6,9 +6,9 @@ import { describe, it } from "node:test";
 const commandDir = new URL("../.kody/commands/", import.meta.url);
 
 const sharedCommands = [
-  "agentResponsibility",
   "analyze",
   "briefing",
+  "capability",
   "explain",
   "factory",
   "goal",

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic agentAction-local tick for auto-sync.
+# Deterministic executable-local tick for auto-sync.
 
 set -euo pipefail
 
@@ -109,7 +109,7 @@ for ((i = 0; i < COUNT; i++)); do
     ACTIONS_TAKEN+=("marked stuck #$pr")
   elif [ "$action" = "sync" ]; then
     if [ "$DRY_RUN" != "1" ]; then
-      gh workflow run kody.yml -f agentAction=sync -f issue_number="$pr" >/dev/null
+      gh workflow run kody.yml -f capability=sync -f issue_number="$pr" >/dev/null
     fi
     ACTIONS_TAKEN+=("dispatched sync on #$pr")
   fi

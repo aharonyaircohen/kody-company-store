@@ -2,11 +2,11 @@
 
 ## Job
 
-Refresh the machine-readable graph of context, agentResponsibilities, agent, agentActions, reports, goals, and issue edges.
+Refresh the machine-readable graph of context, capabilities, agent, executables, reports, goals, and issue edges.
 
-## AgentAction
+## Executable
 
-Run the `company-graph` agentAction. Its skill owns the detailed method and runtime state handling.
+Run the `company-graph` executable. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ Refresh `.kody/reports/company-graph.md`.
 
 ## Allowed Commands
 
-- Run the `company-graph` agentAction.
+- Run the `company-graph` executable.
 
 ## Restrictions
 

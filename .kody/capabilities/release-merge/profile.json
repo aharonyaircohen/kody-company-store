@@ -76,7 +76,7 @@
         "script": "recordOutcome"
       },
       {
-        "script": "applyAgentResponsibilityReports"
+        "script": "applyCapabilityReports"
       },
       {
         "script": "notifyTerminal",

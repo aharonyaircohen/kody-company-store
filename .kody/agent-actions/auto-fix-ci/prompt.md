@@ -1,3 +1,0 @@
-# Auto Fix CI
-
-Deterministic agentAction. `tick.sh` scans open non-draft PRs with settled failing CI, posts `@kody fix-ci` or stuck comments when not in dry-run mode, and emits the next agentResponsibility state block.

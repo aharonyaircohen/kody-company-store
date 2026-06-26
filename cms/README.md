@@ -2,7 +2,7 @@
 
 Phase 1 CMS support lives here as a Store-owned, generic adapter contract.
 
-The contract keeps responsibilities separate:
+The contract keeps ownership separate:
 
 - Store owns the reusable adapter code.
 - A state repo owns CMS configuration.

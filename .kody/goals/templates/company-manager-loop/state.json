@@ -12,7 +12,7 @@
     "outcome": "Agency goals and loops stay aligned with active company intents.",
     "evidence": []
   },
-  "agentResponsibilities": ["company-manager"],
+  "capabilities": ["company-manager"],
   "route": [],
   "stage": "watching",
   "facts": {},

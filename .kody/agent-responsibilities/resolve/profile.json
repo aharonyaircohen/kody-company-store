@@ -1,8 +1,0 @@
-{
-  "name": "resolve",
-  "describe": "PR Conflict Resolution",
-  "action": "resolve",
-  "agent": "kody",
-  "agentAction": "resolve",
-  "capabilityKind": "act"
-}

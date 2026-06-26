@@ -1,11 +1,11 @@
 ---
 name: probe-skill-marker
-description: Internal Kody live-test skill, shipped from the probe-skill agentAction's own directory (not the shared src/plugins catalog). Activates when a prompt mentions "probe-skill-marker" and provides a versioned confirmation token.
+description: Internal Kody live-test skill, shipped from the probe-skill executable's own directory (not the shared src/plugins catalog). Activates when a prompt mentions "probe-skill-marker" and provides a versioned confirmation token.
 ---
 
 # probe-skill-marker
 
-This skill exists only to verify that Kody's agentAction-local plugin-part resolution actually loads skills from `src/agent-actions/<name>/skills/` into the agent's session.
+This skill exists only to verify that Kody's executable-local plugin-part resolution actually loads skills from `src/executables/<name>/skills/` into the agent's session.
 
 ## When to activate
 

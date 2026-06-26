@@ -4,9 +4,9 @@
 
 Implement a feature, enhancement, or refactor issue end-to-end and open a pull request.
 
-## AgentAction
+## Executable
 
-Run the `feature` agentAction. Its skills and scripts own the detailed implementation method.
+Run the `feature` executable. Its skills and scripts own the detailed implementation method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A verified branch and pull request linked to the source issue.
 
 ## Allowed Commands
 
-- Run the `feature` agentAction.
+- Run the `feature` executable.
 
 ## Restrictions
 

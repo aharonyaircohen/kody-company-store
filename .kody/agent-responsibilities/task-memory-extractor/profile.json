@@ -1,8 +1,0 @@
-{
-  "name": "task-memory-extractor",
-  "describe": "Task memory extractor",
-  "action": "task-memory-extractor",
-  "agentAction": "task-memory-extractor",
-  "agent": "coo",
-  "capabilityKind": "act"
-}

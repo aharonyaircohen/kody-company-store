@@ -2,7 +2,7 @@
   "name": "ceo-performance-review",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Review every agent by the agentResponsibilities they own and the evidence those agentResponsibilities produce.",
+  "describe": "Review every agent by the capabilities they own and the evidence those capabilities produce.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -53,7 +53,7 @@
   },
   "agent": "ceo",
   "capabilityKind": "verify",
-  "agentActions": [
+  "implementations": [
     "ceo-performance-review"
   ]
 }

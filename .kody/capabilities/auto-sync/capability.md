@@ -2,13 +2,13 @@
 
 ## Job
 
-Every tick, run the local `auto-sync` agentAction tick:
+Every tick, run the local `auto-sync` executable tick:
 
 ```bash
-bash .kody/agent-actions/auto-sync/tick.sh
+bash .kody/executables/auto-sync/tick.sh
 ```
 
-The agentAction is the source of truth for PR selection, behind-count checks, attempt limits, stuck labels, comments, and next-state output.
+The executable is the source of truth for PR selection, behind-count checks, attempt limits, stuck labels, comments, and next-state output.
 
 ## Restrictions
 
@@ -18,4 +18,4 @@ The agentAction is the source of truth for PR selection, behind-count checks, at
 - Do not issue `@kody sync` more than once per six hours.
 - Do not issue more than two sync attempts per head SHA.
 - After two failed attempts on a head SHA, mark `kody:stuck-sync`.
-- Keep state in `.kody/agent-responsibilities/auto-sync.state.json`.
+- Keep state in `.kody/capabilities/auto-sync.state.json`.

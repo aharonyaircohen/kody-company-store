@@ -2,7 +2,7 @@
 #
 # Deterministic conflict resolution for `kody resolve --prefer ours|theirs`.
 #
-# Runs as a preflight shell entry (see src/agent-actions/resolve/profile.json).
+# Runs as a preflight shell entry (see src/executables/resolve/profile.json).
 # Gated by runWhen on args.prefer, so it only fires when the user requested
 # a side. Reads the side from $KODY_ARG_PREFER (the executor exposes every
 # ctx.args.<key> as an env var).

@@ -9,13 +9,13 @@
     "outcome": "Release is prepared, merged to main, and published to npm.",
     "evidence": ["releasePrExists", "mainMerged", "packagePublished"]
   },
-  "agentResponsibilities": ["release", "task-leader", "npm-publish"],
+  "capabilities": ["release", "task-leader", "npm-publish"],
   "route": [
     {
       "stage": "release",
       "evidence": "releasePrExists",
-      "agentResponsibility": "release",
-      "agentAction": "release-prepare",
+      "capability": "release",
+      "executable": "release-prepare",
       "args": {
         "issue": { "fact": "issue" },
         "goal": "npm-release"
@@ -24,15 +24,15 @@
     {
       "stage": "merge",
       "evidence": "mainMerged",
-      "agentResponsibility": "task-leader",
-      "agentAction": "task-leader",
+      "capability": "task-leader",
+      "executable": "task-leader",
       "args": { "issue": { "fact": "issue" } }
     },
     {
       "stage": "publish",
       "evidence": "packagePublished",
-      "agentResponsibility": "npm-publish",
-      "agentAction": "npm-publish"
+      "capability": "npm-publish",
+      "executable": "npm-publish"
     }
   ],
   "stage": "release",

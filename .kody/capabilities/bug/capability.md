@@ -4,9 +4,9 @@
 
 Reproduce and fix a bug issue end-to-end, then open a pull request with verification evidence.
 
-## AgentAction
+## Executable
 
-Run the `bug` agentAction. Its systematic debugging skill owns the detailed repair method.
+Run the `bug` executable. Its systematic debugging skill owns the detailed repair method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A verified fix branch and pull request linked to the source issue.
 
 ## Allowed Commands
 
-- Run the `bug` agentAction.
+- Run the `bug` executable.
 
 ## Restrictions
 

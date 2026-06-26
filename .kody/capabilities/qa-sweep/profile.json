@@ -56,7 +56,7 @@
     "aguyaharonyair"
   ],
   "capabilityKind": "observe",
-  "agentActions": [
+  "implementations": [
     "qa-sweep"
   ]
 }

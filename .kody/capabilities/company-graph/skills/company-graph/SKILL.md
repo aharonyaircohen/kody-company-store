@@ -12,9 +12,9 @@ Use this skill when refreshing `reports/company-graph.md`.
 Build graph nodes for:
 
 - context files
-- agentResponsibilities
+- capabilities
 - agent
-- agentActions
+- executables
 - scripts
 - skills
 - reports
@@ -23,13 +23,13 @@ Build graph nodes for:
 
 Build graph edges for:
 
-- agentResponsibility `agent` -> assigned agent
-- agentResponsibility `agentActions` -> runnable agentAction
-- agentResponsibility `reads_from` -> source context/report/agentResponsibility
-- agentResponsibility `writes_to` -> report
+- capability `agent` -> assigned agent
+- capability `executables` -> runnable executable
+- capability `reads_from` -> source context/report/capability
+- capability `writes_to` -> report
 - context `agent` -> audience agent
-- agentAction configured skills -> skill nodes
-- agentAction preflight scripts -> script nodes
+- executable configured skills -> skill nodes
+- executable preflight scripts -> script nodes
 - issue `goal:*` labels -> goal nodes
 
 ## Findings
@@ -39,7 +39,7 @@ Report:
 - graph snapshot counts and hash
 - orphan agent
 - stale context
-- disabled agentResponsibilities referenced by other agentResponsibilities
+- disabled capabilities referenced by other capabilities
 - `.kody/` coverage gaps
 - GitHub rate-limit skips
 

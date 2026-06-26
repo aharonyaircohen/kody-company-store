@@ -8,7 +8,7 @@ Treat documentation stewardship as one daily pass:
 2. Run the `docs-code` method to catch broad in-code documentation coverage gaps.
 3. Respect each skill's deduplication, one-action, and advisory-only limits.
 
-Run only the work requested by the matching agentResponsibility. Follow the agentResponsibility profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
+Run only the work requested by the matching capability. Follow the capability profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)
 

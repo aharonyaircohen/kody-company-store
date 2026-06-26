@@ -5,15 +5,15 @@ description: Run a periodic design-health sweep for visual coherence, usability,
 
 # Design Review Skill
 
-Use this skill when the `design-review` agentAction runs from the matching agentResponsibility.
+Use this skill when the `design-review` executable runs from the matching capability.
 
-Runtime state is owned by the engine. Do not ask the agentResponsibility author to configure raw state keys.
+Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
 ## Jobs
 
-Periodic **design-health sweep** of the product's UI — coherence and usability, not feature behavior. The job itself cannot run shell beyond `gh`, so it opens a tracking issue delegating the analysis to a Kody agentAction in CI and tracks the result.
+Periodic **design-health sweep** of the product's UI — coherence and usability, not feature behavior. The job itself cannot run shell beyond `gh`, so it opens a tracking issue delegating the analysis to a Kody executable in CI and tracks the result.
 
 Scope of the delegated sweep:
 
