@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 #
 # release-merge: wait for a release PR to pass checks, squash-merge it, and
-# report mainMerged to a managed goal.
+# report branch-specific merge evidence to a managed goal.
 #
 # Inputs:
 #   KODY_ARG_PR              release PR number to merge
@@ -17,6 +17,8 @@ issue="${KODY_ARG_ISSUE:-}"
 goal_id="${KODY_ARG_GOAL:-}"
 timeout_seconds="${KODY_ARG_TIMEOUT_SECONDS:-1800}"
 poll_seconds="${KODY_ARG_POLL_SECONDS:-30}"
+default_branch="${KODY_CFG_GIT_DEFAULTBRANCH:-main}"
+release_branch="${KODY_CFG_RELEASE_RELEASEBRANCH:-}"
 
 fail() {
   echo "KODY_REASON=$1"
@@ -103,17 +105,34 @@ print(data.get(os.environ["FIELD"], ""))
 PY
 }
 
+merge_evidence_for_base() {
+  local base="$1"
+  if [[ -n "$release_branch" && "$release_branch" != "$default_branch" && "$base" == "$release_branch" ]]; then
+    echo "releaseBranchMerged"
+    return
+  fi
+  if [[ "$base" == "$default_branch" ]]; then
+    echo "defaultBranchMerged"
+    return
+  fi
+  fail "release-merge: PR #${pr} targets '${base}', expected '${default_branch}'${release_branch:+ or '${release_branch}'}" 1
+}
+
 [[ "$pr" =~ ^[0-9]+$ ]] || fail "release-merge: --pr is required" 99
 
-state="$(gh pr view "$pr" --json state --jq '.state' 2>/dev/null || true)"
+pr_view="$(gh pr view "$pr" --json state,baseRefName,mergeCommit 2>/dev/null || true)"
+state="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("state",""))' 2>/dev/null || true)"
+base_ref="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("baseRefName",""))' 2>/dev/null || true)"
+evidence="$(merge_evidence_for_base "$base_ref")"
+
 if [[ "$state" == "MERGED" ]]; then
-  merge_sha="$(gh pr view "$pr" --json mergeCommit --jq '.mergeCommit.oid // ""' 2>/dev/null || true)"
-  emit_goal_report "mainMerged" "releasePr=${pr}" "mergeCommit=${merge_sha}"
+  merge_sha="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print(((json.load(sys.stdin) or {}).get("mergeCommit") or {}).get("oid",""))' 2>/dev/null || true)"
+  emit_goal_report "$evidence" "mergedPr=${pr}" "mergeCommit=${merge_sha}" "mergedBaseBranch=${base_ref}"
   echo "KODY_SKIP_AGENT=true"
   cat <<RESULT
 DONE
 PR_SUMMARY:
-- Release PR #${pr} was already merged.
+- Release PR #${pr} was already merged into ${base_ref}.
 RESULT
   exit 0
 fi
@@ -154,13 +173,13 @@ gh pr merge "$pr" --squash --delete-branch
 merge_sha="$(gh pr view "$pr" --json mergeCommit --jq '.mergeCommit.oid // ""')"
 
 if [[ "$issue" =~ ^[0-9]+$ ]]; then
-  gh issue comment "$issue" --body "Merged release PR #${pr}${merge_sha:+ at ${merge_sha}}." >/dev/null || true
+  gh issue comment "$issue" --body "Merged release PR #${pr} into ${base_ref}${merge_sha:+ at ${merge_sha}}." >/dev/null || true
 fi
 
-emit_goal_report "mainMerged" "releasePr=${pr}" "mergeCommit=${merge_sha}"
+emit_goal_report "$evidence" "mergedPr=${pr}" "mergeCommit=${merge_sha}" "mergedBaseBranch=${base_ref}"
 echo "KODY_SKIP_AGENT=true"
 cat <<RESULT
 DONE
 PR_SUMMARY:
-- Merged release PR #${pr}${merge_sha:+ at ${merge_sha}}.
+- Merged release PR #${pr} into ${base_ref}${merge_sha:+ at ${merge_sha}}.
 RESULT

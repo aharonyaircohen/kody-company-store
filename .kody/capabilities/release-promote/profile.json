@@ -1,8 +1,8 @@
 {
-  "name": "release-deploy",
+  "name": "release-promote",
   "role": "utility",
   "phase": "shipped",
-  "describe": "Run configured deployCommand and notifyCommand after release-publish has tagged + published. No agent.",
+  "describe": "Open or refresh a promotion PR from git.defaultBranch to release.releaseBranch. No agent.",
   "inputs": [
     {
       "name": "dry-run",
@@ -23,7 +23,7 @@
       "flag": "--goal",
       "type": "string",
       "required": false,
-      "describe": "Managed goal id to report deploy PR evidence to."
+      "describe": "Managed goal id to report promotion PR evidence to."
     }
   ],
   "claudeCode": {
@@ -55,7 +55,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "deploy.sh"
+        "shell": "release-promote.sh"
       },
       {
         "script": "skipAgent"
@@ -74,7 +74,7 @@
       {
         "script": "notifyTerminal",
         "with": {
-          "label": "release deploy"
+          "label": "release promote"
         }
       },
       {
@@ -82,5 +82,5 @@
       }
     ]
   },
-  "action": "release-deploy"
+  "action": "release-promote"
 }

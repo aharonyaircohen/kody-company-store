@@ -4,30 +4,53 @@
   "templateId": "web-release",
   "state": "inactive",
   "type": "web-release",
-  "description": "Shared managed goal template releasing a web app: prepare release, merge it to main through task leadership, then deploy Vercel production.",
+  "description": "Shared managed goal template releasing a web app: prepare a release, merge it to the default branch, promote the default branch to the release branch, then deploy and verify production.",
   "destination": {
-    "outcome": "Release is prepared, merged to main, and deployed to Vercel production.",
-    "evidence": ["releasePrExists", "mainMerged", "productionDeployed"]
+    "outcome": "Release is prepared, promoted to the production branch, and verified on production.",
+    "evidence": [
+      "releasePrExists",
+      "defaultBranchMerged",
+      "releasePromotionPrExists",
+      "releaseBranchMerged",
+      "productionDeployed"
+    ]
   },
-  "capabilities": ["release-prepare", "release-merge", "vercel-production-deploy"],
+  "capabilities": ["release-prepare", "release-merge", "release-promote", "vercel-production-deploy"],
   "route": [
     {
       "stage": "release",
       "evidence": "releasePrExists",
       "capability": "release-prepare",
-      "executable": "release-prepare",
       "args": {
         "issue": { "fact": "issue" },
         "goal": { "fact": "goalId" }
       }
     },
     {
-      "stage": "merge",
-      "evidence": "mainMerged",
+      "stage": "merge-default",
+      "evidence": "defaultBranchMerged",
       "capability": "release-merge",
-      "executable": "release-merge",
       "args": {
         "pr": { "fact": "releasePr" },
+        "issue": { "fact": "issue" },
+        "goal": { "fact": "goalId" }
+      }
+    },
+    {
+      "stage": "promote",
+      "evidence": "releasePromotionPrExists",
+      "capability": "release-promote",
+      "args": {
+        "issue": { "fact": "issue" },
+        "goal": { "fact": "goalId" }
+      }
+    },
+    {
+      "stage": "merge-release",
+      "evidence": "releaseBranchMerged",
+      "capability": "release-merge",
+      "args": {
+        "pr": { "fact": "promotionPr" },
         "issue": { "fact": "issue" },
         "goal": { "fact": "goalId" }
       }
@@ -36,7 +59,6 @@
       "stage": "publish",
       "evidence": "productionDeployed",
       "capability": "vercel-production-deploy",
-      "executable": "vercel-production-deploy",
       "args": { "goal": { "fact": "goalId" } }
     }
   ],

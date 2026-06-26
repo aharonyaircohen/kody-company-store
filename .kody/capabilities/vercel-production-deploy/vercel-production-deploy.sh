@@ -77,6 +77,7 @@ trap 'on_error "$?"' ERR
 
 require_command git
 require_command node
+require_command curl
 
 vercel_cmd=(vercel)
 if ! command -v vercel >/dev/null 2>&1; then
@@ -117,9 +118,11 @@ value_or_variable() {
 }
 
 SCOPE="$(value_or_variable "${VERCEL_SCOPE:-}" "VERCEL_SCOPE")"
-DEPLOY_BRANCH="$(value_or_variable "${VERCEL_PRODUCTION_BRANCH:-}" "VERCEL_PRODUCTION_BRANCH" "main")"
+DEPLOY_BRANCH="$(value_or_variable "${VERCEL_PRODUCTION_BRANCH:-}" "VERCEL_PRODUCTION_BRANCH" "${KODY_CFG_RELEASE_RELEASEBRANCH:-main}")"
 VERCEL_ORG_ID="$(value_or_variable "${VERCEL_ORG_ID:-}" "VERCEL_ORG_ID")"
 VERCEL_PROJECT_ID="$(value_or_variable "${VERCEL_PROJECT_ID:-}" "VERCEL_PROJECT_ID")"
+PRODUCTION_URL="$(value_or_variable "${PRODUCTION_URL:-}" "PRODUCTION_URL" "${KODY_CFG_RELEASE_PRODUCTIONURL:-}")"
+SMOKE_COMMAND="${KODY_CFG_RELEASE_SMOKECOMMAND:-}"
 export VERCEL_ORG_ID VERCEL_PROJECT_ID
 
 token="${VERCEL_ACCESS_TOKEN:-${VERCEL_TOKEN:-}}"
@@ -158,6 +161,7 @@ fi
 git pull --ff-only origin "$DEPLOY_BRANCH"
 
 current_branch="$(git branch --show-current)"
+release_version="$(node -e 'const fs=require("fs"); const data=JSON.parse(fs.readFileSync("package.json","utf8")); process.stdout.write(String(data.version || ""))')"
 vercel_args=(--token "$token")
 if [ -n "$SCOPE" ]; then
   vercel_args=(--scope "$SCOPE" "${vercel_args[@]}")
@@ -180,11 +184,33 @@ deployment_url="$(
   ' "$tmp_json"
 )"
 
-emit_goal_report "productionDeployed" "productionDeploymentUrl=${deployment_url}" "productionBranch=${current_branch}"
+curl -fsSL --max-time 30 "$deployment_url" >/dev/null || fail "Production deployment URL is not reachable: ${deployment_url}"
+
+if [ -n "$PRODUCTION_URL" ]; then
+  curl -fsSL --max-time 30 "$PRODUCTION_URL" >/dev/null || fail "Production URL is not reachable: ${PRODUCTION_URL}"
+fi
+
+smoke_status="skipped"
+if [ -n "$SMOKE_COMMAND" ]; then
+  smoke_status="failed"
+  export PRODUCTION_URL
+  if [ -n "$PRODUCTION_URL" ]; then
+    export SMOKE_BASE_URLS="${SMOKE_BASE_URLS:-$PRODUCTION_URL}"
+  fi
+  if timeout "$(( ${KODY_CFG_RELEASE_TIMEOUTMS:-600000} / 1000 ))" bash -c "$SMOKE_COMMAND"; then
+    smoke_status="passed"
+  else
+    fail "Production smoke command failed"
+  fi
+fi
+
+emit_goal_report "productionDeployed" "version=${release_version}" "productionDeploymentUrl=${deployment_url}" "productionBranch=${current_branch}" "productionUrl=${PRODUCTION_URL}" "smoke=${smoke_status}"
 
 cat <<RESULT
 DONE
 PR_SUMMARY:
-- Deployed ${current_branch} to Vercel production.
+- Deployed ${current_branch} (${release_version}) to Vercel production.
 - Production deployment URL: ${deployment_url}.
+${PRODUCTION_URL:+- Production URL: ${PRODUCTION_URL}.}
+${SMOKE_COMMAND:+- Smoke command: ${smoke_status}.}
 RESULT

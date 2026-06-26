@@ -1,7 +1,7 @@
 {
   "name": "vercel-production-deploy",
   "role": "primitive",
-  "describe": "Deploy main branch to Vercel Production. Requires Kody secrets VERCEL_ACCESS_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID.",
+  "describe": "Deploy the configured release branch to Vercel Production, verify the public production URL, and optionally run the configured smoke command.",
   "inputs": [
     {
       "name": "goal",

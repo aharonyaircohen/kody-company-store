@@ -39,7 +39,7 @@ If CI times out or fails, write `MERGE_FAILED` to `state.core.lastOutcome.action
 
 - Never run `pnpm publish`. `release-publish` does that.
 - Never tag. `release-publish` does that.
-- Never deploy. `release-deploy` does that.
+- Never deploy. The production deploy capability does that after promotion.
 
 ## Required output markers
 

@@ -2,7 +2,7 @@
   "name": "release-merge",
   "role": "utility",
   "kind": "oneshot",
-  "describe": "Wait for a release PR to go green, squash-merge it, and optionally report mainMerged to a managed goal. No agent.",
+  "describe": "Wait for a release PR to go green, squash-merge it, and report branch-specific merge evidence to a managed goal. No agent.",
   "inputs": [
     {
       "name": "pr",
@@ -23,7 +23,7 @@
       "flag": "--goal",
       "type": "string",
       "required": false,
-      "describe": "Managed goal id to report mainMerged evidence to."
+      "describe": "Managed goal id to report merge evidence to."
     },
     {
       "name": "timeout-seconds",
