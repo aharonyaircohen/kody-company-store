@@ -1,0 +1,7 @@
+{
+  "action": "kody-vibe",
+  "agent": "kody",
+  "capabilityKind": "act",
+  "describe": "kody-vibe",
+  "agentAction": "kody-chat"
+}

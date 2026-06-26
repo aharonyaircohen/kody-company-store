@@ -1,0 +1,63 @@
+{
+  "name": "job-gap-scan",
+  "role": "watch",
+  "kind": "oneshot",
+  "describe": "Propose one high-ROI missing agentResponsibility and update the job-gap report.",
+  "inputs": [
+    {
+      "name": "agentResponsibility",
+      "flag": "--agentResponsibility",
+      "type": "string",
+      "required": true,
+      "describe": "Runtime agentResponsibility slug whose sidecar state is loaded and updated."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "enableVerifyTool": false,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "runScheduledAgentActionTick",
+        "with": {
+          "jobsDir": ".kody/agent-responsibilities",
+          "slugArg": "agentResponsibility",
+          "shell": "tick.sh",
+          "fenceLabel": "kody-job-next-state"
+        }
+      }
+    ],
+    "postflight": [
+      {
+        "script": "writeJobStateFile",
+        "with": {
+          "jobsDir": ".kody/agent-responsibilities"
+        }
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "action": "job-gap-scan",
+  "agent": "ceo",
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "capabilityKind": "observe"
+}

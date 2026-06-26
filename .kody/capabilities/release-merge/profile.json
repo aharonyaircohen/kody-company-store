@@ -1,0 +1,91 @@
+{
+  "name": "release-merge",
+  "role": "utility",
+  "kind": "oneshot",
+  "describe": "Wait for a release PR to go green, squash-merge it, and optionally report mainMerged to a managed goal. No agent.",
+  "inputs": [
+    {
+      "name": "pr",
+      "flag": "--pr",
+      "type": "int",
+      "required": true,
+      "describe": "Release pull request number to merge."
+    },
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": false,
+      "describe": "GitHub issue number to work on."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report mainMerged evidence to."
+    },
+    {
+      "name": "timeout-seconds",
+      "flag": "--timeout-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Maximum seconds to wait for pending checks before failing. Default 1800."
+    },
+    {
+      "name": "poll-seconds",
+      "flag": "--poll-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Seconds between CI polls while waiting. Default 30."
+    }
+  ],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "setCommentTarget",
+        "with": {
+          "type": "issue"
+        }
+      },
+      {
+        "shell": "release-merge.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "recordOutcome"
+      },
+      {
+        "script": "applyAgentResponsibilityReports"
+      },
+      {
+        "script": "notifyTerminal",
+        "with": {
+          "label": "release merge"
+        }
+      }
+    ]
+  },
+  "action": "release-merge",
+  "capabilityKind": "act"
+}

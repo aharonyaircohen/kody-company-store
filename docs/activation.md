@@ -5,10 +5,24 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 ```json
 {
   "company": {
+    "activeCapabilities": ["fix-ci", "review"],
     "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality"]
   }
 }
 ```
+
+## Capabilities
+
+Store capabilities are inactive shared abilities. Consumer repos activate them
+through `company.activeCapabilities`.
+
+```json
+{ "company": { "activeCapabilities": ["fix-ci", "review"] } }
+```
+
+Capability activation is permission to resolve and run the shared capability for
+that consumer repo. Local `.kody/capabilities/<slug>/` folders remain repo-owned
+and override store capabilities with the same slug.
 
 ## AgentGoals and AgentLoops
 
@@ -48,12 +62,14 @@ Supported intervals are `Nm`, `Nh`, `Nd`, and `Nw`, for example `15m`, `2h`, `1d
 
 Store goals must not contain repo-specific runtime history. Runtime goal progress belongs in the configured state repo.
 
-## AgentResponsibilities
+## Legacy AgentResponsibilities
 
-Store agentResponsibilities are available responsibilities or commands. They are no longer the main scheduled fan-out surface.
+Store agentResponsibilities are legacy available responsibilities or commands.
+They are no longer the main scheduled fan-out surface.
 
 Rules:
 
+- New shared abilities should use `.kody/capabilities/` and `company.activeCapabilities`.
 - Scheduled company behavior should be activated through `company.activeGoals`.
 - AgentResponsibilities do not own cadence; goal/loop ticks own the scheduling decision.
 - Manual agentResponsibility runs still work from the dashboard or workflow dispatch.
@@ -67,7 +83,8 @@ Rules:
 ```text
 kody-store = menu
 consumer repo = decides what is enabled
-agentResponsibility = available responsibility or command
+capability = available shared ability
+agentResponsibility = legacy available responsibility or command
 agentGoal/agentLoop = operator promise that owns when responsibilities run
 activation = permission to run
 scheduled agentLoop = template creates new runtime instance per bucket
