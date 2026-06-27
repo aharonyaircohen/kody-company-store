@@ -18,6 +18,7 @@ const { spawnSync } = require("node:child_process");
 
 const dryRun = process.env.AI_AGENCY_DOCTOR_DRY_RUN === "1";
 const reportSlug = "ai-agency-doctor";
+const stateBranch = "kody-state";
 const cwd = process.cwd();
 const generatedAt = new Date().toISOString();
 const runId = generatedAt.replace(/\.\d{3}Z$/, "Z").replace(/:/g, "-");
@@ -416,6 +417,22 @@ function runGh(args, input) {
   });
 }
 
+function parseJsonOutput(result, label) {
+  try {
+    return JSON.parse(result.stdout);
+  } catch {
+    throw new Error(`${label} returned invalid JSON`);
+  }
+}
+
+function isNotFound(result) {
+  return result.status !== 0 && /Not Found|HTTP 404/i.test(`${result.stderr}\n${result.stdout}`);
+}
+
+function isAlreadyExists(result) {
+  return result.status !== 0 && /Reference already exists|HTTP 422/i.test(`${result.stderr}\n${result.stdout}`);
+}
+
 function normalizeRepo(value) {
   return String(value || "")
     .replace(/^https:\/\/github\.com\//, "")
@@ -438,8 +455,33 @@ function resolveStateTarget() {
   };
 }
 
+function ensureStateBranch(stateRepo) {
+  const stateRef = runGh(["api", `/repos/${stateRepo}/git/ref/heads/${stateBranch}`]);
+  if (stateRef.status === 0) return;
+  if (!isNotFound(stateRef)) throw new Error(stateRef.stderr.trim() || stateRef.stdout.trim() || "Could not read state branch");
+
+  const repo = runGh(["api", `/repos/${stateRepo}`]);
+  if (repo.status !== 0) throw new Error(repo.stderr.trim() || repo.stdout.trim() || "Could not read state repo");
+  const defaultBranch = String(parseJsonOutput(repo, "State repo").default_branch || "").trim();
+  if (!defaultBranch) throw new Error("State repo default branch is missing");
+
+  const defaultRef = runGh(["api", `/repos/${stateRepo}/git/ref/heads/${defaultBranch}`]);
+  if (defaultRef.status !== 0) throw new Error(defaultRef.stderr.trim() || defaultRef.stdout.trim() || "Could not read default branch ref");
+  const sha = String(parseJsonOutput(defaultRef, "Default branch ref").object?.sha || "").trim();
+  if (!sha) throw new Error("Default branch ref SHA is missing");
+
+  const create = runGh(
+    ["api", "--method", "POST", `/repos/${stateRepo}/git/refs`, "--input", "-"],
+    JSON.stringify({ ref: `refs/heads/${stateBranch}`, sha }),
+  );
+  if (create.status !== 0 && !isAlreadyExists(create)) {
+    throw new Error(create.stderr.trim() || create.stdout.trim() || "Could not create state branch");
+  }
+}
+
 function writeReport() {
   const { stateRepo, reportPath } = resolveStateTarget();
+  ensureStateBranch(stateRepo);
   const content = Buffer.from(report).toString("base64");
   const args = [
     "api",
@@ -448,6 +490,8 @@ function writeReport() {
     `/repos/${stateRepo}/contents/${reportPath}`,
     "-f",
     "message=chore(reports): add ai-agency-doctor run",
+    "-f",
+    `branch=${stateBranch}`,
     "-f",
     `content=${content}`,
   ];
@@ -459,7 +503,7 @@ function writeReport() {
 
 if (dryRun) {
   process.stdout.write(`${report}\n`);
-  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): add ai-agency-doctor run\nPR_SUMMARY:\n- Dry run only; no report write attempted.\n- Report path would be ${reportFile}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
+  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): add ai-agency-doctor run\nPR_SUMMARY:\n- Dry run only; no report write attempted.\n- Report path would be ${reportFile} on ${stateBranch}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
 } else {
   const target = writeReport();
   process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): add ai-agency-doctor run\nPR_SUMMARY:\n- Added ${target.reportPath} in ${target.stateRepo}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
