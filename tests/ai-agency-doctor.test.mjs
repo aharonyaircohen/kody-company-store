@@ -70,6 +70,8 @@ describe("ai-agency-doctor", () => {
       assert.match(result.stdout, /goal-template\.local-loop\.not-inactive/);
       assert.match(result.stdout, /goal-template\.local-loop\.capability-store-or-missing\.unknown-capability/);
       assert.match(result.stdout, /Dry run only; no report write attempted/);
+      assert.match(result.stdout, /Report path would be reports\/ai-agency-doctor\/runs\/\d{4}-\d{2}-\d{2}T\d{2}-\d{2}-\d{2}Z\.md/);
+      assert.doesNotMatch(result.stdout, /reports\/ai-agency-doctor\.md/);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }

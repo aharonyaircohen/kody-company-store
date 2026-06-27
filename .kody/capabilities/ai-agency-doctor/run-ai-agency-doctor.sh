@@ -18,9 +18,10 @@ const { spawnSync } = require("node:child_process");
 
 const dryRun = process.env.AI_AGENCY_DOCTOR_DRY_RUN === "1";
 const reportSlug = "ai-agency-doctor";
-const reportFile = `reports/${reportSlug}.md`;
 const cwd = process.cwd();
 const generatedAt = new Date().toISOString();
+const runId = generatedAt.replace(/\.\d{3}Z$/, "Z").replace(/:/g, "-");
+const reportFile = `reports/${reportSlug}/runs/${runId}.md`;
 
 const findings = [];
 const passed = [];
@@ -439,16 +440,6 @@ function resolveStateTarget() {
 
 function writeReport() {
   const { stateRepo, reportPath } = resolveStateTarget();
-  const get = runGh(["api", `/repos/${stateRepo}/contents/${reportPath}`]);
-  let sha = "";
-  if (get.status === 0 && get.stdout.trim()) {
-    try {
-      sha = JSON.parse(get.stdout).sha || "";
-    } catch {
-      sha = "";
-    }
-  }
-
   const content = Buffer.from(report).toString("base64");
   const args = [
     "api",
@@ -456,11 +447,10 @@ function writeReport() {
     "PUT",
     `/repos/${stateRepo}/contents/${reportPath}`,
     "-f",
-    "message=chore(reports): refresh ai-agency-doctor",
+    "message=chore(reports): add ai-agency-doctor run",
     "-f",
     `content=${content}`,
   ];
-  if (sha) args.push("-f", `sha=${sha}`);
 
   const put = runGh(args);
   if (put.status !== 0) throw new Error(put.stderr.trim() || put.stdout.trim() || "Could not write report");
@@ -469,9 +459,9 @@ function writeReport() {
 
 if (dryRun) {
   process.stdout.write(`${report}\n`);
-  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): refresh ai-agency-doctor\nPR_SUMMARY:\n- Dry run only; no report write attempted.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
+  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): add ai-agency-doctor run\nPR_SUMMARY:\n- Dry run only; no report write attempted.\n- Report path would be ${reportFile}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
 } else {
   const target = writeReport();
-  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): refresh ai-agency-doctor\nPR_SUMMARY:\n- Refreshed ${target.reportPath} in ${target.stateRepo}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
+  process.stdout.write(`DONE\nCOMMIT_MSG: chore(reports): add ai-agency-doctor run\nPR_SUMMARY:\n- Added ${target.reportPath} in ${target.stateRepo}.\n- AI Agency Health: ${status} (${red} broken, ${yellow} warnings, ${passed.length} passed).\n`);
 }
 NODE

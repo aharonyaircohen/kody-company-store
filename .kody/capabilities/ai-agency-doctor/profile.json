@@ -2,7 +2,7 @@
   "name": "ai-agency-doctor",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Check AI Agency wiring and refresh reports/ai-agency-doctor.md.",
+  "describe": "Check AI Agency wiring and add a timestamped report under reports/ai-agency-doctor/runs/.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

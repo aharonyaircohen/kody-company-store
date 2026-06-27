@@ -11,12 +11,13 @@ skips the agent.
 
 ## Output
 
-Refresh `reports/ai-agency-doctor.md` in the configured state repo.
+Add a timestamped run report under `reports/ai-agency-doctor/runs/` in the
+configured state repo.
 
 ## Allowed Commands
 
 - Read `.kody` assets and `kody.config.json`.
-- Write only the AI Agency Doctor report.
+- Write only the AI Agency Doctor run report.
 
 ## Restrictions
 
