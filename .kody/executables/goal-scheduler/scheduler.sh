@@ -25,7 +25,8 @@ import os
 import re
 import subprocess
 import sys
-from datetime import datetime, timezone
+import time
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from urllib.parse import urlparse
 from zoneinfo import ZoneInfo
@@ -42,17 +43,51 @@ MANAGED_KEYS = ("type", "destination", "capabilities", "route", "facts", "blocke
 
 
 def gh(args: list[str], input_text: str | None = None) -> str:
-    result = subprocess.run(
-        ["gh", *args],
-        input=input_text,
-        text=True,
-        stdout=subprocess.PIPE,
-        stderr=subprocess.PIPE,
-        check=False,
-    )
-    if result.returncode != 0:
-        raise RuntimeError(result.stderr.strip() or result.stdout.strip() or f"gh exited {result.returncode}")
-    return result.stdout
+    delays = gh_retry_delays()
+    for attempt in range(len(delays) + 1):
+        result = subprocess.run(
+            ["gh", *args],
+            input=input_text,
+            text=True,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            check=False,
+        )
+        if result.returncode == 0:
+            return result.stdout
+        message = result.stderr.strip() or result.stdout.strip() or f"gh exited {result.returncode}"
+        if attempt < len(delays) and is_rate_limit_error(message):
+            delay = delays[attempt]
+            print(
+                f"[goal-scheduler] gh rate limited; retrying in {delay:g}s "
+                f"(attempt {attempt + 2}/{len(delays) + 1})",
+                file=sys.stderr,
+            )
+            if delay > 0:
+                time.sleep(delay)
+            continue
+        raise RuntimeError(message)
+    raise RuntimeError("gh retry loop exhausted")
+
+
+def gh_retry_delays() -> list[float]:
+    raw = os.environ.get("KODY_GOAL_SCHEDULER_GH_RETRY_DELAYS", "1,3,10").strip()
+    if not raw:
+        return []
+    delays: list[float] = []
+    for item in raw.split(","):
+        try:
+            value = float(item.strip())
+        except ValueError:
+            continue
+        if value >= 0:
+            delays.append(value)
+    return delays
+
+
+def is_rate_limit_error(message: str) -> bool:
+    lower = message.lower()
+    return "api rate limit exceeded" in lower or ("rate limit" in lower and "http 403" in lower)
 
 
 def is_not_found(err: Exception) -> bool:
@@ -124,25 +159,46 @@ def interval_seconds(every: str) -> int:
     unit = match.group(2)
     return amount * {"m": 60, "h": 3600, "d": 86400, "w": 604800}[unit]
 
-def preferred_runtime_wait_reason(schedule: dict, now: datetime) -> str | None:
-    preferred = schedule.get("preferredRunTime")
+def iso_z(value: datetime) -> str:
+    return value.astimezone(timezone.utc).isoformat().replace("+00:00", "Z")
+
+
+def parse_preferred_runtime(data: dict) -> tuple[tuple[str, str, int, ZoneInfo] | None, str | None]:
+    preferred = data.get("preferredRunTime")
     if not isinstance(preferred, dict):
-        return None
+        return None, None
     time_value = preferred.get("time")
     timezone_value = preferred.get("timezone")
     if not isinstance(time_value, str) or not isinstance(timezone_value, str):
-        return None
+        return None, None
     match = re.match(r"^([01]\d|2[0-3]):([0-5]\d)$", time_value)
     if not match:
-        return f"invalid preferred time: {time_value}"
+        return None, f"invalid preferred time: {time_value}"
     try:
-        local = now.astimezone(ZoneInfo(timezone_value))
+        zone = ZoneInfo(timezone_value)
     except Exception:
-        return f"invalid preferred timezone: {timezone_value}"
+        return None, f"invalid preferred timezone: {timezone_value}"
     preferred_minute = int(match.group(1)) * 60 + int(match.group(2))
+    return (time_value, timezone_value, preferred_minute, zone), None
+
+
+def preferred_runtime_wait_reason(schedule: dict, now: datetime) -> str | None:
+    parsed, error = parse_preferred_runtime(schedule)
+    if error:
+        return error
+    if parsed is None:
+        return None
+    time_value, timezone_value, preferred_minute, zone = parsed
+    local = now.astimezone(zone)
     current_minute = local.hour * 60 + local.minute
     if current_minute < preferred_minute:
-        return f"waiting preferred time {time_value} {timezone_value}"
+        due_at = local.replace(
+            hour=preferred_minute // 60,
+            minute=preferred_minute % 60,
+            second=0,
+            microsecond=0,
+        )
+        return f"waiting preferred time {time_value} {timezone_value} until {iso_z(due_at)}"
     return None
 
 
@@ -363,17 +419,59 @@ def last_goal_tick_time(data: dict) -> float:
     return 0
 
 
+def last_goal_dispatch_time(data: dict) -> float:
+    schedule_state = data.get("scheduleState")
+    if not isinstance(schedule_state, dict):
+        return 0
+    last_decision = schedule_state.get("lastDecision")
+    if not isinstance(last_decision, dict) or last_decision.get("kind") != "dispatch":
+        return 0
+    return parse_state_time(last_decision.get("at"))
+
+
+def preferred_daily_wait_reason(data: dict, now: datetime) -> str | None:
+    parsed, error = parse_preferred_runtime(data)
+    if error:
+        return error
+    if parsed is None:
+        return None
+    time_value, timezone_value, preferred_minute, zone = parsed
+    local = now.astimezone(zone)
+    preferred_today = local.replace(
+        hour=preferred_minute // 60,
+        minute=preferred_minute % 60,
+        second=0,
+        microsecond=0,
+    )
+    current_minute = local.hour * 60 + local.minute
+    if current_minute < preferred_minute:
+        return f"waiting preferred time {time_value} {timezone_value} until {iso_z(preferred_today)}"
+
+    last_dispatch = last_goal_dispatch_time(data)
+    if last_dispatch > 0:
+        dispatched_local = datetime.fromtimestamp(last_dispatch, timezone.utc).astimezone(zone)
+        if dispatched_local.date() == local.date():
+            next_due = preferred_today + timedelta(days=1)
+            return (
+                f"already dispatched today at preferred time {time_value} {timezone_value}; "
+                f"next eligible {iso_z(next_due)}"
+            )
+    return None
+
+
 def schedule_wait_reason(data: dict, now: datetime) -> str | None:
     every = goal_schedule_interval(data)
     if not every:
         return None
+    if every == "1d" and isinstance(data.get("preferredRunTime"), dict):
+        return preferred_daily_wait_reason(data, now)
     last_tick = last_goal_tick_time(data)
     if last_tick <= 0:
         return None
     next_tick = last_tick + interval_seconds(every)
     if now.timestamp() >= next_tick:
         return None
-    due_at = datetime.fromtimestamp(next_tick, timezone.utc).isoformat().replace("+00:00", "Z")
+    due_at = iso_z(datetime.fromtimestamp(next_tick, timezone.utc))
     return f"waiting schedule {every} until {due_at}"
 
 
