@@ -6,6 +6,7 @@
   "state": "inactive",
   "type": "maintain",
   "scheduleMode": "agentLoop",
+  "schedule": "15m",
   "title": "CI stays healthy",
   "description": "Watch branch CI and surface broken builds quickly.",
   "destination": {

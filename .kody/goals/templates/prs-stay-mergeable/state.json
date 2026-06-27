@@ -6,6 +6,7 @@
   "state": "inactive",
   "type": "maintain",
   "scheduleMode": "agentLoop",
+  "schedule": "15m",
   "title": "PRs stay mergeable",
   "description": "Keep pull requests current, green, and repairable.",
   "destination": {

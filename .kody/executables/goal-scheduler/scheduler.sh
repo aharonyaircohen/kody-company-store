@@ -342,6 +342,41 @@ def scheduled_instance_sort_key(goal_id: str) -> tuple[float, str]:
     return parse_state_time(data.get("createdAt") or data.get("updatedAt")), goal_id
 
 
+def goal_schedule_interval(data: dict) -> str | None:
+    schedule = data.get("schedule")
+    if not isinstance(schedule, str):
+        return None
+    every = schedule.strip()
+    return every if INTERVAL.match(every) else None
+
+
+def last_goal_tick_time(data: dict) -> float:
+    schedule_state = data.get("scheduleState")
+    if not isinstance(schedule_state, dict):
+        return 0
+    last_goal_tick_at = schedule_state.get("lastGoalTickAt")
+    last_decision = schedule_state.get("lastDecision")
+    if isinstance(last_goal_tick_at, str):
+        return parse_state_time(last_goal_tick_at)
+    if isinstance(last_decision, dict):
+        return parse_state_time(last_decision.get("at"))
+    return 0
+
+
+def schedule_wait_reason(data: dict, now: datetime) -> str | None:
+    every = goal_schedule_interval(data)
+    if not every:
+        return None
+    last_tick = last_goal_tick_time(data)
+    if last_tick <= 0:
+        return None
+    next_tick = last_tick + interval_seconds(every)
+    if now.timestamp() >= next_tick:
+        return None
+    due_at = datetime.fromtimestamp(next_tick, timezone.utc).isoformat().replace("+00:00", "Z")
+    return f"waiting schedule {every} until {due_at}"
+
+
 config = load_config()
 active, schedules = active_goal_config(config)
 if not active and not schedules:
@@ -449,6 +484,10 @@ for goal_id in goal_ids:
     managed = is_managed_goal(data)
     if not managed:
         print(f"[goal-scheduler] skip {goal_id}: legacy goal files are not managed-goal instances")
+        continue
+    wait_reason = schedule_wait_reason(data, now)
+    if wait_reason:
+        print(f"[goal-scheduler] skip {goal_id}: {wait_reason}")
         continue
     managed_active += 1
     print(f"[goal-scheduler] -> tick {goal_id} (goal-manager)")
