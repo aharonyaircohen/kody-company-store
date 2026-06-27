@@ -6,7 +6,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 {
   "company": {
     "activeCapabilities": ["fix-ci", "review"],
-    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality"]
+    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality", "ai-agency-health"]
   }
 }
 ```
@@ -39,6 +39,7 @@ Default agentLoop templates:
 - `codebase-health`
 - `release-safety`
 - `kody-company-health`
+- `ai-agency-health`
 
 Consumer repos may also define local goal templates.
 

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "ai-agency-health",
+  "state": "inactive",
+  "type": "monitor",
+  "scheduleMode": "agentLoop",
+  "schedule": "1d",
+  "title": "AI Agency stays healthy",
+  "description": "Run the AI Agency Doctor and keep broken wiring visible.",
+  "destination": {
+    "outcome": "The AI Agency is checked regularly and broken wiring is visible before work runs.",
+    "evidence": []
+  },
+  "capabilities": [
+    "ai-agency-doctor"
+  ],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}

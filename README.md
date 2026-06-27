@@ -31,7 +31,7 @@ The store is a catalog, not an auto-run list. Consumer repos decide which shared
 {
   "company": {
     "activeCapabilities": ["fix-ci", "review"],
-    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality"]
+    "activeGoals": ["prs-stay-mergeable", "ci-health", "product-quality", "ai-agency-health"]
   }
 }
 ```
