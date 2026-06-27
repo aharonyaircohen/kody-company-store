@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "GitHub CMS",
+  "environment": "default",
+  "environmentFile": "environments/default.json",
+  "defaultAdapter": "github",
+  "writePolicy": "enabled",
+  "collections": [
+    "collections/articles.json"
+  ]
+}

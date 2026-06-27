@@ -28,10 +28,7 @@ export async function loadCmsConfigFromDir(rootDir) {
       ...(rawConfig.adapters ?? {}),
       ...(environment.adapter
         ? {
-            [environment.adapter]: {
-              databaseUriSecret: environment.databaseUriSecret,
-              databaseName: environment.databaseName,
-            },
+            [environment.adapter]: adapterSettingsFromEnvironment(environment),
           }
         : {}),
     },
@@ -39,7 +36,15 @@ export async function loadCmsConfigFromDir(rootDir) {
   })
 }
 
+function adapterSettingsFromEnvironment(environment) {
+  return Object.fromEntries(
+    Object.entries(environment).filter(
+      ([key, value]) =>
+        !["name", "adapter", "writePolicy"].includes(key) && value !== undefined,
+    ),
+  )
+}
+
 async function readJson(filePath) {
   return JSON.parse(await readFile(filePath, "utf8"))
 }
-

@@ -17,6 +17,7 @@ cms/
   adapters/
     mongodb/          # generic MongoDB collection adapter
     github/           # generic GitHub file-backed adapter
+    file/             # generic local JSON file adapter
   examples/
     kody-state/       # example state-repo config layout
   tests/              # node:test coverage
@@ -43,5 +44,6 @@ No secret values belong in CMS config. Environment files name a secret, such as
 - `list`, `get`, and `search` are read operations.
 - `create` and `update` require approval unless config explicitly enables them.
 - `delete` is disabled by default.
+- File-backed adapters create missing folders/files on first write. GitHub
+  creates the missing JSON path through the Contents API.
 - Schema changes are not applied by these adapters in Phase 1.
-

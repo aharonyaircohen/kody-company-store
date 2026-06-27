@@ -1,0 +1,6 @@
+{
+  "name": "default",
+  "adapter": "github",
+  "branch": "kody-state",
+  "writePolicy": "enabled"
+}

@@ -31,6 +31,19 @@ export const FILTER_OPERATORS = new Set([
 const READ_OPERATIONS = new Set(["list", "get", "search"])
 const WRITE_OPERATIONS = new Set(["create", "update", "delete"])
 const ALL_OPERATIONS = new Set([...READ_OPERATIONS, ...WRITE_OPERATIONS])
+const FIELD_STORAGE_KINDS = new Set([
+  "string",
+  "number",
+  "boolean",
+  "date",
+  "dateString",
+  "objectId",
+  "objectIdArray",
+  "stringArray",
+  "json",
+  "object",
+  "array",
+])
 
 export class CmsConfigError extends Error {
   constructor(errors) {
@@ -277,6 +290,7 @@ function normalizeCollection(rawCollection, errors) {
   const writePolicy = rawCollection.writePolicy
     ? normalizeWritePolicy(rawCollection.writePolicy, errors)
     : undefined
+  const searchFields = normalizeSearchFields(rawCollection.searchFields, fields, name, errors)
 
   return {
     name,
@@ -285,12 +299,32 @@ function normalizeCollection(rawCollection, errors) {
     mcpName: typeof rawCollection.mcpName === "string" ? rawCollection.mcpName : undefined,
     source: isRecord(rawCollection.source) ? rawCollection.source : {},
     titleField: typeof rawCollection.titleField === "string" ? rawCollection.titleField : "id",
+    searchFields,
     fields,
     filters,
     operations,
     writePolicy,
     defaultSort: Array.isArray(rawCollection.defaultSort) ? rawCollection.defaultSort : [],
   }
+}
+
+function normalizeSearchFields(rawSearchFields, fields, collectionName, errors) {
+  if (rawSearchFields === undefined) return undefined
+  if (!Array.isArray(rawSearchFields)) {
+    errors.push(`${collectionName}.searchFields must be an array`)
+    return undefined
+  }
+
+  const fieldNames = new Set(fields.map((field) => field.name))
+  const searchFields = []
+  for (const field of rawSearchFields) {
+    if (typeof field !== "string" || !fieldNames.has(field)) {
+      errors.push(`${collectionName}.searchFields contains unknown field: ${String(field)}`)
+      continue
+    }
+    if (!searchFields.includes(field)) searchFields.push(field)
+  }
+  return searchFields
 }
 
 function normalizeFields(rawFields, collectionName, errors) {
@@ -331,6 +365,8 @@ function normalizeFields(rawFields, collectionName, errors) {
       name,
       type,
       label: typeof rawField.label === "string" ? rawField.label : titleize(name),
+      description: typeof rawField.description === "string" ? rawField.description : undefined,
+      placeholder: typeof rawField.placeholder === "string" ? rawField.placeholder : undefined,
       required: rawField.required === true,
       hidden: rawField.hidden === true,
       readOnly: rawField.readOnly === true,
@@ -339,6 +375,9 @@ function normalizeFields(rawFields, collectionName, errors) {
       valueField: rawField.valueField ?? "_id",
       labelField: rawField.labelField ?? "title",
       labelTemplate: rawField.labelTemplate,
+      display: normalizeRecord(rawField.display),
+      validation: normalizeValidation(rawField.validation, errors, `${collectionName}.${name}.validation`),
+      storage: normalizeStorage(rawField.storage, errors, `${collectionName}.${name}.storage`),
     })
   }
   return fields
@@ -393,6 +432,7 @@ function normalizeWritePolicy(policy, errors) {
 
 function validateFieldValue(field, value) {
   const errors = []
+  const label = field.label ?? field.name
   switch (field.type) {
     case "id":
     case "text":
@@ -432,6 +472,25 @@ function validateFieldValue(field, value) {
     case "array":
       if (!Array.isArray(value)) errors.push(`${field.name} must be an array`)
       break
+  }
+  if (field.type === "number" && typeof value === "number" && !Number.isNaN(value)) {
+    if (field.validation?.min !== undefined && value < field.validation.min) {
+      errors.push(`${label} must be at least ${field.validation.min}`)
+    }
+    if (field.validation?.max !== undefined && value > field.validation.max) {
+      errors.push(`${label} must be at most ${field.validation.max}`)
+    }
+  }
+  if (isTextField(field) && typeof value === "string") {
+    if (field.validation?.minLength !== undefined && value.length < field.validation.minLength) {
+      errors.push(`${label} must be at least ${field.validation.minLength} characters`)
+    }
+    if (field.validation?.maxLength !== undefined && value.length > field.validation.maxLength) {
+      errors.push(`${label} must be at most ${field.validation.maxLength} characters`)
+    }
+    if (field.validation?.pattern && !new RegExp(field.validation.pattern).test(value)) {
+      errors.push(`${label} is invalid`)
+    }
   }
   return errors
 }
@@ -483,6 +542,61 @@ function optionValues(field) {
   )
 }
 
+function normalizeRecord(value) {
+  if (!isRecord(value)) return undefined
+  return Object.fromEntries(
+    Object.entries(value).filter(([, item]) => item !== undefined),
+  )
+}
+
+function normalizeValidation(value, errors, label) {
+  if (value === undefined) return undefined
+  if (!isRecord(value)) {
+    errors.push(`${label} must be an object`)
+    return undefined
+  }
+  const result = {}
+  for (const key of ["min", "max", "minLength", "maxLength"]) {
+    if (value[key] === undefined) continue
+    const numeric = Number(value[key])
+    if (!Number.isFinite(numeric)) {
+      errors.push(`${label}.${key} must be a number`)
+      continue
+    }
+    result[key] = numeric
+  }
+  if (value.pattern !== undefined) {
+    if (typeof value.pattern !== "string") {
+      errors.push(`${label}.pattern must be a string`)
+    } else {
+      try {
+        new RegExp(value.pattern)
+        result.pattern = value.pattern
+      } catch {
+        errors.push(`${label}.pattern must be a valid regular expression`)
+      }
+    }
+  }
+  return Object.keys(result).length > 0 ? result : undefined
+}
+
+function normalizeStorage(value, errors, label) {
+  if (value === undefined) return undefined
+  if (!isRecord(value)) {
+    errors.push(`${label} must be an object`)
+    return undefined
+  }
+  if (!FIELD_STORAGE_KINDS.has(value.kind)) {
+    errors.push(`${label}.kind is invalid: ${String(value.kind)}`)
+    return undefined
+  }
+  return { kind: value.kind }
+}
+
+function isTextField(field) {
+  return ["id", "text", "textarea", "date", "relation"].includes(field.type)
+}
+
 function singularize(name) {
   if (name.endsWith("ies")) return `${name.slice(0, -3)}y`
   if (name.endsWith("s")) return name.slice(0, -1)
@@ -513,4 +627,3 @@ function isSlug(value) {
 function isFieldName(value) {
   return typeof value === "string" && /^[A-Za-z_][A-Za-z0-9_]*$/.test(value)
 }
-

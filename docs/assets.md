@@ -110,7 +110,7 @@ cms/
 Common folders:
 
 - `contract/`: generic CMS config validation and operation generation.
-- `adapters/`: generic storage adapters such as `mongodb` and `github`.
+- `adapters/`: generic storage adapters such as `mongodb`, `github`, and `file`.
 - `examples/`: state-repo config examples.
 - `tests/`: Store-owned adapter contract tests.
 
@@ -118,3 +118,22 @@ CMS adapters are infrastructure capabilities, not consumer behavior. Consumer
 repos or their state repos own collection config, environment selection, and
 secret names. Store CMS assets must not contain raw database credentials or
 consumer-specific runtime data.
+
+The `github` CMS adapter stores documents as JSON files in the resolved
+consumer state repo by default. A collection with:
+
+```json
+{ "adapter": "github", "source": { "path": "content/articles", "idField": "id" } }
+```
+
+writes documents under:
+
+```text
+<state.basePath>/content/articles/<id>.json
+```
+
+on the `kody-state` branch.
+
+No installer is required for file-backed content. The `file` adapter creates
+missing local folders before the first JSON write, and the `github` adapter
+creates the missing JSON path in the target branch.
