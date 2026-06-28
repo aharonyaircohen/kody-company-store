@@ -227,6 +227,47 @@ describe("Mongo CMS adapter", () => {
     assert.equal(result.docs[0].id, "1")
   })
 
+  it("uses listed Mongo _id values for get, update, delete, and listByIds", async () => {
+    const config = testConfig({ update: true, delete: true }, "enabled", {
+      idField: "id",
+    })
+    const persistedId = "64f1a5f6f2a80f3a3a3a3a3a"
+    const db = new FakeDb({
+      lessons: [
+        {
+          _id: fakeObjectId(persistedId),
+          title: "Intro",
+          status: "draft",
+          order: 2,
+        },
+      ],
+    })
+    const adapter = createMongoCmsAdapter({
+      config,
+      db,
+      ObjectId: FakeObjectId,
+    })
+
+    const listed = await adapter.list("lessons")
+    assert.equal(listed.docs[0]._id, persistedId)
+    assert.equal(listed.docs[0].id, undefined)
+
+    const byId = await adapter.listByIds("lessons", [persistedId])
+    assert.equal(byId[0]._id, persistedId)
+
+    const document = await adapter.get("lessons", persistedId)
+    assert.equal(document._id, persistedId)
+
+    const updated = await adapter.update("lessons", persistedId, {
+      title: "Changed",
+    })
+    assert.equal(updated.title, "Changed")
+
+    const deleted = await adapter.delete("lessons", persistedId)
+    assert.deepEqual(deleted, { deleted: true })
+    assert.equal(db.data.lessons.length, 0)
+  })
+
   it("blocks update without approval", async () => {
     const config = testConfig({ update: true })
     const adapter = createMongoCmsAdapter({ config, db: new FakeDb({ lessons: [] }) })
@@ -237,17 +278,23 @@ describe("Mongo CMS adapter", () => {
   })
 })
 
-function testConfig(operations = {}, writePolicy = "approval-required") {
+function testConfig(
+  operations = {},
+  writePolicy = "approval-required",
+  options = {},
+) {
+  const idField = options.idField ?? "_id"
   return normalizeCmsConfig({
     version: 1,
     writePolicy,
     collections: {
       lessons: {
-        source: { collection: "lessons", idField: "_id" },
+        source: { collection: "lessons", idField },
         searchFields: ["title"],
         operations: { list: true, get: true, search: true, ...operations },
         fields: [
           { name: "_id", type: "id" },
+          ...(idField === "id" ? [{ name: "id", type: "text" }] : []),
           {
             name: "title",
             type: "text",
@@ -303,8 +350,13 @@ class FakeCollection {
     return Promise.resolve(this.docs.find((doc) => matchesQuery(doc, query)) ?? null)
   }
 
-  updateOne() {
-    return Promise.resolve({ matchedCount: 1 })
+  updateOne(query, update) {
+    const doc = this.docs.find((candidate) => matchesQuery(candidate, query))
+    if (!doc) return Promise.resolve({ matchedCount: 0, modifiedCount: 0 })
+    if (update?.$set && typeof update.$set === "object") {
+      Object.assign(doc, update.$set)
+    }
+    return Promise.resolve({ matchedCount: 1, modifiedCount: 1 })
   }
 
   insertOne(doc) {
@@ -351,11 +403,28 @@ function matchesQuery(doc, query) {
   if (query.$and) return query.$and.every((entry) => matchesQuery(doc, entry))
   if (query.$or) return query.$or.some((entry) => matchesQuery(doc, entry))
   return Object.entries(query).every(([field, expected]) => {
-    if (expected?.$in) return expected.$in.includes(doc[field])
+    if (expected?.$in) {
+      return expected.$in.some((value) => sameValue(value, doc[field]))
+    }
     if (expected?.$gte !== undefined) return doc[field] >= expected.$gte
     if (expected?.$regex) return new RegExp(expected.$regex, expected.$options).test(doc[field])
-    return doc[field] === expected
+    return sameValue(doc[field], expected)
   })
+}
+
+function sameValue(left, right) {
+  return comparableValue(left) === comparableValue(right)
+}
+
+function comparableValue(value) {
+  if (
+    value &&
+    typeof value === "object" &&
+    typeof value.toHexString === "function"
+  ) {
+    return value.toHexString()
+  }
+  return value
 }
 
 function fakeObjectId(value) {

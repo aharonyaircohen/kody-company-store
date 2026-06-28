@@ -384,10 +384,18 @@ function buildMongoSearchQuery(collection, search) {
 
 function buildIdQuery(collection, id, options = {}) {
   const idField = getCollectionIdField(collection)
-  if (options.ObjectId && isObjectIdString(id)) {
-    return { [idField]: { $in: [new options.ObjectId(id), id] } }
+  const value = buildIdValue(id, options)
+  if (idField !== "_id") {
+    return { $or: [{ [idField]: value }, { _id: value }] }
   }
-  return { [idField]: id }
+  return { [idField]: value }
+}
+
+function buildIdValue(id, options = {}) {
+  if (options.ObjectId && isObjectIdString(id)) {
+    return { $in: [new options.ObjectId(id), id] }
+  }
+  return id
 }
 
 function buildIdsQuery(collection, ids, options = {}) {
@@ -400,7 +408,11 @@ function buildIdsQuery(collection, ids, options = {}) {
       values.push(id)
     }
   }
-  return { [idField]: { $in: values } }
+  const value = { $in: values }
+  if (idField !== "_id") {
+    return { $or: [{ [idField]: value }, { _id: value }] }
+  }
+  return { [idField]: value }
 }
 
 function buildMongoSort(sortEntries = []) {
