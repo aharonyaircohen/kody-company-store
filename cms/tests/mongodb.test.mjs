@@ -150,6 +150,29 @@ describe("Mongo CMS adapter", () => {
     assert.deepEqual(payload, {})
   })
 
+  it("clears optional blank values on update", async () => {
+    const config = testConfig({ update: true }, "enabled")
+    const db = new FakeDb({
+      lessons: [
+        {
+          _id: "1",
+          title: "Intro",
+          metadata: { items: [{ value: "old" }] },
+          labels: ["draft"],
+        },
+      ],
+    })
+    const adapter = createMongoCmsAdapter({ config, db })
+
+    const updated = await adapter.update("lessons", "1", {
+      metadata: null,
+      labels: [],
+    })
+
+    assert.equal(updated.metadata, undefined)
+    assert.equal(updated.labels, undefined)
+  })
+
   it("lists documents through an injected Mongo-like db", async () => {
     const config = testConfig()
     const db = new FakeDb({
@@ -189,7 +212,7 @@ describe("Mongo CMS adapter", () => {
     const client = {
       closeCalled: false,
       db(databaseName) {
-        assert.equal(databaseName, "A-Guy-Dev")
+        assert.equal(databaseName, "Demo-Db")
         return db
       },
       close() {
@@ -200,7 +223,7 @@ describe("Mongo CMS adapter", () => {
     const adapter = createMongoCmsAdapter({
       config,
       client,
-      databaseName: "A-Guy-Dev",
+      databaseName: "Demo-Db",
     })
 
     const result = await adapter.list("lessons")
@@ -307,6 +330,8 @@ function testConfig(
           { name: "relatedLessons", type: "relationMany", target: "lessons" },
           { name: "isActive", type: "boolean" },
           { name: "updatedAt", type: "date" },
+          { name: "metadata", type: "object" },
+          { name: "labels", type: "multiSelect", options: ["draft"] },
         ],
         filters: [
           { field: "title", operators: ["contains"] },
@@ -355,6 +380,9 @@ class FakeCollection {
     if (!doc) return Promise.resolve({ matchedCount: 0, modifiedCount: 0 })
     if (update?.$set && typeof update.$set === "object") {
       Object.assign(doc, update.$set)
+    }
+    if (update?.$unset && typeof update.$unset === "object") {
+      for (const key of Object.keys(update.$unset)) delete doc[key]
     }
     return Promise.resolve({ matchedCount: 1, modifiedCount: 1 })
   }

@@ -138,20 +138,35 @@ export async function createMongoDocument(options) {
 
 export async function updateMongoDocument(options) {
   const runtime = await getMongoRuntime(options)
-  const payload = buildMongoWriteDocument(options.collection, options.data, {
+  const update = buildMongoUpdateOperation(options.collection, options.data, {
     requireRequiredFields: false,
     ObjectId: runtime.ObjectId,
   })
   const filter = buildIdQuery(options.collection, options.id, runtime)
 
-  if (Object.keys(payload).length > 0) {
-    await runtime.mongoCollection.updateOne(filter, { $set: payload })
+  if (Object.keys(update).length > 0) {
+    await runtime.mongoCollection.updateOne(filter, update)
   }
 
   const updated = await runtime.mongoCollection.findOne(filter, {
     projection: buildProjection(options.collection),
   })
   return updated ? normalizeMongoDocument(updated, options.collection) : null
+}
+
+export function buildMongoUpdateOperation(
+  collection,
+  value,
+  options = { requireRequiredFields: false },
+) {
+  const set = buildMongoWriteDocument(collection, value, options)
+  const unset = buildMongoUnsetDocument(collection, value)
+  const update = {}
+
+  if (Object.keys(set).length > 0) update.$set = set
+  if (Object.keys(unset).length > 0) update.$unset = unset
+
+  return update
 }
 
 export async function deleteMongoDocument(options) {
@@ -257,6 +272,28 @@ export function buildMongoWriteDocument(
   }
 
   return payload
+}
+
+function buildMongoUnsetDocument(collection, value) {
+  const idField = getCollectionIdField(collection)
+  const writableFields = (collection.fields ?? []).filter(
+    (field) =>
+      !field.hidden &&
+      !field.readOnly &&
+      field.type !== "id" &&
+      field.name !== idField,
+  )
+  const unset = {}
+
+  for (const field of writableFields) {
+    if (!Object.prototype.hasOwnProperty.call(value, field.name)) continue
+    const rawValue = value[field.name]
+    if (!field.required && rawValue !== undefined && isBlankValue(rawValue)) {
+      unset[field.name] = ""
+    }
+  }
+
+  return unset
 }
 
 export function normalizeMongoValue(value) {
