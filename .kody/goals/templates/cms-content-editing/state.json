@@ -6,10 +6,10 @@
   "state": "inactive",
   "type": "maintain",
   "scheduleMode": "agentLoop",
-  "title": "CMS content edits run from queue",
-  "description": "Watch the CMS edit queue and apply one explicit document update per tick.",
+  "title": "CMS content writes run from queue",
+  "description": "Watch the CMS edit queue and apply one explicit document create or update per tick.",
   "destination": {
-    "outcome": "Queued CMS content updates are applied safely and audibly.",
+    "outcome": "Queued CMS content writes are applied safely and audibly.",
     "evidence": []
   },
   "capabilities": [

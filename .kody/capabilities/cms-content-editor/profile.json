@@ -2,7 +2,7 @@
   "name": "cms-content-editor",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Apply explicit queued CMS document updates through the Dashboard CMS API.",
+  "describe": "Apply explicit queued CMS document creates and updates through the Dashboard CMS API.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -32,7 +32,9 @@
     "read_thread",
     "ensure_comment",
     "cms_list_collections",
+    "cms_list_documents",
     "cms_get_document",
+    "cms_create_document",
     "cms_update_document"
   ],
   "scripts": {
@@ -79,7 +81,9 @@
     "read_thread",
     "ensure_comment",
     "cms_list_collections",
+    "cms_list_documents",
     "cms_get_document",
+    "cms_create_document",
     "cms_update_document"
   ]
 }
