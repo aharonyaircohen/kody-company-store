@@ -27,7 +27,7 @@
         "checkCommand": "command -v python3"
       },
       "verify": "python3 --version",
-      "usage": "scheduler.sh parses each goal state.json",
+      "usage": "scheduler.sh parses each managed goal todo file",
       "allowedUses": []
     }
   ],
