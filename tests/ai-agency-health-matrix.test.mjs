@@ -199,6 +199,85 @@ describe("ai-agency-health-matrix", () => {
     }
   });
 
+  it("proves a target loop when scheduler state points to a materialized target goal", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-ai-agency-health-matrix-"));
+    try {
+      const stateRoot = join(cwd, "state-root");
+      const statePath = join(stateRoot, "A-Guy-Web");
+      mkdirSync(join(statePath, "todos"), { recursive: true });
+
+      writeJson(join(cwd, "kody.config.json"), {
+        github: { owner: "A-Guy-educ", repo: "A-Guy-Web" },
+        state: { repo: "A-Guy-educ/kody-state", path: "A-Guy-Web", branch: "main" },
+        company: {
+          activeGoals: ["daily-web-release-loop"],
+        },
+      });
+      writeJson(join(statePath, "todos", "daily-web-release-loop.json"), {
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        type: "agentLoop",
+        scheduleMode: "agentLoop",
+        loopTarget: { type: "goal", id: "web-release" },
+        capabilities: [],
+        destination: {
+          outcome: "Daily web release loop keeps production release moving.",
+          evidence: [],
+        },
+        scheduleState: {
+          lastGoalTickAt: "2026-06-30T10:00:00Z",
+          lastDecision: {
+            kind: "dispatch",
+            targetType: "goal",
+            targetId: "web-release-2026-06-30",
+            executable: "goal-manager",
+            reason: "ready target loop tick",
+            at: "2026-06-30T10:00:00Z",
+          },
+        },
+      });
+      writeJson(join(statePath, "todos", "web-release-2026-06-30.json"), {
+        managed: true,
+        managedModel: "goal",
+        state: "active",
+        type: "web-release",
+        destination: {
+          outcome: "Prepare, promote, deploy, and verify production.",
+          evidence: ["productionDeployed"],
+        },
+        capabilities: ["release-prepare"],
+        route: [],
+        facts: {},
+        blockers: [],
+      });
+
+      const result = spawnSync("bash", [scriptPath.pathname, "--dry-run"], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STORE_ROOT: storeRoot,
+          KODY_STATE_ROOT: stateRoot,
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0, result.stderr);
+      const report = extractJsonBlock(result.stdout);
+      const byKey = new Map(report.rows.map((row) => [`${row.area}:${row.expected}`, row]));
+
+      assert.equal(byKey.get("loops:daily-web-release-loop activation")?.health, "healthy");
+      assert.equal(byKey.get("loops:daily-web-release-loop materialized")?.health, "healthy");
+      assert.equal(byKey.get("loops:daily-web-release-loop scheduler")?.health, "healthy");
+      assert.equal(byKey.get("loops:daily-web-release-loop output")?.health, "healthy");
+      assert.equal(byKey.get("loops:daily-web-release-loop outcome")?.health, "healthy");
+      assert.equal(byKey.get("loops:daily-web-release-loop intent")?.health, "healthy");
+      assert.match(byKey.get("loops:daily-web-release-loop output")?.proof ?? "", /A-Guy-Web\/todos\/web-release-2026-06-30\.json/);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("uses the matrix capability from the ai-agency-health loop", async () => {
     const goal = JSON.parse(await readFile(healthGoalPath, "utf8"));
 

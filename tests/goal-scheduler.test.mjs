@@ -110,6 +110,26 @@ describe("goal-scheduler", () => {
     }
   });
 
+  it("can limit a tick to one selected active goal", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeConfig(cwd, ["ci-health", "prs-stay-mergeable"]);
+
+      const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z", {
+        KODY_GOAL_SCHEDULER_ONLY: "ci-health",
+      });
+
+      assert.equal(run.result.status, 0, run.result.stderr);
+      assert.deepEqual(run.calls, ["kody-engine exec goal-manager --goal ci-health"]);
+      assert.equal(readGoal(cwd, "ci-health").schedule, "15m");
+      assert.equal(existsSync(join(cwd, ".kody", "todos", "prs-stay-mergeable.json")), false);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("runs daily preferred-time loops by local day instead of 24 hours after an idle tick", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {

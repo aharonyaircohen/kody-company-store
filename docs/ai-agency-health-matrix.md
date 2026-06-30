@@ -63,10 +63,10 @@ Required loop-proof rows for every active agentLoop:
 |---|---|
 | `<loop> activation` | The loop is active in `kody.config.json`. |
 | `<loop> materialized` | A runtime state file exists in the configured state repo. |
-| `<loop> scheduler` | Runtime state shows the scheduler dispatched the expected capability. |
-| `<loop> output` | The expected report exists and matches its report contract. |
-| `<loop> outcome` | The report answers the goal's outcome question. |
-| `<loop> intent` | The loop's capability and destination fit the company's current repo intent. |
+| `<loop> scheduler` | Runtime state shows the scheduler dispatched the expected capability, workflow, or target goal. |
+| `<loop> output` | The expected report exists, or the dispatched target state exists. |
+| `<loop> outcome` | The report or target state answers the goal's outcome question. |
+| `<loop> intent` | The loop's capability, workflow, or target and destination fit the company's current repo intent. |
 
 For example, `ai-agency-health` is not fully healthy just because its Store
 template resolves. It is fully proven only when it is active, materialized,

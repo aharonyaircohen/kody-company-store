@@ -168,6 +168,15 @@ function goalCapabilities(data) {
   return Array.isArray(data?.capabilities) ? data.capabilities.filter((item) => typeof item === "string" && item) : [];
 }
 
+function goalLoopTarget(data) {
+  const target = data?.loopTarget;
+  if (!target || typeof target !== "object" || Array.isArray(target)) return null;
+  const type = typeof target.type === "string" ? target.type.trim() : "";
+  const id = typeof target.id === "string" ? target.id.trim() : "";
+  if (!type || !id) return null;
+  return { type, id };
+}
+
 function readConfig() {
   if (!exists(cwd, "kody.config.json")) {
     row("config", "kody.config.json", "missing", "missing", "", "consumer repo", "add repo Kody config");
@@ -371,6 +380,93 @@ function dispatchMatchesCapability(state, expectedCapability) {
   return { matched: true, reason: lastDecision.at || scheduleState.lastGoalTickAt || "dispatch recorded" };
 }
 
+function dispatchMatchesTarget(state, expectedTarget) {
+  const scheduleState = state?.scheduleState;
+  const lastDecision = scheduleState && typeof scheduleState === "object" ? scheduleState.lastDecision : null;
+  if (!lastDecision || typeof lastDecision !== "object") return { matched: false, reason: "no scheduler dispatch recorded" };
+  if (lastDecision.kind !== "dispatch") return { matched: false, reason: `last decision was ${lastDecision.kind || "unknown"}` };
+  const actualType = typeof lastDecision.targetType === "string" ? lastDecision.targetType : "";
+  const actualId = typeof lastDecision.targetId === "string" ? lastDecision.targetId : "";
+  const idMatches = actualId === expectedTarget.id || actualId.startsWith(`${expectedTarget.id}-`);
+  if (actualType !== expectedTarget.type || !idMatches) {
+    return { matched: false, reason: `last dispatch was ${actualType || "unknown"} ${actualId || "unknown"}` };
+  }
+  return {
+    matched: true,
+    reason: lastDecision.at || scheduleState.lastGoalTickAt || "dispatch recorded",
+    targetId: actualId,
+  };
+}
+
+function inspectCapabilityLoopOutput(slug, stateBase, repo, expectedCapability) {
+  const report = expectedCapability ? latestReport(stateBase, expectedCapability) : null;
+  const reportMatches =
+    report?.valid === true &&
+    report.data?.reportSlug === expectedCapability &&
+    (typeof report.data?.repo !== "string" || report.data.repo === repo);
+  if (reportMatches) {
+    row("loops", `${slug} output`, `latest ${expectedCapability} report`, "healthy", report.path, "state repo", "none");
+    const rows = Array.isArray(report.data.rows) ? report.data.rows : [];
+    row(
+      "loops",
+      `${slug} outcome`,
+      rows.length > 0 ? "report answers repo agency health" : "report has no rows",
+      rows.length > 0 ? "healthy" : "unknown",
+      report.path,
+      "state repo",
+      rows.length > 0 ? "none" : "fix report output contract",
+    );
+  } else if (report) {
+    row("loops", `${slug} output`, "latest report does not match contract", "failing", report.path, "state repo", "fix report output contract");
+    row("loops", `${slug} outcome`, "output does not prove goal outcome", "failing", report.path, "state repo", "fix report output contract");
+  } else {
+    row("loops", `${slug} output`, "no matching report found", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
+    row("loops", `${slug} outcome`, "no output to judge", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
+  }
+}
+
+function inspectTargetLoopOutput(slug, stateBase, dispatch, expectedTarget) {
+  const targetId = dispatch.targetId || expectedTarget.id;
+  const targetGoal = readStateGoal(stateBase, targetId);
+  if (!targetGoal) {
+    row("loops", `${slug} output`, `target ${expectedTarget.type} ${targetId} not found`, "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop target and verify state");
+    row("loops", `${slug} outcome`, "target outcome not proven", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop target and verify state");
+    return;
+  }
+  row("loops", `${slug} output`, `target ${expectedTarget.type} ${targetId} state`, "healthy", targetGoal.path, "state repo", "none");
+  const outcome = String(targetGoal.data?.destination?.outcome || "");
+  row(
+    "loops",
+    `${slug} outcome`,
+    outcome ? `target ${targetGoal.data?.state || "state"} pursuing outcome` : "target has no outcome",
+    outcome ? "healthy" : "unknown",
+    targetGoal.path,
+    "state repo",
+    outcome ? "none" : "fix target goal outcome",
+  );
+}
+
+function loopIntent(slug, template, loopSource, expectedCapability, expectedTarget) {
+  const profile = expectedCapability ? readCapabilityProfile(expectedCapability) : null;
+  const outcome = String(template?.destination?.outcome || loopSource?.destination?.outcome || "");
+  if (
+    slug === "ai-agency-health" &&
+    expectedCapability === reportSlug &&
+    profile?.capabilityKind === "observe" &&
+    /AI Agency/i.test(outcome) &&
+    /current repo/i.test(outcome)
+  ) {
+    return { fits: true, actual: "observe-only repo agency health", owner: "Store" };
+  }
+  if (expectedTarget && outcome) {
+    return { fits: true, actual: `${expectedTarget.type} target ${expectedTarget.id}`, owner: "Store" };
+  }
+  if (expectedCapability && profile && outcome) {
+    return { fits: true, actual: `capability cadence ${expectedCapability}`, owner: "Store" };
+  }
+  return { fits: false, actual: "intent not proven", owner: "operator" };
+}
+
 function inspectLoopProof(activeGoals, stateBase, repo) {
   for (const item of activeGoals) {
     const slug = activeGoalSlug(item);
@@ -382,6 +478,7 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
 
     const capabilities = goalCapabilities(loopSource).length > 0 ? goalCapabilities(loopSource) : goalCapabilities(template);
     const expectedCapability = capabilities[0] || "";
+    const expectedTarget = goalLoopTarget(loopSource) || goalLoopTarget(template);
 
     row("loops", `${slug} activation`, "active in config", "healthy", "kody.config.json", "consumer repo", "none");
 
@@ -391,7 +488,20 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
       row("loops", `${slug} materialized`, "no runtime state found", "unknown", statePathForProof || "state checkout not provided", "state repo", "wait for scheduler or run loop");
     }
 
-    if (stateGoal && expectedCapability) {
+    let targetDispatch = null;
+    if (stateGoal && expectedTarget) {
+      const dispatch = dispatchMatchesTarget(stateGoal.data, expectedTarget);
+      targetDispatch = dispatch;
+      row(
+        "loops",
+        `${slug} scheduler`,
+        dispatch.matched ? `dispatched ${expectedTarget.type} ${dispatch.targetId || expectedTarget.id}` : dispatch.reason,
+        dispatch.matched ? "healthy" : "unknown",
+        stateGoal.path,
+        "state repo",
+        dispatch.matched ? "none" : "prove scheduler fired this loop",
+      );
+    } else if (stateGoal && expectedCapability) {
       const dispatch = dispatchMatchesCapability(stateGoal.data, expectedCapability);
       row(
         "loops",
@@ -406,46 +516,24 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
       row("loops", `${slug} scheduler`, "not proven", "unknown", stateGoal?.path || "no runtime state", "state repo", "prove scheduler fired this loop");
     }
 
-    const report = expectedCapability ? latestReport(stateBase, expectedCapability) : null;
-    const reportMatches =
-      report?.valid === true &&
-      report.data?.reportSlug === expectedCapability &&
-      (typeof report.data?.repo !== "string" || report.data.repo === repo);
-    if (reportMatches) {
-      row("loops", `${slug} output`, `latest ${expectedCapability} report`, "healthy", report.path, "state repo", "none");
-      const rows = Array.isArray(report.data.rows) ? report.data.rows : [];
-      row(
-        "loops",
-        `${slug} outcome`,
-        rows.length > 0 ? "report answers repo agency health" : "report has no rows",
-        rows.length > 0 ? "healthy" : "unknown",
-        report.path,
-        "state repo",
-        rows.length > 0 ? "none" : "fix report output contract",
-      );
-    } else if (report) {
-      row("loops", `${slug} output`, "latest report does not match contract", "failing", report.path, "state repo", "fix report output contract");
-      row("loops", `${slug} outcome`, "output does not prove goal outcome", "failing", report.path, "state repo", "fix report output contract");
+    if (expectedTarget) {
+      inspectTargetLoopOutput(slug, stateBase, targetDispatch || {}, expectedTarget);
+    } else if (expectedCapability) {
+      inspectCapabilityLoopOutput(slug, stateBase, repo, expectedCapability);
     } else {
-      row("loops", `${slug} output`, "no matching report found", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
-      row("loops", `${slug} outcome`, "no output to judge", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
+      row("loops", `${slug} output`, "no loop output target found", "unknown", statePathForProof || "state checkout not provided", "state repo", "define capability or loop target");
+      row("loops", `${slug} outcome`, "no output to judge", "unknown", statePathForProof || "state checkout not provided", "state repo", "define capability or loop target");
     }
 
-    const profile = expectedCapability ? readCapabilityProfile(expectedCapability) : null;
-    const outcome = String(template?.destination?.outcome || loopSource?.destination?.outcome || "");
-    const intentFits =
-      expectedCapability === reportSlug &&
-      profile?.capabilityKind === "observe" &&
-      /AI Agency/i.test(outcome) &&
-      /current repo/i.test(outcome);
+    const intent = loopIntent(slug, template, loopSource, expectedCapability, expectedTarget);
     row(
       "loops",
       `${slug} intent`,
-      intentFits ? "observe-only repo agency health" : "intent not proven",
-      intentFits ? "healthy" : "unknown",
+      intent.actual,
+      intent.fits ? "healthy" : "unknown",
       template ? `.kody/goals/templates/${slug}/state.json` : stateGoal?.path || "",
-      intentFits ? "Store" : "operator",
-      intentFits ? "none" : "confirm loop matches company intent",
+      intent.owner,
+      intent.fits ? "none" : "confirm loop matches company intent",
     );
   }
 }
