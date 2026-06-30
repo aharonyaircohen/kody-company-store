@@ -62,7 +62,7 @@ This job is **advisory only**. It never dispatches repairs directly.
 - You may call `read_ledger` for context, but never hand-roll trust decisions
   or comments outside the provided tools.
 - Repair dispatch belongs to the dedicated repair capabilities after the
-  operator confirms the exact `kody-cmd` line.
+  operator confirms the recommendation.
 
 ## Scope (hard limits)
 
@@ -103,7 +103,8 @@ Let `<verb>` be the detected primitive and `<n>` the PR number.
 
 - Call `recommend_to_operator` once for that PR.
 - The recommendation body must not include an operator mention. The tool
-  prepends the operator handle. Include the `kody-cmd` line in the body.
+  prepends the operator handle. Include the inert `kody-intent` line in the
+  body.
 - Still honour the dedup ledger: never auto-run or recommend the same repair on
   the same PR twice for the same fingerprint.
 
@@ -115,15 +116,16 @@ Let `<verb>` be the detected primitive and `<n>` the PR number.
 **Recommendation.** One terse, machine-greppable comment. The final posted
 comment must mention the operator on the first line, but the agent-supplied
 body must not include that mention because `recommend_to_operator` prepends it.
-The body must carry the exact command on a single `kody-cmd` line (that is what
-the inbox **Approve** button posts verbatim):
+The body must carry the recommended action on a single inert `kody-intent` line.
+This line must not include the engine command handle; the Dashboard can turn
+the intent into an engine command only after an explicit operator approval:
 
 ```
 🧭 **CTO recommendation** — `<verb>`
 
 <one or two sentences: what's wrong with PR #<n> and what confirming will do>
 
-<!-- kody-cmd: @kody <verb> --pr <n> -->
+<!-- kody-intent: <verb> --pr <n> -->
 
 _Confirm or dismiss this in the dashboard inbox. The CTO will not act on its own._
 ```
@@ -146,6 +148,9 @@ per-tick:
 - Never use Bash or `gh`.
 - Never call `fix_ci_pr`, `sync_pr`, or `resolve_pr` from this capability.
 - Never include `{{mentions}}` in comment bodies.
+- Never include the literal engine command handle anywhere in the posted
+  recommendation. An executable command inside a GitHub comment self-triggers
+  the `issue_comment` workflow.
 
 ## Final State
 

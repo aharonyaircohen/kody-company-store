@@ -2,6 +2,14 @@
 
 Use the `pr-health-triage` skill.
 
+{{capabilityReference}}
+
+## Prior state
+
+```json
+{{jobStateJson}}
+```
+
 Run only the work requested by the matching capability. Follow the capability profile metadata for agent, mentions, and safety limits. The owning goal or loop decides when this runs.
 
 # Final message format (required)

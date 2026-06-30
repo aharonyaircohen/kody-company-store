@@ -46,8 +46,10 @@ describe("Store capabilities", () => {
       "../.kody/capabilities/pr-health-triage/skills/pr-health-triage/SKILL.md",
       import.meta.url,
     );
+    const promptPath = new URL("../.kody/capabilities/pr-health-triage/prompt.md", import.meta.url);
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
     const skill = await readFile(skillPath, "utf8");
+    const prompt = await readFile(promptPath, "utf8");
     const advisoryTools = ["list_prs_to_repair", "read_ledger", "recommend_to_operator"];
 
     assert.deepEqual(profile.cliTools, []);
@@ -56,5 +58,10 @@ describe("Store capabilities", () => {
     assert.deepEqual(profile.tools, advisoryTools);
     assert.match(skill, /recommendations_posted/);
     assert.match(skill, /Do not write\s+`data\.recommendations`/);
+    assert.match(skill, /kody-intent/);
+    assert.doesNotMatch(skill, /kody-cmd/);
+    assert.doesNotMatch(skill, /@kody/);
+    assert.match(prompt, /\{\{capabilityReference\}\}/);
+    assert.match(prompt, /\{\{jobStateJson\}\}/);
   });
 });
