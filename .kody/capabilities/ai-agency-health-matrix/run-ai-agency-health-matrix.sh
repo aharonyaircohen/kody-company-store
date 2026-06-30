@@ -45,6 +45,16 @@ function readJson(root, rel) {
   return JSON.parse(readText(root, rel));
 }
 
+function readJsonIfExists(root, rel) {
+  if (!exists(root, rel)) return null;
+  try {
+    const value = readJson(root, rel);
+    return value && typeof value === "object" && !Array.isArray(value) ? value : null;
+  } catch {
+    return null;
+  }
+}
+
 function listDirs(root, rel) {
   const dir = path.join(root, rel);
   if (!fs.existsSync(dir)) return [];
@@ -127,6 +137,34 @@ function hasLocalGoal(slug) {
 
 function hasStoreGoal(slug) {
   return exists(storeRoot, `.kody/goals/templates/${slug}/state.json`);
+}
+
+function readCapabilityProfile(slug) {
+  return (
+    readJsonIfExists(cwd, `.kody/capabilities/${slug}/profile.json`) ||
+    readJsonIfExists(storeRoot, `.kody/capabilities/${slug}/profile.json`)
+  );
+}
+
+function readGoalTemplate(slug) {
+  return (
+    readJsonIfExists(cwd, `.kody/goals/templates/${slug}/state.json`) ||
+    readJsonIfExists(storeRoot, `.kody/goals/templates/${slug}/state.json`)
+  );
+}
+
+function isAgentLoop(data) {
+  return Boolean(
+    data &&
+      typeof data === "object" &&
+      (data.scheduleMode === "agentLoop" ||
+        data.type === "agentLoop" ||
+        (typeof data.schedule === "string" && Array.isArray(data.capabilities))),
+  );
+}
+
+function goalCapabilities(data) {
+  return Array.isArray(data?.capabilities) ? data.capabilities.filter((item) => typeof item === "string" && item) : [];
 }
 
 function readConfig() {
@@ -258,6 +296,150 @@ function inspectActiveGoals(activeGoals, stateBase) {
   }
 }
 
+function readStateGoal(stateBase, slug) {
+  if (!stateBase) return null;
+  const candidates = [
+    {
+      rel: `goals/instances/${slug}/state.json`,
+      label: "state repo instance",
+    },
+    {
+      rel: `todos/${slug}.json`,
+      label: "state repo todo",
+    },
+  ];
+  for (const candidate of candidates) {
+    const data = readJsonIfExists(stateBase, candidate.rel);
+    if (data) {
+      return {
+        data,
+        label: candidate.label,
+        path: path.join(stateBase, candidate.rel),
+      };
+    }
+  }
+  return null;
+}
+
+function latestReport(stateBase, slug) {
+  if (!stateBase) return null;
+  const rel = `reports/${slug}/runs`;
+  const dir = path.join(stateBase, rel);
+  if (!fs.existsSync(dir)) return null;
+  const files = fs
+    .readdirSync(dir, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".md"))
+    .map((entry) => entry.name)
+    .sort();
+  const latest = files.at(-1);
+  if (!latest) return null;
+  const reportPath = path.join(dir, latest);
+  const body = fs.readFileSync(reportPath, "utf8");
+  const match = body.match(/```json\n([\s\S]*?)\n```/);
+  if (!match) return { path: reportPath, data: null, valid: false };
+  try {
+    const data = JSON.parse(match[1]);
+    return { path: reportPath, data, valid: Boolean(data && typeof data === "object") };
+  } catch {
+    return { path: reportPath, data: null, valid: false };
+  }
+}
+
+function dispatchMatchesCapability(state, expectedCapability) {
+  const scheduleState = state?.scheduleState;
+  const lastDecision = scheduleState && typeof scheduleState === "object" ? scheduleState.lastDecision : null;
+  if (!lastDecision || typeof lastDecision !== "object") return { matched: false, reason: "no scheduler dispatch recorded" };
+  if (lastDecision.kind !== "dispatch") return { matched: false, reason: `last decision was ${lastDecision.kind || "unknown"}` };
+  const actual =
+    (typeof lastDecision.capability === "string" && lastDecision.capability) ||
+    (typeof lastDecision.executable === "string" && lastDecision.executable) ||
+    (typeof lastDecision.action === "string" && lastDecision.action) ||
+    "";
+  if (actual !== expectedCapability) {
+    return { matched: false, reason: `last dispatch was ${actual || "unknown"}` };
+  }
+  return { matched: true, reason: lastDecision.at || scheduleState.lastGoalTickAt || "dispatch recorded" };
+}
+
+function inspectLoopProof(activeGoals, stateBase, repo) {
+  for (const item of activeGoals) {
+    const slug = activeGoalSlug(item);
+    if (!slug) continue;
+    const template = readGoalTemplate(slug);
+    const stateGoal = readStateGoal(stateBase, slug);
+    const loopSource = isAgentLoop(stateGoal?.data) ? stateGoal.data : template;
+    if (!isAgentLoop(loopSource)) continue;
+
+    const capabilities = goalCapabilities(loopSource).length > 0 ? goalCapabilities(loopSource) : goalCapabilities(template);
+    const expectedCapability = capabilities[0] || "";
+
+    row("loops", `${slug} activation`, "active in config", "healthy", "kody.config.json", "consumer repo", "none");
+
+    if (stateGoal) {
+      row("loops", `${slug} materialized`, stateGoal.label, "healthy", stateGoal.path, "state repo", "none");
+    } else {
+      row("loops", `${slug} materialized`, "no runtime state found", "unknown", stateBase || "state checkout not provided", "state repo", "wait for scheduler or run loop");
+    }
+
+    if (stateGoal && expectedCapability) {
+      const dispatch = dispatchMatchesCapability(stateGoal.data, expectedCapability);
+      row(
+        "loops",
+        `${slug} scheduler`,
+        dispatch.matched ? `dispatched ${expectedCapability}` : dispatch.reason,
+        dispatch.matched ? "healthy" : "unknown",
+        stateGoal.path,
+        "state repo",
+        dispatch.matched ? "none" : "prove scheduler fired this loop",
+      );
+    } else {
+      row("loops", `${slug} scheduler`, "not proven", "unknown", stateGoal?.path || "no runtime state", "state repo", "prove scheduler fired this loop");
+    }
+
+    const report = expectedCapability ? latestReport(stateBase, expectedCapability) : null;
+    const reportMatches =
+      report?.valid === true &&
+      report.data?.reportSlug === expectedCapability &&
+      (typeof report.data?.repo !== "string" || report.data.repo === repo);
+    if (reportMatches) {
+      row("loops", `${slug} output`, `latest ${expectedCapability} report`, "healthy", report.path, "state repo", "none");
+      const rows = Array.isArray(report.data.rows) ? report.data.rows : [];
+      row(
+        "loops",
+        `${slug} outcome`,
+        rows.length > 0 ? "report answers repo agency health" : "report has no rows",
+        rows.length > 0 ? "healthy" : "unknown",
+        report.path,
+        "state repo",
+        rows.length > 0 ? "none" : "fix report output contract",
+      );
+    } else if (report) {
+      row("loops", `${slug} output`, "latest report does not match contract", "failing", report.path, "state repo", "fix report output contract");
+      row("loops", `${slug} outcome`, "output does not prove goal outcome", "failing", report.path, "state repo", "fix report output contract");
+    } else {
+      row("loops", `${slug} output`, "no matching report found", "unknown", stateBase || "state checkout not provided", "state repo", "run the loop and verify report");
+      row("loops", `${slug} outcome`, "no output to judge", "unknown", stateBase || "state checkout not provided", "state repo", "run the loop and verify report");
+    }
+
+    const profile = expectedCapability ? readCapabilityProfile(expectedCapability) : null;
+    const outcome = String(template?.destination?.outcome || loopSource?.destination?.outcome || "");
+    const intentFits =
+      expectedCapability === reportSlug &&
+      profile?.capabilityKind === "observe" &&
+      /AI Agency/i.test(outcome) &&
+      /current repo/i.test(outcome);
+    row(
+      "loops",
+      `${slug} intent`,
+      intentFits ? "observe-only repo agency health" : "intent not proven",
+      intentFits ? "healthy" : "unknown",
+      template ? `.kody/goals/templates/${slug}/state.json` : stateGoal?.path || "",
+      intentFits ? "Store" : "operator",
+      intentFits ? "none" : "confirm loop matches company intent",
+    );
+  }
+}
+
 function inspectJobs(stateBase) {
   if (stateBase && fs.existsSync(stateBase)) {
     const jobFiles = listFiles(stateBase, "jobs", ".md");
@@ -332,6 +514,7 @@ inspectOperators(config);
 inspectActiveAgents(activeAgents);
 inspectActiveCapabilities(activeCapabilities);
 inspectActiveGoals(activeGoals, stateBase);
+inspectLoopProof(activeGoals, stateBase, repo);
 inspectJobs(stateBase);
 inspectLocalOverrides();
 

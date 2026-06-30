@@ -57,6 +57,22 @@ Required matrix columns:
 | `owner` | Store, consumer repo, state repo, operator, or later action capability |
 | `nextAction` | The smallest next action, or `none` |
 
+Required loop-proof rows for every active agentLoop:
+
+| Row | Healthy only when |
+|---|---|
+| `<loop> activation` | The loop is active in `kody.config.json`. |
+| `<loop> materialized` | A runtime state file exists in the configured state repo. |
+| `<loop> scheduler` | Runtime state shows the scheduler dispatched the expected capability. |
+| `<loop> output` | The expected report exists and matches its report contract. |
+| `<loop> outcome` | The report answers the goal's outcome question. |
+| `<loop> intent` | The loop's capability and destination fit the company's current repo intent. |
+
+For example, `ai-agency-health` is not fully healthy just because its Store
+template resolves. It is fully proven only when it is active, materialized,
+dispatched by the scheduler, and backed by a matching
+`ai-agency-health-matrix` report.
+
 Required summary fields:
 
 ```json
@@ -91,6 +107,9 @@ Required summary fields:
 Use `red` only for `failing` or critical `missing` rows. Use `yellow` for
 `unknown`, `stale`, or unverified Store references. Use `green` only when every
 required row is healthy or explicitly not relevant.
+
+A loop that is installed but not yet scheduler-proven should be `yellow`, not
+`green`.
 
 ## Inputs
 

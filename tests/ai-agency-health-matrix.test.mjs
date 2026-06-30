@@ -88,6 +88,12 @@ describe("ai-agency-health-matrix", () => {
       assert.equal(byKey.get("capabilities:missing-capability")?.health, "missing");
       assert.equal(byKey.get("goals:ai-agency-health")?.health, "healthy");
       assert.match(byKey.get("goals:ai-agency-health")?.proof ?? "", /state-root/);
+      assert.equal(byKey.get("loops:ai-agency-health activation")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health materialized")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health scheduler")?.health, "unknown");
+      assert.equal(byKey.get("loops:ai-agency-health output")?.health, "unknown");
+      assert.equal(byKey.get("loops:ai-agency-health outcome")?.health, "unknown");
+      assert.equal(byKey.get("loops:ai-agency-health intent")?.health, "healthy");
       assert.equal(byKey.get("goals:missing-goal")?.health, "missing");
       assert.equal(byKey.get("operators:github.operators")?.health, "missing");
       assert.equal(byKey.get("jobs:state jobs")?.health, "healthy");
@@ -104,6 +110,89 @@ describe("ai-agency-health-matrix", () => {
       }
 
       assert.equal(existsSync(join(cwd, "reports", "ai-agency-health-matrix")), false);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("proves an active loop only when scheduler state and output report match the goal", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-ai-agency-health-matrix-"));
+    try {
+      const stateRoot = join(cwd, "state-root");
+      const statePath = join(stateRoot, "A-Guy-Web");
+      mkdirSync(join(statePath, "todos"), { recursive: true });
+      mkdirSync(join(statePath, "reports", "ai-agency-health-matrix", "runs"), { recursive: true });
+
+      writeJson(join(cwd, "kody.config.json"), {
+        github: { owner: "A-Guy-educ", repo: "A-Guy-Web" },
+        state: { repo: "A-Guy-educ/kody-state", path: "A-Guy-Web", branch: "main" },
+        company: {
+          activeGoals: ["ai-agency-health"],
+        },
+      });
+      writeJson(join(statePath, "todos", "ai-agency-health.json"), {
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        scheduleMode: "agentLoop",
+        capabilities: ["ai-agency-health-matrix"],
+        destination: {
+          outcome: "The current repo's AI Agency is checked regularly and broken wiring is visible before work runs.",
+          evidence: [],
+        },
+        scheduleState: {
+          lastGoalTickAt: "2026-06-30T10:00:00Z",
+          lastDecision: {
+            kind: "dispatch",
+            capability: "ai-agency-health-matrix",
+            executable: "ai-agency-health-matrix",
+            reason: "ready for loop tick",
+            at: "2026-06-30T10:00:00Z",
+          },
+        },
+      });
+      writeFileSync(
+        join(statePath, "reports", "ai-agency-health-matrix", "runs", "2026-06-30T10-00-00Z.md"),
+        [
+          "---",
+          "slug: ai-agency-health-matrix",
+          "status: yellow",
+          "---",
+          "# AI Agency Health Matrix",
+          "",
+          "```json",
+          JSON.stringify({
+            schemaVersion: 1,
+            reportSlug: "ai-agency-health-matrix",
+            repo: "A-Guy-educ/A-Guy-Web",
+            status: "yellow",
+            rows: [{ area: "config", expected: "kody.config.json" }],
+          }),
+          "```",
+          "",
+        ].join("\n"),
+      );
+
+      const result = spawnSync("bash", [scriptPath.pathname, "--dry-run"], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STORE_ROOT: storeRoot,
+          KODY_STATE_ROOT: stateRoot,
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0, result.stderr);
+      const report = extractJsonBlock(result.stdout);
+      const byKey = new Map(report.rows.map((row) => [`${row.area}:${row.expected}`, row]));
+
+      assert.equal(byKey.get("loops:ai-agency-health activation")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health materialized")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health scheduler")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health output")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health outcome")?.health, "healthy");
+      assert.equal(byKey.get("loops:ai-agency-health intent")?.health, "healthy");
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
