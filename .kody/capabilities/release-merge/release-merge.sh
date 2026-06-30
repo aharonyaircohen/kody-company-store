@@ -120,9 +120,10 @@ merge_evidence_for_base() {
 
 [[ "$pr" =~ ^[0-9]+$ ]] || fail "release-merge: --pr is required" 99
 
-pr_view="$(gh pr view "$pr" --json state,baseRefName,mergeCommit 2>/dev/null || true)"
+pr_view="$(gh pr view "$pr" --json state,baseRefName,headRefName,mergeCommit 2>/dev/null || true)"
 state="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("state",""))' 2>/dev/null || true)"
 base_ref="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("baseRefName",""))' 2>/dev/null || true)"
+head_ref="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("headRefName",""))' 2>/dev/null || true)"
 evidence="$(merge_evidence_for_base "$base_ref")"
 
 if [[ "$state" == "MERGED" ]]; then
@@ -169,8 +170,35 @@ while true; do
   sleep "$poll_seconds"
 done
 
-gh pr merge "$pr" --squash --delete-branch
-merge_sha="$(gh pr view "$pr" --json mergeCommit --jq '.mergeCommit.oid // ""')"
+merge_args=(--squash)
+if [[ "$head_ref" != "$default_branch" && ( -z "$release_branch" || "$head_ref" != "$release_branch" ) ]]; then
+  merge_args+=(--delete-branch)
+fi
+
+if ! merge_output="$(gh pr merge "$pr" "${merge_args[@]}" 2>&1)"; then
+  if printf '%s' "$merge_output" | grep -qiE 'base branch policy|add the `--auto` flag|--auto'; then
+    printf '%s\n' "$merge_output"
+    gh pr merge "$pr" "${merge_args[@]}" --auto
+  else
+    fail "release-merge: gh pr merge failed for PR #${pr}: ${merge_output}" 1
+  fi
+fi
+
+while true; do
+  pr_view="$(gh pr view "$pr" --json state,mergeCommit 2>/dev/null || true)"
+  state="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print((json.load(sys.stdin) or {}).get("state",""))' 2>/dev/null || true)"
+  if [[ "$state" == "MERGED" ]]; then
+    break
+  fi
+  now="$(date +%s)"
+  if (( now >= deadline )); then
+    fail "release-merge: PR #${pr} auto-merge did not complete after ${timeout_seconds}s (state: ${state:-unknown})" 1
+  fi
+  echo "release-merge: PR #${pr} waiting for GitHub auto-merge; sleeping ${poll_seconds}s"
+  sleep "$poll_seconds"
+done
+
+merge_sha="$(printf '%s' "$pr_view" | python3 -c 'import json,sys; print(((json.load(sys.stdin) or {}).get("mergeCommit") or {}).get("oid",""))' 2>/dev/null || true)"
 
 if [[ "$issue" =~ ^[0-9]+$ ]]; then
   gh issue comment "$issue" --body "Merged release PR #${pr} into ${base_ref}${merge_sha:+ at ${merge_sha}}." >/dev/null || true
