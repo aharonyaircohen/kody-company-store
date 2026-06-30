@@ -87,7 +87,7 @@ describe("ai-agency-health-matrix", () => {
       assert.equal(byKey.get("capabilities:local-only")?.health, "repo-local");
       assert.equal(byKey.get("capabilities:missing-capability")?.health, "missing");
       assert.equal(byKey.get("goals:ai-agency-health")?.health, "healthy");
-      assert.match(byKey.get("goals:ai-agency-health")?.proof ?? "", /state-root/);
+      assert.match(byKey.get("goals:ai-agency-health")?.proof ?? "", /A-Guy-Web\/goals\/instances\/ai-agency-health/);
       assert.equal(byKey.get("loops:ai-agency-health activation")?.health, "healthy");
       assert.equal(byKey.get("loops:ai-agency-health materialized")?.health, "healthy");
       assert.equal(byKey.get("loops:ai-agency-health scheduler")?.health, "unknown");
@@ -98,6 +98,7 @@ describe("ai-agency-health-matrix", () => {
       assert.equal(byKey.get("operators:github.operators")?.health, "missing");
       assert.equal(byKey.get("jobs:state jobs")?.health, "healthy");
       assert.match(byKey.get("jobs:state jobs")?.actual ?? "", /1 state file/);
+      assert.equal(byKey.get("jobs:state jobs")?.proof, "A-Guy-Web/jobs");
 
       for (const row of report.rows) {
         assert.ok(row.area);

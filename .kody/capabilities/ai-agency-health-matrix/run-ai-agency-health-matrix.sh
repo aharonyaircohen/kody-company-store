@@ -32,6 +32,7 @@ const runId = generatedAt.replace(/\.\d{3}Z$/, "Z").replace(/:/g, "-");
 const reportFile = `reports/${reportSlug}/runs/${runId}.md`;
 const defaultStateBranch = "main";
 const rows = [];
+let statePathForProof = "";
 
 function exists(root, rel) {
   return fs.existsSync(path.join(root, rel));
@@ -227,9 +228,17 @@ function inspectState(config) {
 }
 
 function resolveStateBase(config) {
-  const statePath = String(config?.state?.path || config?.statePath || "").replace(/^\/+|\/+$/g, "");
+  const statePath = resolveStatePath(config);
   if (!stateRoot || !statePath) return "";
   return path.join(stateRoot, statePath);
+}
+
+function resolveStatePath(config) {
+  return String(config?.state?.path || config?.statePath || "").replace(/^\/+|\/+$/g, "");
+}
+
+function stateProofPath(rel) {
+  return statePathForProof ? `${statePathForProof}/${rel}` : rel;
 }
 
 function inspectActiveAgents(activeAgents) {
@@ -314,7 +323,7 @@ function readStateGoal(stateBase, slug) {
       return {
         data,
         label: candidate.label,
-        path: path.join(stateBase, candidate.rel),
+        path: stateProofPath(candidate.rel),
       };
     }
   }
@@ -333,8 +342,9 @@ function latestReport(stateBase, slug) {
     .sort();
   const latest = files.at(-1);
   if (!latest) return null;
-  const reportPath = path.join(dir, latest);
-  const body = fs.readFileSync(reportPath, "utf8");
+  const localPath = path.join(dir, latest);
+  const reportPath = stateProofPath(`${rel}/${latest}`);
+  const body = fs.readFileSync(localPath, "utf8");
   const match = body.match(/```json\n([\s\S]*?)\n```/);
   if (!match) return { path: reportPath, data: null, valid: false };
   try {
@@ -378,7 +388,7 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
     if (stateGoal) {
       row("loops", `${slug} materialized`, stateGoal.label, "healthy", stateGoal.path, "state repo", "none");
     } else {
-      row("loops", `${slug} materialized`, "no runtime state found", "unknown", stateBase || "state checkout not provided", "state repo", "wait for scheduler or run loop");
+      row("loops", `${slug} materialized`, "no runtime state found", "unknown", statePathForProof || "state checkout not provided", "state repo", "wait for scheduler or run loop");
     }
 
     if (stateGoal && expectedCapability) {
@@ -417,8 +427,8 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
       row("loops", `${slug} output`, "latest report does not match contract", "failing", report.path, "state repo", "fix report output contract");
       row("loops", `${slug} outcome`, "output does not prove goal outcome", "failing", report.path, "state repo", "fix report output contract");
     } else {
-      row("loops", `${slug} output`, "no matching report found", "unknown", stateBase || "state checkout not provided", "state repo", "run the loop and verify report");
-      row("loops", `${slug} outcome`, "no output to judge", "unknown", stateBase || "state checkout not provided", "state repo", "run the loop and verify report");
+      row("loops", `${slug} output`, "no matching report found", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
+      row("loops", `${slug} outcome`, "no output to judge", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop and verify report");
     }
 
     const profile = expectedCapability ? readCapabilityProfile(expectedCapability) : null;
@@ -445,7 +455,7 @@ function inspectJobs(stateBase) {
     const jobFiles = listFiles(stateBase, "jobs", ".md");
     const stateFiles = listFiles(stateBase, "jobs", ".state.json");
     if (jobFiles.length === 0 && stateFiles.length === 0) {
-      row("jobs", "state jobs", "none", "not-relevant", path.join(stateBase, "jobs"), "state repo", "none");
+      row("jobs", "state jobs", "none", "not-relevant", stateProofPath("jobs"), "state repo", "none");
       return;
     }
     row(
@@ -453,7 +463,7 @@ function inspectJobs(stateBase) {
       "state jobs",
       `${jobFiles.length} job(s), ${stateFiles.length} state file(s)`,
       "healthy",
-      path.join(stateBase, "jobs"),
+      stateProofPath("jobs"),
       "state repo",
       "verify freshness from job run history",
     );
@@ -506,6 +516,7 @@ const company = config && typeof config.company === "object" && config.company ?
 const activeAgents = asStringList(company.activeAgents);
 const activeCapabilities = asStringList(company.activeCapabilities ?? company.activeExecutables);
 const activeGoals = Array.isArray(company.activeGoals) ? company.activeGoals : asStringList(company.activeGoals);
+statePathForProof = resolveStatePath(config);
 const stateBase = resolveStateBase(config);
 
 inspectStore();
