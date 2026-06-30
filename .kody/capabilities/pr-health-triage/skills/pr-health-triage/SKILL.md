@@ -31,6 +31,29 @@ PR list, one optional trust-ledger read, and at most one recommendation per PR.
 Use runtime state only as a dedup ledger so the same recommendation does not
 re-fire on every tick.
 
+## State
+
+State is only a dedup ledger. Keep one canonical shape:
+
+```json
+{
+  "cursor": "idle",
+  "data": {
+    "lastOutcome": "completed",
+    "lastFiredAt": "<ISO timestamp>",
+    "lastDurationMs": 0,
+    "recommendations_posted": ["<pr>-<verb>"]
+  },
+  "done": true,
+  "version": 1
+}
+```
+
+Treat older `data.recommendations` entries like `{ "pr": 252, "verb": "resolve" }`
+as already-posted fingerprints, but always write the canonical
+`data.recommendations_posted` array in the final state. Do not write
+`data.recommendations`.
+
 ## Authority — the trust ledger
 
 This job is **advisory only**. It never dispatches repairs directly.
@@ -61,7 +84,7 @@ by one.
 ### Read the trust ledger (do this first, every tick)
 
 Use `read_ledger` only if you need operator-trust context for the final
-summary. Dispatch authority still comes from the repair tools.
+summary. It does not grant this capability repair-dispatch authority.
 
 ### Detect the repair (priority order — first match wins, one per PR)
 
@@ -123,3 +146,9 @@ per-tick:
 - Never use Bash or `gh`.
 - Never call `fix_ci_pr`, `sync_pr`, or `resolve_pr` from this capability.
 - Never include `{{mentions}}` in comment bodies.
+
+## Final State
+
+Before the final `DONE` message, emit exactly one fenced JSON block labelled
+`kody-job-next-state` with the canonical state shape from **State**. Include all
+previously posted fingerprints and any new recommendations from this tick.

@@ -42,12 +42,19 @@ describe("Store capabilities", () => {
 
   it("keeps PR health triage advisory-only", async () => {
     const profilePath = new URL("../.kody/capabilities/pr-health-triage/profile.json", import.meta.url);
+    const skillPath = new URL(
+      "../.kody/capabilities/pr-health-triage/skills/pr-health-triage/SKILL.md",
+      import.meta.url,
+    );
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
+    const skill = await readFile(skillPath, "utf8");
     const advisoryTools = ["list_prs_to_repair", "read_ledger", "recommend_to_operator"];
 
     assert.deepEqual(profile.cliTools, []);
     assert.deepEqual(profile.claudeCode.tools, ["Read"]);
     assert.deepEqual(profile.capabilityTools, advisoryTools);
     assert.deepEqual(profile.tools, advisoryTools);
+    assert.match(skill, /recommendations_posted/);
+    assert.match(skill, /Do not write\s+`data\.recommendations`/);
   });
 });
