@@ -38,6 +38,7 @@ Default agentLoop templates:
 - `product-quality`
 - `codebase-health`
 - `release-safety`
+- `daily-web-release-loop`
 - `kody-company-health`
 - `ai-agency-health`
 

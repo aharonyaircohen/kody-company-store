@@ -56,11 +56,11 @@ function runScheduler(cwd, binDir, logFile, now, extraEnv = {}) {
 }
 
 function readGoal(cwd, goalId) {
-  return JSON.parse(readFileSync(join(cwd, ".kody", "goals", "instances", goalId, "state.json"), "utf8"));
+  return JSON.parse(readFileSync(join(cwd, ".kody", "todos", `${goalId}.json`), "utf8"));
 }
 
 function writeGoal(cwd, goalId, state) {
-  const file = join(cwd, ".kody", "goals", "instances", goalId, "state.json");
+  const file = join(cwd, ".kody", "todos", `${goalId}.json`);
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, `${JSON.stringify(state, null, 2)}\n`);
 }
@@ -118,6 +118,8 @@ describe("goal-scheduler", () => {
       writeConfig(cwd, ["daily-web-release-loop"]);
       writeGoal(cwd, "daily-web-release-loop", {
         version: 1,
+        managed: true,
+        managedModel: "agentLoop",
         state: "active",
         type: "agentLoop",
         destination: { outcome: "daily web release loop", evidence: [] },
@@ -192,6 +194,8 @@ describe("goal-scheduler", () => {
       const ghCountFile = join(cwd, "gh-list-count");
       const remoteState = {
         version: 1,
+        managed: true,
+        managedModel: "agentLoop",
         state: "active",
         type: "standing",
         destination: { outcome: "CI stays healthy", evidence: [] },
@@ -206,7 +210,7 @@ describe("goal-scheduler", () => {
         [
           "#!/usr/bin/env bash",
           "set -euo pipefail",
-          'if [ "$1" = "api" ] && [ "$2" = "/repos/o/r/contents/base/goals/instances" ]; then',
+          'if [ "$1" = "api" ] && [ "$2" = "/repos/o/r/contents/base/todos" ]; then',
           '  count="$(cat "$GH_LIST_COUNT" 2>/dev/null || echo 0)"',
           "  count=$((count + 1))",
           '  echo "$count" > "$GH_LIST_COUNT"',
@@ -214,10 +218,10 @@ describe("goal-scheduler", () => {
           '    echo "gh: API rate limit exceeded for installation ID 1 (HTTP 403)" >&2',
           "    exit 1",
           "  fi",
-          '  printf \'[{"name":"ci-health","type":"dir"}]\\n\'',
+          '  printf \'[{"name":"ci-health.json","type":"file"}]\\n\'',
           "  exit 0",
           "fi",
-          'if [ "$1" = "api" ] && [ "$2" = "/repos/o/r/contents/base/goals/instances/ci-health/state.json" ]; then',
+          'if [ "$1" = "api" ] && [ "$2" = "/repos/o/r/contents/base/todos/ci-health.json" ]; then',
           '  printf \'{"content":"%s"}\\n\' "$REMOTE_STATE_B64"',
           "  exit 0",
           "fi",

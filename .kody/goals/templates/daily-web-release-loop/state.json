@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "kind": "template",
+  "templateId": "daily-web-release-loop",
+  "state": "inactive",
+  "type": "agentLoop",
+  "schedule": "1d",
+  "scheduleMode": "agentLoop",
+  "loopTarget": {
+    "type": "goal",
+    "id": "web-release"
+  },
+  "preferredRunTime": {
+    "time": "02:00",
+    "timezone": "Asia/Jerusalem"
+  },
+  "destination": {
+    "outcome": "daily web release loop",
+    "evidence": []
+  },
+  "capabilities": [],
+  "route": [],
+  "facts": {
+    "goalType": "agentLoop"
+  },
+  "blockers": []
+}
