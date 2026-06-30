@@ -29,8 +29,19 @@
   "cliTools": [
     "gh"
   ],
+  "capabilityTools": [
+    "list_prs_to_repair",
+    "read_ledger",
+    "sync_pr",
+    "fix_ci_pr",
+    "resolve_pr",
+    "recommend_to_operator"
+  ],
   "scripts": {
     "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
       {
         "script": "buildSyntheticPlugin"
       },
@@ -40,7 +51,16 @@
     ],
     "postflight": [
       {
-        "script": "parseAgentResult"
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
       }
     ]
   },
@@ -55,6 +75,14 @@
   "agent": "cto",
   "mentions": [
     "aguyaharonyair"
+  ],
+  "tools": [
+    "list_prs_to_repair",
+    "read_ledger",
+    "sync_pr",
+    "fix_ci_pr",
+    "resolve_pr",
+    "recommend_to_operator"
   ],
   "implementations": [
     "pr-health-triage"
