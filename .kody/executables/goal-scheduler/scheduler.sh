@@ -39,7 +39,7 @@ from managed_todo_state import (
 local_templates_dir = Path(sys.argv[1])
 store_templates_dir = Path(sys.argv[2])
 template_roots = [local_templates_dir, store_templates_dir]
-instances_dir = Path(".kody/goals/instances")
+local_todos_dir = Path(".kody/todos")
 LOCAL_MODE = os.environ.get("KODY_GOAL_SCHEDULER_SKIP_PERSIST") == "1"
 
 SLUG = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]*$")
@@ -259,18 +259,13 @@ def state_target(config: dict) -> tuple[str, str]:
   return normalize_state_repo(state_repo), str(state_path).strip().strip("/")
 
 
-def state_file_path(state_base: str, goal_id: str) -> str:
-    prefix = f"{state_base}/" if state_base else ""
-    return f"{prefix}goals/instances/{goal_id}/state.json"
-
-
 def todo_file_path(state_base: str, goal_id: str) -> str:
     prefix = f"{state_base}/" if state_base else ""
-    return f"{prefix}todos/{goal_id}.md"
+    return f"{prefix}todos/{goal_id}.json"
 
 
 def local_goal_path(goal_id: str) -> Path:
-    return instances_dir / goal_id / "state.json"
+    return local_todos_dir / f"{goal_id}.json"
 
 
 def read_remote_text(state_repo: str, path: str) -> str | None:
@@ -294,16 +289,14 @@ def read_remote_json(state_repo: str, path: str) -> dict | None:
 def remote_goal_exists(state_repo: str, state_base: str, goal_id: str) -> bool:
     if LOCAL_MODE:
         return local_goal_path(goal_id).exists()
-    if read_remote_text(state_repo, todo_file_path(state_base, goal_id)) is not None:
-        return True
-    return read_remote_json(state_repo, state_file_path(state_base, goal_id)) is not None
+    return read_remote_text(state_repo, todo_file_path(state_base, goal_id)) is not None
 
 
 def persist_goal(state_repo: str, state_base: str, goal_id: str, state_text: str) -> None:
     if LOCAL_MODE:
         target = local_goal_path(goal_id)
         target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(state_text)
+        target.write_text(serialize_todo_goal_state(goal_id, json.loads(state_text), iso_z(now_utc())))
         return
     path = todo_file_path(state_base, goal_id)
     if remote_goal_exists(state_repo, state_base, goal_id):
@@ -351,11 +344,15 @@ def create_instance_from_template(
 
 def list_goal_ids(state_repo: str, state_base: str) -> list[str]:
     if LOCAL_MODE:
-        if not instances_dir.exists():
+        if not local_todos_dir.exists():
             return []
-        return sorted(path.name for path in instances_dir.iterdir() if (path / "state.json").exists())
+        ids = []
+        for path in local_todos_dir.glob("*.json"):
+            text = path.read_text()
+            if is_managed_todo_text(text):
+                ids.append(path.stem)
+        return sorted(ids)
     ids: set[str] = set()
-    todo_file_ids: set[str] = set()
     todos_base = f"{state_base}/todos" if state_base else "todos"
     try:
         entries = json.loads(gh(["api", f"/repos/{state_repo}/contents/{todos_base}"]))
@@ -368,26 +365,11 @@ def list_goal_ids(state_repo: str, state_base: str) -> list[str]:
             if not isinstance(entry, dict):
                 continue
             name = entry.get("name") if isinstance(entry, dict) else None
-            if entry.get("type") == "file" and isinstance(name, str) and name.endswith(".md"):
-                goal_id = name[:-3]
-                todo_file_ids.add(goal_id)
+            if entry.get("type") == "file" and isinstance(name, str) and name.endswith(".json"):
+                goal_id = name[:-5]
                 todo_text = read_remote_text(state_repo, todo_file_path(state_base, goal_id))
                 if todo_text is not None and is_managed_todo_text(todo_text):
                     ids.add(goal_id)
-    legacy_base = f"{state_base}/goals/instances" if state_base else "goals/instances"
-    try:
-        entries = json.loads(gh(["api", f"/repos/{state_repo}/contents/{legacy_base}"]))
-    except Exception as err:
-        if not is_not_found(err):
-            raise
-        entries = []
-    if isinstance(entries, list):
-        for entry in entries:
-            if not isinstance(entry, dict):
-                continue
-            name = entry.get("name") if isinstance(entry, dict) else None
-            if entry.get("type") == "dir" and isinstance(name, str) and name not in todo_file_ids:
-                ids.add(name)
     return sorted(ids)
 
 
@@ -396,13 +378,16 @@ def read_goal_state(state_repo: str, state_base: str, goal_id: str) -> dict | No
         path = local_goal_path(goal_id)
         if not path.exists():
             return None
-        return json.loads(path.read_text())
+        text = path.read_text()
+        if not is_managed_todo_text(text):
+            return None
+        return parse_todo_goal_state(goal_id, text)
     todo_text = read_remote_text(state_repo, todo_file_path(state_base, goal_id))
     if todo_text is not None:
         if not is_managed_todo_text(todo_text):
             return None
         return parse_todo_goal_state(goal_id, todo_text)
-    return read_remote_json(state_repo, state_file_path(state_base, goal_id))
+    return None
 
 
 def schedule_prefix(schedule: dict) -> str:
@@ -628,7 +613,7 @@ for goal_id in goal_ids:
     active_count += 1
     managed = is_managed_goal(data)
     if not managed:
-        print(f"[goal-scheduler] skip {goal_id}: legacy goal files are not managed-goal instances")
+        print(f"[goal-scheduler] skip {goal_id}: todo file is not a managed goal")
         continue
     wait_reason = schedule_wait_reason(data, now)
     if wait_reason:

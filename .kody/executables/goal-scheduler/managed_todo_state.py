@@ -1,76 +1,31 @@
 """Managed-goal todo state contract for goal-scheduler.
 
-The scheduler owns timing and dispatch. This module owns the todo markdown
-shape used for managed goal state.
+The scheduler owns timing and dispatch. This module owns the todo JSON shape
+used for managed goal state.
 """
 
 import json
-import re
-
-
-def parse_frontmatter_value(raw: str) -> object:
-    value = raw.strip()
-    if (value.startswith('"') and value.endswith('"')) or (value.startswith("'") and value.endswith("'")):
-        value = value[1:-1].replace('\\"', '"').replace("\\\\", "\\")
-    if value == "true":
-        return True
-    if value == "false":
-        return False
-    if value == "null":
-        return None
-    if value.startswith(("{", "[")) or re.match(r"^-?\d+(\.\d+)?$", value):
-        try:
-            return json.loads(value)
-        except Exception:
-            pass
-    return value
-
-
-def serialize_frontmatter_value(value: object) -> str:
-    if isinstance(value, str):
-        text = value
-    else:
-        text = json.dumps(value, separators=(",", ":"))
-    return '"' + text.replace("\\", "\\\\").replace('"', '\\"') + '"'
-
-
-def parse_todo_items(text: str) -> list[dict]:
-    match = re.search(r"<!--\s*kody-todo-items-json\s*\n([\s\S]*?)\n-->", text)
-    if not match:
-        return []
-    try:
-        items = json.loads(match.group(1))
-    except Exception:
-        return []
-    return [item for item in items if isinstance(item, dict)] if isinstance(items, list) else []
-
-
-def parse_todo_frontmatter(text: str) -> dict:
-    match = re.match(r"---\r?\n([\s\S]*?)\r?\n---", text)
-    if not match:
-        return {}
-    parsed: dict = {}
-    for raw_line in match.group(1).splitlines():
-        line = raw_line.strip()
-        if not line or line.startswith("#") or ":" not in line:
-            continue
-        key, value = line.split(":", 1)
-        parsed[key.strip()] = parse_frontmatter_value(value)
-    return parsed
 
 
 def is_managed_todo_text(text: str) -> bool:
-    frontmatter = parse_todo_frontmatter(text)
+    data = parse_json_object(text)
+    return is_managed_todo_data(data) if data is not None else False
+
+
+def is_managed_todo_data(data: dict) -> bool:
     return (
-        frontmatter.get("managed") is True
-        or frontmatter.get("managed") == "true"
-        or frontmatter.get("managedModel") in ("agentGoal", "agentLoop")
+        data.get("managed") is True
+        or data.get("managed") == "true"
+        or data.get("managedModel") in ("agentGoal", "agentLoop")
     )
 
 
-def todo_description(text: str) -> str:
-    without_frontmatter = re.sub(r"^---\r?\n[\s\S]*?\r?\n---\r?\n?", "", text, count=1)
-    return re.sub(r"<!--\s*kody-todo-items-json\s*\n[\s\S]*?\n-->", "", without_frontmatter).strip()
+def parse_json_object(text: str) -> dict | None:
+    try:
+        data = json.loads(text)
+    except Exception:
+        return None
+    return data if isinstance(data, dict) else None
 
 
 def string_list(value: object) -> list[str]:
@@ -94,43 +49,50 @@ def route_from_items(items: list[dict]) -> list[dict]:
     return route
 
 
-def parse_todo_goal_state(goal_id: str, text: str) -> dict:
-    frontmatter = parse_todo_frontmatter(text)
-    items = parse_todo_items(text)
-    raw_destination = frontmatter.get("destination") if isinstance(frontmatter.get("destination"), dict) else {}
-    route = frontmatter.get("route") if isinstance(frontmatter.get("route"), list) else route_from_items(items)
-    evidence = string_list(raw_destination.get("evidence")) or string_list(frontmatter.get("evidence"))
+def parse_json_todo_goal_state(goal_id: str, data: dict) -> dict:
+    items = [item for item in data.get("items", []) if isinstance(item, dict)] if isinstance(data.get("items"), list) else []
+    raw_destination = data.get("destination") if isinstance(data.get("destination"), dict) else {}
+    route = data.get("route") if isinstance(data.get("route"), list) else route_from_items(items)
+    evidence = string_list(raw_destination.get("evidence")) or string_list(data.get("evidence"))
     if not evidence:
         evidence = [
             str((item.get("meta") if isinstance(item.get("meta"), dict) else {}).get("evidence") or item.get("id"))
             for item in items
             if item.get("id")
         ]
-    facts = frontmatter.get("facts") if isinstance(frontmatter.get("facts"), dict) else {}
+    facts = data.get("facts") if isinstance(data.get("facts"), dict) else {}
     facts = dict(facts)
     for item in items:
         meta = item.get("meta") if isinstance(item.get("meta"), dict) else {}
         key = meta.get("evidence") or item.get("id")
         if isinstance(key, str):
             facts[key] = item.get("completed") is True
-    capabilities = string_list(frontmatter.get("capabilities"))
+    capabilities = string_list(data.get("capabilities"))
     if not capabilities:
         capabilities = [step["capability"] for step in route if isinstance(step.get("capability"), str)]
-    data = dict(frontmatter)
-    data.update(
+    outcome = data.get("description") if isinstance(data.get("description"), str) else raw_destination.get("outcome")
+    parsed = dict(data)
+    parsed.update(
         {
             "id": goal_id,
-            "version": frontmatter.get("version", 1),
-            "state": frontmatter.get("state", "active"),
-            "type": frontmatter.get("type", "general"),
-            "destination": {**raw_destination, "outcome": todo_description(text), "evidence": evidence},
+            "version": data.get("version", 1),
+            "state": data.get("state", "active"),
+            "type": data.get("type", "general"),
+            "destination": {**raw_destination, "outcome": outcome if isinstance(outcome, str) else "", "evidence": evidence},
             "capabilities": capabilities,
             "route": route,
             "facts": facts,
-            "blockers": string_list(frontmatter.get("blockers")),
+            "blockers": string_list(data.get("blockers")),
         }
     )
-    return data
+    return parsed
+
+
+def parse_todo_goal_state(goal_id: str, text: str) -> dict:
+    data = parse_json_object(text)
+    if data is None:
+        raise ValueError(f"goal {goal_id} todo state must be JSON")
+    return parse_json_todo_goal_state(goal_id, data)
 
 
 def todo_items_from_state(data: dict, now: str) -> list[dict]:
@@ -185,16 +147,14 @@ def todo_items_from_state(data: dict, now: str) -> list[dict]:
 def serialize_todo_goal_state(goal_id: str, data: dict, now: str) -> str:
     destination = data.get("destination") if isinstance(data.get("destination"), dict) else {}
     outcome = destination.get("outcome") if isinstance(destination.get("outcome"), str) else ""
-    frontmatter = dict(data)
-    frontmatter.pop("destination", None)
-    frontmatter["id"] = goal_id
-    frontmatter["title"] = goal_id
-    frontmatter["managed"] = True
-    frontmatter["managedModel"] = "agentLoop" if frontmatter.get("scheduleMode") == "agentLoop" or frontmatter.get("type") == "agentLoop" else "agentGoal"
-    frontmatter["evidence"] = string_list(destination.get("evidence"))
-    lines = ["---"]
-    for key, value in frontmatter.items():
-        if value is not None:
-            lines.append(f"{key}: {serialize_frontmatter_value(value)}")
-    lines.extend(["---", "", outcome, "", "<!-- kody-todo-items-json", json.dumps(todo_items_from_state(data, now), indent=2), "-->", ""])
-    return "\n".join(lines)
+    record = dict(data)
+    record["version"] = 1
+    record["id"] = goal_id
+    record["title"] = goal_id
+    record["description"] = outcome
+    record["createdAt"] = data.get("createdAt") if isinstance(data.get("createdAt"), str) else now
+    record["managed"] = True
+    record["managedModel"] = "agentLoop" if record.get("scheduleMode") == "agentLoop" or record.get("type") == "agentLoop" else "agentGoal"
+    record["evidence"] = string_list(destination.get("evidence"))
+    record["items"] = todo_items_from_state(data, now)
+    return json.dumps(record, indent=2) + "\n"
