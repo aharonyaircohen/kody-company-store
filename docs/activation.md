@@ -42,6 +42,11 @@ Default agentLoop templates:
 - `kody-company-health`
 - `ai-agency-health`
 
+`ai-agency-health` should answer whether the current repo's AI agency is
+healthy. Its observe capability writes a repo-local health matrix report; it
+does not fix, install, promote, comment, or open PRs. See
+[ai-agency-health-matrix.md](ai-agency-health-matrix.md).
+
 Consumer repos may also define local goal templates.
 
 ```text

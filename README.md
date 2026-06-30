@@ -12,6 +12,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `cms/` contains generic CMS contracts, adapters, examples, and tests.
 - `.kody/store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
+- `docs/ai-agency-health-matrix.md` defines the repo-local agency health report contract.
 
 ## Resolution
 
@@ -45,6 +46,8 @@ object form, `{ "template": "release-safety", "every": "1w" }`, to create one
 runtime instance per time bucket in the configured state repo.
 
 See [docs/activation.md](docs/activation.md) for the full activation contract.
+See [docs/ai-agency-health-matrix.md](docs/ai-agency-health-matrix.md) for the
+AI Agency health report model.
 
 ## Asset Kinds
 

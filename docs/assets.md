@@ -36,6 +36,10 @@ Common files:
 Capability scripts should consume environment variables provided by the runtime.
 They should not own consumer secrets or decrypt repo-local vaults inside store.
 
+Observe-only health capabilities, such as `ai-agency-health-matrix`, should
+write reports to the configured state repo and leave install, repair, promotion,
+comments, labels, issues, and PRs to separate act or verify capabilities.
+
 ## Commands
 
 Path:

@@ -8,13 +8,13 @@
   "scheduleMode": "agentLoop",
   "schedule": "1d",
   "title": "AI Agency stays healthy",
-  "description": "Run the AI Agency Doctor and keep broken wiring visible.",
+  "description": "Run the AI Agency health matrix and keep broken agency wiring visible.",
   "destination": {
-    "outcome": "The AI Agency is checked regularly and broken wiring is visible before work runs.",
+    "outcome": "The current repo's AI Agency is checked regularly and broken wiring is visible before work runs.",
     "evidence": []
   },
   "capabilities": [
-    "ai-agency-doctor"
+    "ai-agency-health-matrix"
   ],
   "route": [],
   "stage": "watching",
