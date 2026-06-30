@@ -39,4 +39,15 @@ describe("Store capabilities", () => {
     assert.equal(existsSync(new URL(`../.kody/${removedCapabilityRoot}/`, import.meta.url)), false);
     assert.equal(existsSync(new URL(`../.kody/${oldActionsRoot}/`, import.meta.url)), false);
   });
+
+  it("keeps PR health triage advisory-only", async () => {
+    const profilePath = new URL("../.kody/capabilities/pr-health-triage/profile.json", import.meta.url);
+    const profile = JSON.parse(await readFile(profilePath, "utf8"));
+    const advisoryTools = ["list_prs_to_repair", "read_ledger", "recommend_to_operator"];
+
+    assert.deepEqual(profile.cliTools, []);
+    assert.deepEqual(profile.claudeCode.tools, ["Read"]);
+    assert.deepEqual(profile.capabilityTools, advisoryTools);
+    assert.deepEqual(profile.tools, advisoryTools);
+  });
 });

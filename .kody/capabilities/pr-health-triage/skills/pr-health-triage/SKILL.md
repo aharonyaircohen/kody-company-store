@@ -1,6 +1,6 @@
 ---
 name: pr-health-triage
-description: Review open PRs for conflicts, failed CI, or stale branches, then recommend or dispatch the trusted repair.
+description: Review open PRs for conflicts, failed CI, or stale branches, then recommend the next safe repair.
 ---
 
 # PR Health Triage Skill
@@ -13,46 +13,44 @@ Runtime state is owned by the engine. Do not ask the capability author to config
 
 > Standing PR-health triage, executed by the **CTO** agent
 > (`agent: cto`). Every 15 minutes, read the open pull requests, detect
-> which ones need a mechanical repair, and — per the operator's trust
-> ledger — either recommend the repair or (once that verb has graduated)
-> dispatch it. Schedule is enforced by the owning goal/loop; no
-> prose skip guard is needed.
+> which ones need a mechanical repair, and recommend the next safe repair
+> to the operator. Schedule is enforced by the owning goal/loop; no prose
+> skip guard is needed.
 
 ## Job
 
 Each tick, look at every open PR, pick at most one repair per PR (by the
-priority order below), and either recommend it or — if the engine tool allows
-it — dispatch it. The CTO agent identity defines only _who_ runs this; all
-authority, scope limits, and comment formats below belong to **this job**.
+priority order below), and recommend it. The CTO agent identity defines only
+_who_ runs this; all authority, scope limits, and comment formats below belong
+to **this job**.
 
 ## Tick procedure
 
 Run the PR triage through the capability tools only. Keep it deterministic: one
-PR list, one optional trust-ledger read, and at most one repair action per PR.
+PR list, one optional trust-ledger read, and at most one recommendation per PR.
 Use runtime state only as a dedup ledger so the same recommendation does not
 re-fire on every tick.
 
 ## Authority — the trust ledger
 
-This job is **advisory by default**. Authority is enforced by the engine
-capability tools:
+This job is **advisory only**. It never dispatches repairs directly.
 
-- If `sync_pr`, `fix_ci_pr`, or `resolve_pr` succeeds, the repair was
-  dispatched.
-- If a dispatch tool returns a trust refusal or any uncertainty exists, do not
-  retry the dispatch. Use `recommend_to_operator` and wait.
+- Use `recommend_to_operator` for every new repair recommendation.
 - You may call `read_ledger` for context, but never hand-roll trust decisions
   or comments outside the provided tools.
+- Repair dispatch belongs to the dedicated repair capabilities after the
+  operator confirms the exact `kody-cmd` line.
 
 ## Scope (hard limits)
 
-- The only repair actions this job may ever request are `fix-ci`, `sync`, and
-  `resolve` through their capability tools.
+- The only repair actions this job may ever recommend are `fix-ci`, `sync`,
+  and `resolve`.
 - No `merge`, `approve`, `execute`, `qa-review`, `close`, `revert`,
   `abort`, assign, or label — entirely out of scope here.
 - Never edit, create, or delete any file in the working tree. Never
-  `git commit`, `git push`, or open a PR. The only write paths are the
-  capability tools and `submit_state`.
+  `git commit`, `git push`, open a PR, run a repair, or trigger a repair
+  workflow. The only write paths are `recommend_to_operator` and
+  `submit_state`.
 
 ### Enumerate
 
@@ -76,15 +74,11 @@ For each returned PR, evaluate in this exact order, stop at first hit:
 
 No hit on any of the three → leave the PR alone this tick.
 
-### Act on the repair
+### Recommend the repair
 
 Let `<verb>` be the detected primitive and `<n>` the PR number.
 
-- First call the matching dispatch tool: `fix_ci_pr`, `sync_pr`, or
-  `resolve_pr`.
-- If the tool dispatches, record it in your summary.
-- If the tool refuses because this capability is in Ask mode, call
-  `recommend_to_operator` once for that PR.
+- Call `recommend_to_operator` once for that PR.
 - The recommendation body must not include an operator mention. The tool
   prepends the operator handle. Include the `kody-cmd` line in the body.
 - Still honour the dedup ledger: never auto-run or recommend the same repair on
@@ -95,11 +89,11 @@ Let `<verb>` be the detected primitive and `<n>` the PR number.
 **Operator handle.** Never type `{{mentions}}` and never hardcode a handle.
 `recommend_to_operator` prepends the operator mention.
 
-**Recommendation** (verb not graduated). One terse, machine-greppable
-comment. It MUST `@`-mention the operator on the first line (that mention
-is what routes it into the dashboard inbox + push) and carry the exact
-command on a single `kody-cmd` line (that is what the inbox **Approve**
-button posts verbatim):
+**Recommendation.** One terse, machine-greppable comment. The final posted
+comment must mention the operator on the first line, but the agent-supplied
+body must not include that mention because `recommend_to_operator` prepends it.
+The body must carry the exact command on a single `kody-cmd` line (that is what
+the inbox **Approve** button posts verbatim):
 
 ```
 🧭 **CTO recommendation** — `<verb>`
@@ -114,7 +108,6 @@ _Confirm or dismiss this in the dashboard inbox. The CTO will not act on its own
 ## Allowed Tools
 
 - `list_prs_to_repair` — the single enumeration call.
-- `fix_ci_pr`, `sync_pr`, `resolve_pr` — trusted repair dispatch attempts.
 - `recommend_to_operator` — Ask-mode recommendation comments.
 - `read_ledger` — optional context only.
 - `submit_state` — required final state write.
@@ -128,4 +121,5 @@ per-tick:
   (fingerprint changed — see State). Re-posting every 15 minutes is the
   primary failure mode; the dedup ledger prevents it.
 - Never use Bash or `gh`.
+- Never call `fix_ci_pr`, `sync_pr`, or `resolve_pr` from this capability.
 - Never include `{{mentions}}` in comment bodies.

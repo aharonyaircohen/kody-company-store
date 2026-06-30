@@ -2,7 +2,7 @@
   "name": "pr-health-triage",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Review open PRs for conflicts, failed CI, or stale branches, then recommend or dispatch the trusted repair.",
+  "describe": "Review open PRs for conflicts, failed CI, or stale branches, then recommend the next safe repair.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -11,12 +11,9 @@
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "cacheable": true,
-    "tools": [
-      "Read",
-      "Bash",
-      "Grep",
-      "Glob"
-    ],
+      "tools": [
+        "Read"
+      ],
     "hooks": [],
     "skills": [
       "pr-health-triage"
@@ -26,15 +23,10 @@
     "plugins": [],
     "mcpServers": []
   },
-  "cliTools": [
-    "gh"
-  ],
+  "cliTools": [],
   "capabilityTools": [
     "list_prs_to_repair",
     "read_ledger",
-    "sync_pr",
-    "fix_ci_pr",
-    "resolve_pr",
     "recommend_to_operator"
   ],
   "scripts": {
@@ -79,9 +71,6 @@
   "tools": [
     "list_prs_to_repair",
     "read_ledger",
-    "sync_pr",
-    "fix_ci_pr",
-    "resolve_pr",
     "recommend_to_operator"
   ],
   "implementations": [
