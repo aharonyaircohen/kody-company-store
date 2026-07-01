@@ -5,7 +5,7 @@
 Every tick, run the local `auto-fix-ci` executable tick:
 
 ```bash
-bash .kody/executables/auto-fix-ci/tick.sh
+bash .kody/capabilities/auto-fix-ci/tick.sh
 ```
 
 The executable is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.

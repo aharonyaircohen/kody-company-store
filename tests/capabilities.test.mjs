@@ -36,8 +36,10 @@ describe("Store capabilities", () => {
 
     assert.equal(roots[removedCapabilityRoot], undefined);
     assert.equal(roots[oldActionsRoot], undefined);
+    assert.equal(roots.executables, undefined);
     assert.equal(existsSync(new URL(`../.kody/${removedCapabilityRoot}/`, import.meta.url)), false);
     assert.equal(existsSync(new URL(`../.kody/${oldActionsRoot}/`, import.meta.url)), false);
+    assert.equal(existsSync(new URL("../.kody/executables/", import.meta.url)), false);
   });
 
   it("keeps PR health triage advisory-only", async () => {

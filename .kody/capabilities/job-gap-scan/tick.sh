@@ -23,7 +23,7 @@ const catalogue = [
     effort: 'low',
     value: 'high',
     roi: 95,
-    markdown: '---\nevery: 24h\nagent: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/executables/sentry-digest/tick.sh` before enabling it.\n',
+    markdown: '---\nevery: 24h\nagent: kody\n---\n# sentry-digest\n\n## Job\n\nOnce day, fetch 10 unresolved Sentry errors ranked by `events x users_affected` open one GitHub issue per recurring error no open tracking issue yet.\n\n## Tick procedure REQUIRED\n\nFully scripted. Add `.kody/capabilities/sentry-digest/tick.sh` before enabling it.\n',
   },
   {
     slug: 'secret-leak-scan',

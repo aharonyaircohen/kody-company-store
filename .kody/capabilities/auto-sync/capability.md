@@ -5,7 +5,7 @@
 Every tick, run the local `auto-sync` executable tick:
 
 ```bash
-bash .kody/executables/auto-sync/tick.sh
+bash .kody/capabilities/auto-sync/tick.sh
 ```
 
 The executable is the source of truth for PR selection, behind-count checks, attempt limits, stuck labels, comments, and next-state output.

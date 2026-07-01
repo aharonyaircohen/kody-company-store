@@ -1,0 +1,48 @@
+{
+  "name": "goal-scheduler",
+  "internal": true,
+  "role": "watch",
+  "kind": "scheduled",
+  "schedule": "*/5 * * * *",
+  "describe": "Scheduled: tick every active managed goal via goal-manager. Legacy/unmanaged goal files are skipped.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    {
+      "name": "python3",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v python3"
+      },
+      "verify": "python3 --version",
+      "usage": "scheduler.sh parses each managed goal todo file",
+      "allowedUses": []
+    }
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "scheduler.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  }
+}

@@ -5,7 +5,7 @@
 Every tick, run the local `auto-resolve` executable tick:
 
 ```bash
-bash .kody/executables/auto-resolve/tick.sh
+bash .kody/capabilities/auto-resolve/tick.sh
 ```
 
 The executable is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.

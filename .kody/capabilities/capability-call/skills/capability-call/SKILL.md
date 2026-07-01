@@ -5,14 +5,14 @@ description: Propose one high-ROI missing capability the system does not already
 
 # Capability Call Skill
 
-Use this skill when the `capability-call` executable runs from the matching capability.
+Use this skill when the `capability-call` capability implementation runs.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
 ## Method
 
 Propose one useful missing capability. The proposal is advisory only: create a GitHub
-issue with the reason, score, suggested capability profile fields, and any executable or
+issue with the reason, score, suggested capability profile fields, and any implementation
 skill that would be needed. Do not write the capability folder yourself.
 
 ## Candidate Rules
@@ -21,7 +21,7 @@ skill that would be needed. Do not write the capability folder yourself.
 - Read `.kody/memory/` for prior rejected or dismissed proposals.
 - Never re-propose a rejected slug.
 - Respect dismissed slugs until their cooling-off window expires.
-- Prefer gaps that can be expressed as a simple capability plus executable.
+- Prefer gaps that can be expressed as one simple capability folder.
 
 ## Proposal Shape
 
@@ -31,14 +31,14 @@ The issue should include:
 - agent owner
 - goal/loop schedule that would run it
 - stage template
-- executable slug
+- implementation profile needs
 - expected report/comment/output
 - safety limits
 - why this capability is worth adding now
 
 ## Tick Procedure
 
-1. Gather existing capabilities, agent, executables, reports, and memories.
+1. Gather existing capabilities, agents, reports, and memories.
 2. Build a small candidate list of missing recurring capabilities.
 3. Score each candidate by impact, confidence, noise risk, and implementation cost.
 4. Pick the best candidate that has not been rejected or recently dismissed.
@@ -48,7 +48,7 @@ The issue should include:
 
 ## Allowed Commands
 
-- `gh api` reads for `.kody/capabilities`, `.kody/agents`, `.kody/executables`, `reports/` in the configured Kody state repo, and `.kody/memory`
+- `gh api` reads for `.kody/capabilities`, `.kody/agents`, `reports/` in the configured Kody state repo, and `.kody/memory`
 - `gh issue list`
 - `gh issue create`
 - `gh label create` when the proposal label is missing
@@ -57,6 +57,6 @@ The issue should include:
 
 - One proposal per tick.
 - Never create or edit capability folders.
-- Never create or edit executables.
+- Never create or edit legacy executable folders.
 - Never re-surface rejected proposals.
 - Better to stay quiet than propose low-signal work.

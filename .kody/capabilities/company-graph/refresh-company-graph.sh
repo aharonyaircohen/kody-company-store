@@ -148,7 +148,6 @@ ref_id() {
       ;;
     .kody/context/*|context/*) printf 'context:%s' "$slug"; return 0 ;;
     .kody/agents/*|agent/*) printf 'agent:%s' "$slug"; return 0 ;;
-    .kody/executables/*|executables/*) printf 'executable:%s' "$slug"; return 0 ;;
     .kody/scripts/*|scripts/*) printf 'script:%s' "$slug"; return 0 ;;
     reports/*) printf 'report:%s' "$slug"; return 0 ;;
   esac
@@ -260,20 +259,30 @@ if [[ -d ".kody/capabilities" ]]; then
       (list(.writesTo) + list(.writes_to)) | unique
     ' "$profile")"
     disabled="$(jq -r 'if .disabled == true then "true" else "false" end' "$profile")"
+    internal="$(jq -r 'if .internal == true then "true" else "false" end' "$profile")"
+    role="$(jq -r '.role // ""' "$profile")"
+    kind="$(jq -r '.kind // ""' "$profile")"
+    skills="$(jq -c '[.claudeCode.skills[]? | select(type == "string" and length > 0)]' "$profile")"
+    shell_scripts="$(jq -c '[.scripts.preflight[]? | .shell? | select(type == "string" and length > 0)]' "$profile")"
 
     add_node "$(jq -nc \
       --arg id "capability:$slug" \
       --arg slug "$slug" \
       --arg agent "$agent" \
+      --arg role "$role" \
+      --arg kind "$kind" \
       --argjson executables "$executables" \
       --argjson readsFrom "$reads_from" \
       --argjson writesTo "$writes_to" \
       --argjson disabled "$disabled" \
-      '{id: $id, type: "capability", slug: $slug, agent: $agent, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled}')"
+      --argjson internal "$internal" \
+      --argjson skills "$skills" \
+      --argjson shellScripts "$shell_scripts" \
+      '{id: $id, type: "capability", slug: $slug, agent: $agent, role: $role, kind: $kind, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled, internal: $internal, skills: $skills, shellScripts: $shellScripts}')"
 
     add_edge "capability:$slug" "$(ref_id "$agent" agent)" "assigned_to"
     while IFS= read -r executable; do
-      [[ -n "$executable" ]] && add_edge "capability:$slug" "$(ref_id "$executable" executable)" "runs"
+      [[ -n "$executable" ]] && add_edge "capability:$slug" "$(ref_id "$executable" capability)" "runs"
     done < <(jq -r '.[]' <<<"$executables")
     while IFS= read -r source; do
       [[ -n "$source" ]] && add_edge "capability:$slug" "$(ref_id "$source" context)" "reads_from"
@@ -281,6 +290,25 @@ if [[ -d ".kody/capabilities" ]]; then
     while IFS= read -r target; do
       [[ -n "$target" ]] && add_edge "capability:$slug" "$(ref_id "$target" report)" "writes_to"
     done < <(jq -r '.[]' <<<"$writes_to")
+    while IFS= read -r skill; do
+      [[ -n "$skill" ]] || continue
+      add_node "$(jq -nc \
+        --arg id "skill:$slug/$skill" \
+        --arg slug "$slug/$skill" \
+        --arg name "$skill" \
+        --arg path ".kody/capabilities/$slug/skills/$skill/SKILL.md" \
+        '{id: $id, type: "skill", slug: $slug, name: $name, path: $path, scope: "capability"}')"
+      add_edge "capability:$slug" "skill:$slug/$skill" "uses_skill"
+    done < <(jq -r '.[]' <<<"$skills")
+    while IFS= read -r script; do
+      [[ -n "$script" ]] || continue
+      add_node "$(jq -nc \
+        --arg id "script:$slug/$script" \
+        --arg slug "$slug/$script" \
+        --arg path ".kody/capabilities/$slug/$script" \
+        '{id: $id, type: "script", slug: $slug, path: $path, scope: "capability"}')"
+      add_edge "capability:$slug" "script:$slug/$script" "runs_preflight"
+    done < <(jq -r '.[]' <<<"$shell_scripts")
   done < <(find .kody/capabilities -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
@@ -293,57 +321,6 @@ if [[ -d ".kody/scripts" ]]; then
       --arg path "$file" \
       '{id: $id, type: "script", slug: $slug, path: $path, scope: "repo"}')"
   done < <(find .kody/scripts -maxdepth 1 -type f | sort)
-fi
-
-if [[ -d ".kody/executables" ]]; then
-  while IFS= read -r dir; do
-    slug="$(basename "$dir")"
-    profile="$dir/profile.json"
-    [[ -f "$profile" ]] || continue
-    if ! jq empty "$profile" >/dev/null 2>&1; then
-      continue
-    fi
-
-    describe="$(jq -r '.describe // ""' "$profile")"
-    role="$(jq -r '.role // ""' "$profile")"
-    kind="$(jq -r '.kind // ""' "$profile")"
-    agent="$(jq -r '.agent // ""' "$profile")"
-    skills="$(jq -c '[.claudeCode.skills[]? | select(type == "string" and length > 0)]' "$profile")"
-    shell_scripts="$(jq -c '[.scripts.preflight[]? | .shell? | select(type == "string" and length > 0)]' "$profile")"
-
-    add_node "$(jq -nc \
-      --arg id "executable:$slug" \
-      --arg slug "$slug" \
-      --arg role "$role" \
-      --arg kind "$kind" \
-      --arg agent "$agent" \
-      --arg describe "$describe" \
-      --argjson skills "$skills" \
-      --argjson shellScripts "$shell_scripts" \
-      '{id: $id, type: "executable", slug: $slug, role: $role, kind: $kind, agent: $agent, describe: $describe, skills: $skills, shellScripts: $shellScripts}')"
-    add_edge "executable:$slug" "$(ref_id "$agent" agent)" "runs_as"
-
-    while IFS= read -r skill; do
-      [[ -n "$skill" ]] || continue
-      add_node "$(jq -nc \
-        --arg id "skill:$slug/$skill" \
-        --arg slug "$slug/$skill" \
-        --arg name "$skill" \
-        --arg path ".kody/executables/$slug/skills/$skill/SKILL.md" \
-        '{id: $id, type: "skill", slug: $slug, name: $name, path: $path, scope: "executable"}')"
-      add_edge "executable:$slug" "skill:$slug/$skill" "uses_skill"
-    done < <(jq -r '.[]' <<<"$skills")
-
-    while IFS= read -r script; do
-      [[ -n "$script" ]] || continue
-      add_node "$(jq -nc \
-        --arg id "script:$slug/$script" \
-        --arg slug "$slug/$script" \
-        --arg path ".kody/executables/$slug/$script" \
-        '{id: $id, type: "script", slug: $slug, path: $path, scope: "executable"}')"
-      add_edge "executable:$slug" "script:$slug/$script" "runs_preflight"
-    done < <(jq -r '.[]' <<<"$shell_scripts")
-  done < <(find .kody/executables -mindepth 1 -maxdepth 1 -type d | sort)
 fi
 
 rate_limited=0

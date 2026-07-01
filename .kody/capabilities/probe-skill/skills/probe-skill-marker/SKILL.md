@@ -5,7 +5,7 @@ description: Internal Kody live-test skill, shipped from the probe-skill executa
 
 # probe-skill-marker
 
-This skill exists only to verify that Kody's executable-local plugin-part resolution actually loads skills from `src/executables/<name>/skills/` into the agent's session.
+This skill exists only to verify that Kody's capability-local plugin-part resolution loads skills from `skills/<name>/SKILL.md` into the agent's session.
 
 ## When to activate
 

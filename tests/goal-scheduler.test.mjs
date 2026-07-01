@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 
-const scriptPath = new URL("../.kody/executables/goal-scheduler/scheduler.sh", import.meta.url);
+const scriptPath = new URL("../.kody/capabilities/goal-scheduler/scheduler.sh", import.meta.url);
 
 function installStubs(cwd, ghScript = "#!/usr/bin/env bash\nexit 0\n") {
   const binDir = join(cwd, "bin");
