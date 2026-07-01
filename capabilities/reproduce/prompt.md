@@ -27,17 +27,11 @@ Your FINAL message must use this exact format, with nothing before it:
 DONE
 TEST_PATH: <path/to/test/file relative to repo root>
 FAILURE_SIGNATURE:
-```
-
-```json
 {
   "errorType": "<error class name, e.g. AssertionError>",
   "messageContains": "<distinctive substring of the failure message>",
   "stackContains": "<optional: substring of a stack frame in production code, or empty>"
 }
-```
-
-```
 COMMIT_MSG: test: add failing repro for #{{issue.number}}
 PR_SUMMARY:
 - Test file: <path>
