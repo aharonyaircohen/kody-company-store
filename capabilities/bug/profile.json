@@ -9,12 +9,13 @@
       {
         "capability": "reproduce",
         "target": "issue",
+        "continueOn": ["REPRODUCE_FAILED"],
         "reason": "Reproduce the reported bug with a focused failing test and preserve the failure signature."
       },
       {
         "capability": "plan",
         "target": "issue",
-        "reason": "Create the implementation plan from the reproduced failure and issue context."
+        "reason": "Create the implementation plan from the reproduced failure or explicit no-repro warning and issue context."
       },
       {
         "capability": "run",
