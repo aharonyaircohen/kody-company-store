@@ -5,10 +5,10 @@ Kody store assets live under roots declared in `kody-store.json`.
 ```json
 {
   "assetRoots": {
-    "capabilities": ".kody/capabilities",
-    "commands": ".kody/commands",
-    "goals": ".kody/goals/templates",
-    "agent": ".kody/agents",
+    "capabilities": "capabilities",
+    "commands": "commands",
+    "goals": "goals/templates",
+    "agent": "agents",
     "cms": "cms"
   }
 }
@@ -23,7 +23,7 @@ Availability is separate from activation. See [activation.md](activation.md).
 Path:
 
 ```text
-.kody/capabilities/<slug>/
+capabilities/<slug>/
 ```
 
 Common files:
@@ -45,7 +45,7 @@ comments, labels, issues, and PRs to separate act or verify capabilities.
 Path:
 
 ```text
-.kody/commands/<slug>.md
+commands/<slug>.md
 ```
 
 Commands are Dashboard slash command templates. Frontmatter stores the menu
@@ -60,7 +60,7 @@ contain repo-specific runtime state, generated output, or secrets.
 Path:
 
 ```text
-.kody/agents/<slug>.md
+agents/<slug>.md
 ```
 
 Agent files are agent identities. Concrete job behavior should live in
@@ -71,7 +71,7 @@ capabilities, not in agent identity files.
 Path:
 
 ```text
-.kody/goals/templates/<slug>/state.json
+goals/templates/<slug>/state.json
 ```
 
 Goals are managed agentGoal and agentLoop templates. A shared template should be

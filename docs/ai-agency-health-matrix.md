@@ -116,7 +116,7 @@ A loop that is installed but not yet scheduler-proven should be `yellow`, not
 The capability may read:
 
 - `kody.config.json`
-- local `.kody` assets
+- hydrated local `.kody` assets, when present
 - Store catalog assets resolved for the repo
 - configured state repo files
 - job state files

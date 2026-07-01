@@ -8,10 +8,10 @@
     "engine-builtins"
   ],
   "assetRoots": {
-    "capabilities": ".kody/capabilities",
-    "commands": ".kody/commands",
-    "goals": ".kody/goals/templates",
-    "agent": ".kody/agents",
+    "capabilities": "capabilities",
+    "commands": "commands",
+    "goals": "goals/templates",
+    "agent": "agents",
     "cms": "cms"
   }
 }

@@ -1,16 +1,16 @@
 # Kody Store
 
-Shared Kody assets for Kody engine consumer repos. This repo is the central catalog for reusable `.kody` assets. Consumer repos keep repo-specific assets locally and use the store as the shared default layer.
+Shared Kody assets for Kody engine consumer repos. This repo is the central catalog for reusable Kody assets. Consumer repos keep repo-specific assets in their configured state repo and use the store as the shared default layer.
 
 ## What's Here
 
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
-- `.kody/capabilities/` contains canonical shared capabilities (`profile.json` + `capability.md`).
-- `.kody/commands/` contains shared Dashboard slash commands.
-- `.kody/goals/templates/` contains shared agentGoal and agentLoop templates.
-- `.kody/agents/` contains shared agent identity identities.
+- `capabilities/` contains canonical shared capabilities (`profile.json` + `capability.md`).
+- `commands/` contains shared Dashboard slash commands.
+- `goals/templates/` contains shared agentGoal and agentLoop templates.
+- `agents/` contains shared agent identity identities.
 - `cms/` contains generic CMS contracts, adapters, examples, and tests.
-- `.kody/store-manifest.json` records imported asset provenance.
+- `store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
 - `docs/ai-agency-health-matrix.md` defines the repo-local agency health report contract.
 
@@ -18,7 +18,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 
 Kody resolves assets in order:
 
-1. Consumer-local `.kody` assets
+1. Consumer-local hydrated `.kody` assets
 2. Store assets
 3. Engine built-ins
 
@@ -51,10 +51,10 @@ AI Agency health report model.
 
 ## Asset Kinds
 
-- `capabilities`: canonical reusable capabilities under `.kody/capabilities/<slug>/`
-- `commands`: Dashboard slash command templates under `.kody/commands/<slug>.md`
-- `goals`: managed agentGoal and agentLoop templates under `.kody/goals/templates/<slug>/state.json`
-- `agent`: agent identity files under `.kody/agents/<slug>.md`
+- `capabilities`: canonical reusable capabilities under `capabilities/<slug>/`
+- `commands`: Dashboard slash command templates under `commands/<slug>.md`
+- `goals`: managed agentGoal and agentLoop templates under `goals/templates/<slug>/state.json`
+- `agent`: agent identity files under `agents/<slug>.md`
 - `cms`: generic CMS adapter contracts and implementations under `cms/`
 
 ## What Does Not Belong Here

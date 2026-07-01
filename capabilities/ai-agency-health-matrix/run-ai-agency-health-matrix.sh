@@ -12,7 +12,7 @@ command -v node >/dev/null 2>&1 || {
 }
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-DEFAULT_STORE_ROOT="$(cd "$SCRIPT_DIR/../../.." && pwd)"
+DEFAULT_STORE_ROOT="$(cd "$SCRIPT_DIR/../.." && pwd)"
 
 AI_AGENCY_HEALTH_MATRIX_DRY_RUN="$DRY_RUN" \
 AI_AGENCY_HEALTH_MATRIX_SCRIPT_DIR="$SCRIPT_DIR" \
@@ -117,7 +117,7 @@ function hasLocalCapability(slug) {
 }
 
 function hasStoreCapability(slug) {
-  return exists(storeRoot, `.kody/capabilities/${slug}/profile.json`);
+  return exists(storeRoot, `capabilities/${slug}/profile.json`);
 }
 
 function hasLocalAgent(slug) {
@@ -125,7 +125,7 @@ function hasLocalAgent(slug) {
 }
 
 function hasStoreAgent(slug) {
-  return exists(storeRoot, `.kody/agents/${slug}.md`) || exists(storeRoot, `.kody/agents/${slug}.md`);
+  return exists(storeRoot, `agents/${slug}.md`);
 }
 
 function hasLocalGoal(slug) {
@@ -137,20 +137,20 @@ function hasLocalGoal(slug) {
 }
 
 function hasStoreGoal(slug) {
-  return exists(storeRoot, `.kody/goals/templates/${slug}/state.json`);
+  return exists(storeRoot, `goals/templates/${slug}/state.json`);
 }
 
 function readCapabilityProfile(slug) {
   return (
     readJsonIfExists(cwd, `.kody/capabilities/${slug}/profile.json`) ||
-    readJsonIfExists(storeRoot, `.kody/capabilities/${slug}/profile.json`)
+    readJsonIfExists(storeRoot, `capabilities/${slug}/profile.json`)
   );
 }
 
 function readGoalTemplate(slug) {
   return (
     readJsonIfExists(cwd, `.kody/goals/templates/${slug}/state.json`) ||
-    readJsonIfExists(storeRoot, `.kody/goals/templates/${slug}/state.json`)
+    readJsonIfExists(storeRoot, `goals/templates/${slug}/state.json`)
   );
 }
 

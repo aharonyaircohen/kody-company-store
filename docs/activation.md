@@ -21,7 +21,7 @@ through `company.activeCapabilities`.
 ```
 
 Capability activation is permission to resolve and run the shared capability for
-that consumer repo. Local `.kody/capabilities/<slug>/` folders remain repo-owned
+that consumer repo. Local `capabilities/<slug>/` folders remain repo-owned
 and override store capabilities with the same slug.
 
 ## AgentGoals and AgentLoops
@@ -50,7 +50,7 @@ does not fix, install, promote, comment, or open PRs. See
 Consumer repos may also define local goal templates.
 
 ```text
-.kody/goals/templates/<slug>/state.json
+goals/templates/<slug>/state.json
 <statePath>/goals/instances/<id>/state.json
 ```
 

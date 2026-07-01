@@ -7,8 +7,8 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 const storeRoot = new URL("..", import.meta.url).pathname;
-const scriptPath = new URL("../.kody/capabilities/ai-agency-health-matrix/run-ai-agency-health-matrix.sh", import.meta.url);
-const healthGoalPath = new URL("../.kody/goals/templates/ai-agency-health/state.json", import.meta.url);
+const scriptPath = new URL("../capabilities/ai-agency-health-matrix/run-ai-agency-health-matrix.sh", import.meta.url);
+const healthGoalPath = new URL("../goals/templates/ai-agency-health/state.json", import.meta.url);
 
 function writeJson(file, value) {
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);

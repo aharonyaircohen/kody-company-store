@@ -5,17 +5,17 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 const manifestPath = new URL("../kody-store.json", import.meta.url);
-const capabilitiesDir = new URL("../.kody/capabilities/", import.meta.url);
+const capabilitiesDir = new URL("../capabilities/", import.meta.url);
 
 describe("Store capabilities", () => {
   it("declares capabilities as a first-class asset root", async () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
-    assert.equal(manifest.assetRoots.capabilities, ".kody/capabilities");
+    assert.equal(manifest.assetRoots.capabilities, "capabilities");
   });
 
   it("contains migrated capability folders with profile and capability body", async () => {
-    assert.equal(existsSync(capabilitiesDir), true, ".kody/capabilities must exist");
+    assert.equal(existsSync(capabilitiesDir), true, "capabilities must exist");
 
     const entries = await readdir(capabilitiesDir, { withFileTypes: true });
     const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
@@ -37,18 +37,19 @@ describe("Store capabilities", () => {
     assert.equal(roots[removedCapabilityRoot], undefined);
     assert.equal(roots[oldActionsRoot], undefined);
     assert.equal(roots.executables, undefined);
-    assert.equal(existsSync(new URL(`../.kody/${removedCapabilityRoot}/`, import.meta.url)), false);
-    assert.equal(existsSync(new URL(`../.kody/${oldActionsRoot}/`, import.meta.url)), false);
-    assert.equal(existsSync(new URL("../.kody/executables/", import.meta.url)), false);
+    assert.equal(existsSync(new URL(`../${removedCapabilityRoot}/`, import.meta.url)), false);
+    assert.equal(existsSync(new URL(`../${oldActionsRoot}/`, import.meta.url)), false);
+    assert.equal(existsSync(new URL("../executables/", import.meta.url)), false);
+    assert.equal(existsSync(new URL("../.kody/", import.meta.url)), false);
   });
 
   it("keeps PR health triage advisory-only", async () => {
-    const profilePath = new URL("../.kody/capabilities/pr-health-triage/profile.json", import.meta.url);
+    const profilePath = new URL("../capabilities/pr-health-triage/profile.json", import.meta.url);
     const skillPath = new URL(
-      "../.kody/capabilities/pr-health-triage/skills/pr-health-triage/SKILL.md",
+      "../capabilities/pr-health-triage/skills/pr-health-triage/SKILL.md",
       import.meta.url,
     );
-    const promptPath = new URL("../.kody/capabilities/pr-health-triage/prompt.md", import.meta.url);
+    const promptPath = new URL("../capabilities/pr-health-triage/prompt.md", import.meta.url);
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
     const skill = await readFile(skillPath, "utf8");
     const prompt = await readFile(promptPath, "utf8");

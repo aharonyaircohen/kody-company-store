@@ -3,7 +3,7 @@ import { readdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { describe, it } from "node:test";
 
-const commandDir = new URL("../.kody/commands/", import.meta.url);
+const commandDir = new URL("../commands/", import.meta.url);
 
 const sharedCommands = [
   "analyze",

@@ -22,7 +22,7 @@ same-name variants, do not add them all under the same slug.
 Choose one:
 
 - Publish the safest company-wide default under the existing slug.
-- Keep repo-only behavior as a local `.kody` override in that consumer repo.
+- Keep repo-only behavior as a consumer state-repo override.
 - Rename repeated variants with explicit slugs such as `qa-web` or
   `qa-dashboard`.
 - Parameterize one shared asset if only inputs differ.
@@ -32,13 +32,13 @@ Choose one:
 Validate the top-level config and manifest:
 
 ```bash
-jq empty kody-store.json .kody/store-manifest.json
+jq empty kody-store.json store-manifest.json
 ```
 
 Validate all asset profiles:
 
 ```bash
-find .kody -name profile.json -print0 | xargs -0 -n1 jq empty
+find capabilities -name profile.json -print0 | xargs -0 -n1 jq empty
 ```
 
 Validate CMS examples:
@@ -58,13 +58,13 @@ npm test
 Useful paths to review before committing:
 
 ```bash
-git diff -- README.md docs/ kody-store.json .kody/
+git diff -- README.md docs/ kody-store.json capabilities/ commands/ goals/ agents/ store-manifest.json
 ```
 
 Look especially for:
 
 - Secrets or tokens.
-- `.kody/agent-runs/` or `.kody/sessions/` files.
+- `agent-runs/` or `sessions/` files.
 - Absolute local paths added to capability behavior.
 - Agent identity files that define job-specific commands instead of identity.
 - Capabilities referencing unavailable scripts or CLI tools.
@@ -73,10 +73,10 @@ Look especially for:
 
 Use the existing layout for the asset kind:
 
-- Capability: `.kody/capabilities/<slug>/profile.json`, plus `capability.md`.
-- Command: `.kody/commands/<slug>.md`.
-- Goal template: `.kody/goals/templates/<slug>/state.json`.
-- Agent: `.kody/agents/<slug>.md`.
+- Capability: `capabilities/<slug>/profile.json`, plus `capability.md`.
+- Command: `commands/<slug>.md`.
+- Goal template: `goals/templates/<slug>/state.json`.
+- Agent: `agents/<slug>.md`.
 - CMS adapter: `cms/contract`, `cms/adapters/<adapter>`, plus focused tests.
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
@@ -92,7 +92,7 @@ See [activation.md](activation.md) for the full activation contract.
 ## Updating The Manifest
 
 The manifest is generated provenance from the import process. If an asset came
-from a bulk import or duplicate-resolution pass, update `.kody/store-manifest.json`
+from a bulk import or duplicate-resolution pass, update `store-manifest.json`
 and `docs/import-summary.md` together so they describe the same store snapshot.
 
 For hand edits to an existing asset, update the manifest only if the provenance,
