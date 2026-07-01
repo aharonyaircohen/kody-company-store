@@ -62,9 +62,11 @@ live dashboard URL.
    bottom-most one with a `[#<pr>]` link and no marker. If none, idle. For it:
    1. Open a tracking issue:
       `gh issue create --title "QA: <title> (#<pr>)" --label kody:qa --body "Automated QA pass for changelog entry #<pr>; qa-engineer reports here."`
-   2. Dispatch the pass onto it (pass `--url` explicitly — there's no goal
-      branch to resolve from):
-      `gh issue comment <tracking> --body "@kody qa-engineer --url <PROD_URL> --scope \"<title>\" --issue <tracking>"`
+   2. Dispatch the pass onto it through workflow dispatch. Do not post a bot
+      `@kody qa-engineer` comment; bot-authored command comments are rejected.
+      `qa-engineer` derives the scope from the `QA: <title> (#<pr>)` tracking
+      issue title and resolves the URL from `PREVIEW_URL` or `QA_URL`:
+      `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`
    3. Mark the bullet ` · 🔄 QA (#<tracking>)` via a read-modify-write PUT to the
       Contents API (re-read the sha, swap the one line, retry ≤ 3 on 409):
       `gh api -X PUT repos/{owner}/{repo}/contents/CHANGELOG.md -f message="chore(qa): start QA for #<pr>" -f content="<base64>" -f sha="<sha>"`.
@@ -104,6 +106,7 @@ _Confirm or dismiss in the dashboard inbox. QA will not act on its own._
   **only** a bullet's trailing marker).
 - `gh issue list`, `gh issue create`, `gh issue view`, `gh issue comment`,
   `gh issue close`.
+- `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`.
 
 ## Restrictions
 

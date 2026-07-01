@@ -32,11 +32,12 @@ never revisits.
 4. **Open, ≥ 2h old, no report** → comment the stall, close it, clear state
    (the next eligible tick re-runs). A stuck sweep must never wedge the capability.
 5. **Otherwise** (no active sweep is open) → open a tracking issue and
-   dispatch with no scope:
+   dispatch with no scope through workflow dispatch. Do not post a bot
+   `@kody qa-engineer` comment; bot-authored command comments are rejected.
    ```
    gh issue create --title "QA sweep $(date -u +%Y-%m-%d)" --label kody:qa-sweep \
      --body "Automated broad QA sweep; qa-engineer reports here."
-   gh issue comment <n> --body "@kody qa-engineer --url <PROD_URL> --issue <n>"
+   gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<n>
    ```
    Set `data.openIssue = <n>` and `data.lastRunISO = now`.
 
@@ -68,6 +69,7 @@ itself; it's gated behind your approval.
 
 - `gh issue list`, `gh issue create`, `gh issue view`, `gh issue comment`,
   `gh issue close`.
+- `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`.
 
 ## Restrictions
 
