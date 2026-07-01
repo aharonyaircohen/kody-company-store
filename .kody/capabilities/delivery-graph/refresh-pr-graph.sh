@@ -280,7 +280,7 @@ generated_at="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 {
   printf '%s\n' "---"
   printf '%s\n' "slug: ${REPORT_SLUG}"
-  printf '%s\n' "dutySlug: ${REPORT_SLUG}"
+  printf '%s\n' "capabilitySlug: ${REPORT_SLUG}"
   printf 'generatedAt: "%s"\n' "$generated_at"
   printf '%s\n' "findings:"
   jq -r '.[] | "  - id: \(.id)\n    severity: \(.severity)\n    title: \(.title | @json)\n    data: \(.data | tojson)"' "$FINDINGS"

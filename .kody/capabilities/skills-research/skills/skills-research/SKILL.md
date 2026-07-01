@@ -79,7 +79,7 @@ shape:
 ```md
 ---
 generatedAt: "<now ISO>"
-dutySlug: skills-research
+capabilitySlug: skills-research
 reviewStatus: action-needed
 reviewArea: engineering-capability
 findings:

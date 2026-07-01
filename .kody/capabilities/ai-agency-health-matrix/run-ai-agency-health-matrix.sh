@@ -121,11 +121,11 @@ function hasStoreCapability(slug) {
 }
 
 function hasLocalAgent(slug) {
-  return exists(cwd, `.kody/agents/${slug}.md`) || exists(cwd, `.kody/staff/${slug}.md`);
+  return exists(cwd, `.kody/agents/${slug}.md`) || exists(cwd, `.kody/agents/${slug}.md`);
 }
 
 function hasStoreAgent(slug) {
-  return exists(storeRoot, `.kody/agents/${slug}.md`) || exists(storeRoot, `.kody/staff/${slug}.md`);
+  return exists(storeRoot, `.kody/agents/${slug}.md`) || exists(storeRoot, `.kody/agents/${slug}.md`);
 }
 
 function hasLocalGoal(slug) {
