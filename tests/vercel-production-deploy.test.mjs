@@ -11,14 +11,13 @@ const scriptPath = new URL(
 );
 
 describe("vercel-production-deploy", () => {
-  it("reports goal failure before exiting", async () => {
+  it("reports neutral failure before exiting", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-vercel-deploy-"));
     try {
       const result = spawnSync("bash", [scriptPath.pathname], {
         cwd,
         env: {
           ...process.env,
-          KODY_ARG_GOAL: "web-release-2026-06-24",
           VERCEL_ACCESS_TOKEN: "token",
           VERCEL_ORG_ID: "",
           VERCEL_PROJECT_ID: "project",
@@ -35,6 +34,7 @@ describe("vercel-production-deploy", () => {
       const payload = JSON.parse(line.replace("KODY_CAPABILITY_RESULT=", ""));
       assert.equal(payload.status, "fail");
       assert.match(payload.summary, /VERCEL_ORG_ID/);
+      assert.deepEqual(payload.missingEvidence, ["productionDeployed"]);
     } finally {
       await rm(cwd, { recursive: true, force: true });
     }

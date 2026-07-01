@@ -48,6 +48,24 @@ runtime instance per time bucket in the configured state repo.
 See [docs/activation.md](docs/activation.md) for the full activation contract.
 See [docs/ai-agency-health-matrix.md](docs/ai-agency-health-matrix.md) for the
 AI Agency health report model.
+See [docs/architecture-boundaries.md](docs/architecture-boundaries.md) for the
+goal, loop, capability, and implementation ownership rules.
+
+## Architecture Boundaries
+
+Store assets must keep responsibilities separate:
+
+- Goals and loops own durable progress, schedule, evidence, blockers, and
+  completion decisions.
+- Capabilities own reusable abilities: observe, act, or verify.
+- Implementation profiles own one runnable action and return facts, evidence,
+  artifacts, blockers, and status.
+- The runner that invoked a capability owns the parent goal or loop context and
+  attaches capability output to that parent.
+
+Do not make a normal capability require its parent goal id, route, stage, or
+destination outcome. Existing `--goal` inputs and target-bearing reports are
+compatibility paths only.
 
 ## Asset Kinds
 

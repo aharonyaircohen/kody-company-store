@@ -58,8 +58,7 @@
     {
       "stage": "publish",
       "evidence": "productionDeployed",
-      "capability": "vercel-production-deploy",
-      "args": { "goal": { "fact": "goalId" } }
+      "capability": "vercel-production-deploy"
     }
   ],
   "stage": "release",

@@ -24,12 +24,14 @@ Capability activation is permission to resolve and run the shared capability for
 that consumer repo. Local `capabilities/<slug>/` folders remain repo-owned
 and override store capabilities with the same slug.
 
-## AgentGoals and AgentLoops
+## Goals And Loops
 
-Store goals are inactive agentGoal or agentLoop templates. Consumer repos activate the company model through `company.activeGoals`.
+Store goals are inactive goal or loop templates. Consumer repos activate the
+company model through `company.activeGoals`.
 
-AgentLoops own when capabilities run. A capability declares its owner and runtime
-contract; the agentLoop tick decides which capability runs.
+Loops own when capabilities run. Goals own outcomes and required evidence. A
+capability declares its reusable contract; the active goal or loop decides which
+capability runs and attaches the capability result to progress.
 
 Default agentLoop templates:
 
@@ -76,7 +78,7 @@ Store goals must not contain repo-specific runtime history. Runtime goal progres
 kody-store = menu
 consumer repo = decides what is enabled
 capability = available shared ability
-agentGoal/agentLoop = operator promise that owns when capabilities run
+goal/loop = operator promise that owns progress, schedule, and evidence
 activation = permission to run
-scheduled agentLoop = template creates new runtime instance per bucket
+scheduled loop = template creates new runtime instance per bucket
 ```

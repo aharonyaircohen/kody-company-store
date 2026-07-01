@@ -15,6 +15,10 @@ reports/ai-agency-health-matrix/runs/<timestamp>.md
 The report compares expected agency structure with actual repo, Store, and state
 signals.
 
+It must include architecture-boundary findings, especially whether reusable
+capabilities are depending on parent goal or loop ids instead of returning
+neutral results for the runner to attach.
+
 ## Allowed Commands
 
 - Read `kody.config.json`.
@@ -31,4 +35,3 @@ signals.
 - Do not post comments, labels, PRs, issues, or inbox messages.
 - Do not edit source files in the consumer repo.
 - Do not treat memory or prior chat claims as proof.
-

@@ -17,8 +17,8 @@ label, open PRs, or change runtime state beyond writing its own report.
 | Consumer repo | Activation choices in `kody.config.json` and local overrides | Store-wide defaults for other repos |
 | State repo | Runtime goal instances, job state, reports, proof, run history | Shared catalog source |
 | Agent | Identity only: who is acting | Schedules, methods, output formats, operational loops |
-| Capability | One reusable observe, act, or verify behavior | Long-running progress or portfolio ownership |
-| Goal / Loop | The desired outcome, cadence, route, and progress | Low-level scanning logic or repo-specific script details |
+| Capability | One reusable observe, act, or verify behavior | Parent goal id, parent stage, long-running progress, or portfolio ownership |
+| Goal / Loop | The desired outcome, cadence, route, parent context, and progress | Low-level scanning logic or repo-specific script details |
 | Workflow | A multi-step chain of capabilities | The first primitive for a simple health question |
 
 ## Recommended Shape
@@ -56,6 +56,15 @@ Required matrix columns:
 | `proof` | File path, report path, PR, run, comment, timestamp, or exact reason |
 | `owner` | Store, consumer repo, state repo, operator, or later action capability |
 | `nextAction` | The smallest next action, or `none` |
+
+Required boundary rows:
+
+| Row | Healthy only when |
+|---|---|
+| Capability parent boundary | Normal reusable capabilities do not require parent goal or loop ids as core inputs. |
+| Goal/loop evidence ownership | Goals or loops attach capability output to evidence and decide completion. |
+| Compatibility isolation | Any `--goal` input or target-bearing report is marked as compatibility and not copied into new capability contracts. |
+| Store/state separation | Store assets define reusable contracts; runtime reports and goal instances live in the configured state repo. |
 
 Required loop-proof rows for every active agentLoop:
 

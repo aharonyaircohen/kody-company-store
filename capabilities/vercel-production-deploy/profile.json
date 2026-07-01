@@ -2,15 +2,7 @@
   "name": "vercel-production-deploy",
   "role": "primitive",
   "describe": "Deploy the configured release branch to Vercel Production, verify the public production URL, and optionally run the configured smoke command.",
-  "inputs": [
-    {
-      "name": "goal",
-      "flag": "--goal",
-      "type": "string",
-      "required": false,
-      "describe": "Managed goal id to report production deployment evidence to."
-    }
-  ],
+  "inputs": [],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",

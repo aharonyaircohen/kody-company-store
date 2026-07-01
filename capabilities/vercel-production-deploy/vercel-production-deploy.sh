@@ -2,12 +2,11 @@
 set -euo pipefail
 
 ORIGINAL_BRANCH=""
-goal_id="${KODY_ARG_GOAL:-}"
 failure_reported=0
 
 fail() {
 echo "FAILED: $1"
-emit_goal_failure "$1" || true
+emit_capability_failure "$1" || true
 exit 1
 }
 
@@ -17,40 +16,38 @@ require_command() {
   fi
 }
 
-emit_goal_report() {
+emit_capability_result() {
   local evidence="$1"
   shift
-  [[ -z "$goal_id" ]] && return 0
-  python3 - "$goal_id" "$evidence" "$@" <<'PY'
+  python3 - "$evidence" "$@" <<'PY'
 import json
 import sys
 
-goal_id = sys.argv[1]
-evidence = sys.argv[2]
+evidence = sys.argv[1]
 facts = {}
-for pair in sys.argv[3:]:
+for pair in sys.argv[2:]:
     key, value = pair.split("=", 1)
     if value == "":
         continue
     facts[key] = int(value) if value.isdigit() else value
 
-print("KODY_CAPABILITY_REPORT=" + json.dumps({
-    "target": {"type": "goal", "id": goal_id},
-    "evidence": {evidence: True},
-    "facts": facts,
-}, separators=(",", ":")))
 print("KODY_CAPABILITY_RESULT=" + json.dumps({
     "version": 1,
     "status": "pass",
-    "summary": f"{evidence} reported",
+    "summary": "Production deployed.",
+    "evidence": {evidence: True},
     "facts": facts,
+    "artifacts": [
+        {"label": "Vercel deployment", "url": facts["productionDeploymentUrl"]}
+    ] if facts.get("productionDeploymentUrl") else [],
+    "missingEvidence": [],
+    "blockers": [],
 }, separators=(",", ":")))
 PY
 }
 
-emit_goal_failure() {
+emit_capability_failure() {
 local summary="$1"
-[[ -z "$goal_id" ]] && return 0
 [[ "$failure_reported" = "1" ]] && return 0
 failure_reported=1
 command -v python3 >/dev/null 2>&1 || return 0
@@ -64,13 +61,16 @@ print("KODY_CAPABILITY_RESULT=" + json.dumps({
     "status": "fail",
     "summary": summary,
     "facts": {},
+    "artifacts": [],
+    "missingEvidence": ["productionDeployed"],
+    "blockers": [summary],
 }, separators=(",", ":")))
 PY
 }
 
 on_error() {
 local status="$1"
-emit_goal_failure "Vercel production deploy failed with exit ${status}" || true
+emit_capability_failure "Vercel production deploy failed with exit ${status}" || true
 }
 
 trap 'on_error "$?"' ERR
@@ -204,7 +204,7 @@ if [ -n "$SMOKE_COMMAND" ]; then
   fi
 fi
 
-emit_goal_report "productionDeployed" "version=${release_version}" "productionDeploymentUrl=${deployment_url}" "productionBranch=${current_branch}" "productionUrl=${PRODUCTION_URL}" "smoke=${smoke_status}"
+emit_capability_result "productionDeployed" "version=${release_version}" "productionDeploymentUrl=${deployment_url}" "productionBranch=${current_branch}" "productionUrl=${PRODUCTION_URL}" "smoke=${smoke_status}"
 
 cat <<RESULT
 DONE
