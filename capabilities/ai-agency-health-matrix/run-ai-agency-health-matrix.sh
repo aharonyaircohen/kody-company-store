@@ -364,7 +364,12 @@ function latestReport(stateBase, slug) {
   }
 }
 
-function dispatchMatchesCapability(state, expectedCapability) {
+function dispatchMatchesCapability(state, expectedCapabilities) {
+  const expected = Array.isArray(expectedCapabilities)
+    ? expectedCapabilities.filter((item) => typeof item === "string" && item)
+    : typeof expectedCapabilities === "string" && expectedCapabilities
+      ? [expectedCapabilities]
+      : [];
   const scheduleState = state?.scheduleState;
   const lastDecision = scheduleState && typeof scheduleState === "object" ? scheduleState.lastDecision : null;
   if (!lastDecision || typeof lastDecision !== "object") return { matched: false, reason: "no scheduler dispatch recorded" };
@@ -374,10 +379,11 @@ function dispatchMatchesCapability(state, expectedCapability) {
     (typeof lastDecision.executable === "string" && lastDecision.executable) ||
     (typeof lastDecision.action === "string" && lastDecision.action) ||
     "";
-  if (actual !== expectedCapability) {
-    return { matched: false, reason: `last dispatch was ${actual || "unknown"}` };
+  if (!expected.includes(actual)) {
+    const expectedLabel = expected.length > 0 ? expected.join(", ") : "unknown";
+    return { matched: false, reason: `last dispatch was ${actual || "unknown"}; expected ${expectedLabel}` };
   }
-  return { matched: true, reason: lastDecision.at || scheduleState.lastGoalTickAt || "dispatch recorded" };
+  return { matched: true, actual, reason: lastDecision.at || scheduleState.lastGoalTickAt || "dispatch recorded" };
 }
 
 function dispatchMatchesTarget(state, expectedTarget) {
@@ -502,11 +508,11 @@ function inspectLoopProof(activeGoals, stateBase, repo) {
         dispatch.matched ? "none" : "prove scheduler fired this loop",
       );
     } else if (stateGoal && expectedCapability) {
-      const dispatch = dispatchMatchesCapability(stateGoal.data, expectedCapability);
+      const dispatch = dispatchMatchesCapability(stateGoal.data, capabilities.length > 0 ? capabilities : expectedCapability);
       row(
         "loops",
         `${slug} scheduler`,
-        dispatch.matched ? `dispatched ${expectedCapability}` : dispatch.reason,
+        dispatch.matched ? `dispatched ${dispatch.actual || expectedCapability}` : dispatch.reason,
         dispatch.matched ? "healthy" : "unknown",
         stateGoal.path,
         "state repo",
