@@ -2,7 +2,8 @@ Browse the running app like a real user and produce one structured QA report. Do
 
 Use the `qa-session` skill.
 
-You may write throwaway artifacts under `.kody/qa-reports/`.
+Do not write report files or throwaway artifacts; screenshots captured through
+Playwright MCP are enough for evidence references.
 
 # Target
 

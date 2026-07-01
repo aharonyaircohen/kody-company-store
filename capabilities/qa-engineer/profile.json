@@ -50,9 +50,6 @@
       "Read",
       "Grep",
       "Glob",
-      "Bash",
-      "Write",
-      "Edit",
       "mcp__playwright"
     ],
     "hooks": [

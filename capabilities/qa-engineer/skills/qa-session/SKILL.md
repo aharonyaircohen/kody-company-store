@@ -24,6 +24,15 @@ QA report.
    state.
 6. Write one QA report with a matching machine-readable JSON findings block.
 
+## Boundaries
+
+- Do not run `gh`, `git`, package-manager, shell, or file-write commands.
+- Do not create, edit, comment on, or close GitHub issues or PRs.
+- Do not save the report only as a file or artifact. The engine reads only your
+  final assistant message, then posts it through the qa-engineer postflight.
+- Your last action must be a final assistant message containing the complete QA
+  report in the required format below.
+
 ## Severity
 
 - `P0`: critical path blocked, data loss, security exposure, or total breakage.
