@@ -13,9 +13,7 @@
     "cacheable": true,
     "tools": [],
     "hooks": [],
-    "skills": [
-      "ai-agency-doctor"
-    ],
+    "skills": [],
     "commands": [],
     "subagents": [],
     "plugins": [],

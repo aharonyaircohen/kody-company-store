@@ -8,6 +8,12 @@ const manifestPath = new URL("../kody-store.json", import.meta.url);
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
 
 describe("Store capabilities", () => {
+  const sharedEngineParts = {
+    commands: new Set(["kody-live-probe"]),
+    hooks: new Set(["block-git", "block-write", "kody-live-trace"]),
+    skills: new Set(["kody-live-marker", "systematic-debugging"]),
+  };
+
   it("declares capabilities as a first-class asset root", async () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
@@ -40,16 +46,66 @@ describe("Store capabilities", () => {
 
       for (const name of subagents) {
         const localAgent = join(dir, "agents", `${name}.md`);
-        const sharedAgent = new URL(`../agents/${name}.md`, import.meta.url);
 
         assert.equal(
-          existsSync(localAgent) || existsSync(sharedAgent),
+          existsSync(localAgent),
           true,
           `${slug} declares missing subagent ${name}`,
         );
       }
     }
   });
+
+  it("ships every declared plugin part or uses a known engine shared part", async () => {
+    const entries = await readdir(capabilitiesDir, { withFileTypes: true });
+    const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+
+    for (const slug of slugs) {
+      const dir = join(capabilitiesDir.pathname, slug);
+      const profilePath = join(dir, "profile.json");
+      const profile = JSON.parse(await readFile(profilePath, "utf8"));
+      const parts = [
+        { bucket: "skills", names: profile.claudeCode?.skills ?? [], suffix: "", shared: sharedEngineParts.skills },
+        { bucket: "commands", names: profile.claudeCode?.commands ?? [], suffix: ".md", shared: sharedEngineParts.commands },
+        { bucket: "hooks", names: profile.claudeCode?.hooks ?? [], suffix: ".json", shared: sharedEngineParts.hooks },
+      ];
+
+      for (const part of parts) {
+        for (const name of part.names) {
+          const localPart = join(dir, part.bucket, `${name}${part.suffix}`);
+
+          assert.equal(
+            existsSync(localPart) || part.shared.has(name),
+            true,
+            `${slug} declares missing ${part.bucket} entry ${name}`,
+          );
+        }
+      }
+    }
+  });
+
+  it("exposes scout subagents mentioned by capability prompts", async () => {
+    const entries = await readdir(capabilitiesDir, { withFileTypes: true });
+    const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+    const scoutPattern = /`([a-z0-9-]+-scout)` subagents/g;
+
+    for (const slug of slugs) {
+      const dir = join(capabilitiesDir.pathname, slug);
+      const promptPath = join(dir, "prompt.md");
+      if (!existsSync(promptPath)) continue;
+
+      const profilePath = join(dir, "profile.json");
+      const profile = JSON.parse(await readFile(profilePath, "utf8"));
+      const prompt = await readFile(promptPath, "utf8");
+      const declared = new Set(profile.claudeCode?.subagents ?? []);
+      const mentioned = [...prompt.matchAll(scoutPattern)].map((match) => match[1]);
+
+      for (const name of mentioned) {
+        assert.equal(declared.has(name), true, `${slug} prompt mentions ${name} but profile does not expose it`);
+      }
+    }
+  });
+
 
   it("does not expose legacy action or removed capability roots", async () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));

@@ -38,7 +38,9 @@
       "next-best-practices"
     ],
     "commands": [],
-    "subagents": [],
+    "subagents": [
+      "plan-scout"
+    ],
     "plugins": [],
     "mcpServers": [
       {
