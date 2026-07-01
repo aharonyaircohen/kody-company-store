@@ -28,6 +28,29 @@ describe("Store capabilities", () => {
     }
   });
 
+  it("ships every subagent declared by a capability profile", async () => {
+    const entries = await readdir(capabilitiesDir, { withFileTypes: true });
+    const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
+
+    for (const slug of slugs) {
+      const dir = join(capabilitiesDir.pathname, slug);
+      const profilePath = join(dir, "profile.json");
+      const profile = JSON.parse(await readFile(profilePath, "utf8"));
+      const subagents = profile.claudeCode?.subagents ?? [];
+
+      for (const name of subagents) {
+        const localAgent = join(dir, "agents", `${name}.md`);
+        const sharedAgent = new URL(`../agents/${name}.md`, import.meta.url);
+
+        assert.equal(
+          existsSync(localAgent) || existsSync(sharedAgent),
+          true,
+          `${slug} declares missing subagent ${name}`,
+        );
+      }
+    }
+  });
+
   it("does not expose legacy action or removed capability roots", async () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
     const roots = manifest.assetRoots;
