@@ -9,8 +9,8 @@ Generated at: 2026-06-18T02:01:59.364Z
 
 ## Agent
 
-- Selected assets: 8
+- Selected assets: 9
 - Duplicate slugs resolved by newest file mtime: 7
-- Selected by project: A-Guy 3, Kody-Dashboard 4, kody2 1
+- Selected by project: A-Guy 3, Kody-Dashboard 4, kody-state-aguy 1, kody2 1
 
 Full per-asset source data lives in `store-manifest.json`.

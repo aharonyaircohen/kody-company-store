@@ -5,7 +5,7 @@
   "selection": "newest-file-mtime-per-kind-and-slug",
   "kinds": {
     "agent": {
-      "selectedCount": 8,
+      "selectedCount": 9,
       "duplicateSlugCount": 7,
       "selected": {
         "ceo": {
@@ -47,6 +47,14 @@
           "mtime": "2026-05-26T20:30:14.079Z",
           "copyCount": 4,
           "variantCount": 2
+        },
+        "repo-brain": {
+          "project": "kody-state-aguy",
+          "sourcePath": "/Users/aguy/projects/kody-state-aguy/A-Guy-Web/agents/repo-brain.md",
+          "hash": "e906b895376a",
+          "mtime": "2026-07-01T09:39:31.535Z",
+          "copyCount": 1,
+          "variantCount": 1
         },
         "tech-writer": {
           "project": "A-Guy",
