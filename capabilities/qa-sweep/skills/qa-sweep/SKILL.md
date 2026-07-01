@@ -20,6 +20,14 @@ to the inbox. This catches regressions and rough edges in already-shipped
 features that the changelog-verification capability (which only tests _new_ entries)
 never revisits.
 
+The target repo must define QA access context for `qa-engineer` before this
+capability is enabled. Use `.kody/context/qa-access.md` or equivalent repo
+context, and point to variables/secrets rather than raw secrets:
+
+- `QA_URL` — live site/base URL.
+- `LOGIN_USER` — QA account username.
+- `LOGIN_PASSWORD` — QA account password secret.
+
 **Per tick (one action max):**
 
 1. Check for an open sweep tracking issue:
@@ -32,12 +40,13 @@ never revisits.
 4. **Open, ≥ 2h old, no report** → comment the stall, close it, clear state
    (the next eligible tick re-runs). A stuck sweep must never wedge the capability.
 5. **Otherwise** (no active sweep is open) → open a tracking issue and
-   dispatch with no scope through workflow dispatch. Do not post a bot
-   `@kody qa-engineer` comment; bot-authored command comments are rejected.
+   dispatch with no scope through the engine capability tool. Do not run raw
+   `gh workflow run`, and do not post a bot `@kody qa-engineer` comment;
+   bot-authored command comments are rejected.
    ```
    gh issue create --title "QA sweep $(date -u +%Y-%m-%d)" --label kody:qa-sweep \
      --body "Automated broad QA sweep; qa-engineer reports here."
-   gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<n>
+   start_capability({ name: "qa-engineer", issue: <n> })
    ```
    Set `data.openIssue = <n>` and `data.lastRunISO = now`.
 
@@ -69,7 +78,7 @@ itself; it's gated behind your approval.
 
 - `gh issue list`, `gh issue create`, `gh issue view`, `gh issue comment`,
   `gh issue close`.
-- `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`.
+- Engine tool: `start_capability({ name: "qa-engineer", issue: <tracking> })`.
 
 ## Restrictions
 

@@ -29,8 +29,15 @@
   "cliTools": [
     "gh"
   ],
+  "capabilityTools": [
+    "start_capability"
+  ],
+  "capabilityToolMode": "append",
   "scripts": {
     "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
       {
         "script": "buildSyntheticPlugin"
       },

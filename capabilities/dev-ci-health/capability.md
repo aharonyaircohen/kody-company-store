@@ -26,7 +26,7 @@ Issue body:
 Task: diagnose the failing check(s) and open a PR into `dev` to make them green. Keep it minimal; if the failure is flaky or scanner-config rather than a code defect, make the smallest helpful change, or none and say so.
 ```
 
-3. **Try to dispatch fix:** `dispatch_workflow({ executable: "run", issueNumber: <number> })`.
+3. **Try to dispatch fix:** `start_capability({ name: "run", issue: <number> })`.
    - Tool only fires when capability is trusted (Auto).
    - If the capability is in Ask mode, it dispatches nothing and returns a not-trusted refusal. Read result.
 4. **Notify once, per outcome:**

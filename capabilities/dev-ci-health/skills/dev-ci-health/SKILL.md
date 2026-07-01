@@ -45,7 +45,7 @@ idempotent, so a re-tick reuses the one open issue instead of creating another.
    code defect, make the smallest change that helps — or none, and say so.
    ```
 
-3. **Dispatch the fix:** `dispatch_workflow({ executable: "run", issueNumber: <number> })`.
+3. **Dispatch the fix:** `start_capability({ name: "run", issue: <number> })`.
 
 4. **Notify once:** `ensure_comment({ issue: <number>, key: "dev-ci-red:dispatched", body: "🧭 CTO auto-ran — dispatched @kody run (failing: <names>). The fix lands as a PR into dev; its own CI must pass before merge." })`.
 

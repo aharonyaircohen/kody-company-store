@@ -33,7 +33,7 @@
   "capabilityTools": [
     "read_check_runs",
     "ensure_issue",
-    "dispatch_workflow",
+    "start_capability",
     "ensure_comment"
   ],
   "scripts": {
@@ -78,7 +78,7 @@
   "tools": [
     "read_check_runs",
     "ensure_issue",
-    "dispatch_workflow",
+    "start_capability",
     "ensure_comment"
   ]
 }

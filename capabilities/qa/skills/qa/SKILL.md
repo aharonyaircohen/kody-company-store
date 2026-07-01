@@ -30,7 +30,13 @@ itself); the job opens a tracking issue, dispatches the run onto it, and reads
 the verdict back on a later tick. **One run in flight at a time** — this bounds
 browser cost.
 
-live dashboard URL.
+The target repo must define QA access context for `qa-engineer` before this
+capability is enabled. Use `.kody/context/qa-access.md` or equivalent repo
+context, and point to variables/secrets rather than raw secrets:
+
+- `QA_URL` — live site/base URL.
+- `LOGIN_USER` — QA account username.
+- `LOGIN_PASSWORD` — QA account password secret.
 
 **Per tick (one action max):**
 
@@ -62,11 +68,12 @@ live dashboard URL.
    bottom-most one with a `[#<pr>]` link and no marker. If none, idle. For it:
    1. Open a tracking issue:
       `gh issue create --title "QA: <title> (#<pr>)" --label kody:qa --body "Automated QA pass for changelog entry #<pr>; qa-engineer reports here."`
-   2. Dispatch the pass onto it through workflow dispatch. Do not post a bot
-      `@kody qa-engineer` comment; bot-authored command comments are rejected.
+   2. Dispatch the pass through the engine capability tool. Do not run raw
+      `gh workflow run`, and do not post a bot `@kody qa-engineer` comment;
+      bot-authored command comments are rejected.
       `qa-engineer` derives the scope from the `QA: <title> (#<pr>)` tracking
       issue title and resolves the URL from `PREVIEW_URL` or `QA_URL`:
-      `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`
+      `start_capability({ name: "qa-engineer", issue: <tracking> })`
    3. Mark the bullet ` · 🔄 QA (#<tracking>)` via a read-modify-write PUT to the
       Contents API (re-read the sha, swap the one line, retry ≤ 3 on 409):
       `gh api -X PUT repos/{owner}/{repo}/contents/CHANGELOG.md -f message="chore(qa): start QA for #<pr>" -f content="<base64>" -f sha="<sha>"`.
@@ -106,7 +113,7 @@ _Confirm or dismiss in the dashboard inbox. QA will not act on its own._
   **only** a bullet's trailing marker).
 - `gh issue list`, `gh issue create`, `gh issue view`, `gh issue comment`,
   `gh issue close`.
-- `gh workflow run kody.yml -f capability=qa-engineer -f issue_number=<tracking>`.
+- Engine tool: `start_capability({ name: "qa-engineer", issue: <tracking> })`.
 
 ## Restrictions
 
