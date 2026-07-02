@@ -3,7 +3,15 @@
   "role": "primitive",
   "kind": "oneshot",
   "describe": "Create an AI Agency boundary eval recommendation report from recent engine eval facts.",
-  "inputs": [],
+  "inputs": [
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": false,
+      "describe": "Optional tester issue number used only to route manual workflow_dispatch runs."
+    }
+  ],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
