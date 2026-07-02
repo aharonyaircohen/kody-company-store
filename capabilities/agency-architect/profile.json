@@ -1,5 +1,5 @@
 {
-  "name": "company-manager",
+  "name": "agency-architect",
   "role": "watch",
   "kind": "oneshot",
   "describe": "CTO portfolio orchestration: read company intents and manage goals/loops.",
@@ -14,7 +14,7 @@
     "tools": [],
     "hooks": [],
     "skills": [
-      "company-manager"
+      "agency-architect"
     ],
     "commands": [],
     "subagents": [],
@@ -44,10 +44,10 @@
     ],
     "postflight": [
       {
-        "script": "parseCompanyManagerDecision"
+        "script": "parseAgencyArchitectDecision"
       },
       {
-        "script": "applyCompanyManagerDecision"
+        "script": "applyAgencyArchitectDecision"
       },
       {
         "script": "appendCompanyIntentDecision"
@@ -59,11 +59,11 @@
   },
   "output": {
     "actionTypes": [
-      "COMPANY_MANAGER_DECIDED",
-      "COMPANY_MANAGER_FAILED",
-      "COMPANY_MANAGER_NOT_RUN"
+      "AGENCY_ARCHITECT_DECIDED",
+      "AGENCY_ARCHITECT_FAILED",
+      "AGENCY_ARCHITECT_NOT_RUN"
     ]
   },
-  "action": "company-manager",
+  "action": "agency-architect",
   "agent": "cto"
 }
