@@ -10,7 +10,7 @@
   "assetRoots": {
     "capabilities": "capabilities",
     "commands": "commands",
-    "goals": "goals/templates",
+    "goals": "goals",
     "agent": "agents",
     "cms": "cms"
   }
