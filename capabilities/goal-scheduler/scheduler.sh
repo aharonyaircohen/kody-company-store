@@ -246,6 +246,14 @@ def find_template(template: str) -> Path | None:
   return None
 
 
+def load_template_state(template: str) -> dict | None:
+    template_path = find_template(template)
+    if template_path is None:
+        return None
+    data = json.loads(template_path.read_text())
+    return data if isinstance(data, dict) else None
+
+
 def normalize_state_repo(raw: object, field: str = "state.repo") -> str:
   value = str(raw or "").strip()
   if value.startswith(("http://", "https://")):
@@ -396,12 +404,12 @@ def read_goal_state(state_repo: str, state_base: str, goal_id: str) -> dict | No
         text = path.read_text()
         if not is_managed_todo_text(text):
             return None
-        return parse_todo_goal_state(goal_id, text)
+        return resolve_template_backed_goal_state(parse_todo_goal_state(goal_id, text))
     todo_text = read_remote_text(state_repo, todo_file_path(state_base, goal_id))
     if todo_text is not None:
         if not is_managed_todo_text(todo_text):
             return None
-        return parse_todo_goal_state(goal_id, todo_text)
+        return resolve_template_backed_goal_state(parse_todo_goal_state(goal_id, todo_text))
     return None
 
 
@@ -416,6 +424,41 @@ def schedule_key(schedule: dict) -> tuple[str, str]:
 def goal_template(data: dict) -> str | None:
     template = data.get("template") or data.get("sourceTemplate") or data.get("templateId")
     return template if isinstance(template, str) else None
+
+
+def resolve_template_backed_goal_state(data: dict) -> dict:
+    template = goal_template(data)
+    if not template:
+        return data
+    template_data = load_template_state(template)
+    if not template_data:
+        return data
+    merged = dict(data)
+    for key in (
+        "type",
+        "destination",
+        "capabilities",
+        "route",
+        "schedule",
+        "scheduleMode",
+        "loopTarget",
+        "preferredRunTime",
+        "saveReport",
+    ):
+        if key in template_data:
+            merged[key] = template_data[key]
+        elif key in merged and key in (
+            "schedule",
+            "loopTarget",
+            "preferredRunTime",
+            "saveReport",
+        ):
+            del merged[key]
+    template_facts = template_data.get("facts") if isinstance(template_data.get("facts"), dict) else {}
+    runtime_facts = data.get("facts") if isinstance(data.get("facts"), dict) else {}
+    merged["facts"] = {**template_facts, **runtime_facts}
+    merged["state"] = data.get("state", "active")
+    return merged
 
 
 def is_managed_goal(data: dict) -> bool:

@@ -110,6 +110,107 @@ describe("goal-scheduler", () => {
     }
   });
 
+  it("activates product-quality as a 15-minute Store loop", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeConfig(cwd, ["product-quality"]);
+
+      const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
+
+      assert.equal(run.result.status, 0, run.result.stderr);
+      assert.deepEqual(run.calls, [
+        "kody-engine exec goal-manager --goal product-quality",
+      ]);
+      assert.equal(readGoal(cwd, "product-quality").schedule, "15m");
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("activates ai-agency-health as a 15-minute Store loop", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeConfig(cwd, ["ai-agency-health"]);
+
+      const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
+
+      assert.equal(run.result.status, 0, run.result.stderr);
+      assert.deepEqual(run.calls, [
+        "kody-engine exec goal-manager --goal ai-agency-health",
+      ]);
+      assert.equal(readGoal(cwd, "ai-agency-health").schedule, "15m");
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("uses Store schedule for existing template-backed loops", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeConfig(cwd, ["product-quality", "ai-agency-health"]);
+      writeGoal(cwd, "product-quality", {
+        version: 1,
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        sourceTemplate: "product-quality",
+        type: "monitor",
+        destination: { outcome: "Old copied state", evidence: [] },
+        capabilities: [],
+        route: [],
+        facts: {},
+        blockers: [],
+        scheduleState: {
+          mode: "agentLoop",
+          lastGoalTickAt: "2026-06-20T12:00:00Z",
+          lastDecision: { kind: "idle", reason: "seed", at: "2026-06-20T12:00:00Z" },
+          capabilities: {},
+        },
+      });
+      writeGoal(cwd, "ai-agency-health", {
+        version: 1,
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        sourceTemplate: "ai-agency-health",
+        type: "monitor",
+        destination: { outcome: "Old copied state", evidence: [] },
+        capabilities: [],
+        route: [],
+        facts: {},
+        blockers: [],
+        schedule: "1d",
+        scheduleState: {
+          mode: "agentLoop",
+          lastGoalTickAt: "2026-06-20T12:00:00Z",
+          lastDecision: { kind: "idle", reason: "seed", at: "2026-06-20T12:00:00Z" },
+          capabilities: {},
+        },
+      });
+
+      const early = runScheduler(cwd, binDir, logFile, "2026-06-20T12:05:00Z");
+      assert.equal(early.result.status, 0, early.result.stderr);
+      assert.deepEqual(early.calls, []);
+      assert.match(early.result.stdout, /skip product-quality: waiting schedule 15m/);
+      assert.match(early.result.stdout, /skip ai-agency-health: waiting schedule 15m/);
+
+      const due = runScheduler(cwd, binDir, logFile, "2026-06-20T12:15:00Z");
+      assert.equal(due.result.status, 0, due.result.stderr);
+      assert.deepEqual(due.calls, [
+        "kody-engine exec goal-manager --goal ai-agency-health",
+        "kody-engine exec goal-manager --goal product-quality",
+      ]);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("can limit a tick to one selected active goal", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {

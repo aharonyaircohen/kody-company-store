@@ -56,7 +56,7 @@ goals/templates/<slug>/state.json
 <statePath>/goals/instances/<id>/state.json
 ```
 
-String activation creates one stable runtime instance from a matching store/local template, or activates an existing instance by id.
+String activation creates one stable runtime instance from a matching store/local template, or activates an existing instance by id. The instance keeps the template schedule; for example, `prs-stay-mergeable`, `product-quality`, and `ai-agency-health` tick every 15 minutes from their Store templates.
 
 ```json
 { "company": { "activeGoals": ["prs-stay-mergeable"] } }

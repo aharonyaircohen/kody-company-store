@@ -6,7 +6,7 @@
   "state": "inactive",
   "type": "monitor",
   "scheduleMode": "agentLoop",
-  "schedule": "1d",
+  "schedule": "15m",
   "title": "AI Agency stays healthy",
   "description": "Run the AI Agency health matrix and keep broken agency wiring visible.",
   "destination": {

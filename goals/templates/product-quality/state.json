@@ -6,6 +6,7 @@
   "state": "inactive",
   "type": "monitor",
   "scheduleMode": "agentLoop",
+  "schedule": "15m",
   "title": "Product quality stays good",
   "description": "Keep QA, design review, previews, and product health visible.",
   "destination": {
