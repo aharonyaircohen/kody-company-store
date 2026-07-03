@@ -1,7 +1,7 @@
 {
   "name": "kody-company-store",
   "layoutVersion": 1,
-  "defaultRef": "stable",
+  "defaultRef": "main",
   "resolutionOrder": [
     "consumer-local",
     "store",
