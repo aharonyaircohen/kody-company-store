@@ -6,6 +6,7 @@ import { describe, it } from "node:test";
 
 const manifestPath = new URL("../kody-store.json", import.meta.url);
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
+const workflowsDir = new URL("../workflows/", import.meta.url);
 
 describe("Store capabilities", () => {
   const sharedEngineParts = {
@@ -18,6 +19,12 @@ describe("Store capabilities", () => {
     const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
 
     assert.equal(manifest.assetRoots.capabilities, "capabilities");
+  });
+
+  it("declares workflows as a first-class asset root", async () => {
+    const manifest = JSON.parse(await readFile(manifestPath, "utf8"));
+
+    assert.equal(manifest.assetRoots.workflows, "workflows");
   });
 
   it("contains migrated capability folders with profile and capability body", async () => {
@@ -120,6 +127,23 @@ describe("Store capabilities", () => {
     assert.equal(existsSync(new URL(`../${oldActionsRoot}/`, import.meta.url)), false);
     assert.equal(existsSync(new URL("../executables/", import.meta.url)), false);
     assert.equal(existsSync(new URL("../.kody/", import.meta.url)), false);
+  });
+
+  it("ships web-release as an explicit ordered workflow", async () => {
+    const workflowPath = join(workflowsDir.pathname, "web-release", "workflow.json");
+    assert.equal(existsSync(workflowPath), true, "web-release workflow must exist");
+
+    const workflow = JSON.parse(await readFile(workflowPath, "utf8"));
+    const steps = workflow.steps ?? [];
+
+    assert.equal(workflow.version, 1);
+    assert.deepEqual(
+      steps.map((step) => step.capability),
+      ["release-prepare", "release-merge", "release-promote", "release-merge", "vercel-production-deploy"],
+    );
+    assert.equal(steps.filter((step) => step.capability === "release-merge").length, 2);
+    assert.equal(steps[1].target, "pr");
+    assert.equal(steps[3].target, "pr");
   });
 
   it("keeps PR health triage advisory-only", async () => {
