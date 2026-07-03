@@ -188,6 +188,16 @@ describe("Store capabilities", () => {
     assert.equal(shell.timeoutSec, 2100);
   });
 
+  it("uses merge commits for release promotion PRs", async () => {
+    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const script = await readFile(scriptPath, "utf8");
+
+    assert.match(script, /merge_args=\(--squash\)/);
+    assert.match(script, /\$head_ref" == "\$default_branch"/);
+    assert.match(script, /\$base_ref" == "\$release_branch"/);
+    assert.match(script, /merge_args=\(--merge\)/);
+  });
+
   it("creates release branches from the configured default branch", async () => {
     const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");

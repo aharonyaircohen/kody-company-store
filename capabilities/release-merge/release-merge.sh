@@ -175,6 +175,9 @@ while true; do
 done
 
 merge_args=(--squash)
+if [[ -n "$release_branch" && "$head_ref" == "$default_branch" && "$base_ref" == "$release_branch" ]]; then
+  merge_args=(--merge)
+fi
 if [[ "$head_ref" != "$default_branch" && ( -z "$release_branch" || "$head_ref" != "$release_branch" ) ]]; then
   merge_args+=(--delete-branch)
 fi
