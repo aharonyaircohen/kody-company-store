@@ -257,6 +257,16 @@ remote_branch_exists() {
   git ls-remote --heads origin "$branch" 2>/dev/null | grep -q .
 }
 
+git_push() {
+  if [[ -n "${GH_TOKEN:-}" ]]; then
+    local auth
+    auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
+    git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${auth}" push "$@"
+    return
+  fi
+  git push "$@"
+}
+
 checkout_default_branch() {
   git fetch origin "$default_branch" --quiet
   git checkout -f -B "$default_branch" "origin/${default_branch}"
@@ -345,9 +355,9 @@ for f in "${touched[@]}" CHANGELOG.md; do
 done
 git -c commit.gpgsign=false commit -m "chore: release ${tag}"
 if [[ "$collides" == "true" && "$prefer" == "ours" ]]; then
-  git push -u --force-with-lease origin "$release_branch"
+  git_push -u --force-with-lease origin "$release_branch"
 else
-  git push -u origin "$release_branch"
+  git_push -u origin "$release_branch"
 fi
 
 # Open PR (or link to existing one if --prefer ours collided).

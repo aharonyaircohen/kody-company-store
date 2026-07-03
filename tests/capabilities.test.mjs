@@ -195,4 +195,15 @@ describe("Store capabilities", () => {
     assert.match(script, /checkout_default_branch/);
     assert.match(script, /git checkout -f -B "\$default_branch" "origin\/\$\{default_branch\}"/);
   });
+
+  it("pushes release branches with the engine-selected GitHub token", async () => {
+    const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
+    const script = await readFile(scriptPath, "utf8");
+
+    assert.match(script, /git_push\(\)/);
+    assert.match(script, /x-access-token:%s/);
+    assert.match(script, /http\.https:\/\/github\.com\/\.extraheader=AUTHORIZATION: basic/);
+    assert.match(script, /git_push -u --force-with-lease origin "\$release_branch"/);
+    assert.match(script, /git_push -u origin "\$release_branch"/);
+  });
 });
