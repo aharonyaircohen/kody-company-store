@@ -180,6 +180,14 @@ describe("Store capabilities", () => {
     assert.match(script, /raw="\[\]"/);
   });
 
+  it("lets release-merge wait longer than the default shell timeout", async () => {
+    const profilePath = new URL("../capabilities/release-merge/profile.json", import.meta.url);
+    const profile = JSON.parse(await readFile(profilePath, "utf8"));
+    const shell = profile.scripts.preflight.find((step) => step.shell === "release-merge.sh");
+
+    assert.equal(shell.timeoutSec, 2100);
+  });
+
   it("creates release branches from the configured default branch", async () => {
     const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");

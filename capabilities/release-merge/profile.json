@@ -65,7 +65,8 @@
         }
       },
       {
-        "shell": "release-merge.sh"
+        "shell": "release-merge.sh",
+        "timeoutSec": 2100
       },
       {
         "script": "skipAgent"
