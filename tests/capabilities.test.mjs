@@ -185,6 +185,6 @@ describe("Store capabilities", () => {
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /checkout_default_branch/);
-    assert.match(script, /git checkout -B "\$default_branch" "origin\/\$\{default_branch\}"/);
+    assert.match(script, /git checkout -f -B "\$default_branch" "origin\/\$\{default_branch\}"/);
   });
 });

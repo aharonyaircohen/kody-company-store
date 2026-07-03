@@ -258,11 +258,8 @@ remote_branch_exists() {
 }
 
 checkout_default_branch() {
-  if ! git diff --quiet -- . || ! git diff --cached --quiet -- .; then
-    fail "release prepare: working tree has uncommitted changes before default-branch checkout" 99
-  fi
   git fetch origin "$default_branch" --quiet
-  git checkout -B "$default_branch" "origin/${default_branch}"
+  git checkout -f -B "$default_branch" "origin/${default_branch}"
 }
 
 find_open_pr() {
