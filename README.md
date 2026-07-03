@@ -7,6 +7,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `kody-store.json` defines store name, layout version, default ref, asset roots, and resolution order.
 - `capabilities/` contains canonical shared capabilities (`profile.json` + `capability.md`).
 - `commands/` contains shared Dashboard slash commands.
+- `workflows/` contains ordered capability stacks (`workflow.json`).
 - `goals/templates/` contains shared agentGoal and agentLoop templates.
 - `agents/` contains shared agent identity identities.
 - `cms/` contains generic CMS contracts, adapters, examples, and tests.
@@ -72,6 +73,7 @@ compatibility paths only.
 - `capabilities`: canonical reusable capabilities under `capabilities/<slug>/`
 - `commands`: Dashboard slash command templates under `commands/<slug>.md`
 - `goals`: managed agentGoal and agentLoop templates under `goals/templates/<slug>/state.json`
+- `workflows`: ordered capability stacks under `workflows/<slug>/workflow.json`
 - `agent`: agent identity files under `agents/<slug>.md`
 - `cms`: generic CMS adapter contracts and implementations under `cms/`
 

@@ -11,6 +11,7 @@
     "capabilities": "capabilities",
     "commands": "commands",
     "goals": "goals",
+    "workflows": "workflows",
     "agent": "agents",
     "cms": "cms"
   }

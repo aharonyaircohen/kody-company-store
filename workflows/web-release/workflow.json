@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "name": "Web Release",
+  "createdAt": "2026-07-03T00:00:00Z",
+  "updatedAt": "2026-07-03T00:00:00Z",
+  "steps": [
+    {
+      "capability": "release-prepare",
+      "target": "issue"
+    },
+    {
+      "capability": "release-merge",
+      "target": "pr"
+    },
+    {
+      "capability": "release-promote",
+      "target": "issue"
+    },
+    {
+      "capability": "release-merge",
+      "target": "pr"
+    },
+    {
+      "capability": "vercel-production-deploy"
+    }
+  ]
+}

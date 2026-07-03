@@ -8,6 +8,7 @@ Kody store assets live under roots declared in `kody-store.json`.
     "capabilities": "capabilities",
     "commands": "commands",
     "goals": "goals/templates",
+    "workflows": "workflows",
     "agent": "agents",
     "cms": "cms"
   }
@@ -54,6 +55,17 @@ KodyChat.
 
 Consumer repo commands override store commands by slug. Store commands must not
 contain repo-specific runtime state, generated output, or secrets.
+
+## Workflows
+
+Path:
+
+```text
+workflows/<slug>/workflow.json
+```
+
+Workflows are ordered capability stacks. Use explicit `steps` when order,
+targets, or repeated capabilities matter.
 
 ## Agent
 
