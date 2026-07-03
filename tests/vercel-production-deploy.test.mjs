@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, rm } from "node:fs/promises";
+import { mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { spawnSync } from "node:child_process";
@@ -65,6 +65,33 @@ describe("vercel-production-deploy", () => {
       assert.equal(payload.status, "pass");
       assert.equal(payload.evidence.productionDeploySkipped, true);
       assert.match(payload.summary, /productionDeployRequired=false/);
+    } finally {
+      await rm(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("reads optional production deploy from kody config when env is not flattened", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-vercel-deploy-"));
+    try {
+      await writeFile(
+        join(cwd, "kody.config.json"),
+        JSON.stringify({ release: { productionDeployRequired: false } }),
+      );
+
+      const result = spawnSync("bash", [scriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          VERCEL_ACCESS_TOKEN: "",
+          VERCEL_ORG_ID: "",
+          VERCEL_PROJECT_ID: "",
+          KODY_CFG_RELEASE_PRODUCTIONDEPLOYREQUIRED: "",
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0);
+      assert.match(result.stdout, /productionDeployRequired=false/);
     } finally {
       await rm(cwd, { recursive: true, force: true });
     }

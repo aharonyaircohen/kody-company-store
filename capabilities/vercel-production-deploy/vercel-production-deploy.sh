@@ -150,13 +150,27 @@ value_or_variable() {
   printf '%s' "$default_value"
 }
 
+config_value() {
+  local path="$1"
+  node -e '
+    const fs = require("fs")
+    const path = process.argv[1].split(".")
+    try {
+      let value = JSON.parse(fs.readFileSync("kody.config.json", "utf8"))
+      for (const key of path) value = value?.[key]
+      if (value !== undefined && value !== null) process.stdout.write(String(value))
+    } catch {}
+  ' "$path"
+}
+
 SCOPE="$(value_or_variable "${VERCEL_SCOPE:-}" "VERCEL_SCOPE")"
 DEPLOY_BRANCH="$(value_or_variable "${VERCEL_PRODUCTION_BRANCH:-}" "VERCEL_PRODUCTION_BRANCH" "${KODY_CFG_RELEASE_RELEASEBRANCH:-main}")"
 VERCEL_ORG_ID="$(value_or_variable "${VERCEL_ORG_ID:-}" "VERCEL_ORG_ID")"
 VERCEL_PROJECT_ID="$(value_or_variable "${VERCEL_PROJECT_ID:-}" "VERCEL_PROJECT_ID")"
 PRODUCTION_URL="$(value_or_variable "${PRODUCTION_URL:-}" "PRODUCTION_URL" "${KODY_CFG_RELEASE_PRODUCTIONURL:-}")"
 SMOKE_COMMAND="${KODY_CFG_RELEASE_SMOKECOMMAND:-}"
-PRODUCTION_DEPLOY_REQUIRED="${KODY_CFG_RELEASE_PRODUCTIONDEPLOYREQUIRED:-true}"
+PRODUCTION_DEPLOY_REQUIRED="${KODY_CFG_RELEASE_PRODUCTIONDEPLOYREQUIRED:-$(config_value release.productionDeployRequired)}"
+PRODUCTION_DEPLOY_REQUIRED="${PRODUCTION_DEPLOY_REQUIRED:-true}"
 export VERCEL_ORG_ID VERCEL_PROJECT_ID
 
 token="${VERCEL_ACCESS_TOKEN:-${VERCEL_TOKEN:-}}"
