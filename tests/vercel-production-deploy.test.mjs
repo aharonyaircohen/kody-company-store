@@ -39,4 +39,34 @@ describe("vercel-production-deploy", () => {
       await rm(cwd, { recursive: true, force: true });
     }
   });
+
+  it("can skip deploy when production deploy is explicitly optional", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-vercel-deploy-"));
+    try {
+      const result = spawnSync("bash", [scriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          VERCEL_ACCESS_TOKEN: "",
+          VERCEL_ORG_ID: "",
+          VERCEL_PROJECT_ID: "",
+          KODY_CFG_RELEASE_PRODUCTIONDEPLOYREQUIRED: "false",
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0);
+      const line = result.stdout
+        .split(/\r?\n/)
+        .find((entry) => entry.startsWith("KODY_CAPABILITY_RESULT="));
+      assert.ok(line, "skip result side-channel should be emitted");
+
+      const payload = JSON.parse(line.replace("KODY_CAPABILITY_RESULT=", ""));
+      assert.equal(payload.status, "pass");
+      assert.equal(payload.evidence.productionDeploySkipped, true);
+      assert.match(payload.summary, /productionDeployRequired=false/);
+    } finally {
+      await rm(cwd, { recursive: true, force: true });
+    }
+  });
 });

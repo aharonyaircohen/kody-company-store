@@ -10,6 +10,13 @@ emit_capability_failure "$1" || true
 exit 1
 }
 
+is_false() {
+  case "$(printf '%s' "$1" | tr '[:upper:]' '[:lower:]')" in
+    false|0|no|off) return 0 ;;
+    *) return 1 ;;
+  esac
+}
+
 require_command() {
   if ! command -v "$1" >/dev/null 2>&1; then
     fail "Missing command: $1"
@@ -68,6 +75,32 @@ print("KODY_CAPABILITY_RESULT=" + json.dumps({
 PY
 }
 
+skip_optional_deploy() {
+local summary="$1"
+python3 - "$summary" <<'PY'
+import json
+import sys
+
+summary = sys.argv[1]
+print("KODY_CAPABILITY_RESULT=" + json.dumps({
+    "version": 1,
+    "status": "pass",
+    "summary": summary,
+    "evidence": {"productionDeploySkipped": True},
+    "facts": {},
+    "artifacts": [],
+    "missingEvidence": [],
+    "blockers": [],
+}, separators=(",", ":")))
+PY
+cat <<RESULT
+DONE
+PR_SUMMARY:
+- ${summary}
+RESULT
+exit 0
+}
+
 on_error() {
 local status="$1"
 emit_capability_failure "Vercel production deploy failed with exit ${status}" || true
@@ -123,18 +156,28 @@ VERCEL_ORG_ID="$(value_or_variable "${VERCEL_ORG_ID:-}" "VERCEL_ORG_ID")"
 VERCEL_PROJECT_ID="$(value_or_variable "${VERCEL_PROJECT_ID:-}" "VERCEL_PROJECT_ID")"
 PRODUCTION_URL="$(value_or_variable "${PRODUCTION_URL:-}" "PRODUCTION_URL" "${KODY_CFG_RELEASE_PRODUCTIONURL:-}")"
 SMOKE_COMMAND="${KODY_CFG_RELEASE_SMOKECOMMAND:-}"
+PRODUCTION_DEPLOY_REQUIRED="${KODY_CFG_RELEASE_PRODUCTIONDEPLOYREQUIRED:-true}"
 export VERCEL_ORG_ID VERCEL_PROJECT_ID
 
 token="${VERCEL_ACCESS_TOKEN:-${VERCEL_TOKEN:-}}"
 if [ -z "$token" ]; then
+  if is_false "$PRODUCTION_DEPLOY_REQUIRED"; then
+    skip_optional_deploy "Production deploy skipped because release.productionDeployRequired=false and VERCEL_ACCESS_TOKEN is not configured."
+  fi
   fail "Kody secret VERCEL_ACCESS_TOKEN is required"
 fi
 
 if [ -z "$VERCEL_ORG_ID" ]; then
+  if is_false "$PRODUCTION_DEPLOY_REQUIRED"; then
+    skip_optional_deploy "Production deploy skipped because release.productionDeployRequired=false and VERCEL_ORG_ID is not configured."
+  fi
   fail "Kody secret VERCEL_ORG_ID is required"
 fi
 
 if [ -z "$VERCEL_PROJECT_ID" ]; then
+  if is_false "$PRODUCTION_DEPLOY_REQUIRED"; then
+    skip_optional_deploy "Production deploy skipped because release.productionDeployRequired=false and VERCEL_PROJECT_ID is not configured."
+  fi
   fail "Kody secret VERCEL_PROJECT_ID is required"
 fi
 
