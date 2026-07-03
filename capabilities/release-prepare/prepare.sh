@@ -257,6 +257,14 @@ remote_branch_exists() {
   git ls-remote --heads origin "$branch" 2>/dev/null | grep -q .
 }
 
+checkout_default_branch() {
+  if ! git diff --quiet -- . || ! git diff --cached --quiet -- .; then
+    fail "release prepare: working tree has uncommitted changes before default-branch checkout" 99
+  fi
+  git fetch origin "$default_branch" --quiet
+  git checkout -B "$default_branch" "origin/${default_branch}"
+}
+
 find_open_pr() {
   local branch="$1"
   gh pr list --head "$branch" --state open --json url --limit 1 2>/dev/null \
@@ -265,6 +273,8 @@ find_open_pr() {
 }
 
 # ── Flow ───────────────────────────────────────────────────────────────────
+
+checkout_default_branch
 
 if [[ ! -f package.json ]]; then
   fail "release prepare: package.json not found" 99

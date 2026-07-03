@@ -179,4 +179,12 @@ describe("Store capabilities", () => {
     assert.match(script, /no checks reported/);
     assert.match(script, /raw="\[\]"/);
   });
+
+  it("creates release branches from the configured default branch", async () => {
+    const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
+    const script = await readFile(scriptPath, "utf8");
+
+    assert.match(script, /checkout_default_branch/);
+    assert.match(script, /git checkout -B "\$default_branch" "origin\/\$\{default_branch\}"/);
+  });
 });
