@@ -171,4 +171,12 @@ describe("Store capabilities", () => {
     assert.match(prompt, /\{\{capabilityReference\}\}/);
     assert.match(prompt, /\{\{jobStateJson\}\}/);
   });
+
+  it("treats missing release PR checks as pending", async () => {
+    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const script = await readFile(scriptPath, "utf8");
+
+    assert.match(script, /no checks reported/);
+    assert.match(script, /raw="\[\]"/);
+  });
 });

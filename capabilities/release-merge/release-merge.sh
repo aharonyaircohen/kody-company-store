@@ -143,7 +143,11 @@ fi
 deadline=$(( $(date +%s) + timeout_seconds ))
 while true; do
   if ! raw="$(gh pr checks "$pr" --json name,state,bucket,workflow,link 2>&1)"; then
-    fail "release-merge: gh pr checks failed for PR #${pr}: ${raw}" 1
+    if printf '%s' "$raw" | grep -qi 'no checks reported'; then
+      raw="[]"
+    else
+      fail "release-merge: gh pr checks failed for PR #${pr}: ${raw}" 1
+    fi
   fi
 
   summary="$(summarize_checks "$raw")"
