@@ -6,7 +6,10 @@
   "steps": [
     {
       "capability": "release-prepare",
-      "target": "issue"
+      "target": "issue",
+      "cliArgs": {
+        "prefer": "ours"
+      }
     },
     {
       "capability": "release-merge",

@@ -142,6 +142,7 @@ describe("Store capabilities", () => {
       ["release-prepare", "release-merge", "release-promote", "release-merge", "vercel-production-deploy"],
     );
     assert.equal(steps.filter((step) => step.capability === "release-merge").length, 2);
+    assert.deepEqual(steps[0].cliArgs, { prefer: "ours" });
     assert.equal(steps[1].target, "pr");
     assert.equal(steps[3].target, "pr");
   });
