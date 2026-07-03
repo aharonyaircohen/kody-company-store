@@ -202,6 +202,7 @@ describe("Store capabilities", () => {
 
     assert.match(script, /git_push\(\)/);
     assert.match(script, /x-access-token:%s/);
+    assert.match(script, /http\.https:\/\/github\.com\/\.extraheader="/);
     assert.match(script, /http\.https:\/\/github\.com\/\.extraheader=AUTHORIZATION: basic/);
     assert.match(script, /git_push -u --force-with-lease origin "\$release_branch"/);
     assert.match(script, /git_push -u origin "\$release_branch"/);

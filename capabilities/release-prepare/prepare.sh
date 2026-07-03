@@ -261,7 +261,10 @@ git_push() {
   if [[ -n "${GH_TOKEN:-}" ]]; then
     local auth
     auth=$(printf 'x-access-token:%s' "$GH_TOKEN" | base64 | tr -d '\n')
-    git -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${auth}" push "$@"
+    git \
+      -c "http.https://github.com/.extraheader=" \
+      -c "http.https://github.com/.extraheader=AUTHORIZATION: basic ${auth}" \
+      push "$@"
     return
   fi
   git push "$@"
