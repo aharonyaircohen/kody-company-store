@@ -198,6 +198,15 @@ describe("Store capabilities", () => {
     assert.match(script, /merge_args=\(--merge\)/);
   });
 
+  it("does not gate release merges on wiki publish checks", async () => {
+    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const script = await readFile(scriptPath, "utf8");
+
+    assert.match(script, /Deploy Wiki to GitHub Pages/);
+    assert.match(script, /Publish Complete/);
+    assert.match(script, /close-publish-issue/);
+  });
+
   it("creates release branches from the configured default branch", async () => {
     const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");

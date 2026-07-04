@@ -66,14 +66,20 @@ rows = json.loads(os.environ.get("RAW_CHECKS", "[]") or "[]")
 if not isinstance(rows, list):
     rows = []
 
+ignored_workflows = {"Deploy Wiki to GitHub Pages", "Publish Complete"}
+ignored_names = {"deploy", "close-publish-issue"}
 failed = []
 pending = []
 for row in rows:
     if not isinstance(row, dict):
         continue
+    workflow = str(row.get("workflow") or "")
+    name = str(row.get("name") or "")
+    if workflow in ignored_workflows or name in ignored_names:
+        continue
     bucket = str(row.get("bucket") or "").lower()
     state = str(row.get("state") or "").lower()
-    label = row.get("workflow") or row.get("name") or "check"
+    label = workflow or name or "check"
     if bucket in {"fail", "cancel"} or state in {"failure", "failed", "error", "cancelled", "timed_out"}:
         failed.append(str(label))
     elif bucket == "pending" or state in {"pending", "queued", "in_progress", "waiting", "requested"}:
