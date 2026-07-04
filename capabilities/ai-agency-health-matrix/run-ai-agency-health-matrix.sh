@@ -140,6 +140,16 @@ function hasStoreGoal(slug) {
   return exists(storeRoot, `goals/templates/${slug}/state.json`);
 }
 
+function workflowDefinitionProof(slug) {
+  if (exists(cwd, `.kody/workflows/${slug}/workflow.json`)) {
+    return { owner: "consumer repo", proof: `.kody/workflows/${slug}/workflow.json` };
+  }
+  if (exists(storeRoot, `workflows/${slug}/workflow.json`)) {
+    return { owner: "Store", proof: `.kody/workflows/${slug}/workflow.json` };
+  }
+  return null;
+}
+
 function readCapabilityProfile(slug) {
   return (
     readJsonIfExists(cwd, `.kody/capabilities/${slug}/profile.json`) ||
@@ -433,6 +443,26 @@ function inspectCapabilityLoopOutput(slug, stateBase, repo, expectedCapability) 
 
 function inspectTargetLoopOutput(slug, stateBase, dispatch, expectedTarget) {
   const targetId = dispatch.targetId || expectedTarget.id;
+  if (expectedTarget.type === "workflow") {
+    const workflow = workflowDefinitionProof(targetId);
+    if (workflow) {
+      row("loops", `${slug} output`, `target workflow ${targetId} definition`, "healthy", workflow.proof, workflow.owner, "none");
+      row(
+        "loops",
+        `${slug} outcome`,
+        "workflow execution is not persisted as target state",
+        "unknown",
+        statePathForProof || workflow.proof,
+        "state repo",
+        "verify workflow run output",
+      );
+      return;
+    }
+    row("loops", `${slug} output`, `target workflow ${targetId} not found`, "failing", statePathForProof || "state checkout not provided", "Store", "add workflow definition or fix loop target");
+    row("loops", `${slug} outcome`, "target outcome not proven", "failing", statePathForProof || "state checkout not provided", "Store", "add workflow definition or fix loop target");
+    return;
+  }
+
   const targetGoal = readStateGoal(stateBase, targetId);
   if (!targetGoal) {
     row("loops", `${slug} output`, `target ${expectedTarget.type} ${targetId} not found`, "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop target and verify state");
