@@ -7,7 +7,7 @@
   "schedule": "1d",
   "scheduleMode": "agentLoop",
   "loopTarget": {
-    "type": "workflow",
+    "type": "goal",
     "id": "web-release"
   },
   "preferredRunTime": {
