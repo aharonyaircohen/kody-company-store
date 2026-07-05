@@ -7,6 +7,7 @@ import { describe, it } from "node:test";
 const manifestPath = new URL("../kody-store.json", import.meta.url);
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
 const workflowsDir = new URL("../workflows/", import.meta.url);
+const goalTemplatesDir = new URL("../goals/templates/", import.meta.url);
 
 describe("Store capabilities", () => {
   const sharedEngineParts = {
@@ -145,6 +146,21 @@ describe("Store capabilities", () => {
     assert.deepEqual(steps[0].cliArgs, { prefer: "ours" });
     assert.equal(steps[1].target, "pr");
     assert.equal(steps[3].target, "pr");
+  });
+
+  it("keeps daily web release loop pointing through goal then workflow", async () => {
+    const templatePath = join(goalTemplatesDir.pathname, "daily-web-release-loop", "state.json");
+    const template = JSON.parse(await readFile(templatePath, "utf8"));
+
+    assert.deepEqual(template.loopTarget, { type: "goal", id: "web-release" });
+    assert.equal(template.targetGoal.id, "web-release");
+    assert.deepEqual(template.targetGoal.workflowRef, { source: "store", id: "web-release" });
+    assert.deepEqual(template.targetGoal.chain, [
+      "daily-web-release-loop",
+      "web-release goal",
+      "store workflow:web-release",
+      "workflow capabilities",
+    ]);
   });
 
   it("keeps PR health triage advisory-only", async () => {

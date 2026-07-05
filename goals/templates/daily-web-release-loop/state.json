@@ -10,6 +10,19 @@
     "type": "goal",
     "id": "web-release"
   },
+  "targetGoal": {
+    "id": "web-release",
+    "workflowRef": {
+      "source": "store",
+      "id": "web-release"
+    },
+    "chain": [
+      "daily-web-release-loop",
+      "web-release goal",
+      "store workflow:web-release",
+      "workflow capabilities"
+    ]
+  },
   "preferredRunTime": {
     "time": "02:00",
     "timezone": "Asia/Jerusalem"
