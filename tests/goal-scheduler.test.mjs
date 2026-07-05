@@ -231,6 +231,64 @@ describe("goal-scheduler", () => {
     }
   });
 
+  it("uses github owner/repo defaults for remote state", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const remoteState = {
+        version: 1,
+        managed: true,
+        managedModel: "agentGoal",
+        state: "active",
+        type: "checklist",
+        destination: { outcome: "remote default state", evidence: ["ok"] },
+        capabilities: ["verify-package-published"],
+        route: [{ evidence: "ok", stage: "verify", capability: "verify-package-published" }],
+        facts: {},
+        blockers: [],
+      };
+      const remoteStateB64 = Buffer.from(`${JSON.stringify(remoteState)}\n`).toString("base64");
+      const binDir = installStubs(
+        cwd,
+        [
+          "#!/usr/bin/env bash",
+          "set -euo pipefail",
+          'if [ "$1" = "api" ] && [ "$2" = "/repos/acme/kody-state/contents/widgets/todos" ]; then',
+          '  printf \'[{"name":"live-goal.json","type":"file"}]\\n\'',
+          "  exit 0",
+          "fi",
+          'if [ "$1" = "api" ] && [ "$2" = "/repos/acme/kody-state/contents/widgets/todos/live-goal.json" ]; then',
+          '  printf \'{"content":"%s"}\\n\' "$REMOTE_STATE_B64"',
+          "  exit 0",
+          "fi",
+          "echo '{}'",
+          "",
+        ].join("\n"),
+      );
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify(
+          {
+            github: { owner: "acme", repo: "widgets" },
+            company: { activeGoals: ["live-goal"] },
+          },
+          null,
+          2,
+        )}\n`,
+      );
+
+      const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z", {
+        KODY_GOAL_SCHEDULER_SKIP_PERSIST: "",
+        REMOTE_STATE_B64: remoteStateB64,
+      });
+
+      assert.equal(run.result.status, 0, run.result.stderr);
+      assert.deepEqual(run.calls, ["kody-engine exec goal-manager --goal live-goal"]);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("runs daily preferred-time loops by local day instead of 24 hours after an idle tick", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {

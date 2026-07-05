@@ -270,15 +270,20 @@ def normalize_state_repo(raw: object, field: str = "state.repo") -> str:
 def state_target(config: dict) -> tuple[str, str]:
   if LOCAL_MODE:
     return "__local__", ""
-    github = config.get("github") if isinstance(config.get("github"), dict) else {}
-    owner = github.get("owner")
-    repo = github.get("repo")
-    if not isinstance(owner, str) or not owner or not isinstance(repo, str) or not repo:
-        name_with_owner = gh(["repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner"]).strip()
-        owner, repo = name_with_owner.split("/", 1)
   state = config.get("state") if isinstance(config.get("state"), dict) else {}
-  state_repo = state.get("repo") or config.get("stateRepo") or f"{owner}/kody-state"
-  state_path = state.get("path") or config.get("statePath") or repo
+  explicit_state_repo = state.get("repo") or config.get("stateRepo")
+  explicit_state_path = state.get("path") or config.get("statePath")
+  if explicit_state_repo and explicit_state_path:
+    return normalize_state_repo(explicit_state_repo), str(explicit_state_path).strip().strip("/")
+
+  github = config.get("github") if isinstance(config.get("github"), dict) else {}
+  owner = github.get("owner")
+  repo = github.get("repo")
+  if not isinstance(owner, str) or not owner or not isinstance(repo, str) or not repo:
+      name_with_owner = gh(["repo", "view", "--json", "nameWithOwner", "-q", ".nameWithOwner"]).strip()
+      owner, repo = name_with_owner.split("/", 1)
+  state_repo = explicit_state_repo or f"{owner}/kody-state"
+  state_path = explicit_state_path or repo
   return normalize_state_repo(state_repo), str(state_path).strip().strip("/")
 
 
