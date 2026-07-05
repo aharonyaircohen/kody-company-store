@@ -15,53 +15,17 @@
       "productionDeployed"
     ]
   },
-  "capabilities": ["release-prepare", "release-merge", "release-promote", "vercel-production-deploy"],
-  "route": [
-    {
-      "stage": "release",
-      "evidence": "releasePrExists",
-      "capability": "release-prepare",
-      "args": {
-        "issue": { "fact": "issue" },
-        "goal": { "fact": "goalId" }
-      }
-    },
-    {
-      "stage": "merge-default",
-      "evidence": "defaultBranchMerged",
-      "capability": "release-merge",
-      "args": {
-        "pr": { "fact": "releasePr" },
-        "issue": { "fact": "issue" },
-        "goal": { "fact": "goalId" }
-      }
-    },
-    {
-      "stage": "promote",
-      "evidence": "releasePromotionPrExists",
-      "capability": "release-promote",
-      "args": {
-        "issue": { "fact": "issue" },
-        "goal": { "fact": "goalId" }
-      }
-    },
-    {
-      "stage": "merge-release",
-      "evidence": "releaseBranchMerged",
-      "capability": "release-merge",
-      "args": {
-        "pr": { "fact": "promotionPr" },
-        "issue": { "fact": "issue" },
-        "goal": { "fact": "goalId" }
-      }
-    },
-    {
-      "stage": "publish",
-      "evidence": "productionDeployed",
-      "capability": "vercel-production-deploy"
+  "workflowRef": {
+    "source": "store",
+    "id": "web-release",
+    "args": {
+      "issue": { "fact": "issue" },
+      "goal": { "fact": "goalId" }
     }
-  ],
-  "stage": "release",
+  },
+  "capabilities": [],
+  "route": [],
+  "stage": "workflow",
   "facts": {},
   "blockers": []
 }
