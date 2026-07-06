@@ -76,8 +76,8 @@ describe("goal-scheduler", () => {
       const first = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
       assert.equal(first.result.status, 0, first.result.stderr);
       assert.deepEqual(first.calls, [
-        "kody-engine exec goal-manager --goal ci-health",
-        "kody-engine exec goal-manager --goal prs-stay-mergeable",
+        "kody-engine implementation goal-manager --goal ci-health",
+        "kody-engine implementation goal-manager --goal prs-stay-mergeable",
       ]);
       assert.equal(readGoal(cwd, "ci-health").schedule, "15m");
       assert.equal(readGoal(cwd, "prs-stay-mergeable").schedule, "15m");
@@ -102,8 +102,8 @@ describe("goal-scheduler", () => {
       const due = runScheduler(cwd, binDir, logFile, "2026-06-20T12:15:00Z");
       assert.equal(due.result.status, 0, due.result.stderr);
       assert.deepEqual(due.calls, [
-        "kody-engine exec goal-manager --goal ci-health",
-        "kody-engine exec goal-manager --goal prs-stay-mergeable",
+        "kody-engine implementation goal-manager --goal ci-health",
+        "kody-engine implementation goal-manager --goal prs-stay-mergeable",
       ]);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
@@ -121,7 +121,7 @@ describe("goal-scheduler", () => {
 
       assert.equal(run.result.status, 0, run.result.stderr);
       assert.deepEqual(run.calls, [
-        "kody-engine exec goal-manager --goal product-quality",
+        "kody-engine implementation goal-manager --goal product-quality",
       ]);
       assert.equal(readGoal(cwd, "product-quality").schedule, "15m");
     } finally {
@@ -140,7 +140,7 @@ describe("goal-scheduler", () => {
 
       assert.equal(run.result.status, 0, run.result.stderr);
       assert.deepEqual(run.calls, [
-        "kody-engine exec goal-manager --goal ai-agency-health",
+        "kody-engine implementation goal-manager --goal ai-agency-health",
       ]);
       assert.equal(readGoal(cwd, "ai-agency-health").schedule, "15m");
     } finally {
@@ -203,8 +203,8 @@ describe("goal-scheduler", () => {
       const due = runScheduler(cwd, binDir, logFile, "2026-06-20T12:15:00Z");
       assert.equal(due.result.status, 0, due.result.stderr);
       assert.deepEqual(due.calls, [
-        "kody-engine exec goal-manager --goal ai-agency-health",
-        "kody-engine exec goal-manager --goal product-quality",
+        "kody-engine implementation goal-manager --goal ai-agency-health",
+        "kody-engine implementation goal-manager --goal product-quality",
       ]);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
@@ -223,7 +223,7 @@ describe("goal-scheduler", () => {
       });
 
       assert.equal(run.result.status, 0, run.result.stderr);
-      assert.deepEqual(run.calls, ["kody-engine exec goal-manager --goal ci-health"]);
+      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal ci-health"]);
       assert.equal(readGoal(cwd, "ci-health").schedule, "15m");
       assert.equal(existsSync(join(cwd, ".kody", "todos", "prs-stay-mergeable.json")), false);
     } finally {
@@ -283,7 +283,7 @@ describe("goal-scheduler", () => {
       });
 
       assert.equal(run.result.status, 0, run.result.stderr);
-      assert.deepEqual(run.calls, ["kody-engine exec goal-manager --goal live-goal"]);
+      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal live-goal"]);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
@@ -335,7 +335,7 @@ describe("goal-scheduler", () => {
 
       const afterPreferred = runScheduler(cwd, binDir, logFile, "2026-06-27T06:00:00Z");
       assert.equal(afterPreferred.result.status, 0, afterPreferred.result.stderr);
-      assert.deepEqual(afterPreferred.calls, ["kody-engine exec goal-manager --goal daily-web-release-loop"]);
+      assert.deepEqual(afterPreferred.calls, ["kody-engine implementation goal-manager --goal daily-web-release-loop"]);
       assert.doesNotMatch(afterPreferred.result.stdout, /waiting schedule 1d/);
 
       const dispatchedState = readGoal(cwd, "daily-web-release-loop");
@@ -431,7 +431,7 @@ describe("goal-scheduler", () => {
       assert.equal(run.result.status, 0, run.result.stderr);
       assert.equal(readFileSync(ghCountFile, "utf8").trim(), "2");
       assert.match(run.result.stderr, /gh rate limited; retrying in 0s/);
-      assert.deepEqual(run.calls, ["kody-engine exec goal-manager --goal ci-health"]);
+      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal ci-health"]);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }

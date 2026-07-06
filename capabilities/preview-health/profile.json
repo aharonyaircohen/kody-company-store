@@ -40,7 +40,7 @@
   "scripts": {
     "preflight": [
       {
-        "script": "runScheduledExecutableTick",
+        "script": "runScheduledImplementationTick",
         "with": {
           "jobsDir": ".kody/capabilities",
           "slug": "preview-health",

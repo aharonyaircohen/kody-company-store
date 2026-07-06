@@ -58,7 +58,7 @@
   "scripts": {
     "preflight": [
       {
-        "script": "runScheduledExecutableTick",
+        "script": "runScheduledImplementationTick",
         "with": {
           "jobsDir": ".kody/capabilities",
           "slugArg": "capability",

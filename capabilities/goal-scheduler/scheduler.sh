@@ -694,7 +694,7 @@ for goal_id in goal_ids:
         continue
     managed_active += 1
     print(f"[goal-scheduler] -> tick {goal_id} (goal-manager)")
-    result = subprocess.run(["kody-engine", "exec", "goal-manager", "--goal", goal_id], check=False)
+    result = subprocess.run(["kody-engine", "implementation", "goal-manager", "--goal", goal_id], check=False)
     if result.returncode != 0:
         print(f"[goal-scheduler] tick {goal_id} failed (continuing)")
 
