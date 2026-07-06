@@ -5,7 +5,7 @@ description: Run broad exploratory QA against the live app and summarize actiona
 
 # QA Sweep Skill
 
-Use this skill when the `qa-sweep` executable runs from the matching capability.
+Use this skill when the `qa-sweep` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -14,7 +14,7 @@ Runtime state is owned by the engine. Do not ask the capability author to config
 ## Job
 
 Periodic **broad exploratory QA** of the whole app — no scenario, no scope.
-Delegates to the `qa-engineer` executable with **no `--scope`**, so it smoke-tests
+Delegates to the `qa-engineer` implementation with **no `--scope`**, so it smoke-tests
 every discovered route against the live deployment, then summarizes the result
 to the inbox. This catches regressions and rough edges in already-shipped
 features that the changelog-verification capability (which only tests _new_ entries)

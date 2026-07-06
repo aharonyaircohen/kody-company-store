@@ -13,7 +13,7 @@ Scheduled CTO capability for open pull-request health.
 
 ## State
 
-The executable persists dedupe state in this capability's sidecar state file:
+The implementation persists dedupe state in this capability's sidecar state file:
 `.kody/capabilities/preview-health.state.json`.
 
 State entries are keyed by PR number and fingerprinted as `<verb>|<headRefOid>`,

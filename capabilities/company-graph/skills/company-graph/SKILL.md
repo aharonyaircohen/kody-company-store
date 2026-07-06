@@ -14,7 +14,7 @@ Build graph nodes for:
 - context files
 - capabilities
 - agent
-- executables
+- implementations
 - scripts
 - skills
 - reports
@@ -24,12 +24,12 @@ Build graph nodes for:
 Build graph edges for:
 
 - capability `agent` -> assigned agent
-- capability `executables` -> runnable executable
+- capability `implementations` -> runnable implementation
 - capability `reads_from` -> source context/report/capability
 - capability `writes_to` -> report
 - context `agent` -> audience agent
-- executable configured skills -> skill nodes
-- executable preflight scripts -> script nodes
+- implementation configured skills -> skill nodes
+- implementation preflight scripts -> script nodes
 - issue `goal:*` labels -> goal nodes
 
 ## Findings

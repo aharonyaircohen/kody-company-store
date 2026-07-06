@@ -26,7 +26,7 @@ Also read local context before recommending placement:
 
 - `.kody/capabilities/*/profile.json`
 - `.kody/capabilities/*/skills/*/SKILL.md`
-- `docs/executables.md`
+- `docs/implementations.md`
 - `docs/capabilities.md`
 
 ## Evaluation
@@ -129,7 +129,7 @@ If the report content is byte-identical to the existing report, skip the write.
 ## Restrictions
 
 - Do not install skills.
-- Do not edit legacy executable folders, capabilities, docs, or source files.
+- Do not edit legacy implementation folders, capabilities, docs, or source files.
 - Do not open issues or PRs.
 - Do not recommend skills without a clear implementation placement.
 - Do not list already-installed skills as recommendations.

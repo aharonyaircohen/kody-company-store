@@ -5,7 +5,7 @@ description: Review open PRs for conflicts, failed CI, or stale branches, then r
 
 # PR Health Triage Skill
 
-Use this skill when the `pr-health-triage` executable runs from the matching capability.
+Use this skill when the `pr-health-triage` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -149,7 +149,7 @@ per-tick:
 - Never call `fix_ci_pr`, `sync_pr`, or `resolve_pr` from this capability.
 - Never include `{{mentions}}` in comment bodies.
 - Never include the literal engine command handle anywhere in the posted
-  recommendation. An executable command inside a GitHub comment self-triggers
+  recommendation. An implementation command inside a GitHub comment self-triggers
   the `issue_comment` workflow.
 
 ## Final State

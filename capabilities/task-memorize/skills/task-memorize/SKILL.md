@@ -5,7 +5,7 @@ description: Turn task and execution experience into durable `.kody/memory/` ent
 
 # Task Memorize Skill
 
-Use this skill when the `task-memorize` executable runs from the matching capability.
+Use this skill when the `task-memorize` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -35,7 +35,7 @@ becomes permanent memory.
 
 ## Tick procedure — REQUIRED
 
-The executable method:
+The implementation method:
 
 1. Glob task artifacts and session logs.
 2. For each task without a `.memorized` marker:

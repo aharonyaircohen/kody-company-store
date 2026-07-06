@@ -5,7 +5,7 @@ description: Check merged PRs for documented areas that changed without matching
 
 # Docs Drift - README / markdown Skill
 
-Use this skill when the `docs-readme` executable runs from the matching capability.
+Use this skill when the `docs-readme` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -66,7 +66,7 @@ gap sweep instead, not here).
 | `src/dashboard/lib/runners/`, `src/dashboard/lib/health/`                          | `docs/runners.md`               |
 | `src/dashboard/lib/vibe/`, `src/dashboard/lib/voice/`, `src/dashboard/lib/picker/` | `docs/vibe-and-voice.md`        |
 | `src/dashboard/lib/activity/`                                                      | `docs/activity.md`              |
-| `src/dashboard/lib/executables/`                                                   | `docs/executables.md`           |
+| `src/dashboard/lib/implementations/`                                                   | `docs/implementations.md`           |
 | `src/dashboard/lib/company/`                                                       | `docs/company.md`               |
 | `src/dashboard/lib/context/`                                                       | `docs/context.md`               |
 | `src/dashboard/lib/engine/`                                                        | `docs/engine-config.md`         |

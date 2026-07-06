@@ -4,7 +4,7 @@
 
 Check whether the AI Agency is wired well enough to run safely.
 
-## Executable
+## Implementation
 
 Run the `ai-agency-doctor` capability. It performs deterministic checks and
 skips the agent.

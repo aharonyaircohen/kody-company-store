@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic executable-local tick for auto-resolve.
+# Deterministic implementation-local tick for auto-resolve.
 
 set -euo pipefail
 

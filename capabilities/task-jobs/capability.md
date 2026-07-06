@@ -1,3 +1,3 @@
 # task-jobs
 
-Runs the next pending executable from a hidden task job plan on an issue.
+Runs the next pending implementation from a hidden task job plan on an issue.

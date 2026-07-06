@@ -46,8 +46,8 @@
   },
   "output": {
     "actionTypes": [
-      "DUTY_REVIEW_COMPLETED",
-      "DUTY_REVIEW_FAILED",
+      "CAPABILITY_REVIEW_COMPLETED",
+      "CAPABILITY_REVIEW_FAILED",
       "AGENT_NOT_RUN"
     ]
   },

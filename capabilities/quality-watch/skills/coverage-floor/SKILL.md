@@ -5,7 +5,7 @@ description: Check CI coverage against the floor and escalate when statements or
 
 # Coverage Floor Skill
 
-Use this skill when the `coverage-floor` executable runs from the matching capability.
+Use this skill when the `coverage-floor` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

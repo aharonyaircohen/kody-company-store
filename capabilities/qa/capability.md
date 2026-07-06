@@ -4,9 +4,9 @@
 
 Verify shipped but unverified changelog entries against the live app.
 
-## Executable
+## Implementation
 
-Run the `qa` executable. Its skill owns the detailed method and runtime state handling.
+Run the `qa` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A changelog QA marker update and inbox recommendation when a result needs attent
 
 ## Allowed Commands
 
-- Run the `qa` executable.
+- Run the `qa` implementation.
 
 ## Restrictions
 

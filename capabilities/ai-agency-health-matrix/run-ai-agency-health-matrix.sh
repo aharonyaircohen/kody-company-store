@@ -386,7 +386,7 @@ function dispatchMatchesCapability(state, expectedCapabilities) {
   if (lastDecision.kind !== "dispatch") return { matched: false, reason: `last decision was ${lastDecision.kind || "unknown"}` };
   const actual =
     (typeof lastDecision.capability === "string" && lastDecision.capability) ||
-    (typeof lastDecision.executable === "string" && lastDecision.executable) ||
+    (typeof lastDecision.implementation === "string" && lastDecision.implementation) ||
     (typeof lastDecision.action === "string" && lastDecision.action) ||
     "";
   if (!expected.includes(actual)) {
@@ -464,7 +464,22 @@ function inspectTargetLoopOutput(slug, stateBase, dispatch, expectedTarget) {
   }
 
   const targetGoal = readStateGoal(stateBase, targetId);
+  const targetTemplate = targetGoal ? null : readGoalTemplate(targetId);
   if (!targetGoal) {
+    if (targetTemplate) {
+      row("loops", `${slug} output`, `target ${expectedTarget.type} ${targetId} template`, "healthy", `.kody/goals/templates/${targetId}/state.json`, "Store", "none");
+      const outcome = String(targetTemplate.destination?.outcome || "");
+      row(
+        "loops",
+        `${slug} outcome`,
+        outcome ? `target template pursuing outcome` : "target template has no outcome",
+        outcome ? "healthy" : "unknown",
+        `.kody/goals/templates/${targetId}/state.json`,
+        "Store",
+        outcome ? "none" : "fix target goal outcome",
+      );
+      return;
+    }
     row("loops", `${slug} output`, `target ${expectedTarget.type} ${targetId} not found`, "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop target and verify state");
     row("loops", `${slug} outcome`, "target outcome not proven", "unknown", statePathForProof || "state checkout not provided", "state repo", "run the loop target and verify state");
     return;
@@ -638,7 +653,7 @@ const config = readConfig();
 const repo = resolveRepo(config);
 const company = config && typeof config.company === "object" && config.company ? config.company : {};
 const activeAgents = asStringList(company.activeAgents);
-const activeCapabilities = asStringList(company.activeCapabilities ?? company.activeExecutables);
+const activeCapabilities = asStringList(company.activeCapabilities);
 const activeGoals = Array.isArray(company.activeGoals) ? company.activeGoals : asStringList(company.activeGoals);
 statePathForProof = resolveStatePath(config);
 const stateBase = resolveStateBase(config);

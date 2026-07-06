@@ -4,9 +4,9 @@
 
 Review one capability at a time for design soundness, reachable steps, cadence, and observed output.
 
-## Executable
+## Implementation
 
-Run the `capability-review` executable. Its skill owns the detailed method and runtime state handling.
+Run the `capability-review` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A finding comment or cycle summary on the capability-review tracking issue.
 
 ## Allowed Commands
 
-- Run the `capability-review` executable.
+- Run the `capability-review` implementation.
 
 ## Restrictions
 

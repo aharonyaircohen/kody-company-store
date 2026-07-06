@@ -10,16 +10,16 @@ the goal to continue?
 ## Contract
 
 - The goal provides a PR number and optional goal/evidence keys.
-- The capability runs the `ci-check` executable.
-- The executable checks GitHub CI for that PR.
-- The executable emits `KODY_CAPABILITY_RESULT` with `pass`, `fail`, or `blocked`.
+- The capability runs the `ci-check` implementation.
+- The implementation checks GitHub CI for that PR.
+- The implementation emits `KODY_CAPABILITY_RESULT` with `pass`, `fail`, or `blocked`.
 - If CI is green, the capability reports the requested evidence as `true`.
 - If CI is pending or failed, the capability reports the requested evidence as
   `false` with CI status facts, so the goal can retry later.
 
 ## Boundary
 
-The capability owns the intent. The executable owns the mechanics. The goal
+The capability owns the intent. The implementation owns the mechanics. The goal
 only waits for the reported fact.
 
 ## Goal Route Example
@@ -37,5 +37,5 @@ only waits for the reported fact.
 }
 ```
 
-Do not put `executable` in the goal route for this step. The capability profile owns
+Do not put `implementation` in the goal route for this step. The capability profile owns
 that link and resolves to `ci-check`.

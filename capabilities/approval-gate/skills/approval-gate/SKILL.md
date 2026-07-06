@@ -5,7 +5,7 @@ description: Review QA goal PRs. Verify each candidate, reject duplicates or fai
 
 # Approval Gate Skill
 
-Use this skill when the `approval-gate` executable runs from the matching capability.
+Use this skill when the `approval-gate` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

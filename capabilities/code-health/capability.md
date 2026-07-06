@@ -4,9 +4,9 @@
 
 Run a weekly code-health sweep for architecture risks and TypeScript debt growth.
 
-## Executable
+## Implementation
 
-Run the `code-health` executable. Its skills own the architecture-audit and type-debt methods.
+Run the `code-health` implementation. Its skills own the architecture-audit and type-debt methods.
 
 ## Output
 
@@ -14,7 +14,7 @@ A tracking issue or tracking-issue comment when concrete code-health findings ne
 
 ## Allowed Commands
 
-- Run the `code-health` executable.
+- Run the `code-health` implementation.
 
 ## Restrictions
 

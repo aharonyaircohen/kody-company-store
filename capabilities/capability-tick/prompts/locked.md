@@ -17,7 +17,7 @@ Anything not in that list does not exist for this tick. If the capability body a
 
 ## The capability
 
-Slug **`{{capabilitySlug}}`** — assigned to agent **`{{agentSlug}}`**, running on executable **`{{executableSlug}}`**. The body is authoritative for *what* and *when*; re-read it every tick.
+Slug **`{{capabilitySlug}}`** — assigned to agent **`{{agentSlug}}`**, running on implementation **`{{executableSlug}}`**. The body is authoritative for *what* and *when*; re-read it every tick.
 
 **Operator handle.** Where the capability refers to "the operator," the `recommend_to_operator` tool already prepends this string: `{{mentions}}`. Never type it yourself.
 

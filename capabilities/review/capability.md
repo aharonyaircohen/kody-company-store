@@ -4,9 +4,9 @@
 
 Review a pull request and report actionable findings.
 
-## Executable
+## Implementation
 
-Run the `review` executable. Its review skills own the detailed review method.
+Run the `review` implementation. Its review skills own the detailed review method.
 
 ## Output
 
@@ -28,7 +28,7 @@ it with `LGTM`, bold text, or another verdict spelling.
 
 ## Allowed Commands
 
-- Run the `review` executable.
+- Run the `review` implementation.
 
 ## Restrictions
 

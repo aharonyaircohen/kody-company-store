@@ -5,7 +5,7 @@ jobs_dir="${1:-.kody/capabilities}"
 capability="${2:-preview-health}"
 
 export KODY_PREVIEW_HEALTH_JOBS_DIR="$jobs_dir"
-export KODY_PREVIEW_HEALTH_DUTY="$capability"
+export KODY_PREVIEW_HEALTH_CAPABILITY="$capability"
 
 python3 <<'PY'
 import base64
@@ -195,7 +195,7 @@ def print_row(pr, verb, fp, action, note):
 def main():
     slug = repo_slug()
     jobs_dir = os.environ["KODY_PREVIEW_HEALTH_JOBS_DIR"].rstrip("/")
-    capability = os.environ["KODY_PREVIEW_HEALTH_DUTY"]
+    capability = os.environ["KODY_PREVIEW_HEALTH_CAPABILITY"]
     state_path = f"{jobs_dir}/{capability}/state.json"
     loaded = load_state(slug, state_path)
     modes = read_ledger_modes()

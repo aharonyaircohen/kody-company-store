@@ -4,9 +4,9 @@
 
 Run a weekly documentation-maintenance sweep that reverse-engineers the current repo from code, tests, routes, config, and existing docs, then identifies the most valuable documentation work.
 
-## Executable
+## Implementation
 
-Run `documentation-maintenance` executable.
+Run `documentation-maintenance` implementation.
 
 ## Output
 
@@ -14,7 +14,7 @@ A concise docs health report, one tracking issue or issue comment, and one inbox
 
 ## Allowed Commands
 
-- Run `documentation-maintenance` executable.
+- Run `documentation-maintenance` implementation.
 
 ## Restrictions
 

@@ -2,13 +2,13 @@
 
 ## Job
 
-Every tick, run the local `auto-sync` executable tick:
+Every tick, run the local `auto-sync` implementation tick:
 
 ```bash
 bash .kody/capabilities/auto-sync/tick.sh
 ```
 
-The executable is the source of truth for PR selection, behind-count checks, attempt limits, stuck labels, comments, and next-state output.
+The implementation is the source of truth for PR selection, behind-count checks, attempt limits, stuck labels, comments, and next-state output.
 
 ## Restrictions
 

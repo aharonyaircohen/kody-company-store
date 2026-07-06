@@ -123,10 +123,10 @@ describe("Store capabilities", () => {
 
     assert.equal(roots[removedCapabilityRoot], undefined);
     assert.equal(roots[oldActionsRoot], undefined);
-    assert.equal(roots.executables, undefined);
+    assert.equal(roots.implementations, undefined);
     assert.equal(existsSync(new URL(`../${removedCapabilityRoot}/`, import.meta.url)), false);
     assert.equal(existsSync(new URL(`../${oldActionsRoot}/`, import.meta.url)), false);
-    assert.equal(existsSync(new URL("../executables/", import.meta.url)), false);
+    assert.equal(existsSync(new URL("../implementations/", import.meta.url)), false);
     assert.equal(existsSync(new URL("../.kody/", import.meta.url)), false);
   });
 

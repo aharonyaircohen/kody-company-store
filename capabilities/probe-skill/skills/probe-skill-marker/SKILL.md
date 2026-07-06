@@ -1,6 +1,6 @@
 ---
 name: probe-skill-marker
-description: Internal Kody live-test skill, shipped from the probe-skill executable's own directory (not the shared src/plugins catalog). Activates when a prompt mentions "probe-skill-marker" and provides a versioned confirmation token.
+description: Internal Kody live-test skill, shipped from the probe-skill implementation's own directory (not the shared src/plugins catalog). Activates when a prompt mentions "probe-skill-marker" and provides a versioned confirmation token.
 ---
 
 # probe-skill-marker

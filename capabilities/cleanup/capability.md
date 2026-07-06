@@ -4,9 +4,9 @@
 
 Coordinate repository housekeeping from one place: stale task branches, empty goals, dependency-bump nudges, and dead-code cleanup signals.
 
-## Executable
+## Implementation
 
-Run the `cleanup` executable. Its skills own the branch, goal, dependency, and dead-code cleanup methods.
+Run the `cleanup` implementation. Its skills own the branch, goal, dependency, and dead-code cleanup methods.
 
 ## Output
 
@@ -14,7 +14,7 @@ A cleanup summary, tracking issue, cleanup task, dependency-bump nudge, or quiet
 
 ## Allowed Commands
 
-- Run the `cleanup` executable.
+- Run the `cleanup` implementation.
 
 ## Restrictions
 

@@ -15,7 +15,7 @@
       "stage": "release",
       "evidence": "releasePrExists",
       "capability": "release",
-      "executable": "release-prepare",
+      "implementation": "release-prepare",
       "args": {
         "issue": { "fact": "issue" },
         "goal": "npm-release"
@@ -25,14 +25,14 @@
       "stage": "merge",
       "evidence": "mainMerged",
       "capability": "task-leader",
-      "executable": "task-leader",
+      "implementation": "task-leader",
       "args": { "issue": { "fact": "issue" } }
     },
     {
       "stage": "publish",
       "evidence": "packagePublished",
       "capability": "npm-publish",
-      "executable": "npm-publish"
+      "implementation": "npm-publish"
     }
   ],
   "stage": "release",

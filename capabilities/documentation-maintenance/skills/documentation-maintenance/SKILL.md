@@ -5,7 +5,7 @@ description: Discover product surfaces from repo evidence and maintain a practic
 
 # Documentation Maintenance
 
-Use this skill only when the `documentation-maintenance` executable runs.
+Use this skill only when the `documentation-maintenance` implementation runs.
 
 The goal is not to hard-code knowledge of any one product. The goal is to read the repo, infer what the product/system actually contains, and keep documentation coverage healthy.
 
@@ -25,7 +25,7 @@ These are the only hard-coded checks:
 Read before claiming anything. Build a repo-specific map from evidence:
 
 1. Identify repo kind and audience from `README`, package/build files, app entrypoints, deploy config, and docs.
-2. Discover user-facing surfaces from routes, navigation config, command palettes, menus, CLIs, public APIs, executable/capability definitions, and tests.
+2. Discover user-facing surfaces from routes, navigation config, command palettes, menus, CLIs, public APIs, implementation/capability definitions, and tests.
 3. Discover developer-facing surfaces from API routes, service modules, auth/session code, data/storage layers, scripts, CI, env docs, and tests.
 4. Discover operational surfaces from deployment config, webhooks, background jobs, schedulers, queues, secrets, monitoring, reports, and runbooks.
 5. Inventory existing docs and map each doc to the surface/workflow/concept it explains.

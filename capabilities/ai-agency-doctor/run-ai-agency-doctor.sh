@@ -122,7 +122,7 @@ if (exists("kody.config.json")) {
 
 const company = configOk && config && typeof config.company === "object" && config.company ? config.company : {};
 const activeAgents = asList(company.activeAgents);
-const activeCapabilities = asList(company.activeCapabilities ?? company.activeExecutables);
+const activeCapabilities = asList(company.activeCapabilities);
 const activeGoals = asList(company.activeGoals);
 
 const agents = new Set(listFiles(".kody/agents", ".md"));

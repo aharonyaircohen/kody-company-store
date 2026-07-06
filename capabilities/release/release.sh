@@ -2,7 +2,7 @@
 #
 # release/release.sh — single-job release driver.
 #
-# Replaces the orchestrator + 3-executable chain with one linear bash flow:
+# Replaces the orchestrator + 3-implementation chain with one linear bash flow:
 #   prepare → wait CI → merge → publish → deploy → notify
 #
 # Inputs (env, set by the executor):

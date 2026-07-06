@@ -4,9 +4,9 @@
 
 Research an issue and produce an implementation plan without editing code.
 
-## Executable
+## Implementation
 
-Run the `plan` executable. Its planning skills own the detailed method.
+Run the `plan` implementation. Its planning skills own the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A clear plan attached to the issue or returned by the engine.
 
 ## Allowed Commands
 
-- Run the `plan` executable.
+- Run the `plan` implementation.
 
 ## Restrictions
 

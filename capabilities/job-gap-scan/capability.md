@@ -2,17 +2,17 @@
 
 ## Job
 
-Once per day, run the local `job-gap-scan` executable tick:
+Once per day, run the local `job-gap-scan` implementation tick:
 
 ```bash
 bash .kody/capabilities/job-gap-scan/tick.sh
 ```
 
-The executable writes one advisory proposal report to `.kody/reports/job-gap-scan.md` and updates `.kody/capabilities/job-gap-scan.state.json`.
+The implementation writes one advisory proposal report to `.kody/reports/job-gap-scan.md` and updates `.kody/capabilities/job-gap-scan.state.json`.
 
 ## Restrictions
 
 - Advisory only.
 - Never write a new capability directly.
 - Never re-surface a permanently rejected candidate.
-- Respect the dismiss cool-off in executable logic.
+- Respect the dismiss cool-off in implementation logic.

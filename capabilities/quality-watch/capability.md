@@ -4,9 +4,9 @@
 
 Watch daily quality signals: security posture, coverage floor, and flaky-test candidates.
 
-## Executable
+## Implementation
 
-Run the `quality-watch` executable. Its skills own the security, coverage, and flaky-test methods.
+Run the `quality-watch` implementation. Its skills own the security, coverage, and flaky-test methods.
 
 ## Output
 
@@ -14,7 +14,7 @@ A tracking issue, closing comment, trend warning, flaky-test issue, or security 
 
 ## Allowed Commands
 
-- Run the `quality-watch` executable.
+- Run the `quality-watch` implementation.
 
 ## Restrictions
 

@@ -5,7 +5,7 @@ description: Watch the `dev` branch CI and open or reuse one tracking issue when
 
 # Dev CI Health Skill
 
-Use this skill when the `dev-ci-health` executable runs from the matching capability.
+Use this skill when the `dev-ci-health` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

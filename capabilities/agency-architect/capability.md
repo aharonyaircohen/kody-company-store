@@ -17,9 +17,9 @@ Intent descriptions are optional deeper context. Use them to understand nuance,
 constraints, examples, and what good looks like; do not treat them as a second
 intent, behavior selector, or execution route.
 
-## Executable
+## Implementation
 
-Run `agency-architect` executable. It loads active intents, current goals/loops, asks CTO for a structured portfolio decision, validates the decision, applies allowed changes, and records an intent decision log.
+Run `agency-architect` implementation. It loads active intents, current goals/loops, asks CTO for a structured portfolio decision, validates the decision, applies allowed changes, and records an intent decision log.
 
 ## Output
 
@@ -27,7 +27,7 @@ Update intent-linked goals and loops only through the structured agency-architec
 
 ## Allowed Commands
 
-- Run `agency-architect` executable.
+- Run `agency-architect` implementation.
 
 ## Restrictions
 

@@ -2,15 +2,15 @@
 
 ## Job
 
-Run the `ui-review` executable for a pull request.
+Run the `ui-review` implementation for a pull request.
 
-## Executable
+## Implementation
 
 Run `ui-review` with the PR number supplied by the dispatch comment.
 
 ## Allowed Commands
 
-- Run `ui-review` executable.
+- Run `ui-review` implementation.
 
 ## Restrictions
 

@@ -26,7 +26,7 @@ Build and prune the AI agency from human intent.
 
 ## Current Authority
 
-This executable can directly create, update, pause, and link goals and loops
+This implementation can directly create, update, pause, and link goals and loops
 through the structured `agency-architect` decision contract.
 
 For agents, capabilities, workflows, context, instructions, or unsupported state

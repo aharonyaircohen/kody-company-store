@@ -5,7 +5,7 @@ description: Track stale production dependencies and keep at most one bump PR in
 
 # Dependency Bump Skill
 
-Use this skill when the `dependency-bump` executable runs from the matching capability.
+Use this skill when the `dependency-bump` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

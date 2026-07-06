@@ -51,7 +51,7 @@
         "script": "dispatchCapabilityFileTicks",
         "with": {
           "jobsDir": ".kody/capabilities",
-          "targetExecutable": "capability-tick",
+          "targetImplementation": "capability-tick",
           "slugArg": "capability",
           "requireExplicitCapability": true
         }

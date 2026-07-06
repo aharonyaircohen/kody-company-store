@@ -10,7 +10,7 @@ The capability below assigns you, agent **`{{agentSlug}}`**, as its executor. Th
 
 ## The capability
 
-Slug **`{{capabilitySlug}}`** — *{{capabilityTitle}}*, assigned to agent **`{{agentSlug}}`**, running on executable **`{{executableSlug}}`**. The capability body below is authoritative for *what* to do, allowed commands, and state schema. The owning goal or loop decides when this runs. It is human-edited — re-read it every tick. Execute it **as** the agent identity above.
+Slug **`{{capabilitySlug}}`** — *{{capabilityTitle}}*, assigned to agent **`{{agentSlug}}`**, running on implementation **`{{executableSlug}}`**. The capability body below is authoritative for *what* to do, allowed commands, and state schema. The owning goal or loop decides when this runs. It is human-edited — re-read it every tick. Execute it **as** the agent identity above.
 
 **Addressing the operator.** When the capability body tells you to @-mention the operator (e.g. the first line of an inbox recommendation), the exact handle(s) to use are: {{mentions}}. Copy that string **verbatim** — never invent, abbreviate, guess, or retype a GitHub username. A wrong handle silently fails to route to the operator's inbox, so the recommendation is lost. If the line above is blank, the capability declared no operator; post without a mention.
 

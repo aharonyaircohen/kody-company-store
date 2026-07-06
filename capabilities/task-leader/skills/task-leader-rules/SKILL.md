@@ -87,7 +87,7 @@ Treat `APPROVED` as final GitHub approval. Do not confuse Kody PASS comments
 with GitHub approval; PASS comments are evidence task-leader may use in Step 4
 to approve safe PRs with the separate review token.
 
-If a Kody verdict is missing or stale, dispatch executable directly. Do not post
+If a Kody verdict is missing or stale, dispatch implementation directly. Do not post
 `@kody review` or `@kody ui-review` comments; Kody bot comments are ignored by
 the dispatcher.
 
@@ -242,8 +242,8 @@ into integration branch and this PR only promotes integration to production.
 Clean boundary for Lane C:
 
 - `.github/workflows/kody.yml` is immutable and must not be changed.
-- Engine runs the requested executable and reports success/failure.
-- Preview executable/tool owns preview behavior and preview-provider details.
+- Engine runs the requested implementation and reports success/failure.
+- Preview implementation/tool owns preview behavior and preview-provider details.
 - Task-leader/release policy decides whether a preview result is required.
 - Production promotion PRs do not require preview availability. If preview
   infrastructure is unavailable, do not add workflow or engine exceptions;
@@ -344,7 +344,7 @@ Get operator list from `operators` field in `kody.config.json`.
 
 ## Final output
 
-When invoked through standalone `task-leader` executable, final message must use
+When invoked through standalone `task-leader` implementation, final message must use
 this exact format:
 
 ```text
@@ -364,6 +364,6 @@ If a step errors fatally, output:
 FAILED: <step name> - <error>
 ```
 
-When invoked through the scheduled stateful executable or legacy `capability-tick`,
+When invoked through the scheduled stateful implementation or legacy `capability-tick`,
 call `submit_state` exactly once with `cursor: "idle"`, carried-forward `data`,
 and `done: false`.

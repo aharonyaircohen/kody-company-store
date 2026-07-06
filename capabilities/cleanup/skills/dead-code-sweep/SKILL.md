@@ -5,7 +5,7 @@ description: Coordinate monthly cleanup of unused exports, files, and dependenci
 
 # Dead Code Sweep Skill
 
-Use this skill when the `dead-code-sweep` executable runs from the matching capability.
+Use this skill when the `dead-code-sweep` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

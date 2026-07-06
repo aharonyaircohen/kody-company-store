@@ -4,9 +4,9 @@
 
 Review open PRs for conflicts, failed CI, or stale branches, then recommend the next safe repair.
 
-## Executable
+## Implementation
 
-Run the `pr-health-triage` executable. Its skill owns the detailed method and runtime state handling.
+Run the `pr-health-triage` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A PR repair recommendation.
 
 ## Allowed Commands
 
-- Run the `pr-health-triage` executable.
+- Run the `pr-health-triage` implementation.
 
 ## Restrictions
 

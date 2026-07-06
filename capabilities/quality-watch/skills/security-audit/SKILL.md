@@ -5,7 +5,7 @@ description: Coordinate a security posture sweep covering dependencies, applicat
 
 # Security Audit Skill
 
-Use this skill when the `security-audit` executable runs from the matching capability.
+Use this skill when the `security-audit` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -13,7 +13,7 @@ Runtime state is owned by the engine. Do not ask the capability author to config
 
 ## Job
 
-Daily **security posture sweep** — three layers, delegated to a Kody executable in CI (the job itself cannot run shell beyond `gh`, so it opens a tracking issue and tracks the result):
+Daily **security posture sweep** — three layers, delegated to a Kody implementation in CI (the job itself cannot run shell beyond `gh`, so it opens a tracking issue and tracks the result):
 
 1. **Dependency CVEs** — `pnpm audit` on production deps.
 2. **Code (OWASP Top 10 + STRIDE)** — review the codebase against the OWASP Top 10 and a STRIDE pass on auth/handlers/queries/external calls; every reported finding must carry a concrete exploit path.

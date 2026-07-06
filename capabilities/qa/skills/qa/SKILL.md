@@ -5,7 +5,7 @@ description: Verify shipped but unverified changelog entries against the live ap
 
 # QA Changelog Verification Skill
 
-Use this skill when the `qa` executable runs from the matching capability.
+Use this skill when the `qa` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -25,7 +25,7 @@ trailing QA marker, appended after the `— @author`, joined by `·`:
 | **verified** | ` · ✅ QA <YYYY-MM-DD>`        |
 | **issues**   | ` · ⚠️ QA <YYYY-MM-DD> (#<n>)` |
 
-Browsing is delegated to the `qa-engineer` executable (the job runs no browser
+Browsing is delegated to the `qa-engineer` implementation (the job runs no browser
 itself); the job opens a tracking issue, dispatches the run onto it, and reads
 the verdict back on a later tick. **One run in flight at a time** — this bounds
 browser cost.

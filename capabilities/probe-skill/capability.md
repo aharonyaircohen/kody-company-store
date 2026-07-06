@@ -1,3 +1,3 @@
 # Probe Skill
 
-Run the probe skill test executable.
+Run the probe skill test implementation.

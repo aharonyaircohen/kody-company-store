@@ -4,9 +4,9 @@
 
 Summarize what needs attention across reports, tasks, reviews, running work, waiting items, and recent failures.
 
-## Executable
+## Implementation
 
-Run the `work-briefing` executable. Its skill owns the detailed method.
+Run the `work-briefing` implementation. Its skill owns the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A short, prioritized briefing for the user.
 
 ## Allowed Commands
 
-- Run the `work-briefing` executable.
+- Run the `work-briefing` implementation.
 
 ## Restrictions
 

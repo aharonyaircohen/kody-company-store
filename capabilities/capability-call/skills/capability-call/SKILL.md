@@ -57,6 +57,6 @@ The issue should include:
 
 - One proposal per tick.
 - Never create or edit capability folders.
-- Never create or edit legacy executable folders.
+- Never create or edit legacy implementation folders.
 - Never re-surface rejected proposals.
 - Better to stay quiet than propose low-signal work.

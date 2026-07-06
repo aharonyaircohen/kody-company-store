@@ -4,9 +4,9 @@
 
 Report Kody-assigned tasks that have not been updated within the expected window.
 
-## Executable
+## Implementation
 
-Run the `health-check` executable. Its skill owns the detailed method and runtime state handling.
+Run the `health-check` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ Refresh `.kody/reports/health-check.md`.
 
 ## Allowed Commands
 
-- Run the `health-check` executable.
+- Run the `health-check` implementation.
 
 ## Restrictions
 

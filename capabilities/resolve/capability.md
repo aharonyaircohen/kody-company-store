@@ -4,9 +4,9 @@
 
 Resolve merge conflicts on an existing pull request branch.
 
-## Executable
+## Implementation
 
-Run the `resolve` executable. The engine owns the implementation details.
+Run the `resolve` implementation. The engine owns the implementation details.
 
 ## Output
 
@@ -14,7 +14,7 @@ An updated pull request branch with conflicts resolved.
 
 ## Allowed Commands
 
-- Run the `resolve` executable.
+- Run the `resolve` implementation.
 
 ## Restrictions
 

@@ -1,1 +1,1 @@
-This executable is script-only.
+This implementation is script-only.

@@ -4,9 +4,9 @@
 
 Bring a pull request branch up to date with its base branch.
 
-## Executable
+## Implementation
 
-Run the `sync` executable. The engine owns the implementation details.
+Run the `sync` implementation. The engine owns the implementation details.
 
 ## Output
 
@@ -14,7 +14,7 @@ An updated pull request branch.
 
 ## Allowed Commands
 
-- Run the `sync` executable.
+- Run the `sync` implementation.
 
 ## Restrictions
 

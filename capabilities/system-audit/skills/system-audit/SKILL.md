@@ -29,7 +29,7 @@ Check:
 ## Checks
 
 1. **Broken agent reference:** A capability profile names `"agent": "<slug>"` but `.kody/agents/<slug>.md` does not exist.
-2. **Missing implementation reference:** A capability profile names an executable/implementation but `.kody/capabilities/<slug>/profile.json` does not exist.
+2. **Missing implementation reference:** A capability profile names an implementation/implementation but `.kody/capabilities/<slug>/profile.json` does not exist.
 3. **Old capability shape:** A capability profile or body contains raw state schemas, `stage`, `kody-job-next-state`, long shell recipes, or agent/agent identity prompts.
 4. **Broken implementation shape:** An internal capability implementation has invalid `profile.json`, a large explanatory `prompt.md`, missing declared skills, or shell steps pointing to missing files.
 5. **Stale report:** A report-writing capability has no report, an empty report, or a report older than expected for its cadence.

@@ -4,9 +4,9 @@
 
 Reproduce a bug and capture the failure signature without fixing it.
 
-## Executable
+## Implementation
 
-Run the `reproduce` executable. Its bug reproduction skill owns the detailed method.
+Run the `reproduce` implementation. Its bug reproduction skill owns the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A failing test or reproduction notes that prove the bug.
 
 ## Allowed Commands
 
-- Run the `reproduce` executable.
+- Run the `reproduce` implementation.
 
 ## Restrictions
 

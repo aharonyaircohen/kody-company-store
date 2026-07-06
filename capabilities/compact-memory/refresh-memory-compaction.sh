@@ -187,7 +187,7 @@ snapshot="$(jq -nc --argjson memories "$memories" --argjson recommendations "$re
       "open-questions"
     ],
     actions: {
-      memorizeExecutable: "task-memorize"
+      memorizeImplementation: "task-memorize"
     }
   }
 ')"

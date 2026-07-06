@@ -5,7 +5,7 @@ description: Delete stale task branches whose linked task is closed, done, or fa
 
 # Clean Up Branches Skill
 
-Use this skill when the `cleanup-branches` executable runs from the matching capability.
+Use this skill when the `cleanup-branches` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 

@@ -146,7 +146,7 @@ describe("ai-agency-health-matrix", () => {
           lastDecision: {
             kind: "dispatch",
             capability: "ai-agency-health-matrix",
-            executable: "ai-agency-health-matrix",
+            implementation: "ai-agency-health-matrix",
             reason: "ready for loop tick",
             at: "2026-06-30T10:00:00Z",
           },
@@ -231,7 +231,7 @@ describe("ai-agency-health-matrix", () => {
             kind: "dispatch",
             targetType: "goal",
             targetId: "web-release-2026-06-30",
-            executable: "goal-manager",
+            implementation: "goal-manager",
             reason: "ready target loop tick",
             at: "2026-06-30T10:00:00Z",
           },
@@ -325,7 +325,7 @@ describe("ai-agency-health-matrix", () => {
             targetType: "goal",
             targetId: "web-release",
             action: "goal-manager",
-            executable: "goal-manager",
+            implementation: "goal-manager",
             reason: "preferred time 02:00 Asia/Jerusalem",
             at: "2026-07-04T00:00:00Z",
           },
@@ -350,8 +350,8 @@ describe("ai-agency-health-matrix", () => {
       assert.equal(byKey.get("loops:daily-web-release-loop materialized")?.health, "healthy");
       assert.equal(byKey.get("loops:daily-web-release-loop scheduler")?.health, "healthy");
       assert.equal(byKey.get("loops:daily-web-release-loop output")?.health, "healthy");
-      assert.equal(byKey.get("loops:daily-web-release-loop output")?.actual, "target goal web-release state");
-      assert.match(byKey.get("loops:daily-web-release-loop output")?.proof ?? "", /A-Guy-Web\/todos\/web-release\.json/);
+      assert.equal(byKey.get("loops:daily-web-release-loop output")?.actual, "target goal web-release template");
+      assert.match(byKey.get("loops:daily-web-release-loop output")?.proof ?? "", /\.kody\/goals\/templates\/web-release\/state\.json/);
       assert.equal(byKey.get("loops:daily-web-release-loop outcome")?.health, "healthy");
       assert.equal(byKey.get("loops:daily-web-release-loop intent")?.health, "healthy");
     } finally {

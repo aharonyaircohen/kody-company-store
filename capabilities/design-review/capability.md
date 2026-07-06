@@ -4,9 +4,9 @@
 
 Run a periodic design-health sweep for visual coherence, usability, and accessibility risks.
 
-## Executable
+## Implementation
 
-Run the `design-review` executable. Its skill owns the detailed method and runtime state handling.
+Run the `design-review` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A tracking issue or nudge for the design sweep.
 
 ## Allowed Commands
 
-- Run the `design-review` executable.
+- Run the `design-review` implementation.
 
 ## Restrictions
 

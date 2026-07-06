@@ -5,7 +5,7 @@ description: Track TypeScript escape hatches and escalate meaningful growth week
 
 # Type Debt Tracker Skill
 
-Use this skill when the `type-debt` executable runs from the matching capability.
+Use this skill when the `type-debt` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -17,7 +17,7 @@ Weekly tracking of TypeScript escape hatches: occurrences of `any`, `@ts-ignore`
 
 **Per tick (one action max):**
 
-1. Job cannot grep locally. Trigger a Kody executable to count and report by opening (or reusing) the weekly tracking issue:
+1. Job cannot grep locally. Trigger a Kody implementation to count and report by opening (or reusing) the weekly tracking issue:
    ```
    gh issue list --label "kody:type-debt" --state open --json number,title,createdAt,body
    ```

@@ -4,9 +4,9 @@
 
 Re-check delivery PRs against their previews before merge and route pass/fail outcomes to the inbox.
 
-## Executable
+## Implementation
 
-Run the `qa-verify` executable. Its skill owns the detailed method and runtime state handling.
+Run the `qa-verify` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A UI-review dispatch, merge recommendation, fix recommendation, or trusted merge
 
 ## Allowed Commands
 
-- Run the `qa-verify` executable.
+- Run the `qa-verify` implementation.
 
 ## Restrictions
 

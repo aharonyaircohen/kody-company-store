@@ -4,9 +4,9 @@
 
 Audit `.kody/` coordination for broken references, missed ticks, missing state, stuck dispatches, and duplicate dispatches.
 
-## Executable
+## Implementation
 
-Run the `system-audit` executable. Its skill owns the detailed method and runtime state handling.
+Run the `system-audit` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ A consolidated comment on the Kody system audit tracking issue when findings exi
 
 ## Allowed Commands
 
-- Run the `system-audit` executable.
+- Run the `system-audit` implementation.
 
 ## Restrictions
 

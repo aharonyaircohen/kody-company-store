@@ -5,7 +5,7 @@ description: Run a periodic architecture-health sweep for boundaries, coupling, 
 
 # Architecture Audit Skill
 
-Use this skill when the `architecture-audit` executable runs from the matching capability.
+Use this skill when the `architecture-audit` implementation runs from the matching capability.
 
 Runtime state is owned by the engine. Do not ask the capability author to configure raw state keys.
 
@@ -13,7 +13,7 @@ Runtime state is owned by the engine. Do not ask the capability author to config
 
 ## Jobs
 
-Periodic **architecture-health sweep** of the codebase — boundaries and coupling, not line-level style. The job itself cannot run shell beyond `gh`, so it opens a tracking issue delegating the analysis to a Kody executable in CI and tracks the result.
+Periodic **architecture-health sweep** of the codebase — boundaries and coupling, not line-level style. The job itself cannot run shell beyond `gh`, so it opens a tracking issue delegating the analysis to a Kody implementation in CI and tracks the result.
 
 Scope of the delegated sweep:
 

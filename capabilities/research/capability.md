@@ -4,9 +4,9 @@
 
 Investigate an issue and report relevant facts, options, and risks.
 
-## Executable
+## Implementation
 
-Run the `research` executable. Its research skill owns the detailed method.
+Run the `research` implementation. Its research skill owns the detailed method.
 
 ## Output
 
@@ -14,7 +14,7 @@ A concise research result for the target issue.
 
 ## Allowed Commands
 
-- Run the `research` executable.
+- Run the `research` implementation.
 
 ## Restrictions
 

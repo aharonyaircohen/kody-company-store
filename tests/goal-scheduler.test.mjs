@@ -347,7 +347,7 @@ describe("goal-scheduler", () => {
           targetType: "goal",
           targetId: "web-release",
           action: "goal-manager",
-          executable: "goal-manager",
+          implementation: "goal-manager",
           reason: "preferred time 08:30 Asia/Jerusalem",
           at: "2026-06-27T06:00:00Z",
         },

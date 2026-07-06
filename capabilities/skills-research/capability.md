@@ -4,9 +4,9 @@
 
 Research new and updated AI agent skills that could improve Kody Dashboard.
 
-## Executable
+## Implementation
 
-Run the `skills-research` executable. Its skill owns the detailed method and runtime state handling.
+Run the `skills-research` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,11 +14,11 @@ Refresh `.kody/reports/skills-research.md`.
 
 ## Allowed Commands
 
-- Run the `skills-research` executable.
+- Run the `skills-research` implementation.
 
 ## Restrictions
 
 - Do not install skills automatically.
-- Do not edit executables or capabilities.
+- Do not edit implementations or capabilities.
 - Only write the skills research report.
 - Recommend concrete placements for useful skills.

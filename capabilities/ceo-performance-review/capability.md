@@ -4,9 +4,9 @@
 
 Review every agent by the capabilities they own and the evidence those capabilities produce.
 
-## Executable
+## Implementation
 
-Run the `ceo-performance-review` executable. Its skill owns the detailed method and runtime state handling.
+Run the `ceo-performance-review` implementation. Its skill owns the detailed method and runtime state handling.
 
 ## Output
 
@@ -14,7 +14,7 @@ Refresh `.kody/reports/ceo-performance-review.md`.
 
 ## Allowed Commands
 
-- Run the `ceo-performance-review` executable.
+- Run the `ceo-performance-review` implementation.
 
 ## Restrictions
 

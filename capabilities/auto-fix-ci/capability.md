@@ -2,13 +2,13 @@
 
 ## Job
 
-Every tick, run the local `auto-fix-ci` executable tick:
+Every tick, run the local `auto-fix-ci` implementation tick:
 
 ```bash
 bash .kody/capabilities/auto-fix-ci/tick.sh
 ```
 
-The executable is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.
+The implementation is the source of truth for PR selection, attempt limits, stuck labels, comments, and next-state output.
 
 ## Restrictions
 

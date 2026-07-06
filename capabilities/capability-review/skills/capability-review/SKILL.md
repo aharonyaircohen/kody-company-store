@@ -19,10 +19,10 @@ current structure.
 
 A healthy capability is short and has:
 
-- `profile.json` with `agent` and `executable` or `executables`
+- `profile.json` with `agent` and `implementation` or `implementations`
 - `capability.md` with a concise human-readable contract
 - a clear `Job`
-- a small `Executable` section
+- a small `Implementation` section
 - output and safety limits
 - no raw state schema
 - no shell recipe or long prompt
@@ -51,7 +51,7 @@ Implementation details stay inside capability folders:
 ## Review Checklist
 
 - **Goal clarity:** The capability has one concrete, checkable job.
-- **Profile metadata:** `agent` and `executable` or `executables` are present and point to real repo objects.
+- **Profile metadata:** `agent` and `implementation` or `implementations` are present and point to real repo objects.
 - **Implementation wiring:** The named implementation exists as a capability folder, has valid JSON, has a tiny prompt, and loads at least one skill unless it is deterministic.
 - **State model:** The capability does not define raw state keys or require the author to paste a state block. Runtime state belongs to the engine.
 - **No command recipe in capability text:** Bash, `gh`, Python, and long step-by-step logic belong in implementation skills or capability-owned scripts.

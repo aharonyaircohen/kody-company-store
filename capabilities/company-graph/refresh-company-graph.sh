@@ -234,13 +234,13 @@ if [[ -d ".kody/capabilities" ]]; then
     fi
 
     agent="$(jq -r '.agent // ""' "$profile")"
-    executables="$(jq -c '
+    implementations="$(jq -c '
       def list($x):
         if $x == null then []
         elif ($x | type) == "array" then [$x[] | select(type == "string" and length > 0)]
         elif ($x | type) == "string" and ($x | length) > 0 then [$x]
         else [] end;
-      (list(.executable) + list(.executables)) | unique
+      (list(.implementation) + list(.implementations)) | unique
     ' "$profile")"
     reads_from="$(jq -c '
       def list($x):
@@ -271,19 +271,19 @@ if [[ -d ".kody/capabilities" ]]; then
       --arg agent "$agent" \
       --arg role "$role" \
       --arg kind "$kind" \
-      --argjson executables "$executables" \
+      --argjson implementations "$implementations" \
       --argjson readsFrom "$reads_from" \
       --argjson writesTo "$writes_to" \
       --argjson disabled "$disabled" \
       --argjson internal "$internal" \
       --argjson skills "$skills" \
       --argjson shellScripts "$shell_scripts" \
-      '{id: $id, type: "capability", slug: $slug, agent: $agent, role: $role, kind: $kind, executables: $executables, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled, internal: $internal, skills: $skills, shellScripts: $shellScripts}')"
+      '{id: $id, type: "capability", slug: $slug, agent: $agent, role: $role, kind: $kind, implementations: $implementations, readsFrom: $readsFrom, writesTo: $writesTo, disabled: $disabled, internal: $internal, skills: $skills, shellScripts: $shellScripts}')"
 
     add_edge "capability:$slug" "$(ref_id "$agent" agent)" "assigned_to"
-    while IFS= read -r executable; do
-      [[ -n "$executable" ]] && add_edge "capability:$slug" "$(ref_id "$executable" capability)" "runs"
-    done < <(jq -r '.[]' <<<"$executables")
+    while IFS= read -r implementation; do
+      [[ -n "$implementation" ]] && add_edge "capability:$slug" "$(ref_id "$implementation" capability)" "runs"
+    done < <(jq -r '.[]' <<<"$implementations")
     while IFS= read -r source; do
       [[ -n "$source" ]] && add_edge "capability:$slug" "$(ref_id "$source" context)" "reads_from"
     done < <(jq -r '.[]' <<<"$reads_from")
@@ -374,7 +374,7 @@ done < <(jq -r '.[].to' "$EDGES" | sort -u)
 coverage_gaps="$(
   if [[ -d ".kody" ]]; then
     find .kody -mindepth 1 -maxdepth 1 -type d -exec basename {} \; \
-      | grep -Ev '^(context|capabilities|agent|executables|reports|scripts)$' \
+      | grep -Ev '^(context|capabilities|agent|implementations|reports|scripts)$' \
       | sort \
       | jq -Rsc 'split("\n") | map(select(length > 0))'
   else
@@ -403,7 +403,7 @@ node_counts="$(jq -nc --argjson nodes "$nodes_sorted" --argjson goalIssues "$goa
     context: count_type("context"),
     capabilities: count_type("capability"),
     agent: count_type("agent"),
-    executables: count_type("executable"),
+    implementations: count_type("implementation"),
     scripts: count_type("script"),
     skills: count_type("skill"),
     reports: count_type("report"),
@@ -420,7 +420,7 @@ while IFS=$'\t' read -r id slug; do
     any(.[]; .to == $id and (.relation == "assigned_to" or .relation == "runs_as" or .relation == "audience"))
   ' "$EDGES" >/dev/null; then
     add_finding "company-graph.orphan-agent.$slug" "medium" \
-      "$slug - no capability, context, or executable references it" \
+      "$slug - no capability, context, or implementation references it" \
       "$(jq -nc --arg agent "$slug" '{agent: $agent}')"
   fi
 done < <(jq -r '.[] | select(.type == "agent") | [.id, .slug] | @tsv' "$NODES")

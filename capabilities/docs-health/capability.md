@@ -4,9 +4,9 @@
 
 Find documentation drift from merged PRs and important source areas that lack useful in-code documentation.
 
-## Executable
+## Implementation
 
-Run the `docs-health` executable. Its skills own the README drift and in-code coverage methods.
+Run the `docs-health` implementation. Its skills own the README drift and in-code coverage methods.
 
 ## Output
 
@@ -14,7 +14,7 @@ Tracking issues and inbox recommendations for new documentation drift or the wor
 
 ## Allowed Commands
 
-- Run the `docs-health` executable.
+- Run the `docs-health` implementation.
 
 ## Restrictions
 

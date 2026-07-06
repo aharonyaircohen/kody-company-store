@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Deterministic executable-local tick for auto-sync.
+# Deterministic implementation-local tick for auto-sync.
 
 set -euo pipefail
 
