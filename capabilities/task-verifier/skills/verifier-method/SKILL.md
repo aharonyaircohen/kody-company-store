@@ -2,7 +2,7 @@
 
 ## Scope
 
-An issue is in scope if it is `open` AND has ZERO labels. (Untouched, in the backlog.)
+An issue is in scope if it is open, not a pull request, unassigned, not labeled `status:needs-human`, and not already carrying an active `kody:*` lifecycle label.
 
 Process ONE issue per tick. Sort: oldest first.
 
@@ -39,7 +39,7 @@ For each file path or feature mentioned in the issue, read the actual file. Chec
 
 ## Step 3 — Decide the verdict
 
-### `status:verified` (good to dispatch)
+### Assign to Kody (good to dispatch later)
 
 The issue passes ALL of:
 - Clear, bounded scope. No missing info or open questions for the human.
@@ -59,9 +59,9 @@ ANY of:
 
 ## Step 4 — Apply labels
 
-For verified:
+For safe-for-Kody:
 ```
-gh issue edit <N> --add-label "status:verified,<work-type>,priority:P<X>"
+gh issue edit <N> --add-assignee kody --add-label "<work-type>,priority:P<X>"
 ```
 
 For needs-human:
@@ -81,7 +81,7 @@ Use `gh issue comment <N> --body "<paragraph>"`.
 ## Boundaries
 
 - Process ONE issue per tick.
-- Never re-evaluate an already-labeled issue.
+- Never re-evaluate an issue already assigned to anyone or labeled `status:needs-human`.
 - Never strip or override a verdict label.
 - Read-only on source files.
 - No source edits, no git push.

@@ -41,13 +41,17 @@ Default agentLoop templates:
 - `codebase-health`
 - `release-safety`
 - `daily-web-release-loop`
+- `task-delivery`
 - `ai-agency-health`
 
 `ai-agency-health` should answer whether the current repo's AI agency is
-healthy and keep assigned work moving. Its matrix capability writes a
-repo-local health report, while its task-intake capabilities verify backlog,
-surface stale assigned work, and dispatch verified work. See
+healthy. Its matrix capability writes a repo-local health report; it does not
+start task work. See
 [ai-agency-health-matrix.md](ai-agency-health-matrix.md).
+
+`task-delivery` is the task work production line. The loop targets the
+`task-delivery` workflow, which owns the ordered capability calls for backlog
+triage, Kody assignment, work dispatch, stale-work reporting, and PR delivery.
 
 Consumer repos may also define local goal templates.
 

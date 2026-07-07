@@ -7,7 +7,7 @@ Every 15 minutes, coordinate the work pipeline:
 - request missing reviews (code + UI)
 - request fixes for PR concerns
 - auto-merge safe PRs, including release lanes
-- dispatch the next verified backlog task
+- leave backlog dispatch to `assigned-task-runner`
 - escalate stale PRs to the operator
 
 Read and follow `.kody/capabilities/task-leader/skills/task-leader-rules/SKILL.md` exactly.

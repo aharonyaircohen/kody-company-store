@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "task-delivery",
+  "state": "inactive",
+  "type": "agentLoop",
+  "scheduleMode": "agentLoop",
+  "schedule": "15m",
+  "loopTarget": {
+    "type": "workflow",
+    "id": "task-delivery"
+  },
+  "title": "Tasks keep moving to delivery",
+  "description": "Move task work through intake, Kody assignment, execution dispatch, stale-work reporting, and PR delivery.",
+  "destination": {
+    "outcome": "Backlog tasks are triaged, safe work is assigned to Kody, assigned work starts, and active PRs keep moving.",
+    "evidence": []
+  },
+  "capabilities": [],
+  "route": [],
+  "stage": "watching",
+  "facts": {
+    "goalType": "agentLoop"
+  },
+  "blockers": []
+}

@@ -148,6 +148,54 @@ describe("Store capabilities", () => {
     assert.equal(steps[3].target, "pr");
   });
 
+  it("ships task-delivery as a workflow-target loop", async () => {
+    const workflowPath = join(workflowsDir.pathname, "task-delivery", "workflow.json");
+    const templatePath = join(goalTemplatesDir.pathname, "task-delivery", "state.json");
+    assert.equal(existsSync(workflowPath), true, "task-delivery workflow must exist");
+    assert.equal(existsSync(templatePath), true, "task-delivery loop template must exist");
+
+    const workflow = JSON.parse(await readFile(workflowPath, "utf8"));
+    const template = JSON.parse(await readFile(templatePath, "utf8"));
+    const steps = workflow.steps ?? [];
+
+    assert.equal(workflow.version, 1);
+    assert.deepEqual(
+      steps.map((step) => step.capability),
+      ["task-verifier", "assigned-task-runner", "health-check", "task-leader"],
+    );
+    assert.deepEqual(template.loopTarget, { type: "workflow", id: "task-delivery" });
+    assert.deepEqual(template.capabilities, []);
+  });
+
+  it("keeps task delivery dispatch and verification boundaries clean", async () => {
+    const verifierProfilePath = new URL("../capabilities/task-verifier/profile.json", import.meta.url);
+    const verifierSkillPath = new URL(
+      "../capabilities/task-verifier/skills/verifier-method/SKILL.md",
+      import.meta.url,
+    );
+    const runnerProfilePath = new URL("../capabilities/assigned-task-runner/profile.json", import.meta.url);
+    const runnerBodyPath = new URL("../capabilities/assigned-task-runner/capability.md", import.meta.url);
+
+    const verifierProfile = JSON.parse(await readFile(verifierProfilePath, "utf8"));
+    const verifierSkill = await readFile(verifierSkillPath, "utf8");
+    const runnerProfile = JSON.parse(await readFile(runnerProfilePath, "utf8"));
+    const runnerBody = await readFile(runnerBodyPath, "utf8");
+
+    assert.deepEqual(verifierProfile.inputs, []);
+    assert.equal(
+      verifierProfile.scripts.postflight.some((entry) => entry.script === "postAgentComment"),
+      false,
+    );
+    assert.match(verifierSkill, /--add-assignee kody/);
+    assert.equal(verifierSkill.includes('--add-label "status:verified'), false);
+
+    assert.deepEqual(runnerProfile.capabilityTools, ["start_capability"]);
+    assert.equal(runnerProfile.capabilityToolMode, "append");
+    assert.equal(runnerProfile.claudeCode.enableSubmitTool, true);
+    assert.ok(runnerProfile.claudeCode.tools.includes("mcp__kody-submit"));
+    assert.match(runnerBody, /Do not post a bot-authored `@kody` comment/);
+  });
+
   it("keeps daily web release loop pointing through goal then workflow", async () => {
     const templatePath = join(goalTemplatesDir.pathname, "daily-web-release-loop", "state.json");
     const template = JSON.parse(await readFile(templatePath, "utf8"));

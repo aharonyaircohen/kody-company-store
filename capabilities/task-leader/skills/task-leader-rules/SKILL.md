@@ -302,24 +302,11 @@ gh pr merge <N> --merge --delete-branch=false
 
 If all lanes fail, skip PR and log why.
 
-## Step 5 - Dispatch next backlog task
+## Step 5 - Leave backlog dispatch to task delivery
 
-Re-count `status:ready-for-preview`. If still < `readyPreviewCap`:
-
-1. Find highest-priority open issue with no PR, label `status:verified`, without labels `status:needs-human`, `status:blocked`, or `status:ready-for-preview`:
-
-```sh
-gh issue list --state open --label status:verified --json number,title,labels --limit 100
-```
-
-2. Sort by priority label: P0 > P1 > P2 > P3, oldest first within same priority.
-3. Post dispatch comment on first match:
-
-```sh
-gh issue comment <N> --body "<dispatchComment>"
-```
-
-If no matching issue exists, log "no eligible backlog task".
+Do not dispatch backlog issues here. `task-verifier` assigns safe issues to Kody,
+and `assigned-task-runner` starts Kody-assigned work through `start_capability`.
+If no PR/review/merge lane needed action in this tick, log "no PR delivery action".
 
 ## Step 6 - Escalate stale PRs
 

@@ -1,16 +1,8 @@
 {
   "name": "task-verifier",
   "role": "primitive",
-  "describe": "Task verifier — deep analysis of backlog issues, verdict to verified or needs-human.",
-  "inputs": [
-    {
-      "name": "issue",
-      "flag": "--issue",
-      "type": "int",
-      "required": true,
-      "describe": "GitHub issue number to work on."
-    }
-  ],
+  "describe": "Task verifier - triage one unassigned backlog issue and either assign it to Kody or mark it needs-human.",
+  "inputs": [],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "bypassPermissions",
@@ -35,14 +27,13 @@
     "plugins": [],
     "mcpServers": []
   },
-  "cliTools": [],
+  "cliTools": [
+    "gh"
+  ],
   "scripts": {
     "preflight": [
       {
         "script": "buildSyntheticPlugin"
-      },
-      {
-        "script": "loadIssueContext"
       },
       {
         "script": "composePrompt"
@@ -51,9 +42,6 @@
     "postflight": [
       {
         "script": "parseAgentResult"
-      },
-      {
-        "script": "postAgentComment"
       }
     ]
   },
