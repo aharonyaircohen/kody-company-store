@@ -146,6 +146,18 @@ describe("Store capabilities", () => {
     assert.deepEqual(steps[0].cliArgs, { prefer: "ours" });
     assert.equal(steps[1].target, "pr");
     assert.equal(steps[3].target, "pr");
+    assert.deepEqual(
+      steps.map((step) => step.evidence),
+      [
+        "releasePrExists",
+        "defaultBranchMerged",
+        "releasePromotionPrExists",
+        "releaseBranchMerged",
+        "productionDeployed",
+      ],
+    );
+    assert.equal(steps[1].targetFact, "releasePr");
+    assert.equal(steps[3].targetFact, "promotionPr");
   });
 
   it("ships task-delivery as a workflow-target loop", async () => {

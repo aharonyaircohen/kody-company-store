@@ -6,6 +6,7 @@
   "steps": [
     {
       "capability": "release-prepare",
+      "evidence": "releasePrExists",
       "target": "issue",
       "cliArgs": {
         "prefer": "ours"
@@ -13,18 +14,24 @@
     },
     {
       "capability": "release-merge",
+      "evidence": "defaultBranchMerged",
+      "targetFact": "releasePr",
       "target": "pr"
     },
     {
       "capability": "release-promote",
+      "evidence": "releasePromotionPrExists",
       "target": "issue"
     },
     {
       "capability": "release-merge",
+      "evidence": "releaseBranchMerged",
+      "targetFact": "promotionPr",
       "target": "pr"
     },
     {
-      "capability": "vercel-production-deploy"
+      "capability": "vercel-production-deploy",
+      "evidence": "productionDeployed"
     }
   ]
 }
