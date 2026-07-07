@@ -41,7 +41,6 @@ Default agentLoop templates:
 - `codebase-health`
 - `release-safety`
 - `daily-web-release-loop`
-- `kody-company-health`
 - `ai-agency-health`
 
 `ai-agency-health` should answer whether the current repo's AI agency is
