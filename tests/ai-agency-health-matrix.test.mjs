@@ -359,10 +359,16 @@ describe("ai-agency-health-matrix", () => {
     }
   });
 
-  it("uses the matrix capability from the ai-agency-health loop", async () => {
+  it("keeps agency health and work-intake capabilities under ai-agency-health", async () => {
     const goal = JSON.parse(await readFile(healthGoalPath, "utf8"));
 
-    assert.deepEqual(goal.capabilities, ["ai-agency-health-matrix"]);
-    assert.match(goal.description, /health matrix/i);
+    assert.deepEqual(goal.capabilities, [
+      "ai-agency-health-matrix",
+      "health-check",
+      "task-verifier",
+      "task-leader",
+    ]);
+    assert.equal(goal.type, "maintain");
+    assert.match(goal.description, /task intake/i);
   });
 });

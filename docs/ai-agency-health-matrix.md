@@ -23,7 +23,8 @@ label, open PRs, or change runtime state beyond writing its own report.
 
 ## Recommended Shape
 
-Use the existing Store-owned `ai-agency-health` goal loop as the recurring owner.
+Use the existing Store-owned `ai-agency-health` goal loop as the recurring owner
+for agency health and work-intake health.
 
 ```text
 goal loop:  ai-agency-health
@@ -31,9 +32,10 @@ capability: ai-agency-health-matrix
 output:     reports/ai-agency-health-matrix/runs/<timestamp>.md
 ```
 
-The loop owns the recurring question and cadence. The capability owns the
-deterministic inspection and report. Later action capabilities may consume the
-report, but the matrix itself stays read-only.
+The loop owns the recurring question, cadence, and sibling task-intake
+capabilities. The matrix capability owns deterministic inspection and its
+report. Other capabilities in the same loop may verify backlog, report stale
+assigned work, or dispatch verified work, but the matrix itself stays read-only.
 
 The current `ai-agency-doctor` capability can be evolved into this matrix or
 kept as a compatibility alias while consumers migrate. The target contract is
@@ -168,8 +170,8 @@ after the observe capability is stable and the team wants an explicit chain:
 health matrix -> install candidate -> verify candidate -> repair Store -> promote to another repo
 ```
 
-Until then, `ai-agency-health` plus `ai-agency-health-matrix` is the cleanest
-shape.
+Until then, `ai-agency-health` as the loop plus focused health and task-intake
+capabilities is the cleanest shape.
 
 ## Store Update Rule
 

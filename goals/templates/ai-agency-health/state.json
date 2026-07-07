@@ -4,17 +4,20 @@
   "template": true,
   "templateId": "ai-agency-health",
   "state": "inactive",
-  "type": "monitor",
+  "type": "maintain",
   "scheduleMode": "agentLoop",
   "schedule": "15m",
   "title": "AI Agency stays healthy",
-  "description": "Run the AI Agency health matrix and keep broken agency wiring visible.",
+  "description": "Keep agency wiring, task intake, stale assigned work, and backlog dispatch healthy.",
   "destination": {
-    "outcome": "The current repo's AI Agency is checked regularly and broken wiring is visible before work runs.",
+    "outcome": "The current repo's AI Agency is checked regularly and assigned work keeps moving.",
     "evidence": []
   },
   "capabilities": [
-    "ai-agency-health-matrix"
+    "ai-agency-health-matrix",
+    "health-check",
+    "task-verifier",
+    "task-leader"
   ],
   "route": [],
   "stage": "watching",

@@ -45,8 +45,9 @@ Default agentLoop templates:
 - `ai-agency-health`
 
 `ai-agency-health` should answer whether the current repo's AI agency is
-healthy. Its observe capability writes a repo-local health matrix report; it
-does not fix, install, promote, comment, or open PRs. See
+healthy and keep assigned work moving. Its matrix capability writes a
+repo-local health report, while its task-intake capabilities verify backlog,
+surface stale assigned work, and dispatch verified work. See
 [ai-agency-health-matrix.md](ai-agency-health-matrix.md).
 
 Consumer repos may also define local goal templates.

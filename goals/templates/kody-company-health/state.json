@@ -7,7 +7,7 @@
   "type": "maintain",
   "scheduleMode": "agentLoop",
   "title": "Kody company stays healthy",
-  "description": "Keep the Kody operating system, memory, delivery, and management capabilities healthy.",
+  "description": "Keep the Kody operating system, memory, and internal management capabilities healthy.",
   "destination": {
     "outcome": "Kody's company layer stays healthy and understandable.",
     "evidence": []
@@ -18,17 +18,14 @@
     "delivery-graph",
     "capability-call",
     "capability-review",
-    "health-check",
     "job-gap-scan",
     "kody-analyzer",
     "kody-mem",
     "kody-operator",
     "kody-vibe",
     "system-audit",
-    "task-leader",
     "task-memorize",
     "task-memory-extractor",
-    "task-verifier",
     "work-briefing"
   ],
   "route": [],
