@@ -5,7 +5,7 @@ set -euo pipefail
 
 NOW_ISO=$(date -u +%Y-%m-%dT%H:%M:%SZ)
 DRY_RUN="${KODY_DRY_RUN:-0}"
-STATE_JSON="${KODY_JOB_STATE_JSON:-{}}"
+STATE_JSON="${KODY_JOB_STATE_JSON:-"{}"}"
 PRIOR=$(jq -c '.data.perPr // {}' <<<"$STATE_JSON")
 
 PRS=$(gh pr list --state open --limit 200 \
