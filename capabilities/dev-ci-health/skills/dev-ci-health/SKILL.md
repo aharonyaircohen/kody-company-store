@@ -28,16 +28,24 @@ creating more cards.
    - This issue is intentionally visible even when CI is green or pending.
    - Keep returned `number` as `healthIssue`.
 
-2. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
+2. **Mark the health issue as Dashboard-visible:**
+   - Run `gh label create "kody:task" --color "0E8A16" --description "Kody task" --force`.
+   - Run `gh issue edit <healthIssue> --add-label "kody:task"`.
+
+3. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
    - `state` is `"GREEN"` -> comment on `healthIssue`, `submit_state`, and stop.
    - `state` is `"PENDING"` -> comment on `healthIssue`, `submit_state`, and stop.
    - `state` is `"RED"` -> keep `sha` and `failing` (each has `name` + `detailsUrl`), comment on `healthIssue`, and continue.
 
-3. **Ensure the one repair issue (this IS the fix dedup):**
+4. **Ensure the one repair issue (this IS the fix dedup):**
    `ensure_issue({ key: "default-branch-ci-red-{{defaultBranch}}", title: "{{defaultBranch}} CI is red — Kody auto-fix", body: <below> })`
    - If it returns `created: false`, a fix is already in flight -> `submit_state`
      and stop. Do **not** dispatch again.
    - If `created: true`, keep the returned `number` and continue.
+
+5. **Mark the repair issue as Dashboard-visible:**
+   - Run `gh label create "kody:fixing-ci" --color "1D76DB" --description "Kody is fixing CI" --force`.
+   - Run `gh issue edit <number> --add-label "kody:fixing-ci"`.
 
    Health issue body:
 
@@ -62,12 +70,12 @@ creating more cards.
    code defect, make the smallest change that helps — or none, and say so.
    ```
 
-4. **Dispatch the fix:** `start_capability({ name: "run", issue: <number> })`.
+6. **Dispatch the fix:** `start_capability({ name: "run", issue: <number> })`.
 
-5. **Notify once:** `ensure_comment({ issue: <number>, key: "default-branch-ci-red-{{defaultBranch}}:dispatched", body: "CTO auto-ran — dispatched @kody run (failing: <names>). The fix targets {{defaultBranch}} CI." })`.
+7. **Notify once:** `ensure_comment({ issue: <number>, key: "default-branch-ci-red-{{defaultBranch}}:dispatched", body: "CTO auto-ran — dispatched @kody run (failing: <names>). The fix targets {{defaultBranch}} CI." })`.
 
-6. **`submit_state`** with `{ cursor: "idle", data: {}, done: false }`.
+8. **`submit_state`** with `{ cursor: "idle", data: {}, done: false }`.
 
-The health issue (`key: "default-branch-ci-health-{{defaultBranch}}"`) is the always-visible Dashboard card.
+The health issue (`key: "default-branch-ci-health-{{defaultBranch}}"`) is the always-visible Dashboard card because it carries a `kody:*` label.
 The repair issue (`key: "default-branch-ci-red-{{defaultBranch}}"`) is the fix dedup — while it is open,
 `ensure_issue` returns `created: false` and the capability stops before dispatching another fix.
