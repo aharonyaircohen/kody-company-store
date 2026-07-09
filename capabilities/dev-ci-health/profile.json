@@ -2,7 +2,7 @@
   "name": "dev-ci-health",
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Watch the repo default branch CI and open or reuse one tracking issue when the branch is red.",
+  "describe": "Keep repo default branch CI visible and open a repair issue when the branch is red.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",

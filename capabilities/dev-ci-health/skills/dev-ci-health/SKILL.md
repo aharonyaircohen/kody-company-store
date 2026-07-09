@@ -1,6 +1,6 @@
 ---
 name: dev-ci-health
-description: Watch the repo default branch CI and open or reuse one tracking issue when the branch is red.
+description: Keep repo default branch CI visible and open a repair issue when the branch is red.
 ---
 
 # Dev CI Health Skill
@@ -11,28 +11,45 @@ Runtime state is owned by the engine. Do not ask the capability author to config
 
 ## Method
 
-Watch the repo default branch's own CI. If a check on `{{defaultBranch}}`'s tip is failing **and no
-fix is already in flight**, open the single tracking issue and dispatch
-`@kody run` to fix it.
+Keep the repo default branch's own CI visible in Dashboard. Always open or reuse one
+health tracking issue for `{{defaultBranch}}`; only open a repair issue and dispatch
+`@kody run` when the branch is red and no repair is already in flight.
 
 Why: `fix-ci` / `sync` / `resolve` all need a `--pr`, but the default branch has no PR — so a
-broken default-branch build is invisible to PR-only health tools. This routes the repair
-through a tracking issue. Duplicates are impossible here: `ensure_issue` is keyed and
-idempotent, so a re-tick reuses the one open issue instead of creating another.
+broken default-branch build is invisible to PR-only health tools. The health issue keeps
+the watcher visible; the repair issue routes the fix. Duplicates are impossible here:
+`ensure_issue` is keyed and idempotent, so a re-tick reuses open issues instead of
+creating more cards.
 
 ## Tick
 
-1. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
-   - `state` is `"GREEN"` or `"PENDING"` -> nothing to do. `submit_state` and stop.
-   - `state` is `"RED"` -> keep `sha` and `failing` (each has `name` + `detailsUrl`), continue.
+1. **Ensure the visible health issue:**
+   `ensure_issue({ key: "default-branch-ci-health-{{defaultBranch}}", title: "{{defaultBranch}} CI health monitor", body: <health body> })`
+   - This issue is intentionally visible even when CI is green or pending.
+   - Keep returned `number` as `healthIssue`.
 
-2. **Ensure the one tracking issue (this IS the dedup):**
+2. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
+   - `state` is `"GREEN"` -> comment on `healthIssue`, `submit_state`, and stop.
+   - `state` is `"PENDING"` -> comment on `healthIssue`, `submit_state`, and stop.
+   - `state` is `"RED"` -> keep `sha` and `failing` (each has `name` + `detailsUrl`), comment on `healthIssue`, and continue.
+
+3. **Ensure the one repair issue (this IS the fix dedup):**
    `ensure_issue({ key: "default-branch-ci-red-{{defaultBranch}}", title: "{{defaultBranch}} CI is red — Kody auto-fix", body: <below> })`
    - If it returns `created: false`, a fix is already in flight -> `submit_state`
      and stop. Do **not** dispatch again.
    - If `created: true`, keep the returned `number` and continue.
 
-   Issue body:
+   Health issue body:
+
+   ```
+   {{mentions}} `{{defaultBranch}}` branch CI health is being watched.
+
+   This card stays visible so Dashboard shows the default-branch CI health tool even when CI is pending or green.
+
+   When CI turns red, Kody opens or reuses the matching repair issue and tries to dispatch a fix.
+   ```
+
+   Repair issue body:
 
    ```
    {{mentions}} 🔴 `{{defaultBranch}}` branch CI is failing.
@@ -45,12 +62,12 @@ idempotent, so a re-tick reuses the one open issue instead of creating another.
    code defect, make the smallest change that helps — or none, and say so.
    ```
 
-3. **Dispatch the fix:** `start_capability({ name: "run", issue: <number> })`.
+4. **Dispatch the fix:** `start_capability({ name: "run", issue: <number> })`.
 
-4. **Notify once:** `ensure_comment({ issue: <number>, key: "default-branch-ci-red-{{defaultBranch}}:dispatched", body: "CTO auto-ran — dispatched @kody run (failing: <names>). The fix targets {{defaultBranch}} CI." })`.
+5. **Notify once:** `ensure_comment({ issue: <number>, key: "default-branch-ci-red-{{defaultBranch}}:dispatched", body: "CTO auto-ran — dispatched @kody run (failing: <names>). The fix targets {{defaultBranch}} CI." })`.
 
-5. **`submit_state`** with `{ cursor: "idle", data: {}, done: false }`.
+6. **`submit_state`** with `{ cursor: "idle", data: {}, done: false }`.
 
-The reused issue (`key: "default-branch-ci-red-{{defaultBranch}}"`) is the entire dedup — while it is open,
-`ensure_issue` returns `created: false` and the capability stops. The fix PR closes it
-on merge; only then does a later tick open a fresh one.
+The health issue (`key: "default-branch-ci-health-{{defaultBranch}}"`) is the always-visible Dashboard card.
+The repair issue (`key: "default-branch-ci-red-{{defaultBranch}}"`) is the fix dedup — while it is open,
+`ensure_issue` returns `created: false` and the capability stops before dispatching another fix.
