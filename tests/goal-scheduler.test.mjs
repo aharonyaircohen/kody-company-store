@@ -66,6 +66,15 @@ function writeGoal(cwd, goalId, state) {
 }
 
 describe("goal-scheduler", () => {
+  it("allows enough time for sequential managed-goal ticks", async () => {
+    const profile = JSON.parse(
+      await readFileSync(new URL("../capabilities/goal-scheduler/profile.json", import.meta.url), "utf8"),
+    );
+    const scheduler = profile.scripts.preflight.find((step) => step.shell === "scheduler.sh");
+
+    assert.equal(scheduler.timeoutSec, 1800);
+  });
+
   it("honors 15-minute Store loop schedules for string activations", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {

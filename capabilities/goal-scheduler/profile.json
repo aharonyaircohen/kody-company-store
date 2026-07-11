@@ -37,7 +37,8 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "scheduler.sh"
+        "shell": "scheduler.sh",
+        "timeoutSec": 1800
       },
       {
         "script": "skipAgent"
