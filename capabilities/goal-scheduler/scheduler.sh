@@ -554,8 +554,8 @@ def preferred_daily_wait_reason(data: dict, now: datetime) -> str | None:
     return None
 
 
-def schedule_wait_reason(data: dict, now: datetime) -> str | None:
-    every = goal_schedule_interval(data)
+def schedule_wait_reason(data: dict, now: datetime, activation_every: str | None = None) -> str | None:
+    every = activation_every or goal_schedule_interval(data)
     if not every:
         return None
     if every == "1d" and isinstance(data.get("preferredRunTime"), dict):
@@ -688,7 +688,16 @@ for goal_id in goal_ids:
     if not managed:
         print(f"[goal-scheduler] skip {goal_id}: todo file is not a managed goal")
         continue
-    wait_reason = schedule_wait_reason(data, now)
+    activation_schedule = next(
+        (
+            schedule
+            for schedule in scheduled_recurring
+            if is_scheduled_instance(goal_id, data, schedule)
+        ),
+        None,
+    )
+    activation_every = activation_schedule.get("every") if activation_schedule else None
+    wait_reason = schedule_wait_reason(data, now, activation_every)
     if wait_reason:
         print(f"[goal-scheduler] skip {goal_id}: {wait_reason}")
         continue

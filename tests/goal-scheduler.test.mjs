@@ -220,6 +220,47 @@ describe("goal-scheduler", () => {
     }
   });
 
+  it("uses the company activation interval for an existing scheduled instance", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeConfig(cwd, [{ template: "agency-evolution-loop", every: "15m" }]);
+      writeGoal(cwd, "agency-evolution-loop-b123", {
+        version: 1,
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        sourceTemplate: "agency-evolution-loop",
+        type: "agentLoop",
+        destination: { outcome: "Agency evolves", evidence: [] },
+        capabilities: ["agency-portfolio-management"],
+        route: [],
+        facts: {},
+        blockers: [],
+        scheduleState: {
+          mode: "agentLoop",
+          lastGoalTickAt: "2026-06-20T12:00:00Z",
+          lastDecision: { kind: "idle", reason: "seed", at: "2026-06-20T12:00:00Z" },
+          capabilities: {},
+        },
+      });
+
+      const early = runScheduler(cwd, binDir, logFile, "2026-06-20T12:05:00Z");
+      assert.equal(early.result.status, 0, early.result.stderr);
+      assert.deepEqual(early.calls, []);
+      assert.match(early.result.stdout, /waiting schedule 15m/);
+
+      const due = runScheduler(cwd, binDir, logFile, "2026-06-20T12:15:00Z");
+      assert.equal(due.result.status, 0, due.result.stderr);
+      assert.deepEqual(due.calls, [
+        "kody-engine implementation goal-manager --goal agency-evolution-loop-b123",
+      ]);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("can limit a tick to one selected active goal", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {
