@@ -88,4 +88,30 @@ describe("Executive agency management", () => {
     assert.match(coo, /activate, pause, resume, retry, or escalate/i);
     assert.match(coo, /ai-agency-health/i);
   });
+
+  it("gives CEO and CTO a verifiable state-repo persistence contract", async () => {
+    const ceo = await readFile(
+      new URL(
+        "../capabilities/company-portfolio-management/skills/company-portfolio-management/SKILL.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    const cto = await readFile(
+      new URL(
+        "../capabilities/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+
+    assert.match(ceo, /portfolio\.json/);
+    assert.match(cto, /agency-portfolio\.json/);
+    for (const skill of [ceo, cto]) {
+      assert.match(skill, /gh api --method PUT/);
+      assert.match(skill, /read it back/i);
+      assert.match(skill, /FAILED/);
+      assert.match(skill, /Do not clone the state repo/i);
+    }
+  });
 });
