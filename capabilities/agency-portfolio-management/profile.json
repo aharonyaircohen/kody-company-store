@@ -1,0 +1,33 @@
+{
+  "name": "agency-portfolio-management",
+  "role": "watch",
+  "kind": "oneshot",
+  "describe": "CTO builds and scales the agency portfolio from active intents and CEO priorities.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": ["Read", "Bash", "Grep", "Glob"],
+    "hooks": [],
+    "skills": ["agency-portfolio-management"],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": ["gh"],
+  "scripts": {
+    "preflight": [{ "script": "buildSyntheticPlugin" }, { "script": "composePrompt" }],
+    "postflight": [{ "script": "parseAgentResult" }]
+  },
+  "output": {
+    "actionTypes": ["AGENCY_PORTFOLIO_MANAGED", "AGENCY_PORTFOLIO_MANAGEMENT_FAILED", "AGENT_NOT_RUN"]
+  },
+  "action": "agency-portfolio-management",
+  "agent": "cto",
+  "implementations": ["agency-portfolio-management"]
+}

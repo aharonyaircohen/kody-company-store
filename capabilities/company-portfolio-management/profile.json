@@ -1,0 +1,33 @@
+{
+  "name": "company-portfolio-management",
+  "role": "watch",
+  "kind": "oneshot",
+  "describe": "CEO reviews active company intents and company evidence and sets growth priorities.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": ["Read", "Bash", "Grep", "Glob"],
+    "hooks": [],
+    "skills": ["company-portfolio-management"],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": ["gh"],
+  "scripts": {
+    "preflight": [{ "script": "buildSyntheticPlugin" }, { "script": "composePrompt" }],
+    "postflight": [{ "script": "parseAgentResult" }]
+  },
+  "output": {
+    "actionTypes": ["COMPANY_PORTFOLIO_MANAGED", "COMPANY_PORTFOLIO_MANAGEMENT_FAILED", "AGENT_NOT_RUN"]
+  },
+  "action": "company-portfolio-management",
+  "agent": "ceo",
+  "implementations": ["company-portfolio-management"]
+}

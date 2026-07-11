@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "agency-evolution-loop",
+  "state": "inactive",
+  "type": "agentLoop",
+  "scheduleMode": "agentLoop",
+  "schedule": "1d",
+  "title": "CTO evolves the AI agency",
+  "description": "CTO turns active company intents and CEO priorities into a coherent agency portfolio.",
+  "destination": {
+    "outcome": "The agency has the smallest effective set of intent-backed goals, loops, capabilities, workflows, and agents.",
+    "evidence": []
+  },
+  "capabilities": ["agency-portfolio-management"],
+  "route": [],
+  "stage": "watching",
+  "facts": {},
+  "blockers": []
+}
