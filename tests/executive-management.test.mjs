@@ -112,6 +112,8 @@ describe("Executive agency management", () => {
       assert.match(skill, /read it back/i);
       assert.match(skill, /FAILED/);
       assert.match(skill, /Do not clone the state repo/i);
+      assert.match(skill, /A roll-forward is not a new decision/i);
+      assert.match(skill, /do not PUT/i);
     }
   });
 });

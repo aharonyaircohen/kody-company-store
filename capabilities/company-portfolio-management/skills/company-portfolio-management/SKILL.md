@@ -17,6 +17,7 @@ description: Set company growth priorities from active company intents and curre
 ## State output
 
 - The decision file is `<state.path>/portfolio.json` in the state repo configured by `kody.config.json`.
+- A roll-forward is not a new decision. Compare the decision-bearing fields with the current file before writing; changes only to timestamps, job IDs, wording, or evidence ordering do not count. When priorities, outcomes, evidence meaning, rank, and next owner are unchanged, do not PUT and report `no change` from the existing file.
 - Do not clone the state repo and do not use Write or Edit outside the target workspace. Build the JSON payload from Bash and persist it through the GitHub contents API with `gh api --method PUT`; include the current blob `sha` when replacing an existing file.
 - After the PUT, read it back through `gh api` and verify the active `intentId`, rank, outcome, evidence, and next owner. If persistence or verification fails, finish with `FAILED: <reason>`; never report a successful management decision that exists only in the agent session.
 - Do not run the target repo's full test or typecheck suites during a portfolio review. Use existing results and narrow evidence checks so one management tick fits inside its configured cadence.
