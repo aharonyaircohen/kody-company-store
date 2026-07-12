@@ -18,7 +18,7 @@
       "Glob"
     ],
     "hooks": [],
-    "skills": ["github-actions-docs"],
+    "skills": [],
     "commands": [],
     "subagents": [],
     "plugins": [],
@@ -29,6 +29,7 @@
   ],
   "capabilityTools": [
     "read_check_runs",
+    "read_thread",
     "ensure_issue",
     "start_capability",
     "ensure_comment"
@@ -74,6 +75,7 @@
   ],
   "tools": [
     "read_check_runs",
+    "read_thread",
     "ensure_issue",
     "start_capability",
     "ensure_comment"

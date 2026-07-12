@@ -9,11 +9,14 @@ Duplicates are impossible here: `ensure_issue` is keyed idempotently, so a re-ti
 ## Tick
 
 1. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
+   - Read only `{{defaultBranch}}`; do not inspect `main` or another branch.
    - If `state` is `"GREEN"` or `"PENDING"`, call `submit_state` with fresh `lastRunISO` and `nextEligibleISO`, then stop.
    - If `state` is `"RED"`, keep `sha` and `failing` (each `name` + `detailsUrl`), then continue.
 2. **Ensure one repair issue (dedup):** `ensure_issue({ key: "default-branch-ci-red-{{defaultBranch}}", title: "{{defaultBranch}} CI is red - Kody auto-fix", body: <below> })`.
-   - If it returns `created: false`, a fix is already in flight. Call `submit_state` with fresh `lastRunISO` and `nextEligibleISO`, then stop. Do not dispatch again.
-   - If `created: true`, keep returned `number`, then continue.
+   - Keep the returned `number` whether `created` is true or false.
+   - If `created: false`, call `read_thread` for that issue. Stop only when an
+     existing comment contains the stable `:dispatched` or `:awaiting` marker;
+     otherwise continue because a prior run may have stopped after creating the issue.
 3. **Mark the repair issue as Dashboard-visible:** ensure label `kody:fixing-ci` exists with `gh label create "kody:fixing-ci" --color "1D76DB" --description "Kody is fixing CI" --force`, then run `gh issue edit <number> --add-label "kody:fixing-ci"`.
 
 Issue body:
