@@ -27,11 +27,14 @@ function gh(args) {
 let run = null;
 let status = process.env.KODY_OBSERVER_CI_STATUS || "";
 if (!status) {
-  const output = gh([
+  const output = process.env.KODY_OBSERVER_CI_RUNS_JSON || gh([
     "run", "list", "--repo", `${owner}/${repo}`, "--branch", branch,
-    "--limit", "1", "--json", "conclusion,status,url,name,databaseId",
+    "--limit", "20", "--json", "conclusion,status,url,name,databaseId",
   ]);
-  run = JSON.parse(output || "[]")[0] || null;
+  const runs = JSON.parse(output || "[]");
+  run = runs.find((candidate) =>
+    String(candidate?.name || "").trim().toLowerCase() !== "kody"
+  ) || null;
   status = !run
     ? "unknown"
     : run.status !== "completed"

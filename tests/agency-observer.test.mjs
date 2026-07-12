@@ -130,4 +130,63 @@ describe("agency observer and operating loops", () => {
       rmSync(cwd, { recursive: true, force: true });
     }
   });
+
+  it("ignores the agency runner when selecting repository CI evidence", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-agency-observer-runs-"));
+    const stateRoot = join(cwd, "state-root");
+    try {
+      mkdirSync(stateRoot, { recursive: true });
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify({
+          github: { owner: "A-Guy", repo: "example" },
+          git: { defaultBranch: "dev" },
+          state: { path: "example" },
+        })}\n`,
+      );
+      const result = spawnSync("bash", [observerScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STATE_ROOT: stateRoot,
+          KODY_OBSERVER_CI_RUNS_JSON: JSON.stringify([
+            {
+              name: "kody",
+              status: "in_progress",
+              conclusion: "",
+              url: "https://example.test/kody",
+              databaseId: 1,
+            },
+            {
+              name: "Test CI",
+              status: "completed",
+              conclusion: "success",
+              url: "https://example.test/ci",
+              databaseId: 2,
+            },
+          ]),
+          KODY_OBSERVER_NOW: "2026-07-12T10:00:00.000Z",
+        },
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, result.stderr);
+      assert.match(result.stdout, /status=healthy/);
+      const observation = JSON.parse(
+        await readFile(
+          join(
+            stateRoot,
+            "example",
+            "agency",
+            "observations",
+            "obs-ci-dev-20260712t100000000z.json",
+          ),
+          "utf8",
+        ),
+      );
+      assert.equal(observation.status, "healthy");
+      assert.equal(observation.evidence[0].label, "Test CI");
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
 });
