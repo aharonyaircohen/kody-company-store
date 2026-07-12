@@ -7,7 +7,7 @@
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
-    "maxTurns": 40,
+    "maxTurns": 10,
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "cacheable": false,

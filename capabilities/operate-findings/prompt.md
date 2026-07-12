@@ -12,6 +12,11 @@ even when their files are Store-backed and absent from the consumer checkout.
 
 For one Finding at a time:
 
+- `observed`: decide, persist with `agency-state.mjs decide`, then stop.
+- `deciding`: deliver with the existing Capability, persist with
+  `agency-state.mjs deliver`, then stop.
+- `verifying`: use only a newer Observation to resolve or reopen, then stop.
+
 1. Check active Intents and Goals to decide whether it matters now.
 2. When an existing Capability can safely act, persist the decision with
    `node .kody-engine/agency-state.mjs decide <finding-id> <capability> <reason>`.
