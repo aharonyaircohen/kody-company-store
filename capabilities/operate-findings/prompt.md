@@ -1,7 +1,11 @@
 # Instructions
 
-Read open or `in_progress` records from `agency/findings/` in the configured
-state repo.
+Read `.kody-engine/agency-findings.json` first. It is loaded deterministically
+from the configured state repo before this agent starts. Do not search the
+consumer repository for `agency/findings/`.
+
+The file includes `stateRepo`, `statePath`, and `stateBranch`. Use those exact
+values when reading or updating Finding and Learning JSON through `gh api`.
 
 For one Finding at a time:
 

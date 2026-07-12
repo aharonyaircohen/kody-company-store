@@ -10,6 +10,7 @@ const observerGoalPath = new URL("../goals/templates/agency-observer/state.json"
 const operatingGoalPath = new URL("../goals/templates/agency-operating-loop/state.json", import.meta.url);
 const observerProfilePath = new URL("../capabilities/observe-repo-ci/profile.json", import.meta.url);
 const operatingProfilePath = new URL("../capabilities/operate-findings/profile.json", import.meta.url);
+const operatingLoaderPath = new URL("../capabilities/operate-findings/load-agency-findings.sh", import.meta.url);
 const observerScriptPath = new URL("../capabilities/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
 
 describe("agency observer and operating loops", () => {
@@ -32,6 +33,9 @@ describe("agency observer and operating loops", () => {
       "start_capability",
       "ensure_comment",
     ]);
+    assert.deepEqual(operateCapability.scripts.preflight[0], {
+      shell: "load-agency-findings.sh",
+    });
     assert.deepEqual(operateCapability.readsFrom, ["findings", "intents", "goals"]);
     assert.deepEqual(operateCapability.writesTo, ["findings", "learnings"]);
   });
@@ -191,6 +195,59 @@ describe("agency observer and operating loops", () => {
       );
       assert.equal(observation.status, "healthy");
       assert.equal(observation.evidence[0].label, "Test CI");
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("loads active findings from the configured state repo for the operating agent", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-operate-findings-loader-"));
+    const stateRoot = join(cwd, "state-root");
+    try {
+      mkdirSync(join(stateRoot, "example", "agency", "findings"), {
+        recursive: true,
+      });
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify({
+          github: { owner: "A-Guy", repo: "example" },
+          state: { path: "example" },
+        })}\n`,
+      );
+      writeFileSync(
+        join(
+          stateRoot,
+          "example",
+          "agency",
+          "findings",
+          "finding-ci.json",
+        ),
+        `${JSON.stringify({ id: "finding-ci", status: "open", phase: "observed" })}\n`,
+      );
+      writeFileSync(
+        join(
+          stateRoot,
+          "example",
+          "agency",
+          "findings",
+          "finding-closed.json",
+        ),
+        `${JSON.stringify({ id: "finding-closed", status: "resolved", phase: "closed" })}\n`,
+      );
+
+      const result = spawnSync("bash", [operatingLoaderPath.pathname], {
+        cwd,
+        env: { ...process.env, KODY_STATE_ROOT: stateRoot },
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, result.stderr);
+      const loaded = JSON.parse(
+        await readFile(join(cwd, ".kody-engine", "agency-findings.json"), "utf8"),
+      );
+      assert.deepEqual(loaded.findings.map((finding) => finding.id), [
+        "finding-ci",
+      ]);
+      assert.equal(loaded.statePath, "example");
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
