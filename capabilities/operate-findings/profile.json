@@ -26,8 +26,10 @@
     "start_capability",
     "ensure_comment"
   ],
+  "capabilityToolMode": "append",
   "scripts": {
     "preflight": [
+      { "script": "loadCapabilityState" },
       { "shell": "load-agency-findings.sh" },
       { "script": "buildSyntheticPlugin" },
       { "script": "composePrompt" }

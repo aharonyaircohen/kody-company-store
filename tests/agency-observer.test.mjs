@@ -33,7 +33,11 @@ describe("agency observer and operating loops", () => {
       "start_capability",
       "ensure_comment",
     ]);
+    assert.equal(operateCapability.capabilityToolMode, "append");
     assert.deepEqual(operateCapability.scripts.preflight[0], {
+      script: "loadCapabilityState",
+    });
+    assert.deepEqual(operateCapability.scripts.preflight[1], {
       shell: "load-agency-findings.sh",
     });
     assert.deepEqual(operateCapability.readsFrom, ["findings", "intents", "goals"]);
