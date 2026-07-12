@@ -1,0 +1,36 @@
+{
+  "name": "operate-findings",
+  "role": "watch",
+  "kind": "oneshot",
+  "describe": "Process open Findings through decide, deliver, verify, and learn phases.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "tools": ["Read", "Bash", "Grep", "Glob"],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": ["gh"],
+  "scripts": {
+    "preflight": [{ "script": "buildSyntheticPlugin" }, { "script": "composePrompt" }],
+    "postflight": [{ "script": "parseAgentResult" }, { "script": "appendCompanyActivity" }]
+  },
+  "output": {
+    "actionTypes": ["FINDINGS_OPERATED", "FINDINGS_OPERATION_FAILED", "AGENT_NOT_RUN"]
+  },
+  "action": "operate-findings",
+  "agent": "coo",
+  "capabilityKind": "act",
+  "implementations": ["operate-findings"],
+  "readsFrom": ["findings", "intents", "goals"],
+  "writesTo": ["findings", "learnings"]
+}

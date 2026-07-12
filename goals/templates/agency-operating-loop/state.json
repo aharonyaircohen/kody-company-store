@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "agency-operating-loop",
+  "state": "inactive",
+  "type": "monitor",
+  "scheduleMode": "agentLoop",
+  "schedule": "15m",
+  "title": "Agency operating loop",
+  "description": "Decide, deliver, verify, and learn from open agency Findings.",
+  "destination": {
+    "outcome": "Open Findings are processed through a visible phase and verified changes create Learning records.",
+    "evidence": []
+  },
+  "capabilities": ["operate-findings"],
+  "route": [],
+  "stage": "deciding",
+  "facts": {},
+  "blockers": []
+}

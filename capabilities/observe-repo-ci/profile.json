@@ -1,0 +1,35 @@
+{
+  "name": "observe-repo-ci",
+  "role": "primitive",
+  "kind": "oneshot",
+  "describe": "Read default-branch CI evidence and write one Observation plus the current CI Finding.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": ["gh", "node"],
+  "scripts": {
+    "preflight": [{ "shell": "run-observe-repo-ci.sh" }, { "script": "skipAgent" }],
+    "postflight": []
+  },
+  "output": {
+    "actionTypes": ["REPO_CI_OBSERVED", "REPO_CI_OBSERVATION_FAILED", "AGENT_NOT_RUN"]
+  },
+  "agent": "coo",
+  "capabilityKind": "observe",
+  "implementations": ["observe-repo-ci"],
+  "readsFrom": ["repo-ci"],
+  "writesTo": ["observations", "findings"]
+}
