@@ -25,23 +25,53 @@ function gh(args) {
 }
 
 let run = null;
+let evidenceKind = "workflow-run";
 let status = process.env.KODY_OBSERVER_CI_STATUS || "";
 if (!status) {
-  const output = process.env.KODY_OBSERVER_CI_RUNS_JSON || gh([
-    "run", "list", "--repo", `${owner}/${repo}`, "--branch", branch,
-    "--limit", "20", "--json", "conclusion,status,url,name,databaseId",
-  ]);
-  const runs = JSON.parse(output || "[]");
-  run = runs.find((candidate) =>
-    String(candidate?.name || "").trim().toLowerCase() !== "kody"
-  ) || null;
-  status = !run
-    ? "unknown"
-    : run.status !== "completed"
-      ? "unknown"
-      : run.conclusion === "success"
+  let commitStatus = null;
+  try {
+    if (process.env.KODY_OBSERVER_COMMIT_STATUS_JSON) {
+      commitStatus = JSON.parse(process.env.KODY_OBSERVER_COMMIT_STATUS_JSON);
+    } else {
+      const sha = gh(["api", `repos/${owner}/${repo}/commits/${branch}`, "--jq", ".sha"]);
+      commitStatus = JSON.parse(gh(["api", `repos/${owner}/${repo}/commits/${sha}/status`]));
+    }
+  } catch {}
+  const statuses = Array.isArray(commitStatus?.statuses) ? commitStatus.statuses : [];
+  if (statuses.length > 0) {
+    const selected = statuses.find((candidate) => ["failure", "error"].includes(candidate?.state))
+      || statuses.find((candidate) => candidate?.state === "pending")
+      || statuses[0];
+    run = {
+      name: selected?.context || "Commit status",
+      status: selected?.state === "pending" ? "in_progress" : "completed",
+      conclusion: selected?.state || commitStatus.state || "pending",
+      url: selected?.target_url || "",
+      sha: commitStatus?.sha || "",
+    };
+    evidenceKind = "commit-status";
+    status = ["failure", "error"].includes(commitStatus.state)
+      ? "unhealthy"
+      : commitStatus.state === "success"
         ? "healthy"
-        : "unhealthy";
+        : "unknown";
+  } else {
+    const output = process.env.KODY_OBSERVER_CI_RUNS_JSON || gh([
+      "run", "list", "--repo", `${owner}/${repo}`, "--branch", branch,
+      "--limit", "20", "--json", "conclusion,status,url,name,databaseId",
+    ]);
+    const runs = JSON.parse(output || "[]");
+    run = runs.find((candidate) =>
+      String(candidate?.name || "").trim().toLowerCase() !== "kody"
+    ) || null;
+    status = !run
+      ? "unknown"
+      : run.status !== "completed"
+        ? "unknown"
+        : run.conclusion === "success"
+          ? "healthy"
+          : "unhealthy";
+  }
 }
 if (!["healthy", "unhealthy", "unknown"].includes(status)) {
   throw new Error(`Unsupported CI status: ${status}`);
@@ -64,11 +94,12 @@ const observation = {
   status,
   summary,
   evidence: run ? [{
-    kind: "workflow-run",
+    kind: evidenceKind,
     label: run.name || "GitHub Actions",
     status: run.conclusion || run.status,
     ...(run.url ? { url: run.url } : {}),
     ...(run.databaseId ? { value: Number(run.databaseId) } : {}),
+    ...(run.sha ? { value: run.sha } : {}),
   }] : [{ kind: "ci-status", label: summary, status }],
   observedAt: now,
 };
