@@ -8,7 +8,7 @@ Duplicates are impossible here: `ensure_issue` is keyed idempotently, so a re-ti
 
 ## Tick
 
-1. **Read default branch CI:** `read_check_runs({ ref: "{{defaultBranch}}" })`.
+1. **Read default branch CI:** `read_check_runs({ ref: "default" })`.
    - Read only `{{defaultBranch}}`; do not inspect `main` or another branch.
    - If `state` is `"GREEN"` or `"PENDING"`, call `submit_state` with fresh `lastRunISO` and `nextEligibleISO`, then stop.
    - If `state` is `"RED"`, keep `sha` and `failing` (each `name` + `detailsUrl`), then continue.
