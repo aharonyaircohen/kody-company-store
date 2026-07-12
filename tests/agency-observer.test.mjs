@@ -110,6 +110,20 @@ describe("agency observer and operating loops", () => {
       assert.equal(reopened.phase, "observed");
       assert.equal(reopened.decision, undefined);
       assert.equal(reopened.deliveryRunId, undefined);
+
+      writeFileSync(
+        findingPath,
+        `${JSON.stringify({
+          ...reopened,
+          decision: { action: "stale" },
+          deliveryRunId: "stale",
+        })}\n`,
+      );
+      const stillRed = run("unhealthy", "2026-07-12T11:00:00.000Z");
+      assert.equal(stillRed.status, 0, stillRed.stderr);
+      const observed = JSON.parse(await readFile(findingPath, "utf8"));
+      assert.equal(observed.decision, undefined);
+      assert.equal(observed.deliveryRunId, undefined);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }

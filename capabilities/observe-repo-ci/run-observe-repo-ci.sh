@@ -128,6 +128,7 @@ const shouldReopen = !readyForVerification && (
   previous?.phase === "closed" ||
   previous?.status === "resolved"
 );
+const preserveOperation = readyForVerification || (!shouldReopen && previous?.phase !== "observed");
 const finding = {
   version: 1,
   id: findingId,
@@ -142,8 +143,8 @@ const finding = {
   observationIds: ids,
   createdAt: previous?.createdAt || now,
   updatedAt: now,
-  ...(!shouldReopen && previous?.decision ? { decision: previous.decision } : {}),
-  ...(!shouldReopen && previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
+  ...(preserveOperation && previous?.decision ? { decision: previous.decision } : {}),
+  ...(preserveOperation && previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
   ...(previous?.learningIds ? { learningIds: previous.learningIds } : {}),
 };
 writeJson(`agency/findings/${findingId}.json`, finding, `finding: ${finding.status} ${findingId}`);
