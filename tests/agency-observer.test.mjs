@@ -280,7 +280,9 @@ describe("agency observer and operating loops", () => {
         env: {
           ...process.env,
           PATH: `${bin}:${process.env.PATH}`,
-          RAW_FILE: Buffer.from(JSON.stringify(finding)).toString("base64"),
+          RAW_FILE: Buffer.from(
+            Buffer.from(JSON.stringify(finding)).toString("base64"),
+          ).toString("base64"),
           FINDING_LIST: JSON.stringify([
             { type: "file", name: "finding-ci.json" },
           ]),

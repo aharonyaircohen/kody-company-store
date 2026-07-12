@@ -7,6 +7,7 @@ export KODY_STORE_CAPABILITIES_ROOT="$(dirname "$PROFILE_DIR")"
 node --input-type=module <<'NODE'
 import { execFileSync } from "node:child_process";
 import {
+  copyFileSync,
   existsSync,
   mkdirSync,
   readFileSync,
@@ -55,16 +56,24 @@ function gh(args) {
 
 function remoteJson(relative) {
   const apiPath = `repos/${stateOwner}/${stateRepo}/contents/${statePath}/${relative}`;
-  const raw = gh(["api", "--method", "GET", apiPath, "-f", `ref=${stateBranch}`]);
-  try {
-    const payload = JSON.parse(raw);
-    if (payload && typeof payload === "object" && typeof payload.content === "string") {
-      return JSON.parse(Buffer.from(payload.content, "base64").toString("utf8"));
+  let text = gh(["api", "--method", "GET", apiPath, "-f", `ref=${stateBranch}`]);
+  for (let depth = 0; depth < 4; depth += 1) {
+    try {
+      const payload = JSON.parse(text);
+      if (payload && typeof payload === "object" && typeof payload.content === "string") {
+        text = Buffer.from(payload.content, "base64").toString("utf8");
+        continue;
+      }
+      if (typeof payload === "string") {
+        text = payload;
+        continue;
+      }
+      return payload;
+    } catch {
+      text = Buffer.from(text.replace(/\s/g, ""), "base64").toString("utf8");
     }
-    return payload;
-  } catch {
-    return JSON.parse(Buffer.from(raw, "base64").toString("utf8"));
   }
+  throw new Error(`invalid agency state: ${relative}`);
 }
 
 let records = [];
@@ -107,6 +116,10 @@ const output = {
   findings,
 };
 mkdirSync(".kody-engine", { recursive: true });
+copyFileSync(
+  join(process.env.KODY_STORE_CAPABILITIES_ROOT, "operate-findings", "agency-state.mjs"),
+  ".kody-engine/agency-state.mjs",
+);
 writeFileSync(
   ".kody-engine/agency-findings.json",
   `${JSON.stringify(output, null, 2)}\n`,
