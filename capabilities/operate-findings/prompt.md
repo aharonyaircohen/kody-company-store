@@ -22,7 +22,9 @@ For one Finding at a time:
    `node .kody-engine/agency-state.mjs decide <finding-id> <capability> <reason>`.
 3. Create or reuse one issue for the Finding, then use the `start_capability`
    tool to invoke the existing Capability. Never dispatch it with `gh workflow
-   run`. Persist the returned Job or Run id with
+   run`. Pass `issue` only when that Capability's `availableCapabilities.inputs`
+   declares an issue input; inputless Capabilities such as `dev-ci-health` must
+   be started with only their name. Persist the returned Job or Run id with
    `node .kody-engine/agency-state.mjs deliver <finding-id> <run-id>`, then stop
    this run. Do not wait or poll for the child.
 4. On a later run, require a fresh Observation as proof.

@@ -46,6 +46,7 @@ function capabilityProfile(slug) {
     name: slug,
     describe: profile.describe || "Active Capability",
     capabilityKind: profile.capabilityKind || null,
+    inputs: Array.isArray(profile.inputs) ? profile.inputs : [],
     tools: profile.capabilityTools || profile.tools || [],
   };
 }
