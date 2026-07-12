@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const [command, id, value, ...rest] = process.argv.slice(2);
-if (!command || !id) throw new Error("usage: agency-state.mjs <decide|deliver|resolve> <finding-id> ...");
+if (!command || !id) throw new Error("usage: agency-state.mjs <decide|deliver|resolve|correct-learning-observation> <finding-id> ...");
 
 const config = JSON.parse(readFileSync("kody.config.json", "utf8"));
 const owner = config.github?.owner;
@@ -70,12 +70,17 @@ if (command === "decide") {
   current.value.updatedAt = now;
   writeJson(findingPath, current.value, `operate: deliver ${id}`, current.sha);
 } else if (command === "resolve") {
+  const observationIds = current.value.observationIds || [];
+  const observationId = observationIds.includes(value)
+    ? value
+    : observationIds.at(-1);
+  if (!observationId) throw new Error(`finding ${id} has no Observation to verify`);
   const learningId = `learning-${id}-${now.replace(/[^0-9]/g, "").toLowerCase()}`;
   const learning = {
     version: 1,
     id: learningId,
     findingId: id,
-    observationId: value,
+    observationId,
     changedModel: rest.shift() || "unknown",
     summary: rest.join(" ") || "Finding verified healthy",
     evidence: current.value.observationIds || [],
@@ -89,6 +94,16 @@ if (command === "decide") {
   current.value.updatedAt = now;
   writeJson(findingPath, current.value, `operate: resolve ${id}`, current.sha);
   console.log(learningId);
+} else if (command === "correct-learning-observation") {
+  const learningId = value;
+  const observationId = rest[0];
+  if (!(current.value.observationIds || []).includes(observationId)) {
+    throw new Error(`Observation ${observationId} is not linked to finding ${id}`);
+  }
+  const learningPath = `agency/learnings/${learningId}.json`;
+  const learning = readJson(learningPath);
+  learning.value.observationId = observationId;
+  writeJson(learningPath, learning.value, `learn: correct Observation for ${id}`, learning.sha);
 } else {
   throw new Error(`unknown command: ${command}`);
 }
