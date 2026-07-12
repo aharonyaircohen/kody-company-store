@@ -20,6 +20,12 @@
     "mcpServers": []
   },
   "cliTools": ["gh"],
+  "capabilityTools": [
+    "read_check_runs",
+    "ensure_issue",
+    "start_capability",
+    "ensure_comment"
+  ],
   "scripts": {
     "preflight": [{ "script": "buildSyntheticPlugin" }, { "script": "composePrompt" }],
     "postflight": [{ "script": "parseAgentResult" }, { "script": "appendCompanyActivity" }]
@@ -31,6 +37,12 @@
   "agent": "coo",
   "capabilityKind": "act",
   "implementations": ["operate-findings"],
+  "tools": [
+    "read_check_runs",
+    "ensure_issue",
+    "start_capability",
+    "ensure_comment"
+  ],
   "readsFrom": ["findings", "intents", "goals"],
   "writesTo": ["findings", "learnings"]
 }

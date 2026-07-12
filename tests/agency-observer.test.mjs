@@ -26,11 +26,17 @@ describe("agency observer and operating loops", () => {
     assert.equal(observeCapability.capabilityKind, "observe");
     assert.deepEqual(observeCapability.writesTo, ["observations", "findings"]);
     assert.equal(operateCapability.capabilityKind, "act");
+    assert.deepEqual(operateCapability.capabilityTools, [
+      "read_check_runs",
+      "ensure_issue",
+      "start_capability",
+      "ensure_comment",
+    ]);
     assert.deepEqual(operateCapability.readsFrom, ["findings", "intents", "goals"]);
     assert.deepEqual(operateCapability.writesTo, ["findings", "learnings"]);
   });
 
-  it("creates one finding, updates it, and resolves it from CI observations", async () => {
+  it("creates one finding, updates it, and hands recovery to verification", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-agency-observer-"));
     const stateRoot = join(cwd, "state-root");
     try {
@@ -75,10 +81,10 @@ describe("agency observer and operating loops", () => {
       const healthy = run("healthy", "2026-07-12T10:30:00.000Z");
       assert.equal(healthy.status, 0, healthy.stderr);
       const resolved = JSON.parse(await readFile(findingPath, "utf8"));
-      assert.equal(resolved.status, "resolved");
-      assert.equal(resolved.phase, "closed");
+      assert.equal(resolved.status, "in_progress");
+      assert.equal(resolved.phase, "verifying");
       assert.equal(resolved.observationIds.length, 3);
-      assert.equal(resolved.resolvedAt, "2026-07-12T10:30:00.000Z");
+      assert.equal(resolved.resolvedAt, undefined);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
