@@ -20,11 +20,12 @@ For one Finding at a time:
 1. Check active Intents and Goals to decide whether it matters now.
 2. When an existing Capability can safely act, persist the decision with
    `node .kody-engine/agency-state.mjs decide <finding-id> <capability> <reason>`.
-3. Create or reuse one issue for the Finding, then use the `start_capability`
-   tool to invoke the existing Capability. Never dispatch it with `gh workflow
-   run`. Pass `issue` only when that Capability's `availableCapabilities.inputs`
-   declares an issue input; inputless Capabilities such as `dev-ci-health` must
-   be started with only their name. Persist the returned Job or Run id with
+3. Use the `start_capability` tool to invoke the existing Capability. Let that
+   Capability own any issue it needs; the operating loop must not create a
+   duplicate delivery issue. Never dispatch with `gh workflow run`. Pass
+   `issue` only when that Capability's `availableCapabilities.inputs` declares
+   an issue input; inputless Capabilities such as `dev-ci-health` must be started
+   with only their name. Persist the returned Job or Run id with
    `node .kody-engine/agency-state.mjs deliver <finding-id> <run-id>`, then stop
    this run. Do not wait or poll for the child.
 4. On a later run, require a fresh Observation as proof.
