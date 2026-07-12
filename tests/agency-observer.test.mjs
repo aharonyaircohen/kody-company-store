@@ -94,11 +94,22 @@ describe("agency observer and operating loops", () => {
       assert.equal(resolved.observationIds.length, 3);
       assert.equal(resolved.resolvedAt, undefined);
 
+      writeFileSync(
+        findingPath,
+        `${JSON.stringify({
+          ...resolved,
+          decision: { action: "dev-ci-health" },
+          deliveryRunId: "123",
+        })}\n`,
+      );
+
       const redAgain = run("unhealthy", "2026-07-12T10:45:00.000Z");
       assert.equal(redAgain.status, 0, redAgain.stderr);
       const reopened = JSON.parse(await readFile(findingPath, "utf8"));
       assert.equal(reopened.status, "open");
       assert.equal(reopened.phase, "observed");
+      assert.equal(reopened.decision, undefined);
+      assert.equal(reopened.deliveryRunId, undefined);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }

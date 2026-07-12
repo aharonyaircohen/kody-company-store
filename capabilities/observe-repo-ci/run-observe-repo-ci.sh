@@ -142,8 +142,8 @@ const finding = {
   observationIds: ids,
   createdAt: previous?.createdAt || now,
   updatedAt: now,
-  ...(previous?.decision ? { decision: previous.decision } : {}),
-  ...(previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
+  ...(!shouldReopen && previous?.decision ? { decision: previous.decision } : {}),
+  ...(!shouldReopen && previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
   ...(previous?.learningIds ? { learningIds: previous.learningIds } : {}),
 };
 writeJson(`agency/findings/${findingId}.json`, finding, `finding: ${finding.status} ${findingId}`);
