@@ -123,6 +123,11 @@ if (status === "healthy" && !previous) {
 }
 const ids = [...new Set([...(previous?.observationIds || []), observationId])].slice(-100);
 const readyForVerification = status === "healthy";
+const shouldReopen = !readyForVerification && (
+  previous?.phase === "verifying" ||
+  previous?.phase === "closed" ||
+  previous?.status === "resolved"
+);
 const finding = {
   version: 1,
   id: findingId,
@@ -132,8 +137,8 @@ const finding = {
   expectation: "Default branch CI is green",
   actual: summary,
   severity: "high",
-  status: readyForVerification ? "in_progress" : (previous?.status || "open"),
-  phase: readyForVerification ? "verifying" : (previous?.phase || "observed"),
+  status: readyForVerification ? "in_progress" : shouldReopen ? "open" : (previous?.status || "open"),
+  phase: readyForVerification ? "verifying" : shouldReopen ? "observed" : (previous?.phase || "observed"),
   observationIds: ids,
   createdAt: previous?.createdAt || now,
   updatedAt: now,
