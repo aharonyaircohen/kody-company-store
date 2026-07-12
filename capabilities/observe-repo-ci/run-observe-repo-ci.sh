@@ -154,6 +154,9 @@ if (status === "healthy" && !previous) {
 }
 const ids = [...new Set([...(previous?.observationIds || []), observationId])].slice(-100);
 const readyForVerification = status === "healthy";
+const remainsClosed = readyForVerification && (
+  previous?.phase === "closed" || previous?.status === "resolved"
+);
 const shouldReopen = !readyForVerification && (
   previous?.phase === "verifying" ||
   previous?.phase === "closed" ||
@@ -169,14 +172,15 @@ const finding = {
   expectation: "Default branch CI is green",
   actual: summary,
   severity: "high",
-  status: readyForVerification ? "in_progress" : shouldReopen ? "open" : (previous?.status || "open"),
-  phase: readyForVerification ? "verifying" : shouldReopen ? "observed" : (previous?.phase || "observed"),
+  status: remainsClosed ? "resolved" : readyForVerification ? "in_progress" : shouldReopen ? "open" : (previous?.status || "open"),
+  phase: remainsClosed ? "closed" : readyForVerification ? "verifying" : shouldReopen ? "observed" : (previous?.phase || "observed"),
   observationIds: ids,
   createdAt: previous?.createdAt || now,
   updatedAt: now,
   ...(preserveOperation && previous?.decision ? { decision: previous.decision } : {}),
   ...(preserveOperation && previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
   ...(previous?.learningIds ? { learningIds: previous.learningIds } : {}),
+  ...(remainsClosed && previous?.resolvedAt ? { resolvedAt: previous.resolvedAt } : {}),
 };
 writeJson(`agency/findings/${findingId}.json`, finding, `finding: ${finding.status} ${findingId}`);
 
