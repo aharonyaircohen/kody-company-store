@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
+PROFILE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+export KODY_STORE_CAPABILITIES_ROOT="$(dirname "$PROFILE_DIR")"
+
 node --input-type=module <<'NODE'
 import { execFileSync } from "node:child_process";
 import {
@@ -26,6 +29,25 @@ if (!stateOwner || !stateRepo) throw new Error("state.repo must be owner/repo");
 const statePath = String(config.state?.path || repo).replace(/^\/+|\/+$/g, "");
 const stateBranch = config.state?.branch || "main";
 const localRoot = process.env.KODY_STATE_ROOT;
+const activeCapabilitySlugs = Array.isArray(config.company?.activeCapabilities)
+  ? config.company.activeCapabilities.filter((value) => typeof value === "string")
+  : [];
+
+function capabilityProfile(slug) {
+  const candidates = [
+    join(process.cwd(), ".kody", "capabilities", slug, "profile.json"),
+    join(process.env.KODY_STORE_CAPABILITIES_ROOT || "", slug, "profile.json"),
+  ];
+  const file = candidates.find((candidate) => candidate && existsSync(candidate));
+  if (!file) return { name: slug, describe: "Active Capability", capabilityKind: null };
+  const profile = JSON.parse(readFileSync(file, "utf8"));
+  return {
+    name: slug,
+    describe: profile.describe || "Active Capability",
+    capabilityKind: profile.capabilityKind || null,
+    tools: profile.capabilityTools || profile.tools || [],
+  };
+}
 
 function gh(args) {
   return execFileSync("gh", args, { encoding: "utf8" }).trim();
@@ -72,6 +94,10 @@ const output = {
   statePath,
   stateBranch,
   loadedAt: new Date().toISOString(),
+  availableCapabilities: activeCapabilitySlugs.map(capabilityProfile),
+  activeGoals: Array.isArray(config.company?.activeGoals)
+    ? config.company.activeGoals
+    : [],
   findings,
 };
 mkdirSync(".kody-engine", { recursive: true });

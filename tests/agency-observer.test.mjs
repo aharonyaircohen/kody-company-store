@@ -212,6 +212,7 @@ describe("agency observer and operating loops", () => {
         `${JSON.stringify({
           github: { owner: "A-Guy", repo: "example" },
           state: { path: "example" },
+          company: { activeCapabilities: ["dev-ci-health"] },
         })}\n`,
       );
       writeFileSync(
@@ -248,6 +249,8 @@ describe("agency observer and operating loops", () => {
         "finding-ci",
       ]);
       assert.equal(loaded.statePath, "example");
+      assert.equal(loaded.availableCapabilities[0].name, "dev-ci-health");
+      assert.match(loaded.availableCapabilities[0].describe, /CI/i);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
