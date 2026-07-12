@@ -18,10 +18,7 @@
       "Glob"
     ],
     "hooks": [],
-    "skills": [
-      "dev-ci-health",
-      "github-actions-docs"
-    ],
+    "skills": ["github-actions-docs"],
     "commands": [],
     "subagents": [],
     "plugins": [],
