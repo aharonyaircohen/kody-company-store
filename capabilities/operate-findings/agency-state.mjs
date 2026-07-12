@@ -2,7 +2,7 @@ import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 
 const [command, id, value, ...rest] = process.argv.slice(2);
-if (!command || !id) throw new Error("usage: agency-state.mjs <decide|deliver|resolve|correct-learning-observation> <finding-id> ...");
+if (!command || !id) throw new Error("usage: agency-state.mjs <decide|deliver|resolve|correct-delivery-run|correct-learning-observation> <finding-id> ...");
 
 const config = JSON.parse(readFileSync("kody.config.json", "utf8"));
 const owner = config.github?.owner;
@@ -104,6 +104,11 @@ if (command === "decide") {
   const learning = readJson(learningPath);
   learning.value.observationId = observationId;
   writeJson(learningPath, learning.value, `learn: correct Observation for ${id}`, learning.sha);
+} else if (command === "correct-delivery-run") {
+  if (!/^\d+$/.test(value || "")) throw new Error("delivery run id must be numeric");
+  current.value.deliveryRunId = value;
+  current.value.updatedAt = now;
+  writeJson(findingPath, current.value, `operate: correct delivery run for ${id}`, current.sha);
 } else {
   throw new Error(`unknown command: ${command}`);
 }
