@@ -124,6 +124,22 @@ describe("agency observer and operating loops", () => {
       const observed = JSON.parse(await readFile(findingPath, "utf8"));
       assert.equal(observed.decision, undefined);
       assert.equal(observed.deliveryRunId, undefined);
+
+      writeFileSync(
+        findingPath,
+        `${JSON.stringify({
+          ...observed,
+          status: "resolved",
+          phase: "closed",
+          resolvedAt: "2026-07-12T11:05:00.000Z",
+        })}\n`,
+      );
+      const healthyAfterResolution = run("healthy", "2026-07-12T11:15:00.000Z");
+      assert.equal(healthyAfterResolution.status, 0, healthyAfterResolution.stderr);
+      const stillClosed = JSON.parse(await readFile(findingPath, "utf8"));
+      assert.equal(stillClosed.status, "resolved");
+      assert.equal(stillClosed.phase, "closed");
+      assert.equal(stillClosed.resolvedAt, "2026-07-12T11:05:00.000Z");
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
