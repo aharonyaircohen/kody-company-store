@@ -55,10 +55,16 @@ function gh(args) {
 
 function remoteJson(relative) {
   const apiPath = `repos/${stateOwner}/${stateRepo}/contents/${statePath}/${relative}`;
-  const payload = JSON.parse(
-    gh(["api", "--method", "GET", apiPath, "-f", `ref=${stateBranch}`]),
-  );
-  return JSON.parse(Buffer.from(payload.content, "base64").toString("utf8"));
+  const raw = gh(["api", "--method", "GET", apiPath, "-f", `ref=${stateBranch}`]);
+  try {
+    const payload = JSON.parse(raw);
+    if (payload && typeof payload === "object" && typeof payload.content === "string") {
+      return JSON.parse(Buffer.from(payload.content, "base64").toString("utf8"));
+    }
+    return payload;
+  } catch {
+    return JSON.parse(Buffer.from(raw, "base64").toString("utf8"));
+  }
 }
 
 let records = [];

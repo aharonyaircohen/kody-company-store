@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
-import { mkdirSync, rmSync, writeFileSync } from "node:fs";
+import { chmodSync, mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { mkdtemp, readFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -251,6 +251,47 @@ describe("agency observer and operating loops", () => {
       assert.equal(loaded.statePath, "example");
       assert.equal(loaded.availableCapabilities[0].name, "dev-ci-health");
       assert.match(loaded.availableCapabilities[0].describe, /CI/i);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("accepts raw base64 file responses from the state repo", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-operate-findings-remote-"));
+    try {
+      const bin = join(cwd, "bin");
+      mkdirSync(bin, { recursive: true });
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify({
+          github: { owner: "A-Guy", repo: "example" },
+          state: { repo: "A-Guy/state", path: "example" },
+        })}\n`,
+      );
+      const gh = join(bin, "gh");
+      writeFileSync(
+        gh,
+        `#!/usr/bin/env bash\nif [[ "$*" == *"finding-ci.json"* ]]; then\n  printf '%s' "$RAW_FILE"\nelse\n  printf '%s' "$FINDING_LIST"\nfi\n`,
+      );
+      chmodSync(gh, 0o755);
+      const finding = { id: "finding-ci", status: "open", phase: "observed" };
+      const result = spawnSync("bash", [operatingLoaderPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          PATH: `${bin}:${process.env.PATH}`,
+          RAW_FILE: Buffer.from(JSON.stringify(finding)).toString("base64"),
+          FINDING_LIST: JSON.stringify([
+            { type: "file", name: "finding-ci.json" },
+          ]),
+        },
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, result.stderr);
+      const loaded = JSON.parse(
+        await readFile(join(cwd, ".kody-engine", "agency-findings.json"), "utf8"),
+      );
+      assert.deepEqual(loaded.findings, [finding]);
     } finally {
       rmSync(cwd, { recursive: true, force: true });
     }
