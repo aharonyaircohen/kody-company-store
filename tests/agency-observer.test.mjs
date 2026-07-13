@@ -158,6 +158,7 @@ describe("agency observer and operating loops", () => {
         `${JSON.stringify({
           github: { owner: "A-Guy", repo: "example" },
           state: { path: "example" },
+          company: { activeCapabilities: ["dev-ci-health"] },
         })}\n`,
       );
 
@@ -233,6 +234,21 @@ describe("agency observer and operating loops", () => {
         findingPath,
         `${JSON.stringify({
           ...observed,
+          phase: "deciding",
+          decision: { action: "escalate", reason: "old decision" },
+        })}\n`,
+      );
+      const staleDecision = run("unhealthy", "2026-07-12T11:05:00.000Z");
+      assert.equal(staleDecision.status, 0, staleDecision.stderr);
+      const reconsidered = JSON.parse(await readFile(findingPath, "utf8"));
+      assert.equal(reconsidered.status, "open");
+      assert.equal(reconsidered.phase, "observed");
+      assert.equal(reconsidered.decision, undefined);
+
+      writeFileSync(
+        findingPath,
+        `${JSON.stringify({
+          ...reconsidered,
           status: "resolved",
           phase: "closed",
           resolvedAt: "2026-07-12T11:05:00.000Z",

@@ -18,6 +18,9 @@ const [stateOwner, stateRepo] = stateSlug.split("/");
 const statePath = String(config.state?.path || repo).replace(/^\/+|\/+$/g, "");
 const stateBranch = config.state?.branch || "main";
 const branch = config.git?.defaultBranch || config.github?.defaultBranch || "main";
+const activeCapabilities = Array.isArray(config.company?.activeCapabilities)
+  ? config.company.activeCapabilities.filter((value) => typeof value === "string")
+  : [];
 const now = process.env.KODY_OBSERVER_NOW || new Date().toISOString();
 
 function gh(args) {
@@ -157,7 +160,13 @@ const readyForVerification = status === "healthy";
 const remainsClosed = readyForVerification && (
   previous?.phase === "closed" || previous?.status === "resolved"
 );
+const decisionAction = previous?.decision?.action;
+const decisionUnavailable = !readyForVerification
+  && previous?.phase === "deciding"
+  && typeof decisionAction === "string"
+  && !activeCapabilities.includes(decisionAction);
 const shouldReopen = !readyForVerification && (
+  decisionUnavailable ||
   previous?.phase === "verifying" ||
   previous?.phase === "closed" ||
   previous?.status === "resolved"

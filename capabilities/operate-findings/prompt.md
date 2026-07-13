@@ -34,9 +34,10 @@ For one Finding at a time:
    <changed-model> <summary>`. This writes Learning, links it, and closes the
    Finding at the agency state boundary.
 
-Do not invent a Capability. If none can perform the required action, leave the
-Finding open and record that decision. Never treat delivery output alone as
-verification.
+Do not invent a Capability. If none can perform the required action, do not call
+`agency-state.mjs decide`; leave the Finding open in `observed` so a newly
+activated Capability can be considered later. Never treat delivery output alone
+as verification.
 
 Perform only one durable phase transition per run. The persisted Finding is the
 handoff to the next run.
