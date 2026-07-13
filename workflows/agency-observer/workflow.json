@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "name": "Agency Observer",
+  "createdAt": "2026-07-13T00:00:00Z",
+  "updatedAt": "2026-07-13T00:00:00Z",
+  "steps": [
+    {
+      "capability": "repo-source-health"
+    },
+    {
+      "capability": "observe-repo-ci"
+    }
+  ]
+}

@@ -9,6 +9,12 @@ import { describe, it } from "node:test";
 const observerGoalPath = new URL("../goals/templates/agency-observer/state.json", import.meta.url);
 const operatingGoalPath = new URL("../goals/templates/agency-operating-loop/state.json", import.meta.url);
 const observerProfilePath = new URL("../capabilities/observe-repo-ci/profile.json", import.meta.url);
+const sourceHealthProfilePath = new URL("../capabilities/repo-source-health/profile.json", import.meta.url);
+const sourceHealthScriptPath = new URL(
+  "../capabilities/repo-source-health/run-repo-source-health.sh",
+  import.meta.url,
+);
+const observerWorkflowPath = new URL("../workflows/agency-observer/workflow.json", import.meta.url);
 const operatingProfilePath = new URL("../capabilities/operate-findings/profile.json", import.meta.url);
 const operatingLoaderPath = new URL("../capabilities/operate-findings/load-agency-findings.sh", import.meta.url);
 const observerScriptPath = new URL("../capabilities/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
@@ -17,13 +23,23 @@ describe("agency observer and operating loops", () => {
   it("defines both responsibilities as ordinary Loop templates", async () => {
     const observer = JSON.parse(await readFile(observerGoalPath, "utf8"));
     const operating = JSON.parse(await readFile(operatingGoalPath, "utf8"));
+    const sourceHealthCapability = JSON.parse(await readFile(sourceHealthProfilePath, "utf8"));
     const observeCapability = JSON.parse(await readFile(observerProfilePath, "utf8"));
     const operateCapability = JSON.parse(await readFile(operatingProfilePath, "utf8"));
+    const observerWorkflow = JSON.parse(await readFile(observerWorkflowPath, "utf8"));
 
     assert.equal(observer.scheduleMode, "agentLoop");
-    assert.deepEqual(observer.capabilities, ["observe-repo-ci"]);
+    assert.equal(observer.type, "agentLoop");
+    assert.deepEqual(observer.loopTarget, { type: "workflow", id: "agency-observer" });
+    assert.deepEqual(observer.capabilities, []);
+    assert.deepEqual(
+      observerWorkflow.steps.map((step) => step.capability),
+      ["repo-source-health", "observe-repo-ci"],
+    );
     assert.equal(operating.scheduleMode, "agentLoop");
     assert.deepEqual(operating.capabilities, ["operate-findings"]);
+    assert.equal(sourceHealthCapability.capabilityKind, "observe");
+    assert.deepEqual(sourceHealthCapability.writesTo, ["commit-status"]);
     assert.equal(observeCapability.capabilityKind, "observe");
     assert.deepEqual(observeCapability.writesTo, ["observations", "findings"]);
     assert.equal(operateCapability.capabilityKind, "act");
@@ -42,6 +58,94 @@ describe("agency observer and operating loops", () => {
     });
     assert.deepEqual(operateCapability.readsFrom, ["findings", "intents", "goals"]);
     assert.deepEqual(operateCapability.writesTo, ["findings", "learnings"]);
+  });
+
+  it("publishes configured source-check failure without failing the observer workflow", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-repo-source-health-"));
+    try {
+      const bin = join(cwd, "bin");
+      const ghLog = join(cwd, "gh.log");
+      mkdirSync(bin, { recursive: true });
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify({
+          github: { owner: "A-Guy", repo: "example" },
+          quality: {
+            typecheck: 'node -e "process.exit(0)"',
+            lint: 'node -e "process.exit(7)"',
+            testUnit: 'node -e "process.exit(0)"',
+          },
+        })}\n`,
+      );
+      const gh = join(bin, "gh");
+      writeFileSync(
+        gh,
+        `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$GH_LOG"\nif [[ "$*" == *"/commits/"*"/status"* ]]; then\n  printf '%s' '{"statuses":[]}'\nelse\n  printf '%s' '{}'\nfi\n`,
+      );
+      chmodSync(gh, 0o755);
+
+      const result = spawnSync("bash", [sourceHealthScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          PATH: `${bin}:${process.env.PATH}`,
+          GH_LOG: ghLog,
+          KODY_SOURCE_HEALTH_SHA: "abc123",
+          KODY_SOURCE_HEALTH_SKIP_INSTALL: "1",
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0, result.stderr);
+      assert.match(result.stdout, /REPO_SOURCE_HEALTH status=failure/);
+      assert.match(result.stdout, /failed=lint/);
+      const calls = await readFile(ghLog, "utf8");
+      assert.match(calls, /--method POST repos\/A-Guy\/example\/statuses\/abc123/);
+      assert.match(calls, /-f state=failure/);
+      assert.match(calls, /-f context=Kody Source Health/);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("does not rerun source checks for a terminal status on the current commit", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-repo-source-health-dedup-"));
+    try {
+      const bin = join(cwd, "bin");
+      const ghLog = join(cwd, "gh.log");
+      mkdirSync(bin, { recursive: true });
+      writeFileSync(
+        join(cwd, "kody.config.json"),
+        `${JSON.stringify({
+          github: { owner: "A-Guy", repo: "example" },
+          quality: { typecheck: 'node -e "process.exit(9)"' },
+        })}\n`,
+      );
+      const gh = join(bin, "gh");
+      writeFileSync(
+        gh,
+        `#!/usr/bin/env bash\nprintf '%s\\n' "$*" >> "$GH_LOG"\nif [[ "$*" == *"/commits/"*"/status"* ]]; then\n  printf '%s' '{"statuses":[{"context":"Kody Source Health","state":"success"}]}'\nelse\n  printf '%s' '{}'\nfi\n`,
+      );
+      chmodSync(gh, 0o755);
+
+      const result = spawnSync("bash", [sourceHealthScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          PATH: `${bin}:${process.env.PATH}`,
+          GH_LOG: ghLog,
+          KODY_SOURCE_HEALTH_SHA: "abc123",
+          KODY_SOURCE_HEALTH_SKIP_INSTALL: "1",
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0, result.stderr);
+      assert.match(result.stdout, /REPO_SOURCE_HEALTH status=success skipped=already-checked/);
+      assert.doesNotMatch(await readFile(ghLog, "utf8"), /--method POST/);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
   });
 
   it("creates one finding, updates it, and hands recovery to verification", async () => {

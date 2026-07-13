@@ -4,16 +4,20 @@
   "template": true,
   "templateId": "agency-observer",
   "state": "inactive",
-  "type": "monitor",
+  "type": "agentLoop",
   "scheduleMode": "agentLoop",
   "schedule": "15m",
+  "loopTarget": {
+    "type": "workflow",
+    "id": "agency-observer"
+  },
   "title": "Agency observer",
   "description": "Observe real repo evidence and keep durable Observations and Findings current.",
   "destination": {
     "outcome": "The agency has current evidence and distinct problems are recorded as Findings.",
     "evidence": []
   },
-  "capabilities": ["observe-repo-ci"],
+  "capabilities": [],
   "route": [],
   "stage": "observing",
   "facts": {},
