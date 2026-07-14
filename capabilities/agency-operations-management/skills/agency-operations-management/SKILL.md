@@ -8,8 +8,8 @@ description: Operate one active persisted Operation within its exact Goal and Lo
 ## Method
 
 1. Read the operator request and extract exactly one safe lowercase `operationId`. Refuse ambiguous, missing, or invalid ids.
-2. Resolve the configured state repository, path, and branch from `kody.config.json`; use the documented defaults when fields are absent. Do not clone the state repo.
-3. With `gh api`, read `operations/<operationId>/operation.json` from that state path. Treat this file as the authoritative runtime scope.
+2. Resolve the external state target from the consumer repo's `kody.config.json`. Read `state.repo`, `state.path`, and `state.branch` (or legacy `stateRepo`, `statePath`, and `stateBranch`). When absent, use exactly: repo `<consumer-owner>/kody-state`, path `<consumer-repo>`, branch `main`. `github.owner`, `github.repo`, `git.defaultBranch`, and the checked-out consumer repo are not the state target. Do not clone the state repo.
+3. With `gh api`, read `<state.path>/operations/<operationId>/operation.json` from `<state.repo>` at `<state.branch>`. A correct request targets `repos/<state-owner>/<state-repo>/contents/<state.path>/operations/<operationId>/operation.json?ref=<state.branch>`, then base64-decodes `.content`. Treat this file as the authoritative runtime scope. Do not fall back to the consumer repo or Store when this read fails.
 4. Validate version `1`, matching `id`, `status: active`, non-empty `intentIds`, non-empty `doesNotOwn`, and at least one owned Goal or Loop. Refuse malformed or inactive Operations.
 5. Read every linked Intent and require it to be active. Read every listed Goal and Loop and verify that it exists as the expected model. Refuse unresolved references; never silently drop one.
 6. Read policy limits, current run state, and the latest `ai-agency-health` evidence only for those owned Goals and Loops. Treat `doesNotOwn` and linked Intent hard rules as mandatory boundaries.
