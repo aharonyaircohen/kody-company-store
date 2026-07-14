@@ -7,6 +7,12 @@ The loaded capability state is this Loop's private process state. Findings and
 Learning are Reports; never write `agency/findings` or `agency/learnings` JSON.
 Call `submit_state` exactly once as your final action.
 
+## Current operating-loop state
+
+```json
+{{jobStateJson}}
+```
+
 Process one phase per run:
 
 1. **Choose:** when no Finding is active, select one open Finding not listed in

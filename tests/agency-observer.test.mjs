@@ -14,6 +14,7 @@ const sourceHealthScriptPath = new URL("../capabilities/repo-source-health/run-r
 const observerWorkflowPath = new URL("../workflows/agency-observer/workflow.json", import.meta.url);
 const operatingWorkflowPath = new URL("../workflows/agency-operating-loop/workflow.json", import.meta.url);
 const operatingProfilePath = new URL("../capabilities/operate-findings/profile.json", import.meta.url);
+const operatingPromptPath = new URL("../capabilities/operate-findings/prompt.md", import.meta.url);
 const operatingLoaderPath = new URL("../capabilities/operate-findings/load-agency-findings.sh", import.meta.url);
 const observerScriptPath = new URL("../capabilities/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
 
@@ -49,6 +50,7 @@ describe("agency observer and operating loops", () => {
     const sourceHealthCapability = JSON.parse(await readFile(sourceHealthProfilePath, "utf8"));
     const observeCapability = JSON.parse(await readFile(observerProfilePath, "utf8"));
     const operateCapability = JSON.parse(await readFile(operatingProfilePath, "utf8"));
+    const operatePrompt = await readFile(operatingPromptPath, "utf8");
     const observerWorkflow = JSON.parse(await readFile(observerWorkflowPath, "utf8"));
     const operatingWorkflow = JSON.parse(await readFile(operatingWorkflowPath, "utf8"));
 
@@ -90,6 +92,7 @@ describe("agency observer and operating loops", () => {
     );
     assert.deepEqual(operateCapability.readsFrom, ["reports", "intents", "goals"]);
     assert.deepEqual(operateCapability.writesTo, ["capability-state"]);
+    assert.match(operatePrompt, /\{\{jobStateJson\}\}/);
   });
 
   it("publishes configured source-check failure without failing the observer workflow", async () => {
