@@ -296,7 +296,7 @@ def local_goal_path(goal_id: str) -> Path:
     return local_todos_dir / f"{goal_id}.json"
 
 
-def read_remote_text(state_repo: str, path: str) -> str | None:
+def read_remote_file(state_repo: str, path: str) -> tuple[str, str] | None:
     try:
         meta = json.loads(gh(["api", f"/repos/{state_repo}/contents/{path}"]))
     except Exception as err:
@@ -304,9 +304,15 @@ def read_remote_text(state_repo: str, path: str) -> str | None:
             return None
         raise
     content = meta.get("content")
-    if not isinstance(content, str):
+    sha = meta.get("sha")
+    if not isinstance(content, str) or not isinstance(sha, str):
         return None
-    return base64.b64decode(content.replace("\n", "")).decode("utf-8")
+    return base64.b64decode(content.replace("\n", "")).decode("utf-8"), sha
+
+
+def read_remote_text(state_repo: str, path: str) -> str | None:
+    file = read_remote_file(state_repo, path)
+    return file[0] if file is not None else None
 
 
 def read_remote_json(state_repo: str, path: str) -> dict | None:
@@ -555,6 +561,11 @@ def preferred_daily_wait_reason(data: dict, now: datetime) -> str | None:
 
 
 def schedule_wait_reason(data: dict, now: datetime, activation_every: str | None = None) -> str | None:
+    schedule_state = data.get("scheduleState")
+    lease = schedule_state.get("lease") if isinstance(schedule_state, dict) else None
+    lease_expires = parse_state_time(lease.get("expiresAt")) if isinstance(lease, dict) else 0
+    if lease_expires > now.timestamp():
+        return f"leased until {iso_z(datetime.fromtimestamp(lease_expires, timezone.utc))}"
     every = activation_every or goal_schedule_interval(data)
     if not every:
         return None
@@ -570,27 +581,151 @@ def schedule_wait_reason(data: dict, now: datetime, activation_every: str | None
     return f"waiting schedule {every} until {due_at}"
 
 
+def write_existing_goal_state(
+    state_repo: str,
+    state_base: str,
+    goal_id: str,
+    data: dict,
+    message: str,
+    sha: str | None,
+) -> None:
+    content = serialize_todo_goal_state(goal_id, data, iso_z(now_utc()))
+    if LOCAL_MODE:
+        local_goal_path(goal_id).write_text(content)
+        return
+    if not sha:
+        raise RuntimeError(f"cannot update {goal_id}: missing state sha")
+    payload = {
+        "message": message,
+        "content": base64.b64encode(content.encode("utf-8")).decode("ascii"),
+        "sha": sha,
+    }
+    gh(
+        ["api", "--method", "PUT", f"/repos/{state_repo}/contents/{todo_file_path(state_base, goal_id)}", "--input", "-"],
+        json.dumps(payload),
+    )
+
+
+def read_fresh_goal_for_update(state_repo: str, state_base: str, goal_id: str) -> tuple[dict, str | None] | None:
+    if LOCAL_MODE:
+        path = local_goal_path(goal_id)
+        if not path.exists():
+            return None
+        text = path.read_text()
+        if not is_managed_todo_text(text):
+            return None
+        return parse_todo_goal_state(goal_id, text), None
+    file = read_remote_file(state_repo, todo_file_path(state_base, goal_id))
+    if file is None or not is_managed_todo_text(file[0]):
+        return None
+    return parse_todo_goal_state(goal_id, file[0]), file[1]
+
+
+def reserve_goal_tick(
+    state_repo: str,
+    state_base: str,
+    goal_id: str,
+    now: datetime,
+    activation_every: str | None,
+) -> tuple[str | None, str | None]:
+    fresh = read_fresh_goal_for_update(state_repo, state_base, goal_id)
+    if fresh is None:
+        return None, "goal state disappeared"
+    raw_data, sha = fresh
+    data = resolve_template_backed_goal_state(raw_data)
+    if data.get("state") != "active" or not is_managed_goal(data):
+        return None, "goal is no longer active"
+    wait_reason = schedule_wait_reason(data, now, activation_every)
+    if wait_reason:
+        return None, wait_reason
+
+    lease_id = f"{os.getpid()}-{time.time_ns()}"
+    acquired_at = iso_z(now)
+    schedule_state = dict(raw_data.get("scheduleState")) if isinstance(raw_data.get("scheduleState"), dict) else {}
+    schedule_state["lease"] = {
+        "id": lease_id,
+        "acquiredAt": acquired_at,
+        "expiresAt": iso_z(now + timedelta(hours=1)),
+    }
+    raw_data["scheduleState"] = schedule_state
+    try:
+        write_existing_goal_state(
+            state_repo,
+            state_base,
+            goal_id,
+            raw_data,
+            f"chore(loops): reserve {goal_id}",
+            sha,
+        )
+    except Exception as err:
+        if "HTTP 409" in str(err) or "HTTP 422" in str(err):
+            return None, "claimed by another scheduler"
+        raise
+    return lease_id, None
+
+
+def finish_goal_tick_reservation(
+    state_repo: str,
+    state_base: str,
+    goal_id: str,
+    lease_id: str,
+    reserved_at: datetime,
+) -> None:
+    try:
+        fresh = read_fresh_goal_for_update(state_repo, state_base, goal_id)
+        if fresh is None:
+            return
+        raw_data, sha = fresh
+        schedule_state = raw_data.get("scheduleState")
+        if not isinstance(schedule_state, dict):
+            return
+        lease = schedule_state.get("lease")
+        if not isinstance(lease, dict) or lease.get("id") != lease_id:
+            return
+        next_schedule_state = dict(schedule_state)
+        next_schedule_state.pop("lease", None)
+        at = iso_z(reserved_at)
+        next_schedule_state["lastGoalTickAt"] = at
+        next_schedule_state["lastDecision"] = {
+            "kind": "idle",
+            "reason": "scheduler dispatch completed without a newer Loop decision",
+            "at": at,
+        }
+        raw_data["scheduleState"] = next_schedule_state
+        write_existing_goal_state(
+            state_repo,
+            state_base,
+            goal_id,
+            raw_data,
+            f"chore(loops): finish reservation {goal_id}",
+            sha,
+        )
+    except Exception as err:
+        if "HTTP 409" not in str(err) and "HTTP 422" not in str(err):
+            print(f"[goal-scheduler] warning: failed to finish reservation for {goal_id} ({err})")
+
+
 config = load_config()
 active, schedules = active_goal_config(config)
 only_goals = selected_goal_filter()
 if only_goals:
     active = {goal_id for goal_id in active if goal_id in only_goals}
     schedules = [schedule for schedule in schedules if schedule["template"] in only_goals]
-if not active and not schedules:
-    if only_goals:
-        print(
-            "[goal-scheduler] no selected active goals after "
-            f"KODY_GOAL_SCHEDULER_ONLY={','.join(sorted(only_goals))}"
-        )
-    else:
-        print("[goal-scheduler] no company.activeGoals configured")
-    print("KODY_SKIP_AGENT=true")
-    raise SystemExit(0)
 state_repo, state_base = state_target(config)
 now = now_utc()
 created: list[str] = []
 errors: list[str] = []
 goal_ids = list_goal_ids(state_repo, state_base)
+if not active and not schedules and not goal_ids:
+    if only_goals:
+        print(
+            "[goal-scheduler] no selected active goals or persisted Loops after "
+            f"KODY_GOAL_SCHEDULER_ONLY={','.join(sorted(only_goals))}"
+        )
+    else:
+        print("[goal-scheduler] no company.activeGoals configured and no persisted Loops")
+    print("KODY_SKIP_AGENT=true")
+    raise SystemExit(0)
 goal_state_cache: dict[str, dict | None] = {}
 scheduled_recurring = [schedule for schedule in schedules if schedule.get("every")]
 
@@ -676,10 +811,24 @@ for goal_id in goal_ids:
     if not isinstance(data, dict):
         continue
     template = goal_template(data)
+    direct_loop = (
+        data.get("scheduleMode") == "agentLoop"
+        and template is None
+        and goal_schedule_interval(data) is not None
+    )
+    selected = (
+        not only_goals
+        or goal_id in only_goals
+        or (isinstance(template, str) and template in only_goals)
+    )
     activated = (
-        goal_id in active
-        or (isinstance(template, str) and template in active)
-        or goal_id in selected_scheduled_ids
+        selected
+        and (
+            direct_loop
+            or goal_id in active
+            or (isinstance(template, str) and template in active)
+            or goal_id in selected_scheduled_ids
+        )
     )
     if not activated or data.get("state") != "active":
         continue
@@ -701,9 +850,20 @@ for goal_id in goal_ids:
     if wait_reason:
         print(f"[goal-scheduler] skip {goal_id}: {wait_reason}")
         continue
+    lease_id, lease_wait_reason = reserve_goal_tick(
+        state_repo,
+        state_base,
+        goal_id,
+        now,
+        activation_every,
+    )
+    if not lease_id:
+        print(f"[goal-scheduler] skip {goal_id}: {lease_wait_reason or 'not reserved'}")
+        continue
     managed_active += 1
     print(f"[goal-scheduler] -> tick {goal_id} (goal-manager)")
     result = subprocess.run(["kody-engine", "implementation", "goal-manager", "--goal", goal_id], check=False)
+    finish_goal_tick_reservation(state_repo, state_base, goal_id, lease_id, now)
     if result.returncode != 0:
         print(f"[goal-scheduler] tick {goal_id} failed (continuing)")
 

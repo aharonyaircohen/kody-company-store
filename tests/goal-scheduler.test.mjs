@@ -75,6 +75,70 @@ describe("goal-scheduler", () => {
     assert.equal(scheduler.timeoutSec, 1800);
   });
 
+  it("ticks a directly-created active Loop without company.activeGoals", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeGoal(cwd, "repo-observer", {
+        version: 1,
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        type: "agency-observer",
+        destination: { outcome: "Observe repository health", evidence: [] },
+        schedule: "15m",
+        scheduleMode: "agentLoop",
+        loopTarget: { type: "capability", id: "observe-repo-ci" },
+        capabilities: ["observe-repo-ci"],
+        route: [],
+        facts: {},
+        blockers: [],
+      });
+
+      const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
+
+      assert.equal(run.result.status, 0, run.result.stderr);
+      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal repo-observer"]);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("reserves a due Loop before dispatch so a second heartbeat cannot duplicate it", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
+    try {
+      const logFile = join(cwd, "calls.log");
+      const binDir = installStubs(cwd);
+      writeGoal(cwd, "repo-observer", {
+        version: 1,
+        managed: true,
+        managedModel: "agentLoop",
+        state: "active",
+        type: "agency-observer",
+        destination: { outcome: "Observe repository health", evidence: [] },
+        schedule: "15m",
+        scheduleMode: "agentLoop",
+        loopTarget: { type: "capability", id: "observe-repo-ci" },
+        capabilities: ["observe-repo-ci"],
+        route: [],
+        facts: {},
+        blockers: [],
+      });
+
+      const first = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
+      const second = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:01Z");
+
+      assert.equal(first.result.status, 0, first.result.stderr);
+      assert.deepEqual(first.calls, ["kody-engine implementation goal-manager --goal repo-observer"]);
+      assert.equal(second.result.status, 0, second.result.stderr);
+      assert.deepEqual(second.calls, []);
+      assert.match(second.result.stdout, /waiting schedule 15m/);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
   it("honors 15-minute Store loop schedules for string activations", async () => {
     const cwd = await mkdtemp(join(tmpdir(), "kody-store-goal-scheduler-"));
     try {
@@ -308,7 +372,11 @@ describe("goal-scheduler", () => {
           "  exit 0",
           "fi",
           'if [ "$1" = "api" ] && [ "$2" = "/repos/acme/kody-state/contents/widgets/todos/live-goal.json" ]; then',
-          '  printf \'{"content":"%s"}\\n\' "$REMOTE_STATE_B64"',
+          '  printf \'{"sha":"state-sha","content":"%s"}\\n\' "$REMOTE_STATE_B64"',
+          "  exit 0",
+          "fi",
+          'if [ "$1" = "api" ] && [ "$2" = "--method" ] && [ "$3" = "PUT" ]; then',
+          "  echo '{}'",
           "  exit 0",
           "fi",
           "echo '{}'",
@@ -452,7 +520,11 @@ describe("goal-scheduler", () => {
           "  exit 0",
           "fi",
           'if [ "$1" = "api" ] && [ "$2" = "/repos/o/r/contents/base/todos/ci-health.json" ]; then',
-          '  printf \'{"content":"%s"}\\n\' "$REMOTE_STATE_B64"',
+          '  printf \'{"sha":"state-sha","content":"%s"}\\n\' "$REMOTE_STATE_B64"',
+          "  exit 0",
+          "fi",
+          'if [ "$1" = "api" ] && [ "$2" = "--method" ] && [ "$3" = "PUT" ]; then',
+          "  echo '{}'",
           "  exit 0",
           "fi",
           "echo '{}'",
