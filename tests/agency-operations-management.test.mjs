@@ -24,5 +24,9 @@ describe("agency operations runtime state resolution", () => {
     );
     assert.match(skill, /not the state target/i);
     assert.match(skill, /Do not fall back to the consumer repo or Store/i);
+    assert.match(skill, /<state\.path>\/todos\/<id>\.json/);
+    assert.match(skill, /managedModel: agentGoal/);
+    assert.match(skill, /managedModel: agentLoop/);
+    assert.match(skill, /Do not search legacy `goals\/<id>` or `loops\/<id>` paths/);
   });
 });
