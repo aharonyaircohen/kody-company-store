@@ -1,6 +1,0 @@
-{
-  "action": "agent-factory",
-  "describe": "Create or assemble Kody agency model definitions from an operator request.",
-  "implementation": "agent-factory",
-  "name": "agent-factory"
-}

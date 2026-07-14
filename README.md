@@ -14,6 +14,7 @@ Shared Kody assets for Kody engine consumer repos. This repo is the central cata
 - `store-manifest.json` records imported asset provenance.
 - `docs/` contains store contract and maintenance notes.
 - `docs/ai-agency-health-matrix.md` defines the repo-local agency health report contract.
+- `docs/model-creators.md` defines the five detailed, agency-owned model creation contracts.
 
 ## Resolution
 
@@ -51,6 +52,8 @@ See [docs/ai-agency-health-matrix.md](docs/ai-agency-health-matrix.md) for the
 AI Agency health report model.
 See [docs/architecture-boundaries.md](docs/architecture-boundaries.md) for the
 goal, loop, capability, and implementation ownership rules.
+See [docs/model-creators.md](docs/model-creators.md) for model creation and
+cross-model coordination rules.
 
 ## Architecture Boundaries
 
