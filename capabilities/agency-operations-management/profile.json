@@ -2,7 +2,7 @@
   "name": "agency-operations-management",
   "role": "watch",
   "kind": "oneshot",
-  "describe": "COO monitors and operates approved intent-backed agency entities.",
+  "describe": "Operate one active Operation within its persisted Goal and Loop scope.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -28,6 +28,6 @@
     "actionTypes": ["AGENCY_OPERATIONS_MANAGED", "AGENCY_OPERATIONS_MANAGEMENT_FAILED", "AGENT_NOT_RUN"]
   },
   "action": "agency-operations-management",
-  "agent": "coo",
+  "agent": "kody",
   "implementations": ["agency-operations-management"]
 }

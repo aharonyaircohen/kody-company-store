@@ -13,13 +13,13 @@ const managementPairs = [
   {
     loop: "agency-evolution-loop",
     capability: "agency-portfolio-management",
-    agent: "cto",
+    agent: "kody",
     schedule: "1d",
   },
   {
     loop: "agency-operations-loop",
     capability: "agency-operations-management",
-    agent: "coo",
+    agent: "kody",
     schedule: "1h",
   },
 ];
@@ -68,36 +68,38 @@ describe("Executive agency management", () => {
     });
   }
 
-  it("keeps executive authority separated", async () => {
-    const ceo = await readFile(
+  it("keeps portfolio design and runtime operation separated", async () => {
+    const company = await readFile(
       new URL("../capabilities/company-portfolio-management/capability.md", import.meta.url),
       "utf8",
     );
-    const cto = await readFile(
+    const portfolio = await readFile(
       new URL("../capabilities/agency-portfolio-management/capability.md", import.meta.url),
       "utf8",
     );
-    const coo = await readFile(
+    const operations = await readFile(
       new URL("../capabilities/agency-operations-management/capability.md", import.meta.url),
       "utf8",
     );
 
-    assert.match(ceo, /priorities/i);
-    assert.match(ceo, /ceo-performance-review/i);
-    assert.match(cto, /goals, loops, capabilities, workflows, and agents/i);
-    assert.match(coo, /activate, pause, resume, retry, or escalate/i);
-    assert.match(coo, /ai-agency-health/i);
+    assert.match(company, /priorities/i);
+    assert.match(company, /ceo-performance-review/i);
+    assert.match(portfolio, /operations, goals, loops, capabilities, workflows, and agents/i);
+    assert.match(portfolio, /proposed/i);
+    assert.match(portfolio, /provisioning/i);
+    assert.match(portfolio, /active/i);
+    assert.match(operations, /activate, pause, resume, retry, or escalate/i);
+    assert.match(operations, /ai-agency-health/i);
   });
 
-  it("gives CEO and CTO a verifiable state-repo persistence contract", async () => {
-    const ceo = await readFile(
-      new URL(
-        "../capabilities/company-portfolio-management/skills/company-portfolio-management/SKILL.md",
-        import.meta.url,
+  it("makes Operation the portfolio manager's required scaling boundary", async () => {
+    const profile = JSON.parse(
+      await readFile(
+        new URL("../capabilities/agency-portfolio-management/profile.json", import.meta.url),
+        "utf8",
       ),
-      "utf8",
     );
-    const cto = await readFile(
+    const skill = await readFile(
       new URL(
         "../capabilities/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
         import.meta.url,
@@ -105,9 +107,65 @@ describe("Executive agency management", () => {
       "utf8",
     );
 
-    assert.match(ceo, /portfolio\.json/);
-    assert.match(cto, /agency-portfolio\.json/);
-    for (const skill of [ceo, cto]) {
+    assert.equal(profile.agent, "kody");
+    assert.match(skill, /Intent owns why/i);
+    assert.match(skill, /Operation owns.*responsibility/i);
+    assert.match(skill, /operations\/<id>\/operation\.json/);
+    assert.match(skill, /responsibility/);
+    assert.match(skill, /doesNotOwn/);
+    assert.match(skill, /intentIds/);
+    assert.match(skill, /Goals and Loops/i);
+    assert.match(skill, /proposed.*provisioning.*active/is);
+    assert.match(skill, /read it back/i);
+  });
+
+  it("constrains runtime work to one active Operation contract", async () => {
+    const profile = JSON.parse(
+      await readFile(
+        new URL("../capabilities/agency-operations-management/profile.json", import.meta.url),
+        "utf8",
+      ),
+    );
+    const body = await readFile(
+      new URL("../capabilities/agency-operations-management/capability.md", import.meta.url),
+      "utf8",
+    );
+    const skill = await readFile(
+      new URL(
+        "../capabilities/agency-operations-management/skills/agency-operations-management/SKILL.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+
+    assert.equal(profile.agent, "kody");
+    assert.match(`${body}\n${skill}`, /operations\/<operationId>\/operation\.json/);
+    assert.match(`${body}\n${skill}`, /status.*active/i);
+    assert.match(`${body}\n${skill}`, /only.*Goals.*Loops/i);
+    assert.match(`${body}\n${skill}`, /doesNotOwn/);
+    assert.match(`${body}\n${skill}`, /refuse/i);
+    assert.doesNotMatch(`${body}\n${skill}`, /COO owns|CTO owns|CEO owns/);
+  });
+
+  it("gives portfolio managers a verifiable state-repo persistence contract", async () => {
+    const company = await readFile(
+      new URL(
+        "../capabilities/company-portfolio-management/skills/company-portfolio-management/SKILL.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    const agency = await readFile(
+      new URL(
+        "../capabilities/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+
+    assert.match(company, /portfolio\.json/);
+    assert.match(agency, /agency-portfolio\.json/);
+    for (const skill of [company, agency]) {
       assert.match(skill, /gh api --method PUT/);
       assert.match(skill, /read it back/i);
       assert.match(skill, /FAILED/);
