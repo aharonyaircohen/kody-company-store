@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "name": "Agency Operating Loop",
+  "createdAt": "2026-07-14T00:00:00Z",
+  "updatedAt": "2026-07-14T00:00:00Z",
+  "steps": [
+    {
+      "capability": "operate-findings",
+      "report": {
+        "type": "learning",
+        "version": 1,
+        "owner": "agency-operating-loop",
+        "slugFact": "learning.id",
+        "titleFact": "learning.summary",
+        "publishWhenFact": "learning.id",
+        "reviewStatus": "info",
+        "reviewArea": "agency-learning"
+      }
+    }
+  ]
+}

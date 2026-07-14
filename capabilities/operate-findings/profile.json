@@ -11,6 +11,7 @@
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "cacheable": false,
+    "enableSubmitTool": true,
     "tools": ["Read", "Bash", "Grep", "Glob"],
     "hooks": [],
     "skills": [],
@@ -34,7 +35,12 @@
       { "script": "buildSyntheticPlugin" },
       { "script": "composePrompt" }
     ],
-    "postflight": [{ "script": "parseAgentResult" }, { "script": "appendCompanyActivity" }]
+    "postflight": [
+      { "script": "parseJobStateFromAgentResult", "with": { "fenceLabel": "kody-job-next-state" } },
+      { "script": "writeJobStateFile" },
+      { "script": "publishReport" },
+      { "script": "appendCompanyActivity" }
+    ]
   },
   "output": {
     "actionTypes": ["FINDINGS_OPERATED", "FINDINGS_OPERATION_FAILED", "AGENT_NOT_RUN"]
@@ -49,6 +55,6 @@
     "start_capability",
     "ensure_comment"
   ],
-  "readsFrom": ["findings", "intents", "goals"],
-  "writesTo": ["findings", "learnings"]
+  "readsFrom": ["reports", "intents", "goals"],
+  "writesTo": ["capability-state"]
 }

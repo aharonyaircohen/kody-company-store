@@ -8,7 +8,17 @@
       "capability": "repo-source-health"
     },
     {
-      "capability": "observe-repo-ci"
+      "capability": "observe-repo-ci",
+      "report": {
+        "type": "finding",
+        "version": 1,
+        "owner": "agency-observer",
+        "slugFact": "finding.id",
+        "titleFact": "finding.title",
+        "publishWhenFact": "finding.id",
+        "reviewStatus": "action-needed",
+        "reviewArea": "repo-health"
+      }
     }
   ]
 }

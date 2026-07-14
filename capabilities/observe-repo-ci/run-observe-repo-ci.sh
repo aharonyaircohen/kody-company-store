@@ -18,9 +18,6 @@ const [stateOwner, stateRepo] = stateSlug.split("/");
 const statePath = String(config.state?.path || repo).replace(/^\/+|\/+$/g, "");
 const stateBranch = config.state?.branch || "main";
 const branch = config.git?.defaultBranch || config.github?.defaultBranch || "main";
-const activeCapabilities = Array.isArray(config.company?.activeCapabilities)
-  ? config.company.activeCapabilities.filter((value) => typeof value === "string")
-  : [];
 const now = process.env.KODY_OBSERVER_NOW || new Date().toISOString();
 
 function gh(args) {
@@ -150,48 +147,46 @@ function writeJson(relative, value, message) {
 
 writeJson(`agency/observations/${observationId}.json`, observation, `observe: ${summary}`);
 
-const previous = readJson(`agency/findings/${findingId}.json`);
-if (status === "healthy" && !previous) {
-  console.log(`REPO_CI_OBSERVED status=${status} observation=${observationId} finding=none`);
-  process.exit(0);
+function findingReportExists() {
+  if (localRoot) {
+    const dir = join(localRoot, statePath, "reports", findingId, "runs");
+    return existsSync(dir);
+  }
+  try {
+    gh(["api", "--method", "GET", `repos/${stateOwner}/${stateRepo}/contents/${statePath}/reports/${findingId}/runs`, "-f", `ref=${stateBranch}`]);
+    return true;
+  } catch {
+    return false;
+  }
 }
-const ids = [...new Set([...(previous?.observationIds || []), observationId])].slice(-100);
-const readyForVerification = status === "healthy";
-const remainsClosed = readyForVerification && (
-  previous?.phase === "closed" || previous?.status === "resolved"
-);
-const decisionAction = previous?.decision?.action;
-const decisionUnavailable = !readyForVerification
-  && previous?.phase === "deciding"
-  && typeof decisionAction === "string"
-  && !activeCapabilities.includes(decisionAction);
-const shouldReopen = !readyForVerification && (
-  decisionUnavailable ||
-  previous?.phase === "verifying" ||
-  previous?.phase === "closed" ||
-  previous?.status === "resolved"
-);
-const preserveOperation = readyForVerification || (!shouldReopen && previous?.phase !== "observed");
-const finding = {
-  version: 1,
+
+const shouldPublishFinding = status !== "healthy" || findingReportExists();
+const finding = shouldPublishFinding ? {
   id: findingId,
   observerId: "agency-observer",
   subject: `repo-ci:${branch}`,
-  title: previous?.title || "Default branch CI is failing",
+  title: "Default branch CI is failing",
   expectation: "Default branch CI is green",
   actual: summary,
   severity: "high",
-  status: remainsClosed ? "resolved" : readyForVerification ? "in_progress" : shouldReopen ? "open" : (previous?.status || "open"),
-  phase: remainsClosed ? "closed" : readyForVerification ? "verifying" : shouldReopen ? "observed" : (previous?.phase || "observed"),
-  observationIds: ids,
-  createdAt: previous?.createdAt || now,
-  updatedAt: now,
-  ...(preserveOperation && previous?.decision ? { decision: previous.decision } : {}),
-  ...(preserveOperation && previous?.deliveryRunId ? { deliveryRunId: previous.deliveryRunId } : {}),
-  ...(previous?.learningIds ? { learningIds: previous.learningIds } : {}),
-  ...(remainsClosed && previous?.resolvedAt ? { resolvedAt: previous.resolvedAt } : {}),
+  status: status === "healthy" ? "resolved" : "open",
+  observationId,
+  observedAt: now,
+} : undefined;
+const result = {
+  version: 1,
+  status: status === "healthy" ? "pass" : status === "unhealthy" ? "fail" : "blocked",
+  summary,
+  facts: {
+    observation,
+    ...(finding ? { finding } : {}),
+  },
+  artifacts: observation.evidence
+    .filter((item) => item.url)
+    .map((item) => ({ label: item.label, url: item.url })),
+  missingEvidence: status === "unknown" ? ["repo-ci-status"] : [],
+  blockers: status === "unhealthy" ? [summary] : [],
 };
-writeJson(`agency/findings/${findingId}.json`, finding, `finding: ${finding.status} ${findingId}`);
-
-console.log(`REPO_CI_OBSERVED status=${status} observation=${observationId} finding=${findingId}`);
+console.log(`KODY_CAPABILITY_RESULT=${JSON.stringify(result)}`);
+console.log(`REPO_CI_OBSERVED status=${status} observation=${observationId} finding=${finding ? findingId : "none"}`);
 NODE

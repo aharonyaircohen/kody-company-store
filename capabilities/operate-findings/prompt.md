@@ -1,45 +1,28 @@
-# Instructions
+# Agency Operating Loop
 
-Read `.kody-engine/agency-findings.json` first. It is loaded deterministically
-from the configured state repo before this agent starts. Do not search the
-consumer repository for `agency/findings/`.
+Read `.kody-engine/agency-findings.json` first. It contains the latest Reports
+whose `reportType` is `finding`, plus the agency's active Capabilities.
 
-The file includes `stateRepo`, `statePath`, `stateBranch`,
-`availableCapabilities`, and `activeGoals`. Never write Finding or Learning JSON
-with `gh api`. Use only `.kody-engine/agency-state.mjs` for durable state. Treat
-`availableCapabilities` as the abilities currently available to this agency,
-even when their files are Store-backed and absent from the consumer checkout.
+The loaded capability state is this Loop's private process state. Findings and
+Learning are Reports; never write `agency/findings` or `agency/learnings` JSON.
+Call `submit_state` exactly once as your final action.
 
-For one Finding at a time:
+Process one phase per run:
 
-- `observed`: decide, persist with `agency-state.mjs decide`, then stop.
-- `deciding`: deliver with the existing Capability, persist with
-  `agency-state.mjs deliver`, then stop.
-- `verifying`: use only a newer Observation to resolve or reopen, then stop.
+1. **Choose:** when no Finding is active, select one open Finding not listed in
+   `processedFindingIds`. If an active Capability can address it, submit state
+   with `phase: "deciding"`, the Finding id/run id, and the chosen Capability.
+   If none can act, preserve state and stop.
+2. **Deliver:** when `phase` is `deciding`, call `start_capability` for the
+   chosen Capability. Submit `phase: "verifying"` with the returned run id and
+   the Finding report run id used for the decision. Do not wait for the child.
+3. **Verify:** when `phase` is `verifying`, require a newer Finding report run.
+   If its status is `resolved`, submit `phase: "closed"` and include:
+   `learning: { id, findingId, summary, change, evidence }`. The workflow will
+   publish that value as a `learning` Report. If the newer report is still open,
+   submit `phase: "deciding"` so delivery can be reconsidered.
+4. **Continue:** a later run may clear the closed active Finding and choose the
+   next unprocessed open Finding.
 
-1. Check active Intents and Goals to decide whether it matters now.
-2. When an existing Capability can safely act, persist the decision with
-   `node .kody-engine/agency-state.mjs decide <finding-id> <capability> <reason>`.
-3. Use the `start_capability` tool to invoke the existing Capability. Let that
-   Capability own any issue it needs; the operating loop must not create a
-   duplicate delivery issue. Never dispatch with `gh workflow run`. Pass
-   `issue` only when that Capability's `availableCapabilities.inputs` declares
-   an issue input; inputless Capabilities such as `dev-ci-health` must be started
-   with only their name. Persist the returned Job or Run id with
-   `node .kody-engine/agency-state.mjs deliver <finding-id> <run-id>`, then stop
-   this run. Do not wait or poll for the child.
-4. On a later run, require a fresh Observation as proof.
-5. When the latest Observation is healthy and the Finding phase is `verifying`,
-   run `node .kody-engine/agency-state.mjs resolve <finding-id> <observation-id>
-   <changed-model> <summary>`. This writes Learning, links it, and closes the
-   Finding at the agency state boundary.
-
-Do not invent a Capability. If none can perform the required action, do not call
-`agency-state.mjs decide`; leave the Finding open in `observed` so a newly
-activated Capability can be considered later. Never treat delivery output alone
-as verification.
-
-Perform only one durable phase transition per run. The persisted Finding is the
-handoff to the next run.
-
-Finish with `DONE` and a short `PR_SUMMARY`, or `FAILED: <reason>`.
+Carry `processedFindingIds` forward. Never invent a Capability and never treat
+delivery output as verification.
