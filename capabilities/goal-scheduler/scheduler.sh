@@ -571,7 +571,12 @@ only_goals = selected_goal_filter()
 if only_goals:
     active = {goal_id for goal_id in active if goal_id in only_goals}
     schedules = [schedule for schedule in schedules if schedule["template"] in only_goals]
-if not active and not schedules:
+state_repo, state_base = state_target(config)
+now = now_utc()
+created: list[str] = []
+errors: list[str] = []
+goal_ids = list_goal_ids(state_repo, state_base)
+if not active and not schedules and not goal_ids:
     if only_goals:
         print(
             "[goal-scheduler] no selected active goals after "
@@ -581,11 +586,6 @@ if not active and not schedules:
         print("[goal-scheduler] no company.activeGoals configured")
     print("KODY_SKIP_AGENT=true")
     raise SystemExit(0)
-state_repo, state_base = state_target(config)
-now = now_utc()
-created: list[str] = []
-errors: list[str] = []
-goal_ids = list_goal_ids(state_repo, state_base)
 goal_state_cache: dict[str, dict | None] = {}
 scheduled_recurring = [schedule for schedule in schedules if schedule.get("every")]
 
@@ -671,8 +671,14 @@ for goal_id in goal_ids:
     if not isinstance(data, dict):
         continue
     template = goal_template(data)
+    direct_loop = (
+        data.get("scheduleMode") == "agentLoop"
+        and template is None
+        and goal_schedule_interval(data) is not None
+    )
     activated = (
-        goal_id in active
+        direct_loop
+        or goal_id in active
         or (isinstance(template, str) and template in active)
         or goal_id in selected_scheduled_ids
     )
