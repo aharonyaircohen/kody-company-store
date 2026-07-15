@@ -11,6 +11,13 @@
       "type": "int",
       "required": true,
       "describe": "GitHub issue number containing the focused model creation request."
+    },
+    {
+      "name": "dry_run",
+      "flag": "--dry-run",
+      "type": "boolean",
+      "required": false,
+      "describe": "Validate the generated workflow without creating a state-repo branch or pull request."
     }
   ],
   "claudeCode": {
