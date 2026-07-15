@@ -68,6 +68,15 @@ the source step's `next` list, never directly on the step. Use this shape:
 
 ```json
 {
+  "startAt": "start",
+  "steps": [
+    {
+      "id": "start",
+      "capability": "<existing-capability-slug>",
+      "reason": "prepare the result",
+      "next": "inspect"
+    },
+    {
   "id": "inspect",
   "capability": "<existing-capability-slug>",
   "reason": "inspect the current result",
@@ -75,8 +84,16 @@ the source step's `next` list, never directly on the step. Use this shape:
     { "to": "repair", "when": { "result.needsFix": true } },
     { "to": "finish", "default": true }
   ]
+    },
+    { "id": "repair", "capability": "<existing-capability-slug>", "reason": "repair", "next": [{ "to": "inspect", "maxIterations": 2 }] },
+    { "id": "finish", "capability": "<existing-capability-slug>", "reason": "finish" }
+  ]
 }
 ```
+
+For a graph, include `startAt` and make every step reachable from it. The first
+step must have a `next` connection to the decision step; a disconnected list of
+steps is invalid even when every individual step is well formed.
 
 A bounded loop is a transition back to an earlier step, with the limit on that
 transition: `{ "to": "inspect", "maxIterations": 2 }`. Do not write string
