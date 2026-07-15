@@ -54,6 +54,8 @@ Prefer placing workflow steps on the public capability that owns the composed ac
 
 Put the workflow contract in `capabilities/<slug>/profile.json`. Prefer a `workflow` object with `steps`; top-level `steps` are only for existing profiles that already use that shape.
 
+Also include `capabilities/<slug>/capability.md` with a short human-readable description of what the workflow does. The profile and body are one runnable capability folder; do not omit either file.
+
 The workflow profile is stored as a capability profile because workflows are composed capability runs. The generated file path must use exactly the same slug as `model.slug`.
 
 Minimum profile shape:
@@ -71,6 +73,8 @@ Minimum profile shape:
     ]
   }
 }
+
+The `files` array must contain both `capabilities/<slug>/profile.json` and `capabilities/<slug>/capability.md`.
 ```
 
 Do not place workflow files under `workflows/`. Do not use a different profile slug than `model.slug`.

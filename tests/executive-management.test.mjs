@@ -116,7 +116,9 @@ describe("Executive agency management", () => {
     assert.match(skill, /intentIds/);
     assert.match(skill, /Goals and Loops/i);
     assert.match(skill, /proposed.*provisioning.*active/is);
-    assert.match(skill, /read it back/i);
+    assert.match(skill, /operation-creator/i);
+    assert.match(skill, /traceable.*request/i);
+    assert.doesNotMatch(skill, /draft the minimum `operations\/<id>\/operation\.json` contract/i);
   });
 
   it("constrains runtime work to one active Operation contract", async () => {
@@ -165,6 +167,7 @@ describe("Executive agency management", () => {
 
     assert.match(company, /portfolio\.json/);
     assert.match(agency, /agency-portfolio\.json/);
+    assert.doesNotMatch(agency, /Approved Operation contracts live at/);
     for (const skill of [company, agency]) {
       assert.match(skill, /gh api --method PUT/);
       assert.match(skill, /read it back/i);

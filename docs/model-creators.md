@@ -1,6 +1,6 @@
 # Agency Model Creators
 
-The agency owns its structure. Model creation is split across five focused
+The agency owns its structure. Model creation is split across seven focused
 capabilities; there is no central factory.
 
 ## Shared creation flow
@@ -18,6 +18,28 @@ Every creator must:
 The creator must fail with the specific missing decision when the request is
 too ambiguous to produce one valid model. It must not guess across model
 ownership boundaries.
+
+## Intent creator
+
+`intent-creator` creates the company **why**.
+
+It defines direction, priority, posture, scope, principles, success measures,
+automation limits, human-approval policy, and review cadence. New Intent
+proposals remain paused until a human approves activation.
+
+Output: `intents/<slug>/intent.json`.
+
+## Operation creator
+
+`operation-creator` creates one durable agency **responsibility boundary**.
+
+It defines responsibility, `doesNotOwn`, active `intentIds`, accountable Goals
+and Loops, and lifecycle. New Operations always start proposed. Portfolio
+management decides that an Operation is needed; this creator authors and
+validates its contract. Goal and Loop lists may be empty while a proposed
+Operation is being provisioned; activation requires at least one accountable Goal or Loop.
+
+Output: `operations/<slug>/operation.json`.
 
 ## Agent creator
 

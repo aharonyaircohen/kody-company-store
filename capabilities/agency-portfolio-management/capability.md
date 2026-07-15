@@ -18,5 +18,5 @@ status. Operation lifecycle is `proposed` -> `provisioning` -> `active`.
 - No active company intents means no new durable structure.
 - No Goal or Loop may be added without one accountable Operation.
 - Reuse and repair before creating another entity.
-- Delegate implementation as traceable work; do not silently edit production structure.
+- Delegate every new Operation contract to `operation-creator` as traceable work; do not author it here or silently edit production structure.
 - Never bypass intent policy or required human approval.

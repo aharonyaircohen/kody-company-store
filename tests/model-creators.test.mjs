@@ -8,6 +8,16 @@ const capabilitiesDir = new URL("../capabilities/", import.meta.url);
 
 const creators = [
   {
+    slug: "intent-creator",
+    owns: ["direction", "priority", "scope", "principles", "success measures", "policy"],
+    excludes: ["operations", "goals", "loops", "capability implementation"],
+  },
+  {
+    slug: "operation-creator",
+    owns: ["responsibility", "doesNotOwn", "intentIds", "goals", "loops", "lifecycle"],
+    excludes: ["company direction", "capability implementation", "runtime operation"],
+  },
+  {
     slug: "agent-creator",
     owns: ["identity", "judgment", "boundaries"],
     excludes: ["tasks", "schedules", "tools"],
@@ -97,5 +107,21 @@ describe("agency-owned model creators", () => {
 
   it("does not keep a central agent factory", () => {
     assert.equal(existsSync(new URL("../capabilities/agent-factory/profile.json", import.meta.url)), false);
+  });
+
+  it("keeps company direction and agency responsibility review-first", async () => {
+    const intentPrompt = await readFile(
+      new URL("../capabilities/intent-creator/prompt.md", import.meta.url),
+      "utf8",
+    );
+    const operationPrompt = await readFile(
+      new URL("../capabilities/operation-creator/prompt.md", import.meta.url),
+      "utf8",
+    );
+
+    assert.match(intentPrompt, /human approval/i);
+    assert.match(intentPrompt, /must not activate/i);
+    assert.match(operationPrompt, /status.*proposed/is);
+    assert.match(operationPrompt, /must not activate/i);
   });
 });
