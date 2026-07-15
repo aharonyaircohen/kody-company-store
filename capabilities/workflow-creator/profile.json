@@ -15,7 +15,7 @@
     {
       "name": "dry_run",
       "flag": "--dry-run",
-      "type": "boolean",
+      "type": "bool",
       "required": false,
       "describe": "Validate the generated workflow without creating a state-repo branch or pull request."
     }
