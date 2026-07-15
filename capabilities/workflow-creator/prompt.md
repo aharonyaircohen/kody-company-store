@@ -15,6 +15,12 @@ Read and follow these docs before producing the model:
 
 These docs are contract references. If the consumer repo does not contain them or `Read` fails, continue from the model boundary below and still list the referenced doc paths in `model.docsUsed`.
 
+Do not inspect installed engine packages, generated `node_modules`, compiled files,
+git history, or unrelated repositories to recover missing documentation. The model
+boundary and schema below are sufficient. After one focused capability inspection,
+design the smallest model and produce the required `DONE` output; do not keep
+researching once the referenced capabilities are known.
+
 # Operator Request
 
 {{issue.body}}
