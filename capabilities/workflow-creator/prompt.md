@@ -48,6 +48,15 @@ Create the smallest review-ready Workflow model that satisfies the requested ord
 
 Before designing it, inspect the current agency capabilities and workflows. Reuse existing capabilities and workflow fragments when they fit; do not duplicate capability implementation inside a step. Validate every capability reference, input/output handoff, failure rule, and final output contract.
 
+Use only fields understood by the engine. A linear workflow uses `workflow.steps` with
+`capability` and `reason`. A branching or data-mapped workflow must use step `id`s,
+`next` transitions, and `inputs` whose `from` paths are real engine paths
+(`facts.*`, `evidence.*`, `artifacts.*`, `result.*`, `workflow.*`, or `lastOutcome.*`).
+Only map an input that the target capability actually declares. Do not invent
+`produces`, `consumes`, `handoff`, or other descriptive fields as if they transfer
+data; unknown fields are ignored by the runtime. If no compatible declared input
+exists, keep the workflow linear and describe the shared result in the final output.
+
 Do not call Bash, Write, Edit, mkdir, cat, tee, printf, python, node, git, gh, or any external command. Your only mutation channel is `PR_SUMMARY.files`; the deterministic postflight opens the state-repo review PR from that JSON.
 
 Prefer placing workflow steps on the public capability that owns the composed action. Do not create a workflow when a single capability is enough.
