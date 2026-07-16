@@ -25,6 +25,9 @@
     "postflight": [{ "script": "publishReport" }]
   },
   "output": {
+    "result": {
+      "facts": ["observation", "finding"]
+    },
     "actionTypes": ["REPO_CI_OBSERVED", "REPO_CI_OBSERVATION_FAILED", "AGENT_NOT_RUN"]
   },
   "agent": "coo",

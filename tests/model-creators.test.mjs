@@ -58,7 +58,7 @@ describe("agency-owned model creators", () => {
       assert.equal(profile.name, creator.slug);
       assert.equal(profile.role, "primitive");
       assert.equal(profile.kind, "oneshot");
-      assert.deepEqual(profile.inputs, [
+      const expectedInputs = [
         {
           name: "issue",
           flag: "--issue",
@@ -66,7 +66,17 @@ describe("agency-owned model creators", () => {
           required: true,
           describe: "GitHub issue number containing the focused model creation request.",
         },
-      ]);
+      ];
+      if (creator.slug === "workflow-creator") {
+        expectedInputs.push({
+          name: "dry_run",
+          flag: "--dry-run",
+          type: "bool",
+          required: false,
+          describe: "Validate the generated workflow without creating a state-repo branch or pull request.",
+        });
+      }
+      assert.deepEqual(profile.inputs, expectedInputs);
       assert.deepEqual(
         profile.scripts.postflight.map((step) => step.script),
         ["parseAgentResult", "validateAgencyModelProposal", "openAgencyModelReviewPr"],

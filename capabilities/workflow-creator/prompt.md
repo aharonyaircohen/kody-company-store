@@ -64,7 +64,10 @@ data; unknown fields are ignored by the runtime. If no compatible declared input
 exists, keep the workflow linear and describe the shared result in the final output.
 
 For branching and loops, the condition and loop controls belong on objects inside
-the source step's `next` list, never directly on the step. Use this shape:
+the source step's `next` list, never directly on the step. Conditions may read
+only `result.status`, `result.summary`, `result.resultClass`, or a
+`result.facts.<name>` field explicitly declared by the source capability profile.
+Use this shape:
 
 ```json
 {
@@ -81,7 +84,7 @@ the source step's `next` list, never directly on the step. Use this shape:
   "capability": "<existing-capability-slug>",
   "reason": "inspect the current result",
   "next": [
-    { "to": "repair", "when": { "result.needsFix": true } },
+    { "to": "repair", "when": { "result.status": "fail" } },
     { "to": "finish", "default": true }
   ]
     },
@@ -100,7 +103,9 @@ transition: `{ "to": "inspect", "maxIterations": 2 }`. Do not write string
 conditions such as `result.needsFix == true`, step-level `when`, `default`, or
 `maxIterations`, and do not use `runWhen: "always"`; `runWhen` is an object match.
 Every `capability` value must be an existing capability discovered in the consumer
-repo. Never use the new workflow's own slug as a capability reference.
+repo. Never use the new workflow's own slug as a capability reference. If the
+source capability does not declare a structured result, keep the workflow
+linear after that step.
 
 Do not call Bash, Write, Edit, mkdir, cat, tee, printf, python, node, git, gh, or any external command. Your only mutation channel is `PR_SUMMARY.files`; the deterministic postflight opens the state-repo review PR from that JSON.
 
