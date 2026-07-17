@@ -144,18 +144,18 @@ describe("goal-scheduler", () => {
     try {
       const logFile = join(cwd, "calls.log");
       const binDir = installStubs(cwd);
-      writeConfig(cwd, ["ci-health", "prs-stay-mergeable"]);
+      writeConfig(cwd, ["product-quality", "prs-stay-mergeable"]);
 
       const first = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z");
       assert.equal(first.result.status, 0, first.result.stderr);
       assert.deepEqual(first.calls, [
-        "kody-engine implementation goal-manager --goal ci-health",
+        "kody-engine implementation goal-manager --goal product-quality",
         "kody-engine implementation goal-manager --goal prs-stay-mergeable",
       ]);
-      assert.equal(readGoal(cwd, "ci-health").schedule, "15m");
+      assert.equal(readGoal(cwd, "product-quality").schedule, "15m");
       assert.equal(readGoal(cwd, "prs-stay-mergeable").schedule, "15m");
 
-      for (const goalId of ["ci-health", "prs-stay-mergeable"]) {
+      for (const goalId of ["product-quality", "prs-stay-mergeable"]) {
         const state = readGoal(cwd, goalId);
         state.scheduleState = {
           mode: "agentLoop",
@@ -169,13 +169,13 @@ describe("goal-scheduler", () => {
       const early = runScheduler(cwd, binDir, logFile, "2026-06-20T12:05:00Z");
       assert.equal(early.result.status, 0, early.result.stderr);
       assert.deepEqual(early.calls, []);
-      assert.match(early.result.stdout, /skip ci-health: waiting schedule 15m/);
+      assert.match(early.result.stdout, /skip product-quality: waiting schedule 15m/);
       assert.match(early.result.stdout, /skip prs-stay-mergeable: waiting schedule 15m/);
 
       const due = runScheduler(cwd, binDir, logFile, "2026-06-20T12:15:00Z");
       assert.equal(due.result.status, 0, due.result.stderr);
       assert.deepEqual(due.calls, [
-        "kody-engine implementation goal-manager --goal ci-health",
+        "kody-engine implementation goal-manager --goal product-quality",
         "kody-engine implementation goal-manager --goal prs-stay-mergeable",
       ]);
     } finally {
@@ -330,15 +330,15 @@ describe("goal-scheduler", () => {
     try {
       const logFile = join(cwd, "calls.log");
       const binDir = installStubs(cwd);
-      writeConfig(cwd, ["ci-health", "prs-stay-mergeable"]);
+      writeConfig(cwd, ["product-quality", "prs-stay-mergeable"]);
 
       const run = runScheduler(cwd, binDir, logFile, "2026-06-20T12:00:00Z", {
-        KODY_GOAL_SCHEDULER_ONLY: "ci-health",
+        KODY_GOAL_SCHEDULER_ONLY: "product-quality",
       });
 
       assert.equal(run.result.status, 0, run.result.stderr);
-      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal ci-health"]);
-      assert.equal(readGoal(cwd, "ci-health").schedule, "15m");
+      assert.deepEqual(run.calls, ["kody-engine implementation goal-manager --goal product-quality"]);
+      assert.equal(readGoal(cwd, "product-quality").schedule, "15m");
       assert.equal(existsSync(join(cwd, ".kody", "todos", "prs-stay-mergeable.json")), false);
     } finally {
       rmSync(cwd, { recursive: true, force: true });

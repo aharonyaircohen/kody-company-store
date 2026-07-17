@@ -5,23 +5,17 @@ import { describe, it } from "node:test";
 
 const managementPairs = [
   {
-    loop: "company-growth-loop",
-    capability: "company-portfolio-management",
-    agent: "ceo",
-    schedule: "1w",
-  },
-  {
     loop: "agency-evolution-loop",
     capability: "agency-portfolio-management",
     agent: "kody",
     schedule: "1d",
   },
-  {
-    loop: "agency-operations-loop",
-    capability: "agency-operations-management",
-    agent: "kody",
-    schedule: "1h",
-  },
+];
+
+const retiredLoops = [
+  "company-growth-loop",
+  "agency-operations-loop",
+  "ci-health",
 ];
 
 describe("Executive agency management", () => {
@@ -34,6 +28,16 @@ describe("Executive agency management", () => {
       existsSync(new URL("../goals/templates/agency-architect-loop/", import.meta.url)),
       false,
     );
+  });
+
+  it("retires duplicate loop templates", () => {
+    for (const loop of retiredLoops) {
+      assert.equal(
+        existsSync(new URL(`../goals/templates/${loop}/`, import.meta.url)),
+        false,
+        `${loop} template must stay retired`,
+      );
+    }
   });
 
   for (const pair of managementPairs) {
