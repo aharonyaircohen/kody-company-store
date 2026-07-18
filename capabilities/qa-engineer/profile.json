@@ -40,6 +40,27 @@
       "describe": "Path to a Playwright storageState.json for pre-authenticated sessions (skips manual login)."
     }
   ],
+  "auth": {
+    "methods": [
+      {
+        "name": "Kody repository login",
+        "strategy": "browser-storage-state",
+        "adapter": "kody-repository",
+        "fields": [
+          {
+            "label": "Repository",
+            "source": "variable",
+            "key": "KODY_LOGIN_REPO"
+          },
+          {
+            "label": "Personal access token",
+            "source": "secret",
+            "key": "KODY_LOGIN_PASS"
+          }
+        ]
+      }
+    ]
+  },
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "acceptEdits",
@@ -47,10 +68,22 @@
     "maxThinkingTokens": null,
     "systemPromptAppend": null,
     "tools": [
-      "Read",
-      "Grep",
-      "Glob",
-      "mcp__playwright"
+      "mcp__playwright__browser_navigate",
+      "mcp__playwright__browser_navigate_back",
+      "mcp__playwright__browser_snapshot",
+      "mcp__playwright__browser_take_screenshot",
+      "mcp__playwright__browser_click",
+      "mcp__playwright__browser_type",
+      "mcp__playwright__browser_fill_form",
+      "mcp__playwright__browser_select_option",
+      "mcp__playwright__browser_hover",
+      "mcp__playwright__browser_drag",
+      "mcp__playwright__browser_press_key",
+      "mcp__playwright__browser_resize",
+      "mcp__playwright__browser_tabs",
+      "mcp__playwright__browser_wait_for",
+      "mcp__playwright__browser_handle_dialog",
+      "mcp__playwright__browser_close"
     ],
     "hooks": [
       "block-git"
@@ -106,6 +139,9 @@
       },
       {
         "script": "loadQaContext"
+      },
+      {
+        "script": "prepareBrowserAuth"
       },
       {
         "script": "loadConventions"

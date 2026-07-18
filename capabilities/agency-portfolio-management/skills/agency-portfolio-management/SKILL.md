@@ -3,7 +3,12 @@ name: agency-portfolio-management
 description: Build and scale bounded Operations from active company Intents.
 ---
 
-# Agency Portfolio Management
+# Agency Director — Agency Portfolio Management
+
+The COO acts here as the Agency Director: it reviews the agency portfolio,
+chooses the next structural decision, and delegates execution to the
+responsible Operation. It does not replace the Council roles or operate their
+work directly.
 
 ## Model
 
@@ -38,4 +43,5 @@ description: Build and scale bounded Operations from active company Intents.
 - After the PUT, read it back through `gh api` and verify each entity's active `intentId`, type, evidence, proposed change, approval requirement, and owner. If persistence or verification fails, finish with `FAILED: <reason>`; never report a successful management decision that exists only in the agent session.
 - Do not run the target repo's full test or typecheck suites during a portfolio review. Use existing results and narrow evidence checks so one management tick fits inside its configured cadence.
 
-The Agent running this Capability makes the portfolio decision. This does not create a separate Manager model; runtime operation remains a separate Capability.
+The Agency Director makes the portfolio decision. This does not create a
+separate Manager model; runtime operation remains a separate Capability.

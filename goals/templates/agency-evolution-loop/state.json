@@ -7,8 +7,8 @@
   "type": "agentLoop",
   "scheduleMode": "agentLoop",
   "schedule": "1d",
-  "title": "CTO evolves the AI agency",
-  "description": "CTO turns active company intents and CEO priorities into a coherent agency portfolio.",
+  "title": "Agency Director evolves the AI agency",
+  "description": "COO, acting as Agency Director, turns active company intents and CEO priorities into a coherent agency portfolio.",
   "destination": {
     "outcome": "The agency has the smallest effective set of intent-backed goals, loops, capabilities, workflows, and agents.",
     "evidence": []

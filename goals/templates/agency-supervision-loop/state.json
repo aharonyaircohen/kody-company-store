@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "agency-supervision-loop",
+  "state": "inactive",
+  "type": "agentLoop",
+  "scheduleMode": "agentLoop",
+  "schedule": "1h",
+  "loopTarget": {
+    "type": "workflow",
+    "id": "agency-supervision-loop"
+  },
+  "title": "Agency supervision loop",
+  "description": "Check that the agency is observing, operating, verifying, and recovering with current evidence.",
+  "destination": {
+    "outcome": "The agency has a current supervision result and every detected violation is repaired or escalated.",
+    "evidence": []
+  },
+  "capabilities": [],
+  "route": [],
+  "stage": "checking",
+  "facts": {},
+  "blockers": []
+}

@@ -7,7 +7,7 @@ const managementPairs = [
   {
     loop: "agency-evolution-loop",
     capability: "agency-portfolio-management",
-    agent: "kody",
+    agent: "coo",
     schedule: "1d",
   },
 ];
@@ -111,7 +111,7 @@ describe("Executive agency management", () => {
       "utf8",
     );
 
-    assert.equal(profile.agent, "kody");
+    assert.equal(profile.agent, "coo");
     assert.match(skill, /Intent owns why/i);
     assert.match(skill, /Operation owns.*responsibility/i);
     assert.match(skill, /operations\/<id>\/operation\.json/);

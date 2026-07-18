@@ -28,6 +28,6 @@
     "actionTypes": ["AGENCY_PORTFOLIO_MANAGED", "AGENCY_PORTFOLIO_MANAGEMENT_FAILED", "AGENT_NOT_RUN"]
   },
   "action": "agency-portfolio-management",
-  "agent": "kody",
+  "agent": "coo",
   "implementations": ["agency-portfolio-management"]
 }

@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "name": "Agency Supervision Loop",
+  "createdAt": "2026-07-18T00:00:00Z",
+  "updatedAt": "2026-07-18T00:00:00Z",
+  "steps": [
+    {
+      "capability": "agency-supervisor",
+      "report": {
+        "type": "supervision",
+        "version": 1,
+        "owner": "agency-supervisor",
+        "slugFact": "supervision.subject",
+        "titleFact": "supervision.subject",
+        "publishWhenFact": "supervision.subject",
+        "reviewStatus": "info",
+        "reviewArea": "agency-supervision"
+      }
+    }
+  ]
+}

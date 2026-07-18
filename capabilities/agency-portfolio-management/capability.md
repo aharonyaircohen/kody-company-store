@@ -1,4 +1,8 @@
-# Agency Portfolio Management
+# Agency Director — Agency Portfolio Management
+
+This capability is the Agency Director's portfolio-management action. It runs
+as the COO identity and coordinates agency structure; it does not perform the
+scheduled work owned by individual Operations.
 
 ## Job
 
