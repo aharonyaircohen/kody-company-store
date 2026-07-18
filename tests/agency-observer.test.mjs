@@ -17,6 +17,8 @@ const operatingProfilePath = new URL("../capabilities/operate-findings/profile.j
 const operatingPromptPath = new URL("../capabilities/operate-findings/prompt.md", import.meta.url);
 const operatingLoaderPath = new URL("../capabilities/operate-findings/load-agency-findings.sh", import.meta.url);
 const observerScriptPath = new URL("../capabilities/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
+const agencyFlowProfilePath = new URL("../capabilities/observe-agency-flow/profile.json", import.meta.url);
+const agencyFlowScriptPath = new URL("../capabilities/observe-agency-flow/run-observe-agency-flow.sh", import.meta.url);
 
 function capabilityResult(stdout) {
   const line = stdout.split("\n").find((item) => item.startsWith("KODY_CAPABILITY_RESULT="));
@@ -61,6 +63,7 @@ describe("agency observer and operating loops", () => {
     assert.deepEqual(observerWorkflow.steps.map((step) => step.capability), [
       "repo-source-health",
       "observe-repo-ci",
+      "observe-agency-flow",
     ]);
     assert.deepEqual(observerWorkflow.steps[1].report, {
       type: "finding",
@@ -82,6 +85,20 @@ describe("agency observer and operating loops", () => {
       reviewStatus: "info",
       reviewArea: "agency-learning",
     });
+    assert.deepEqual(observerWorkflow.steps[2].report, {
+      type: "finding",
+      version: 1,
+      owner: "agency-observer",
+      slugFact: "finding.id",
+      titleFact: "finding.title",
+      publishWhenFact: "finding.id",
+      reviewStatus: "action-needed",
+      reviewArea: "agency-flow",
+    });
+    const agencyFlowCapability = JSON.parse(await readFile(agencyFlowProfilePath, "utf8"));
+    assert.equal(agencyFlowCapability.capabilityKind, "observe");
+    assert.deepEqual(agencyFlowCapability.writesTo, ["observations"]);
+    assert.deepEqual(agencyFlowCapability.scripts.postflight, [{ script: "publishReport" }]);
     assert.equal(sourceHealthCapability.capabilityKind, "observe");
     assert.deepEqual(observeCapability.writesTo, ["observations"]);
     assert.deepEqual(observeCapability.scripts.postflight, [{ script: "publishReport" }]);
@@ -184,6 +201,95 @@ describe("agency observer and operating loops", () => {
       const result = spawnSync("bash", [observerScriptPath.pathname], {
         cwd,
         env: { ...process.env, KODY_STATE_ROOT: stateRoot, KODY_OBSERVER_CI_STATUS: "healthy", KODY_OBSERVER_NOW: "2026-07-14T12:00:00.000Z" },
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, result.stderr);
+      assert.equal(capabilityResult(result.stdout).facts.finding.status, "resolved");
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("reports stale agency items as an open agency-flow Finding", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-agency-flow-stale-"));
+    const stateRoot = join(cwd, "state-root");
+    try {
+      mkdirSync(stateRoot, { recursive: true });
+      writeFileSync(join(cwd, "kody.config.json"), `${JSON.stringify({
+        github: { owner: "A-Guy", repo: "example" },
+        state: { path: "example" },
+      })}\n`);
+      const result = spawnSync("bash", [agencyFlowScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STATE_ROOT: stateRoot,
+          KODY_AGENCY_FLOW_NOW: "2026-07-14T12:00:00.000Z",
+          KODY_AGENCY_FLOW_ITEMS_JSON: JSON.stringify([
+            { kind: "stale-review-pr", label: "Review PR #9 open since 2026-07-10", url: "https://example.test/pr/9" },
+            { kind: "unanswered-request", label: "Request issue #8 open since 2026-07-10", url: "https://example.test/issues/8" },
+          ]),
+        },
+        encoding: "utf8",
+      });
+
+      assert.equal(result.status, 0, result.stderr);
+      const output = capabilityResult(result.stdout);
+      assert.equal(output.status, "fail");
+      assert.equal(output.facts.finding.id, "finding-agency-flow");
+      assert.equal(output.facts.finding.status, "open");
+      const observation = JSON.parse(await readFile(join(stateRoot, "example", "agency", "observations", "obs-agency-flow-20260714t120000000z.json"), "utf8"));
+      assert.equal(observation.status, "unhealthy");
+      assert.equal(observation.evidence.length, 2);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("does not create an agency-flow Finding when the pipeline is clear", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-agency-flow-clear-"));
+    const stateRoot = join(cwd, "state-root");
+    try {
+      mkdirSync(stateRoot, { recursive: true });
+      writeFileSync(join(cwd, "kody.config.json"), `${JSON.stringify({ github: { owner: "A-Guy", repo: "example" }, state: { path: "example" } })}\n`);
+      const result = spawnSync("bash", [agencyFlowScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STATE_ROOT: stateRoot,
+          KODY_AGENCY_FLOW_NOW: "2026-07-14T12:00:00.000Z",
+          KODY_AGENCY_FLOW_ITEMS_JSON: "[]",
+        },
+        encoding: "utf8",
+      });
+      assert.equal(result.status, 0, result.stderr);
+      const output = capabilityResult(result.stdout);
+      assert.equal(output.status, "pass");
+      assert.equal(output.facts.finding, undefined);
+    } finally {
+      rmSync(cwd, { recursive: true, force: true });
+    }
+  });
+
+  it("resolves the agency-flow Finding once a report exists and the pipeline clears", async () => {
+    const cwd = await mkdtemp(join(tmpdir(), "kody-agency-flow-recovery-"));
+    const stateRoot = join(cwd, "state-root");
+    try {
+      const runDir = join(stateRoot, "example", "reports", "finding-agency-flow", "runs");
+      mkdirSync(runDir, { recursive: true });
+      writeFileSync(join(runDir, "2026-07-14T11-45-00Z.md"), reportMarkdown({
+        title: "Agency pipeline has stale items",
+        data: { finding: { id: "finding-agency-flow", status: "open" } },
+      }));
+      writeFileSync(join(cwd, "kody.config.json"), `${JSON.stringify({ github: { owner: "A-Guy", repo: "example" }, state: { path: "example" } })}\n`);
+      const result = spawnSync("bash", [agencyFlowScriptPath.pathname], {
+        cwd,
+        env: {
+          ...process.env,
+          KODY_STATE_ROOT: stateRoot,
+          KODY_AGENCY_FLOW_NOW: "2026-07-14T12:00:00.000Z",
+          KODY_AGENCY_FLOW_ITEMS_JSON: "[]",
+        },
         encoding: "utf8",
       });
       assert.equal(result.status, 0, result.stderr);

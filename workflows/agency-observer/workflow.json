@@ -19,6 +19,19 @@
         "reviewStatus": "action-needed",
         "reviewArea": "repo-health"
       }
+    },
+    {
+      "capability": "observe-agency-flow",
+      "report": {
+        "type": "finding",
+        "version": 1,
+        "owner": "agency-observer",
+        "slugFact": "finding.id",
+        "titleFact": "finding.title",
+        "publishWhenFact": "finding.id",
+        "reviewStatus": "action-needed",
+        "reviewArea": "agency-flow"
+      }
     }
   ]
 }
