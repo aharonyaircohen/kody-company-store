@@ -5,18 +5,19 @@ comment.
 
 ## Workflow
 
-1. Fan out specialist reviewers in parallel:
-   - `review-security` always.
-   - `review-correctness` always.
-   - `review-style` always.
-   - `review-architecture` only when the diff is structural.
+1. Run all four reviewers in parallel on every PR:
+   - `review-security`.
+   - `review-reliability`.
+   - `review-maintainability`.
+   - `review-complexity`.
 2. Give each reviewer the PR context, base/head refs, and diff. Require full
    changed-file reads before reporting.
-3. Check each reviewer status. `NEEDS_CONTEXT` or `BLOCKED` is not a clean
-   pass.
-4. Synthesize one comment.
+3. Check each reviewer status. `NEEDS_CONTEXT` is not a clean pass.
+4. Merge duplicate findings, keeping the strongest severity and clearest
+   evidence, then synthesize one comment.
 5. Resolve verdict from worst severity:
-   - any `BLOCK` in security/correctness/architecture -> `FAIL`,
+   - any `BLOCK` -> `FAIL`,
+   - any `NEEDS_CONTEXT` -> `FAIL`,
    - no block but any `WARN` -> `CONCERNS`,
    - all `NONE` -> `PASS`.
 
@@ -25,7 +26,7 @@ comment.
 - Default to skepticism until the code proves the change is correct.
 - Cite real `file:line` evidence for every issue.
 - Do not invent citations.
-- Do not downgrade blocking correctness, security, or architecture issues.
+- Do not downgrade a blocking issue from any reviewer.
 - Do not pass when an entire review dimension was blocked.
 - Treat stubs/placeholders shipped against a stated requirement as failures.
 
@@ -38,7 +39,7 @@ For every change, check:
 3. Wired: its output is consumed where it matters.
 4. Functional: it produces the right result for the issue cases.
 
-Missing wiring is a correctness failure.
+Missing wiring is a reliability failure.
 
 ## Required output
 
@@ -47,7 +48,7 @@ Return raw markdown only, with this shape:
 ```markdown
 ## Verdict: PASS | CONCERNS | FAIL
 
-> Reviewed in parallel by specialist subagents (security · correctness · structure · architecture when the diff is structural).
+> Reviewed in parallel by specialist subagents (security · reliability · maintainability · complexity).
 
 ### Summary
 <2-3 sentences>

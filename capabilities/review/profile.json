@@ -40,9 +40,9 @@
     "commands": [],
     "subagents": [
       "review-security",
-      "review-correctness",
-      "review-style",
-      "review-architecture"
+      "review-reliability",
+      "review-maintainability",
+      "review-complexity"
     ],
     "plugins": [],
     "mcpServers": [

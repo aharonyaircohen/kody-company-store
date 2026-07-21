@@ -64,6 +64,89 @@ describe("Store capabilities", () => {
     }
   });
 
+  it("keeps the review panel aligned to its four engineering risks", async () => {
+    const reviewDir = join(capabilitiesDir.pathname, "review");
+    const profile = JSON.parse(
+      await readFile(join(reviewDir, "profile.json"), "utf8"),
+    );
+    const skill = await readFile(
+      join(reviewDir, "skills", "code-review", "SKILL.md"),
+      "utf8",
+    );
+    const expectedReviewers = [
+      "review-security",
+      "review-reliability",
+      "review-maintainability",
+      "review-complexity",
+    ];
+
+    assert.deepEqual(profile.claudeCode.subagents, expectedReviewers);
+    assert.match(skill, /Run all four reviewers in parallel on every PR/);
+    assert.match(skill, /any `BLOCK` -> `FAIL`/);
+    assert.match(
+      skill,
+      /security · reliability · maintainability · complexity/,
+    );
+
+    const reviewerPrompts = Object.fromEntries(
+      await Promise.all(
+        expectedReviewers.map(async (reviewer) => [
+          reviewer,
+          (
+            await readFile(join(reviewDir, "agents", `${reviewer}.md`), "utf8")
+          ).replace(/\s+/g, " "),
+        ]),
+      ),
+    );
+    assert.match(
+      reviewerPrompts["review-security"],
+      /concrete threat, likely impact, and smallest safe fix/,
+    );
+    assert.match(reviewerPrompts["review-reliability"], /concurrency/);
+    assert.match(reviewerPrompts["review-reliability"], /data integrity/);
+    assert.match(reviewerPrompts["review-reliability"], /recovery/);
+    assert.match(
+      reviewerPrompts["review-maintainability"],
+      /ownership boundaries/,
+    );
+    assert.match(
+      reviewerPrompts["review-maintainability"],
+      /future change cost/,
+    );
+    assert.match(
+      reviewerPrompts["review-maintainability"],
+      /Do not report cosmetic preferences/,
+    );
+    assert.match(
+      reviewerPrompts["review-complexity"],
+      /simplest correct design/,
+    );
+    assert.match(
+      reviewerPrompts["review-complexity"],
+      /simpler concrete alternative/,
+    );
+
+    for (const reviewer of expectedReviewers) {
+      assert.equal(
+        existsSync(join(reviewDir, "agents", `${reviewer}.md`)),
+        true,
+        `review capability must ship ${reviewer}`,
+      );
+    }
+
+    for (const retiredReviewer of [
+      "review-correctness",
+      "review-style",
+      "review-architecture",
+    ]) {
+      assert.equal(
+        existsSync(join(reviewDir, "agents", `${retiredReviewer}.md`)),
+        false,
+        `review capability must retire ${retiredReviewer}`,
+      );
+    }
+  });
+
   it("ships every declared plugin part or uses a known engine shared part", async () => {
     const entries = await readdir(capabilitiesDir, { withFileTypes: true });
     const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);

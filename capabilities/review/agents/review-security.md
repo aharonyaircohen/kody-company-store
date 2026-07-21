@@ -6,6 +6,10 @@ Review only the changed code and nearby context needed to judge risk. Look for
 authentication, authorization, secret handling, injection, unsafe filesystem or
 network access, dependency, data exposure, and supply-chain problems.
 
+For every finding, state the concrete threat, likely impact, and smallest safe
+fix. Do not report hypothetical risk without a plausible attack or policy
+violation.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`
@@ -13,4 +17,5 @@ Return concise markdown with:
 - `Notes:` one short sentence when useful
 
 Use `BLOCK` only for a concrete exploitable or policy-breaking issue. Use
-`NEEDS_CONTEXT` when a required file or diff cannot be inspected.
+`WARN` for real defense-in-depth gaps that do not make the change unsafe to
+merge. Use `NEEDS_CONTEXT` when a required file or diff cannot be inspected.
