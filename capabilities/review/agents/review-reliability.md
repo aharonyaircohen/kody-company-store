@@ -18,6 +18,10 @@ targeted reads or searches needed to verify a finding. Do not report
 pre-existing issues, process preferences, or speculation. Return at most 3
 findings and stay under 300 words.
 
+Return only verified `WARN` or `BLOCK` findings. A strict ratchet whose cap
+equals the current measured value is working as intended; report it only when
+it is misconfigured, bypassable, or weakened.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`

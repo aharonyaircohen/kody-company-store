@@ -81,6 +81,8 @@ describe("Store capabilities", () => {
     ];
 
     assert.deepEqual(profile.claudeCode.subagents, expectedReviewers);
+    assert.deepEqual(profile.claudeCode.skills, ["code-review"]);
+    assert.equal(profile.claudeCode.maxTurns, 18);
     assert.match(skill, /Run all four reviewers in a single parallel dispatch on every PR/);
     assert.match(skill, /single parallel dispatch/);
     assert.match(skill, /paste the relevant diff hunks directly into each child prompt/);
@@ -89,7 +91,13 @@ describe("Store capabilities", () => {
     assert.match(skill, /Verify every `WARN` and `BLOCK`/);
     assert.match(skill, /at most five verified concerns/);
     assert.match(skill, /Discard\s+speculative, pre-existing, and process-only findings/);
+    assert.match(skill, /Discard `NIT`, `NOTE`, and `NONE`/);
+    assert.match(skill, /PR title, scope, commit splitting, or bisectability/);
+    assert.match(skill, /ratchet.*current measured value.*intended/i);
+    assert.match(skill, /single caller.*not.*complexity finding/i);
     assert.match(skill, /first line must be `## Verdict: PASS \| CONCERNS \| FAIL`/);
+    assert.doesNotMatch(skill, /### Strengths/);
+    assert.doesNotMatch(skill, /### Suggestions/);
     assert.match(
       skill,
       /security · reliability · maintainability · complexity/,

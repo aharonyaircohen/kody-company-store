@@ -21,6 +21,9 @@ targeted reads or searches needed to verify a finding. Do not report
 pre-existing issues, process preferences, or speculation. Return at most 3
 findings and stay under 300 words.
 
+Return only verified `WARN` or `BLOCK` findings. Do not promote a `NIT`,
+`NOTE`, defense preference without concrete risk, or `NONE` item into a finding.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`

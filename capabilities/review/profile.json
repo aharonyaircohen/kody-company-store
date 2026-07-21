@@ -15,7 +15,7 @@
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
-    "maxTurns": null,
+    "maxTurns": 18,
     "maxThinkingTokens": 8000,
     "systemPromptAppend": null,
     "cacheable": true,
@@ -31,11 +31,7 @@
       "block-write"
     ],
     "skills": [
-      "code-review",
-      "design-system",
-      "vercel-react-best-practices",
-      "next-best-practices",
-      "web-design-guidelines"
+      "code-review"
     ],
     "commands": [],
     "subagents": [

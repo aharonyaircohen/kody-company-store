@@ -18,6 +18,9 @@ comment.
 4. Verify every `WARN` and `BLOCK` against the diff and nearby code. Discard
    speculative, pre-existing, and process-only findings. Merge duplicates,
    keeping the strongest supported severity and clearest evidence.
+   Discard `NIT`, `NOTE`, and `NONE` items rather than turning them into final
+   concerns. Never report PR title, scope, commit splitting, or bisectability;
+   those are process preferences, not code findings.
 5. Return at most five verified concerns in the combined comment, ordered by
    severity and impact. Suggestions do not affect the verdict.
 6. Resolve verdict from worst verified severity:
@@ -35,6 +38,14 @@ comment.
 - Do not preserve a reviewer finding that the evidence disproves.
 - Do not pass when an entire review dimension was blocked.
 - Treat stubs/placeholders shipped against a stated requirement as failures.
+- A strict ratchet whose cap equals the current measured value is intended to
+  prevent regression; that fact alone is not a finding. Report a ratchet only
+  when it is misconfigured, bypassable, or weakened.
+- A single caller or extraction is not by itself a complexity finding. Require
+  demonstrated indirection or change cost and a simpler correct alternative.
+- Package-boundary glue or duplication is not automatically a maintainability
+  issue. Require evidence of behavioral drift, inconsistent ownership, or
+  material future change cost.
 
 ## Implementation-depth ladder
 
@@ -61,14 +72,8 @@ verification, notes, nits, or non-issues sections. Use only this shape:
 ### Summary
 <2-3 sentences>
 
-### Strengths
-- <bullet>
-
 ### Concerns
 - <bullet with file:line, or "None">
-
-### Suggestions
-- <bullet with file:line where possible, or "None">
 
 ### Bottom line
 <one sentence>

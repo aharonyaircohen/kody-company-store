@@ -18,6 +18,10 @@ targeted reads or searches needed to verify a finding. Do not report
 pre-existing issues, process preferences, or speculation. Return at most 3
 findings and stay under 300 words.
 
+Return only verified `WARN` or `BLOCK` findings. Never report PR title, scope,
+commit splitting, or bisectability. Package-boundary glue or duplication needs
+evidence of drift, inconsistent ownership, or material future change cost.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`

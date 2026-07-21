@@ -18,6 +18,10 @@ targeted reads or searches needed to verify a finding. Do not report
 pre-existing issues, process preferences, or speculation. Return at most 3
 findings and stay under 300 words.
 
+Return only verified `WARN` or `BLOCK` findings. A single caller or extraction
+is not itself a complexity finding; require demonstrated indirection or change
+cost and name a simpler correct alternative.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`
