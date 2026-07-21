@@ -95,6 +95,9 @@ describe("Store capabilities", () => {
     assert.match(skill, /PR title, scope, commit splitting, or bisectability/);
     assert.match(skill, /ratchet.*current measured value.*intended/i);
     assert.match(skill, /single caller.*not.*complexity finding/i);
+    assert.match(skill, /recommended action is a follow-up[\s\S]*discard/i);
+    assert.match(skill, /named extraction from a large component[\s\S]*maintainability\s+improvement/i);
+    assert.match(skill, /tiny package-local test setup[\s\S]*not a finding/i);
     assert.match(skill, /first line must be `## Verdict: PASS \| CONCERNS \| FAIL`/);
     assert.doesNotMatch(skill, /### Strengths/);
     assert.doesNotMatch(skill, /### Suggestions/);

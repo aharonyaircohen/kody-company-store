@@ -22,7 +22,8 @@ comment.
    concerns. Never report PR title, scope, commit splitting, or bisectability;
    those are process preferences, not code findings.
 5. Return at most five verified concerns in the combined comment, ordered by
-   severity and impact. Suggestions do not affect the verdict.
+   severity and impact. If the recommended action is a follow-up rather than a
+   current `WARN` or `BLOCK`, discard it.
 6. Resolve verdict from worst verified severity:
    - any `BLOCK` -> `FAIL`,
    - any `NEEDS_CONTEXT` -> `FAIL`,
@@ -46,6 +47,11 @@ comment.
 - Package-boundary glue or duplication is not automatically a maintainability
   issue. Require evidence of behavioral drift, inconsistent ownership, or
   material future change cost.
+- A named extraction from a large component is normally a maintainability
+  improvement, even with one caller. Do not infer a bad motive from a size
+  ratchet or an extraction-oriented docstring; require a concrete regression.
+- Tiny package-local test setup duplicated across packages is not a finding.
+  Do not propose a shared package unless substantial logic has already drifted.
 
 ## Implementation-depth ladder
 

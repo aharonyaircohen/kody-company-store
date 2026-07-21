@@ -21,6 +21,9 @@ findings and stay under 300 words.
 Return only verified `WARN` or `BLOCK` findings. A single caller or extraction
 is not itself a complexity finding; require demonstrated indirection or change
 cost and name a simpler correct alternative.
+Do not infer line-count arbitrage from a size ratchet or an extraction-oriented
+docstring. A named extraction from a large component is normally simpler than
+keeping every concern inline. Discard follow-up-only recommendations.
 
 Return concise markdown with:
 

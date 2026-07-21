@@ -21,6 +21,9 @@ findings and stay under 300 words.
 Return only verified `WARN` or `BLOCK` findings. Never report PR title, scope,
 commit splitting, or bisectability. Package-boundary glue or duplication needs
 evidence of drift, inconsistent ownership, or material future change cost.
+A named extraction from a large component is normally an improvement even with
+one caller. Tiny package-local test setup duplication is not a finding unless
+substantial logic has actually drifted. Discard follow-up-only recommendations.
 
 Return concise markdown with:
 
