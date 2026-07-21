@@ -87,6 +87,7 @@ describe("Store capabilities", () => {
     assert.match(skill, /Verify every `WARN` and `BLOCK`/);
     assert.match(skill, /at most five verified concerns/);
     assert.match(skill, /Discard\s+speculative, pre-existing, and process-only findings/);
+    assert.match(skill, /first line must be `## Verdict: PASS \| CONCERNS \| FAIL`/);
     assert.match(
       skill,
       /security · reliability · maintainability · complexity/,
@@ -143,6 +144,8 @@ describe("Store capabilities", () => {
         reviewerPrompts[reviewer],
         /Do not report pre-existing issues, process preferences, or speculation/,
       );
+      assert.match(reviewerPrompts[reviewer], /tools: Read, Grep, Glob/);
+      assert.match(reviewerPrompts[reviewer], /description:/);
       assert.equal(
         existsSync(join(reviewDir, "agents", `${reviewer}.md`)),
         true,

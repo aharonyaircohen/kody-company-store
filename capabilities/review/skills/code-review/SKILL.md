@@ -48,7 +48,9 @@ Missing wiring is a reliability failure.
 
 ## Required output
 
-Return raw markdown only, with this shape:
+Return raw markdown only. The first line must be `## Verdict: PASS | CONCERNS | FAIL`
+with exactly one real verdict selected. Stay under 600 words. Do not add overview,
+verification, notes, nits, or non-issues sections. Use only this shape:
 
 ```markdown
 ## Verdict: PASS | CONCERNS | FAIL

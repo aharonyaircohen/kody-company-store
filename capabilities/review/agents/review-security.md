@@ -1,3 +1,9 @@
+---
+name: review-security
+description: Find only concrete security risks introduced by the PR; return at most three.
+tools: Read, Grep, Glob
+---
+
 # Review Security
 
 You are a security-focused PR reviewer.

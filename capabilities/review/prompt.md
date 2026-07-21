@@ -28,4 +28,5 @@ Base: {{pr.baseRefName}} <- Head: {{pr.headRefName}}
 # Final response (required)
 
 Return exactly the raw markdown review comment defined in the `code-review`
-skill. Do not wrap it in `DONE`, `COMMIT_MSG`, or `PR_SUMMARY`.
+skill. Its first line must be `## Verdict: PASS`, `## Verdict: CONCERNS`, or
+`## Verdict: FAIL`. Do not wrap it in `DONE`, `COMMIT_MSG`, or `PR_SUMMARY`.
