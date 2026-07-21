@@ -7,6 +7,11 @@ abstractions, layers, indirection, dependencies, configuration, state,
 branching, duplication, premature generality, and coupling that makes the
 solution harder to understand than the problem requires.
 
+The parent provides the diff. Do not fetch the PR or full diff again. Use only
+targeted reads or searches needed to verify a finding. Do not report
+pre-existing issues, process preferences, or speculation. Return at most 3
+findings and stay under 300 words.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`

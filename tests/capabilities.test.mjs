@@ -81,8 +81,12 @@ describe("Store capabilities", () => {
     ];
 
     assert.deepEqual(profile.claudeCode.subagents, expectedReviewers);
-    assert.match(skill, /Run all four reviewers in parallel on every PR/);
+    assert.match(skill, /Run all four reviewers in a single parallel dispatch on every PR/);
+    assert.match(skill, /single parallel dispatch/);
     assert.match(skill, /any `BLOCK` -> `FAIL`/);
+    assert.match(skill, /Verify every `WARN` and `BLOCK`/);
+    assert.match(skill, /at most five verified concerns/);
+    assert.match(skill, /Discard\s+speculative, pre-existing, and process-only findings/);
     assert.match(
       skill,
       /security · reliability · maintainability · complexity/,
@@ -127,6 +131,18 @@ describe("Store capabilities", () => {
     );
 
     for (const reviewer of expectedReviewers) {
+      assert.match(
+        reviewerPrompts[reviewer],
+        /Return at most 3 findings and stay under 300 words/,
+      );
+      assert.match(
+        reviewerPrompts[reviewer],
+        /Do not fetch the PR or full diff again/,
+      );
+      assert.match(
+        reviewerPrompts[reviewer],
+        /Do not report pre-existing issues, process preferences, or speculation/,
+      );
       assert.equal(
         existsSync(join(reviewDir, "agents", `${reviewer}.md`)),
         true,

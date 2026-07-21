@@ -5,17 +5,21 @@ comment.
 
 ## Workflow
 
-1. Run all four reviewers in parallel on every PR:
+1. Run all four reviewers in a single parallel dispatch on every PR:
    - `review-security`.
    - `review-reliability`.
    - `review-maintainability`.
    - `review-complexity`.
-2. Give each reviewer the PR context, base/head refs, and diff. Require full
-   changed-file reads before reporting.
+2. Give each reviewer the already-provided PR context, base/head refs, and
+   relevant diff. Tell them not to fetch the PR or full diff again. Require
+   targeted changed-file reads before reporting.
 3. Check each reviewer status. `NEEDS_CONTEXT` is not a clean pass.
-4. Merge duplicate findings, keeping the strongest severity and clearest
-   evidence, then synthesize one comment.
-5. Resolve verdict from worst severity:
+4. Verify every `WARN` and `BLOCK` against the diff and nearby code. Discard
+   speculative, pre-existing, and process-only findings. Merge duplicates,
+   keeping the strongest supported severity and clearest evidence.
+5. Return at most five verified concerns in the combined comment, ordered by
+   severity and impact. Suggestions do not affect the verdict.
+6. Resolve verdict from worst verified severity:
    - any `BLOCK` -> `FAIL`,
    - any `NEEDS_CONTEXT` -> `FAIL`,
    - no block but any `WARN` -> `CONCERNS`,
@@ -27,6 +31,7 @@ comment.
 - Cite real `file:line` evidence for every issue.
 - Do not invent citations.
 - Do not downgrade a blocking issue from any reviewer.
+- Do not preserve a reviewer finding that the evidence disproves.
 - Do not pass when an entire review dimension was blocked.
 - Treat stubs/placeholders shipped against a stated requirement as failures.
 

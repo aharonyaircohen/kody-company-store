@@ -10,6 +10,11 @@ For every finding, state the concrete threat, likely impact, and smallest safe
 fix. Do not report hypothetical risk without a plausible attack or policy
 violation.
 
+The parent provides the diff. Do not fetch the PR or full diff again. Use only
+targeted reads or searches needed to verify a finding. Do not report
+pre-existing issues, process preferences, or speculation. Return at most 3
+findings and stay under 300 words.
+
 Return concise markdown with:
 
 - `Status: NONE | WARN | BLOCK | NEEDS_CONTEXT`
