@@ -20,7 +20,8 @@ Base: {{pr.baseRefName}} <- Head: {{pr.headRefName}}
 
 - Follow the `code-review` skill.
 - Use specialist reviewer subagents in parallel as described by the skill.
-- Pass the supplied diff to them; do not ask them to fetch it again.
+- Paste relevant hunks from the supplied diff into every child prompt. Do not
+  merely tell a child that the parent has the diff.
 - Read only.
 - Do not invent citations or pass blocked reviewer dimensions as clean.
 - Verify all warnings and blockers before including them in the final comment.

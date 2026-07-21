@@ -83,6 +83,8 @@ describe("Store capabilities", () => {
     assert.deepEqual(profile.claudeCode.subagents, expectedReviewers);
     assert.match(skill, /Run all four reviewers in a single parallel dispatch on every PR/);
     assert.match(skill, /single parallel dispatch/);
+    assert.match(skill, /paste the relevant diff hunks directly into each child prompt/);
+    assert.match(skill, /A reference to the supplied diff is not\s+sufficient/);
     assert.match(skill, /any `BLOCK` -> `FAIL`/);
     assert.match(skill, /Verify every `WARN` and `BLOCK`/);
     assert.match(skill, /at most five verified concerns/);
