@@ -20,7 +20,7 @@ comment body and must include this exact machine-readable heading:
 Use exactly one of:
 
 - `## Verdict: PASS` when there are no blocking or advisory findings.
-- `## Verdict: CONCERNS` when there are non-blocking issues or follow-ups.
+- `## Verdict: CONCERNS` when there is at least one verified `WARN` finding.
 - `## Verdict: FAIL` when the PR should not merge until fixes are made.
 
 The heading may be followed by summary and findings sections, but do not replace

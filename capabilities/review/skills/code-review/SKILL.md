@@ -79,7 +79,7 @@ verification, notes, nits, or non-issues sections. Use only this shape:
 <2-3 sentences>
 
 ### Concerns
-- <bullet with file:line, or "None">
+- <each bullet starts with **[WARN]** or **[BLOCK]**, or "None">
 
 ### Bottom line
 <one sentence>

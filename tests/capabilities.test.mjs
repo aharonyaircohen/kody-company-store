@@ -73,6 +73,8 @@ describe("Store capabilities", () => {
       join(reviewDir, "skills", "code-review", "SKILL.md"),
       "utf8",
     );
+    const prompt = await readFile(join(reviewDir, "prompt.md"), "utf8");
+    const capability = await readFile(join(reviewDir, "capability.md"), "utf8");
     const expectedReviewers = [
       "review-security",
       "review-reliability",
@@ -105,6 +107,11 @@ describe("Store capabilities", () => {
       skill,
       /security · reliability · maintainability · complexity/,
     );
+    assert.match(prompt, /final concern must start with `- \*\*\[WARN\]\*\*` or `- \*\*\[BLOCK\]\*\*`/);
+    assert.match(prompt, /exact-current-value ratchets/);
+    assert.match(prompt, /metadata or documentation tag typos/);
+    assert.match(prompt, /format-only changes to pre-existing casts/);
+    assert.doesNotMatch(capability, /issues or follow-ups/);
 
     const reviewerPrompts = Object.fromEntries(
       await Promise.all(
