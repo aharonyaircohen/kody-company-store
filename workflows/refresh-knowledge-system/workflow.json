@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "name": "Refresh Knowledge System",
+  "createdAt": "2026-07-22T00:00:00Z",
+  "updatedAt": "2026-07-22T00:00:00Z",
+  "steps": [
+    { "capability": "build-knowledge-graph" },
+    { "capability": "create-knowledge-report" },
+    { "capability": "publish-knowledge-system" }
+  ]
+}

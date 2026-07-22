@@ -13,7 +13,9 @@
     "outcome": "Kody has a current repository-scoped graph of code, business state, issues, and pull requests.",
     "evidence": []
   },
-  "capabilities": ["knowledge-system-refresh"],
+  "capabilities": [],
+  "operationId": "knowledge",
+  "loopTarget": { "type": "workflow", "id": "refresh-knowledge-system" },
   "route": [],
   "stage": "refreshing",
   "facts": {},

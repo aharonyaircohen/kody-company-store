@@ -29,7 +29,7 @@ ISSUES_FILE="$TMP_DIR/issues.json"
 PRS_FILE="$TMP_DIR/pull-requests.json"
 BUSINESS_FILE="$TMP_DIR/business-graph.json"
 GRAPH_FILE="$TMP_DIR/graph.json"
-REPORT_FILE="$TMP_DIR/GRAPH_REPORT.md"
+ARTIFACT_DIR="${KODY_ARTIFACT_DIR:-$PWD/.kody-engine/artifacts/knowledge-system}"
 
 auth_args=(
   -H "x-kody-token: $AUTH_TOKEN"
@@ -70,6 +70,7 @@ jq -n \
     "definitionHeads", "definitionVersions", "catalog", "workflows",
     "workflowRuns", "userJourneys", "userJourneyVersions", "userJourneyRuns",
     "intents", "intentDecisions", "goals", "reports", "agents", "macros",
+    "agencyDefinitions", "agencyStates", "agencyOutputs",
     "agencyRecords", "taskState", "capabilityState", "dailyLogs",
     "agencyRuns", "runEvents", "manifests", "inboxEntries"
   ];
@@ -156,63 +157,27 @@ KODY_COUNT="$(jq '[.nodes[] | select(.source == "kody")] | length' "$GRAPH_FILE"
 ISSUE_COUNT="$(jq '[.nodes[] | select(.type == "issue")] | length' "$GRAPH_FILE")"
 PR_COUNT="$(jq '[.nodes[] | select(.type == "pull_request")] | length' "$GRAPH_FILE")"
 
-{
-  printf '# Knowledge System\n\n'
-  printf -- '- Repository: `%s`\n' "$REPOSITORY"
-  printf -- '- Generated: `%s`\n' "$GENERATED_AT"
-  printf -- '- Source revision: `%s`\n' "$SOURCE_REVISION"
-  printf -- '- Nodes: %s\n' "$NODE_COUNT"
-  printf -- '- Edges: %s\n' "$EDGE_COUNT"
-  printf -- '- Kody business records: %s\n' "$KODY_COUNT"
-  printf -- '- GitHub issues: %s\n' "$ISSUE_COUNT"
-  printf -- '- GitHub pull requests: %s\n' "$PR_COUNT"
-} >"$REPORT_FILE"
-
-create_upload() {
-  curl --fail --silent --show-error -X POST \
-    "${auth_args[@]}" \
-    "$KODY_DASHBOARD_URL/api/kody/knowledge-system" \
-    | jq -er '.uploadUrl'
-}
-
-upload_file() {
-  local file="$1"
-  local content_type="$2"
-  local upload_url
-  upload_url="$(create_upload)"
-  curl --fail --silent --show-error -X POST \
-    -H "Content-Type: $content_type" \
-    --data-binary "@$file" \
-    "$upload_url" \
-    | jq -er '.storageId'
-}
-
-GRAPH_STORAGE_ID="$(upload_file "$GRAPH_FILE" "application/json")"
-REPORT_STORAGE_ID="$(upload_file "$REPORT_FILE" "text/markdown; charset=utf-8")"
-
-publish_body="$(jq -nc \
-  --arg graphStorageId "$GRAPH_STORAGE_ID" \
-  --arg reportStorageId "$REPORT_STORAGE_ID" \
+mkdir -p "$ARTIFACT_DIR"
+cp "$GRAPH_FILE" "$ARTIFACT_DIR/graph.json"
+jq -nc \
+  --arg repository "$REPOSITORY" \
   --arg generatedAt "$GENERATED_AT" \
   --arg sourceRevision "$SOURCE_REVISION" \
   --argjson nodeCount "$NODE_COUNT" \
   --argjson edgeCount "$EDGE_COUNT" \
+  --argjson kodyCount "$KODY_COUNT" \
+  --argjson issueCount "$ISSUE_COUNT" \
+  --argjson prCount "$PR_COUNT" \
   '{
-    graphStorageId: $graphStorageId,
-    reportStorageId: $reportStorageId,
+    repository: $repository,
     generatedAt: $generatedAt,
     sourceRevision: $sourceRevision,
     nodeCount: $nodeCount,
     edgeCount: $edgeCount,
-    schemaVersion: 1
-  }')"
+    kodyCount: $kodyCount,
+    issueCount: $issueCount,
+    prCount: $prCount
+  }' >"$ARTIFACT_DIR/meta.json"
 
-curl --fail --silent --show-error -X PUT \
-  "${auth_args[@]}" \
-  -H "Content-Type: application/json" \
-  --data "$publish_body" \
-  "$KODY_DASHBOARD_URL/api/kody/knowledge-system" \
-  | jq -e '.ok == true' >/dev/null
-
-printf 'DONE\nCOMMIT_MSG: chore(knowledge): refresh knowledge system\nPR_SUMMARY:\n- Published %s nodes and %s edges for %s.\n' \
+printf 'DONE\nCOMMIT_MSG: chore(knowledge): build knowledge graph\nPR_SUMMARY:\n- Built %s nodes and %s edges for %s.\n' \
   "$NODE_COUNT" "$EDGE_COUNT" "$REPOSITORY"
