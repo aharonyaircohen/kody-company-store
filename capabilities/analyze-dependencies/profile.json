@@ -1,9 +1,9 @@
 {
-  "name": "ci-health-graph",
+  "name": "analyze-dependencies",
   "internal": true,
   "role": "primitive",
   "kind": "oneshot",
-  "describe": "Derive CI health from GitHub workflow runs and PR checks, then refresh reports/ci-health-graph.md.",
+  "describe": "Analyze dependency structure from package manifests and lockfiles.",
   "inputs": [],
   "claudeCode": {
     "model": "inherit",
@@ -15,7 +15,7 @@
     "tools": [],
     "hooks": [],
     "skills": [
-      "ci-health-graph"
+      "dependency-graph"
     ],
     "commands": [],
     "subagents": [],
@@ -23,7 +23,6 @@
     "mcpServers": []
   },
   "cliTools": [
-    "gh",
     "jq"
   ],
   "scripts": {
@@ -32,7 +31,7 @@
         "script": "buildSyntheticPlugin"
       },
       {
-        "shell": "refresh-ci-health-graph.sh"
+        "shell": "refresh-dependency-graph.sh"
       },
       {
         "script": "skipAgent"
@@ -42,8 +41,8 @@
   },
   "output": {
     "actionTypes": [
-      "CI_HEALTH_GRAPH_REFRESHED",
-      "CI_HEALTH_GRAPH_FAILED",
+      "DEPENDENCIES_ANALYZED",
+      "DEPENDENCY_ANALYSIS_FAILED",
       "AGENT_NOT_RUN"
     ]
   }

@@ -18,7 +18,8 @@
     "docs-health",
     "documentation-maintenance",
     "memory-compaction",
-    "repo-graph",
+    "analyze-dependencies",
+    "analyze-documentation",
     "skills-research"
   ],
   "route": [],

@@ -17,6 +17,18 @@ const loopUrl = new URL(
 const workflowUrl = new URL("../workflows/refresh-knowledge-system/workflow.json", import.meta.url);
 
 describe("knowledge-system-refresh", () => {
+  it("keeps graph identity only on the Knowledge System builder", async () => {
+    const capabilities = [
+      "build-knowledge-graph",
+      "analyze-ci-health",
+      "analyze-dependencies",
+      "analyze-documentation",
+      "analyze-pull-requests",
+      "analyze-agency-structure",
+    ];
+    assert.deepEqual(capabilities.filter((name) => name.includes("graph")), ["build-knowledge-graph"]);
+  });
+
   it("builds repository-scoped artifacts without publishing them", async () => {
     const profile = JSON.parse(await readFile(profileUrl, "utf8"));
     const script = await readFile(scriptUrl, "utf8");

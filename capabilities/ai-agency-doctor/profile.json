@@ -51,7 +51,7 @@
   ],
   "readsFrom": [
     "ai-agency-setup",
-    "company-graph"
+    "agency-structure-analysis"
   ],
   "writesTo": [
     "ai-agency-doctor"

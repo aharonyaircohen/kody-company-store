@@ -1,8 +1,8 @@
-# Company Graph - derive and refresh the orchestration graph
+# Analyze agency structure
 
 ## Job
 
-Refresh the machine-readable graph of context, capabilities, agent, implementations, reports, goals, and issue edges.
+Analyze the relationships between capabilities, agents, implementations, reports, goals, and issues.
 
 ## Implementation
 
