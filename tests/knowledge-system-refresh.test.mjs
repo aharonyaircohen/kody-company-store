@@ -15,6 +15,10 @@ const loopUrl = new URL(
   import.meta.url,
 );
 const workflowUrl = new URL("../workflows/refresh-knowledge-system/workflow.json", import.meta.url);
+const publishScriptUrl = new URL(
+  "../capabilities/publish-knowledge-system/publish-knowledge-system.sh",
+  import.meta.url,
+);
 
 describe("knowledge-system-refresh", () => {
   it("keeps graph identity only on the Knowledge System builder", async () => {
@@ -62,5 +66,15 @@ describe("knowledge-system-refresh", () => {
       "create-knowledge-report",
       "publish-knowledge-system",
     ]);
+  });
+
+  it("publishes structured evidence for the owning Goal", async () => {
+    const script = await readFile(publishScriptUrl, "utf8");
+
+    assert.match(script, /KODY_CAPABILITY_RESULT/);
+    assert.match(script, /graph-published/);
+    assert.match(script, /knowledge-graph/);
+    assert.match(script, /knowledge-report/);
+    assert.match(script, /KODY_OUTPUT/);
   });
 });
