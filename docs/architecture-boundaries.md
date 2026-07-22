@@ -7,6 +7,10 @@ capabilities, implementation profiles, agents, and runtime state separate.
 
 A reusable capability does not own its parent goal or loop.
 
+A reusable capability also does not duplicate the parent's business purpose.
+It owns one independently callable action. Goals own why, loops own when, and
+workflows own multi-action order.
+
 The clean flow is:
 
 ```text
@@ -27,6 +31,9 @@ runner attaches the result to goal/loop evidence and persists progress
 | Implementation profile | CLI inputs, tools, scripts, prompt, run-local result | Business outcome, route decision, long-term state |
 | Agent | Professional judgment inside the assigned scope | Scheduler, persistence model, parent ownership |
 | State repo | Runtime facts, reports, goal instances, logs | Shared catalog definitions |
+
+See [Capability Design](capability-design.md) for naming, reuse, composition,
+and duplication rules.
 
 ## Inputs
 

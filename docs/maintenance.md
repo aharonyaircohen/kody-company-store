@@ -9,10 +9,13 @@ assets from the store.
 1. Identify the asset kind and slug.
 2. Read the existing asset files and the matching manifest entry.
 3. Confirm this is the canonical shared default for the slug.
-4. Edit only the shared default behavior that belongs in the store.
-5. Keep consumer-specific state in the consumer repo.
-6. Validate JSON before committing.
-7. Review the diff for accidental runtime state, secrets, or local paths.
+4. Confirm an existing capability cannot perform the same action.
+5. Confirm business purpose, ordering, and cadence belong to a goal, workflow,
+   or loop instead.
+6. Edit only the shared default behavior that belongs in the store.
+7. Keep consumer-specific state in the consumer repo.
+8. Validate JSON before committing.
+9. Review the diff for accidental runtime state, secrets, or local paths.
 
 ## Stable Curation
 
@@ -81,6 +84,11 @@ Use the existing layout for the asset kind:
 
 Choose stable slugs. Renaming a slug is a breaking change for consumers that
 reference it from capabilities, scripts, or dashboards.
+
+Name capabilities as reusable actions, normally with a verb-object slug. Read
+[Capability Design](capability-design.md) before adding a capability. Do not
+copy another capability's scripts into a wrapper capability; use a workflow or
+shared engine script instead.
 
 Store capabilities and goals must be safe as inactive catalog entries. Do not
 add `disabled: true` to all shared capabilities; activation belongs in the

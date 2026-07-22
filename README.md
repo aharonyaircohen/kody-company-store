@@ -52,6 +52,8 @@ See [docs/ai-agency-health-matrix.md](docs/ai-agency-health-matrix.md) for the
 AI Agency health report model.
 See [docs/architecture-boundaries.md](docs/architecture-boundaries.md) for the
 goal, loop, capability, and implementation ownership rules.
+See [docs/capability-design.md](docs/capability-design.md) for capability
+naming, reuse, composition, and duplication rules.
 See [docs/model-creators.md](docs/model-creators.md) for model creation and
 cross-model coordination rules.
 
