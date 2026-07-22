@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "kind": "template",
+  "template": true,
+  "templateId": "knowledge-system-refresh",
+  "state": "inactive",
+  "type": "agentLoop",
+  "scheduleMode": "agentLoop",
+  "schedule": "1d",
+  "title": "Knowledge System stays current",
+  "description": "Rebuild and publish the repository's visual knowledge graph.",
+  "destination": {
+    "outcome": "Kody has a current repository-scoped graph of code, business state, issues, and pull requests.",
+    "evidence": []
+  },
+  "capabilities": ["knowledge-system-refresh"],
+  "route": [],
+  "stage": "refreshing",
+  "facts": {},
+  "blockers": []
+}
