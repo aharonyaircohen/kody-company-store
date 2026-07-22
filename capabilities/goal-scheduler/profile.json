@@ -37,6 +37,9 @@
   "scripts": {
     "preflight": [
       {
+        "script": "dispatchAgencyLoops"
+      },
+      {
         "shell": "scheduler.sh",
         "timeoutSec": 1800
       },
