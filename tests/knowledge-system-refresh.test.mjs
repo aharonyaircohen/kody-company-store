@@ -19,6 +19,10 @@ const publishScriptUrl = new URL(
   "../capabilities/publish-knowledge-system/publish-knowledge-system.sh",
   import.meta.url,
 );
+const dispatchProfileUrl = new URL(
+  "../capabilities/dispatch-due-loops/profile.json",
+  import.meta.url,
+);
 
 describe("knowledge-system-refresh", () => {
   it("keeps graph identity only on the Knowledge System builder", async () => {
@@ -76,5 +80,15 @@ describe("knowledge-system-refresh", () => {
     assert.match(script, /knowledge-graph/);
     assert.match(script, /knowledge-report/);
     assert.match(script, /KODY_OUTPUT/);
+  });
+
+  it("uses the same generic Loop dispatcher for manual proof", async () => {
+    const profile = JSON.parse(await readFile(dispatchProfileUrl, "utf8"));
+
+    assert.equal(profile.action, "dispatch-due-loops");
+    assert.deepEqual(profile.scripts.preflight, [
+      { script: "dispatchAgencyLoops" },
+      { script: "skipAgent" },
+    ]);
   });
 });

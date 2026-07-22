@@ -1,0 +1,36 @@
+{
+  "name": "dispatch-due-loops",
+  "role": "primitive",
+  "kind": "oneshot",
+  "describe": "Reserve and dispatch due AI Agency Loops.",
+  "inputs": [],
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      { "script": "dispatchAgencyLoops" },
+      { "script": "skipAgent" }
+    ],
+    "postflight": []
+  },
+  "output": { "actionTypes": ["AGENT_NOT_RUN"] },
+  "action": "dispatch-due-loops",
+  "capabilityKind": "act",
+  "implementations": ["dispatch-due-loops"],
+  "readsFrom": ["agency-model"],
+  "writesTo": ["agency-runs", "agency-state"]
+}
