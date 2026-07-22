@@ -1,13 +1,21 @@
 {
   "version": 1,
   "name": "Agency Observer",
+  "capabilities": [
+    "repo-source-health",
+    "observe-repo-ci",
+    "observe-agency-flow"
+  ],
+  "startAt": "source-health",
   "createdAt": "2026-07-13T00:00:00Z",
   "updatedAt": "2026-07-13T00:00:00Z",
   "steps": [
     {
+      "id": "source-health",
       "capability": "repo-source-health"
     },
     {
+      "id": "observe-ci",
       "capability": "observe-repo-ci",
       "report": {
         "type": "finding",
@@ -21,6 +29,7 @@
       }
     },
     {
+      "id": "observe-flow",
       "capability": "observe-agency-flow",
       "report": {
         "type": "finding",
