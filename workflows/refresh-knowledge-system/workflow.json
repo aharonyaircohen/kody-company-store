@@ -6,12 +6,11 @@
     "create-knowledge-report",
     "publish-knowledge-system"
   ],
-  "startAt": "build-graph",
   "createdAt": "2026-07-22T00:00:00Z",
   "updatedAt": "2026-07-22T00:00:00Z",
   "steps": [
-    { "id": "build-graph", "capability": "build-knowledge-graph" },
-    { "id": "create-report", "capability": "create-knowledge-report" },
-    { "id": "publish", "capability": "publish-knowledge-system" }
+    { "capability": "build-knowledge-graph" },
+    { "capability": "create-knowledge-report" },
+    { "capability": "publish-knowledge-system" }
   ]
 }

@@ -70,6 +70,8 @@ describe("knowledge-system-refresh", () => {
       "create-knowledge-report",
       "publish-knowledge-system",
     ]);
+    assert.equal(workflow.startAt, undefined);
+    assert.equal(workflow.steps.some((step) => "id" in step || "next" in step), false);
   });
 
   it("publishes structured evidence for the owning Goal", async () => {
