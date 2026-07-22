@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { readFile } from "node:fs/promises";
+import { readFile, readdir } from "node:fs/promises";
 import { describe, it } from "node:test";
 
 const profileUrl = new URL(
@@ -18,15 +18,15 @@ const workflowUrl = new URL("../workflows/refresh-knowledge-system/workflow.json
 
 describe("knowledge-system-refresh", () => {
   it("keeps graph identity only on the Knowledge System builder", async () => {
-    const capabilities = [
-      "build-knowledge-graph",
-      "analyze-ci-health",
-      "analyze-dependencies",
-      "analyze-documentation",
-      "analyze-pull-requests",
-      "analyze-agency-structure",
-    ];
-    assert.deepEqual(capabilities.filter((name) => name.includes("graph")), ["build-knowledge-graph"]);
+    const root = new URL("../capabilities/", import.meta.url);
+    const folders = await readdir(root);
+    const names = await Promise.all(
+      folders.map(async (folder) => {
+        const raw = await readFile(new URL(`${folder}/profile.json`, root), "utf8");
+        return JSON.parse(raw).name;
+      }),
+    );
+    assert.deepEqual(names.filter((name) => name.includes("graph")), ["build-knowledge-graph"]);
   });
 
   it("builds repository-scoped artifacts without publishing them", async () => {
