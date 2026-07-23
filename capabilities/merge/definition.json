@@ -41,19 +41,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "Reads PR mergeability (`gh pr view --json`) and merges (`gh pr merge --squash --delete-branch`).",
-      "allowedUses": [
-        "pr",
-        "api"
-      ]
-    }
+    "gh"
   ],
   "success": "merge completes and returns a valid canonical result",
   "failure": "merge cannot return a valid canonical result"

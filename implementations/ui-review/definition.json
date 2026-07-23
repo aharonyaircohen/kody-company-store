@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "ui-review"
   },
-  "compatibleCapabilityRevision": "049a57d19e0dd8b3345b289ed29588f66050b8b44b74cc0a851af786f237dee9",
+  "compatibleCapabilityRevision": "1af1ebe0f9b8fdf3c3f70ff533029a2362c12ad6dd2e44917eb376ed09503042",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

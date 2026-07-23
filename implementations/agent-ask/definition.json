@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "agent-ask"
   },
-  "compatibleCapabilityRevision": "4bbb2a3d7edc251d5701348d353244dee0f9829feffe0215fc09b223aecc7c87",
+  "compatibleCapabilityRevision": "a7c1f6afbcc21695ddaf6a3efc56d01e369d683b3b0c8615f22522576a4ea86b",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "preview-build"
   },
-  "compatibleCapabilityRevision": "e9e3aa00d3df03340af7b558ca9dc57691a4bd75fc1eb09ce3d7f251f23ff2dc",
+  "compatibleCapabilityRevision": "aa39952dc07c35a05e3fa375b4861f7309f07d276445667853e341a677abb14b",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

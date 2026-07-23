@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "revert"
   },
-  "compatibleCapabilityRevision": "b8033b5d87ecaba57c06aa9355f6be4f3f416efcf5cc35e424b7938fe1841b94",
+  "compatibleCapabilityRevision": "1c1210bab4e9ed4fd04a8e779e4149562534c7a09e56f49b48ff336d8e9ce187",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

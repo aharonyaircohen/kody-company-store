@@ -47,19 +47,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "playwright",
-      "install": {
-        "required": false,
-        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
-        "installCommand": "npx --yes playwright install chromium"
-      },
-      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
-      "usage": "The Playwright MCP server uses Chromium under the hood. Preflight ensures it is installed. Save screenshots under `.kody/qa-reports/<run>/` if you take any — that directory is gitignored.",
-      "allowedUses": [
-        "--version"
-      ]
-    }
+    "playwright"
   ],
   "success": "qa-engineer completes and returns a valid canonical result",
   "failure": "qa-engineer cannot return a valid canonical result"

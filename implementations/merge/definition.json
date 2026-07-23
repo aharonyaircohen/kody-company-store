@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "merge"
   },
-  "compatibleCapabilityRevision": "66965164fc61438d7e3cfe82f7edcc6183a2ab822895251829d1275a76fac6c8",
+  "compatibleCapabilityRevision": "077015853a826fd162b2be8f1d15ce1203250274433d027500c3e50ab9d1cb79",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

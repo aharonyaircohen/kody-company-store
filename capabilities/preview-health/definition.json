@@ -26,21 +26,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "Reads open PRs, reads the CTO trust ledger, dispatches Kody workflows, and posts PR audit/recommendation comments.",
-      "allowedUses": [
-        "pr",
-        "api",
-        "issue",
-        "workflow"
-      ]
-    }
+    "gh"
   ],
   "success": "preview-health completes and returns a valid canonical result",
   "failure": "preview-health cannot return a valid canonical result"

@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "research"
   },
-  "compatibleCapabilityRevision": "c1914a9693ce12094b3bc4ffec77d689eee27efe312044c88b0ec4a91e165425",
+  "compatibleCapabilityRevision": "b99e4568517f5800f54cf9131625a5e791fd2f37672563ad3b2677e282d1b16c",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

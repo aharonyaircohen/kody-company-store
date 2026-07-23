@@ -34,20 +34,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "gh --version"
-      },
-      "verify": "gh auth status",
-      "usage": "Read and write repository memory files when durable lessons are found.",
-      "allowedUses": [
-        "inspect task artifacts",
-        "write memory files",
-        "commit memory updates"
-      ]
-    }
+    "gh"
   ],
   "success": "task-memorize completes and returns a valid canonical result",
   "failure": "task-memorize cannot return a valid canonical result"

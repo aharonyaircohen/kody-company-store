@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "redispatch"
   },
-  "compatibleCapabilityRevision": "b1509c4e81ddca60aabc967b1e3b8d481615de04d3c23f174f69aaa005457d14",
+  "compatibleCapabilityRevision": "7829bbaf44d6910246254143f93630d7b8a6d3e6afeeffc50d4465a877428755",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

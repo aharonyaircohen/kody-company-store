@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "task-memorize"
   },
-  "compatibleCapabilityRevision": "acb1cb6adebb2e00af4783063d57a5e1454ddd502e455a55f2599584c6529fa3",
+  "compatibleCapabilityRevision": "2a18d7011698a3e627f2026f7073c4e44648d0cc7a9785a87670bb4f123a9d18",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

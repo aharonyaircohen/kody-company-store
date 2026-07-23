@@ -63,6 +63,25 @@ function outputSchema(outputContract) {
   };
 }
 
+function permissionNames(cliTools, fallback) {
+  const values = Array.isArray(cliTools) ? cliTools : fallback;
+  if (!Array.isArray(values)) return [];
+  return [
+    ...new Set(
+      values
+        .map((value) =>
+          typeof value === "string"
+            ? value
+            : typeof value?.name === "string"
+              ? value.name
+              : "",
+        )
+        .map((value) => value.trim())
+        .filter(Boolean),
+    ),
+  ];
+}
+
 const ids = (await readdir(capabilitiesRoot, { withFileTypes: true }))
   .filter((entry) => entry.isDirectory())
   .map((entry) => entry.name)
@@ -83,7 +102,7 @@ for (const id of ids) {
     inputSchema: inputSchema(runtime.inputs),
     outputSchema: outputSchema(runtime.outputContract),
     effects: Array.isArray(runtime.writesTo) ? runtime.writesTo : capability.effects ?? [],
-    permissions: Array.isArray(runtime.cliTools) ? runtime.cliTools : capability.permissions ?? [],
+    permissions: permissionNames(runtime.cliTools, capability.permissions),
   };
   const refinedImplementation = {
     ...implementation,

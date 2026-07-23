@@ -69,6 +69,13 @@ describe("Capability and Implementation separation", () => {
       assert.equal(capability.inputSchema.additionalProperties, false);
       assert.equal(Array.isArray(capability.effects), true);
       assert.equal(Array.isArray(capability.permissions), true);
+      assert.equal(
+        capability.permissions.every(
+          (permission) =>
+            typeof permission === "string" && permission.trim().length > 0,
+        ),
+        true,
+      );
       types.add(implementation.type);
       assert.equal(runtime.adapter, "kody-engine-profile");
       assert.equal(Object.hasOwn(runtime, "implementations"), false);

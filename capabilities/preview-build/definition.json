@@ -33,33 +33,8 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "docker",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v docker"
-      },
-      "verify": "docker info",
-      "usage": "Builds the per-PR preview image and pushes it to Fly's registry. Available by default on ubuntu-latest GHA runners.",
-      "allowedUses": [
-        "build",
-        "push",
-        "login"
-      ]
-    },
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "Posts the preview-ready comment on the PR.",
-      "allowedUses": [
-        "pr",
-        "api"
-      ]
-    }
+    "docker",
+    "gh"
   ],
   "success": "preview-build completes and returns a valid canonical result",
   "failure": "preview-build cannot return a valid canonical result"

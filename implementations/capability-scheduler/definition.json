@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "capability-scheduler"
   },
-  "compatibleCapabilityRevision": "b68152c9e0d2be4ab7ac9b198c06cda4cf3320398e7a30e630631e7d7653c84e",
+  "compatibleCapabilityRevision": "ae15b7b2cfd9462ae7463b22adf1b4f524381f82030747b77a4f93616ec0dffc",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

@@ -33,19 +33,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "Reads issues, comments, workflow runs, and posts resume/stuck comments when live.",
-      "allowedUses": [
-        "issue",
-        "api"
-      ]
-    }
+    "gh"
   ],
   "success": "redispatch completes and returns a valid canonical result",
   "failure": "redispatch cannot return a valid canonical result"

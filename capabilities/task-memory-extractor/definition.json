@@ -33,21 +33,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "git",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v git"
-      },
-      "verify": "git --version",
-      "usage": "Commits and pushes promoted memory files when not in dry-run or no-commit mode.",
-      "allowedUses": [
-        "status",
-        "add",
-        "commit",
-        "push"
-      ]
-    }
+    "git"
   ],
   "success": "task-memory-extractor completes and returns a valid canonical result",
   "failure": "task-memory-extractor cannot return a valid canonical result"

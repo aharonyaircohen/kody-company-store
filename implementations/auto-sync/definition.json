@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "auto-sync"
   },
-  "compatibleCapabilityRevision": "f1e092dcd887f53c88beca802462eabc2e0ef35a57cac5e799e9caa96f8f5118",
+  "compatibleCapabilityRevision": "95863ec32addd3e8307626c6bbe2ca3ba06cba579ed9e7e8276d8cfe221663a3",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

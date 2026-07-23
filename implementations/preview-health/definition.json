@@ -4,7 +4,7 @@
     "kind": "capability",
     "id": "preview-health"
   },
-  "compatibleCapabilityRevision": "40aea1ef709c7a197c7e69dd54ed29f03d14bd155b8e5c2cd6d9854631337f5d",
+  "compatibleCapabilityRevision": "1a40a9956e8950c59b0632f91de5e0159663bb7febc10ca810ccb74c3683cf62",
   "type": "agent",
   "agentRef": {
     "kind": "agent",

@@ -45,38 +45,8 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "git",
-      "install": {
-        "required": true,
-        "checkCommand": "git --version"
-      },
-      "verify": "git --version",
-      "usage": "Used by revert.sh to stage `git revert --no-commit` and by commitAndPush to land the revert.",
-      "allowedUses": [
-        "revert",
-        "rev-parse",
-        "merge-base",
-        "log",
-        "commit",
-        "push",
-        "rev-list"
-      ]
-    },
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "gh --version"
-      },
-      "verify": "gh --version",
-      "usage": "Used by revertFlow to read PR metadata and post status / failure comments.",
-      "allowedUses": [
-        "pr",
-        "api",
-        "issue"
-      ]
-    }
+    "git",
+    "gh"
   ],
   "success": "revert completes and returns a valid canonical result",
   "failure": "revert cannot return a valid canonical result"

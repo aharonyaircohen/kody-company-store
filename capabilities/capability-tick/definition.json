@@ -37,20 +37,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "gh",
-      "install": {
-        "required": true,
-        "checkCommand": "command -v gh"
-      },
-      "verify": "gh auth status",
-      "usage": "Use `gh` for all GitHub actions: `gh pr list ...` to enumerate candidate PRs, `gh pr comment <n> --body \"...\"` to issue a Kody command, `gh pr view <n> --json mergeable,statusCheckRollup,headRefOid` to inspect state, `gh api ...` for anything else. NEVER edit files in the working tree.",
-      "allowedUses": [
-        "pr",
-        "api",
-        "issue"
-      ]
-    }
+    "gh"
   ],
   "success": "capability-tick completes and returns a valid canonical result",
   "failure": "capability-tick cannot return a valid canonical result"

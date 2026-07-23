@@ -40,16 +40,7 @@
   },
   "effects": [],
   "permissions": [
-    {
-      "name": "playwright",
-      "install": {
-        "required": false,
-        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
-        "installCommand": "npx --yes playwright install --with-deps chromium"
-      },
-      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
-      "usage": ""
-    }
+    "playwright"
   ],
   "success": "research completes and returns a valid canonical result",
   "failure": "research cannot return a valid canonical result"
