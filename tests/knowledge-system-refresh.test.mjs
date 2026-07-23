@@ -50,34 +50,40 @@ describe("knowledge-system-refresh", () => {
       { script: "skipAgent" },
     ]);
     assert.match(script, /graphifyy==0\.9\.18/);
-    assert.match(script, /GRAPHIFY_VIZ_NODE_LIMIT/);
-    assert.match(script, /graphify cluster-only/);
-    assert.match(script, /graph\.html/);
-    assert.match(script, /source_file/);
-    assert.match(script, /\.edges \/\/ \.links/);
+    assert.match(script, /pwd\)\/\.\.\/build-business-graph\.jq/);
+    assert.match(script, /technical-graph\.json/);
+    assert.match(script, /cp "\$BUSINESS_FILE" "\$ARTIFACT_DIR\/graph\.json"/);
+    assert.doesNotMatch(script, /graphify cluster-only/);
+    assert.doesNotMatch(script, /graph\.html/);
+    assert.match(script, /--slurpfile code "\$BASE_GRAPH"/);
     assert.match(script, /\/api\/kody\/company\/backend\/export/);
     assert.doesNotMatch(script, /-X PUT[\s\S]*\/api\/kody\/knowledge-system/);
     assert.match(businessFilter, /agencyDefinitions/);
     assert.match(businessFilter, /agencyStates/);
     assert.match(businessFilter, /agencyOutputs/);
-    assert.match(script, /external-reference/);
     assert.match(script, /GITHUB_REPOSITORY/);
     assert.match(script, /conversationEntries/);
     assert.match(script, /raw chat data is[\s\S]*intentionally excluded/i);
   });
 
-  it("publishes Graphify's visualization with the graph bundle", async () => {
+  it("publishes the canonical visible graph without generated viewer HTML", async () => {
     const script = await readFile(publishScriptUrl, "utf8");
 
-    assert.match(script, /graph\.html/);
-    assert.match(script, /text\/html/);
-    assert.match(script, /htmlStorageId/);
-    assert.match(script, /knowledge-visualization/);
+    assert.match(script, /graph\.json/);
+    assert.doesNotMatch(script, /graph\.html/);
+    assert.doesNotMatch(script, /htmlStorageId/);
+    assert.doesNotMatch(script, /knowledge-visualization/);
   });
 
   it("connects purpose, execution, Runs, outputs, issues, and pull requests", async () => {
     const input = {
       repository: "acme/widgets",
+      code: {
+        nodes: [
+          { source_file: "apps/dashboard/app/page.tsx" },
+          { source_file: "packages/agency/src/index.ts" },
+        ],
+      },
       backend: {
         tables: {
           agencyDefinitions: [
@@ -129,16 +135,27 @@ describe("knowledge-system-refresh", () => {
               createdAt: "2026-07-23T00:00:00Z",
               data: { id: "deploy", action: "Deploy" },
             },
+            {
+              kind: "implementation",
+              recordId: "implementation-1",
+              createdAt: "2026-07-23T00:00:00Z",
+              data: {
+                id: "deploy-with-kody",
+                capabilityRef: { kind: "capability", id: "deploy" },
+                agentRef: { kind: "agent", id: "kody" },
+              },
+            },
           ],
           agencyStates: [],
           agencyRuns: [
             {
               runId: "run-1",
+              subjectId: "release",
+              subjectType: "goal",
               run: {
                 status: "succeeded",
-                trace: [
-                  { kind: "goal", id: "release", revision: "goal-1" },
-                ],
+                subjectId: "release",
+                subjectType: "goal",
               },
             },
           ],
@@ -149,6 +166,76 @@ describe("knowledge-system-refresh", () => {
               data: { key: "deployed", kind: "evidence" },
             },
           ],
+          repoDocs: [
+            {
+              kind: "context:architecture",
+              doc: { title: "Architecture context" },
+            },
+            {
+              kind: "todo:release",
+              doc: { title: "Release checklist" },
+            },
+            {
+              kind: "instructions",
+              doc: [],
+            },
+            {
+              kind: "secrets.enc",
+              doc: { ciphertext: "hidden" },
+            },
+          ],
+          agencyRecords: [
+            {
+              kind: "observation",
+              recordId: "observation-old",
+              updatedAt: "2026-07-22T00:00:00Z",
+              doc: {
+                id: "observation-old",
+                capability: "deploy",
+                subject: "release",
+                summary: "Release used to be blocked",
+              },
+            },
+            {
+              kind: "observation",
+              recordId: "observation-1",
+              updatedAt: "2026-07-23T00:00:00Z",
+              doc: {
+                id: "observation-1",
+                capability: "deploy",
+                subject: "release",
+                summary: "Release is blocked",
+              },
+            },
+            {
+              kind: "finding",
+              recordId: "finding-1",
+              doc: {
+                id: "finding-1",
+                title: "Release finding",
+                observationIds: ["observation-1"],
+                learningIds: ["learning-1"],
+              },
+            },
+            {
+              kind: "learning",
+              recordId: "learning-1",
+              doc: {
+                id: "learning-1",
+                summary: "Keep releases small",
+                findingId: "finding-1",
+              },
+            },
+          ],
+          agents: [
+            {
+              slug: "kody",
+              frontmatter: { name: "Kody" },
+              body: "Developer agent",
+            },
+          ],
+          intents: [{ intentId: "quality", intent: { for: "Duplicate" } }],
+          catalog: [{ category: "capability", slug: "deploy", doc: {} }],
         },
       },
       issues: [{ number: 7, title: "Release", state: "OPEN", url: "issue" }],
@@ -172,6 +259,7 @@ describe("knowledge-system-refresh", () => {
     const relations = graph.edges.map(
       (edge) => `${edge.source}|${edge.relation}|${edge.target}`,
     );
+    const nodeIds = graph.nodes.map((node) => node.id);
 
     assert.ok(
       relations.includes(
@@ -189,10 +277,86 @@ describe("knowledge-system-refresh", () => {
       ),
     );
     assert.ok(
+      relations.includes(
+        "kody:agency:capability:deploy|implemented-by|kody:agency:implementation:deploy-with-kody",
+      ),
+    );
+    assert.ok(
+      relations.includes(
+        "kody:agency:implementation:deploy-with-kody|run-by|kody:agent:kody",
+      ),
+    );
+    assert.ok(
+      relations.includes(
+        "kody:agency:goal:release|has-run|kody:run:run-1",
+      ),
+    );
+    assert.ok(
       relations.includes("kody:run:run-1|produces|kody:output:output-1"),
     );
     assert.ok(
       relations.includes("github:issue:7|resolved-by|github:pr:8"),
+    );
+    assert.ok(nodeIds.includes("kody:repoDocs:context:architecture"));
+    assert.ok(nodeIds.includes("kody:repoDocs:todo:release"));
+    assert.ok(!nodeIds.includes("kody:repoDocs:secrets.enc"));
+    assert.ok(!nodeIds.includes("kody:agencyRecords:observation-old"));
+    assert.ok(!nodeIds.includes("kody:intents:quality"));
+    assert.ok(!nodeIds.includes("kody:catalog:deploy"));
+    assert.ok(nodeIds.includes("project:area:apps/dashboard"));
+    assert.ok(nodeIds.includes("project:area:packages/agency"));
+    assert.equal(
+      graph.nodes.find(
+        (node) => node.id === "project:area:apps/dashboard",
+      )?.domain,
+      "technical",
+    );
+    assert.equal(
+      graph.nodes.find((node) => node.id === "kody:agencyRecords:finding-1")
+        ?.domain,
+      "knowledge",
+    );
+    assert.ok(
+      relations.includes(
+        "kody:agencyRecords:observation-1|evidence-for|kody:agencyRecords:finding-1",
+      ),
+    );
+    assert.ok(
+      relations.includes(
+        "kody:agencyRecords:finding-1|produces-learning|kody:agencyRecords:learning-1",
+      ),
+    );
+    assert.ok(
+      relations.includes(
+        "repo:acme/widgets|has-context|kody:repoDocs:context:architecture",
+      ),
+    );
+    assert.ok(
+      relations.includes(
+        "repo:acme/widgets|tracks|kody:repoDocs:todo:release",
+      ),
+    );
+    assert.equal(
+      graph.edges.some(
+        (edge) => edge.relation === "groups" || edge.relation === "contains",
+      ),
+      false,
+    );
+    assert.equal(
+      graph.edges.some(
+        (edge) =>
+          edge.source === "repo:acme/widgets" &&
+          edge.target === "github:issue:7" &&
+          edge.relation === "tracks",
+      ),
+      true,
+    );
+    const connectedNodeIds = new Set(
+      graph.edges.flatMap((edge) => [edge.source, edge.target]),
+    );
+    assert.equal(
+      graph.nodes.every((node) => connectedNodeIds.has(node.id)),
+      true,
     );
   });
 

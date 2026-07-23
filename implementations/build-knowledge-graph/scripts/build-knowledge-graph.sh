@@ -24,12 +24,11 @@ KODY_DASHBOARD_URL="${KODY_DASHBOARD_URL%/}"
 TMP_DIR="$(mktemp -d)"
 trap 'rm -rf "$TMP_DIR"' EXIT
 GRAPHIFY_DIR="$TMP_DIR/graphify"
-MERGED_GRAPH="$TMP_DIR/merged-graph.json"
 EXPORT_FILE="$TMP_DIR/kody-backend.json"
 ISSUES_FILE="$TMP_DIR/issues.json"
 PRS_FILE="$TMP_DIR/pull-requests.json"
 BUSINESS_FILE="$TMP_DIR/business-graph.json"
-BUSINESS_FILTER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/build-business-graph.jq"
+BUSINESS_FILTER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../build-business-graph.jq"
 ARTIFACT_DIR="${KODY_ARTIFACT_DIR:-$PWD/.kody-engine/artifacts/knowledge-system}"
 
 auth_args=(
@@ -67,64 +66,21 @@ jq -n \
   --slurpfile backend "$EXPORT_FILE" \
   --slurpfile issues "$ISSUES_FILE" \
   --slurpfile prs "$PRS_FILE" \
-  '{repository: $repository, backend: $backend[0], issues: $issues[0], prs: $prs[0]}' |
+  --slurpfile code "$BASE_GRAPH" \
+  '{repository: $repository, backend: $backend[0], issues: $issues[0], prs: $prs[0], code: $code[0]}' |
   jq -f "$BUSINESS_FILTER" >"$BUSINESS_FILE"
 
-jq -s '
-  .[0] as $code |
-  .[1] as $business |
-  ($code.edges // $code.links // []) as $codeEdges |
-  ($business.nodes | map(
-    if has("source_file") then .
-    else . + {source_file: ("kody://" + ((.source // "business") | tostring))}
-    end
-  )) as $businessNodes |
-  ($business.edges | map(
-    if has("source_file") then .
-    else . + {source_file: "kody://business"}
-    end
-  )) as $businessEdges |
-  (($code.nodes // []) + $businessNodes) as $knownNodes |
-  ($codeEdges + $businessEdges) as $allEdges |
-  ([$allEdges[] | .source, .target] | unique) as $endpointIds |
-  ([$endpointIds[] as $id | select(([$knownNodes[].id] | index($id)) | not) |
-    {
-      id: $id,
-      label: $id,
-      type: "external-reference",
-      domain: "other",
-      source: "graph-reference",
-      source_file: "kody://graph-reference"
-    }
-  ]) as $externalNodes |
-  {
-    directed: ($code.directed // true),
-    multigraph: ($code.multigraph // false),
-    graph: ($code.graph // {}),
-    nodes: ($knownNodes + $externalNodes | unique_by(.id)),
-    edges: $allEdges
-  }
-' "$BASE_GRAPH" "$BUSINESS_FILE" >"$MERGED_GRAPH"
-
-cp "$MERGED_GRAPH" "$BASE_GRAPH"
-GRAPHIFY_VIZ_NODE_LIMIT="$(jq '.nodes | length' "$BASE_GRAPH")" \
-  uvx --from graphifyy==0.9.18 graphify cluster-only "$GRAPHIFY_DIR" \
-    --graph "$BASE_GRAPH" \
-    --no-label >/dev/null
-GRAPH_HTML="$GRAPHIFY_DIR/graphify-out/graph.html"
-[[ -s "$GRAPH_HTML" ]] || fail "Graphify did not produce graph.html"
-
-NODE_COUNT="$(jq '.nodes | length' "$BASE_GRAPH")"
-EDGE_COUNT="$(jq '(.edges // .links // []) | length' "$BASE_GRAPH")"
+NODE_COUNT="$(jq '.nodes | length' "$BUSINESS_FILE")"
+EDGE_COUNT="$(jq '.edges | length' "$BUSINESS_FILE")"
 GENERATED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 SOURCE_REVISION="$(git rev-parse HEAD)"
-KODY_COUNT="$(jq '[.nodes[] | select(.source == "kody")] | length' "$BASE_GRAPH")"
-ISSUE_COUNT="$(jq '[.nodes[] | select(.type == "issue")] | length' "$BASE_GRAPH")"
-PR_COUNT="$(jq '[.nodes[] | select(.type == "pull_request")] | length' "$BASE_GRAPH")"
+KODY_COUNT="$(jq '[.nodes[] | select(.source == "kody")] | length' "$BUSINESS_FILE")"
+ISSUE_COUNT="$(jq '[.nodes[] | select(.type == "issue")] | length' "$BUSINESS_FILE")"
+PR_COUNT="$(jq '[.nodes[] | select(.type == "pull_request")] | length' "$BUSINESS_FILE")"
 
 mkdir -p "$ARTIFACT_DIR"
-cp "$BASE_GRAPH" "$ARTIFACT_DIR/graph.json"
-cp "$GRAPH_HTML" "$ARTIFACT_DIR/graph.html"
+cp "$BUSINESS_FILE" "$ARTIFACT_DIR/graph.json"
+cp "$BASE_GRAPH" "$ARTIFACT_DIR/technical-graph.json"
 jq -nc \
   --arg repository "$REPOSITORY" \
   --arg generatedAt "$GENERATED_AT" \
