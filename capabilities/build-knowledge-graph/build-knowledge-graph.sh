@@ -28,6 +28,7 @@ EXPORT_FILE="$TMP_DIR/kody-backend.json"
 ISSUES_FILE="$TMP_DIR/issues.json"
 PRS_FILE="$TMP_DIR/pull-requests.json"
 BUSINESS_FILE="$TMP_DIR/business-graph.json"
+BUSINESS_FILTER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/build-business-graph.jq"
 GRAPH_FILE="$TMP_DIR/graph.json"
 ARTIFACT_DIR="${KODY_ARTIFACT_DIR:-$PWD/.kody-engine/artifacts/knowledge-system}"
 
@@ -38,7 +39,7 @@ auth_args=(
 )
 
 # Reliable CI base: deterministic local AST extraction with no model or API key.
-uvx --from graphifyy graphify extract . \
+uvx --from graphifyy==0.9.18 graphify extract . \
   --code-only \
   --no-cluster \
   --out "$GRAPHIFY_DIR" >/dev/null
@@ -48,14 +49,14 @@ BASE_GRAPH="$GRAPHIFY_DIR/graphify-out/graph.json"
 
 curl --fail --silent --show-error \
   "${auth_args[@]}" \
-  "$KODY_DASHBOARD_URL/api/kody/company/backend/export" \
+  "$KODY_DASHBOARD_URL/api/kody/company/backend/export?scope=knowledge-graph" \
   >"$EXPORT_FILE"
 
 gh issue list --repo "$REPOSITORY" --state all --limit 500 \
   --json number,title,state,labels,assignees,milestone,url,createdAt,updatedAt \
   >"$ISSUES_FILE"
 gh pr list --repo "$REPOSITORY" --state all --limit 500 \
-  --json number,title,state,isDraft,baseRefName,headRefName,labels,author,url,createdAt,updatedAt \
+  --json number,title,state,isDraft,baseRefName,headRefName,labels,author,url,createdAt,updatedAt,closingIssuesReferences \
   >"$PRS_FILE"
 
 # Only business and operational tables enter the graph. Raw chat data is
@@ -65,76 +66,9 @@ jq -n \
   --arg repository "$REPOSITORY" \
   --slurpfile backend "$EXPORT_FILE" \
   --slurpfile issues "$ISSUES_FILE" \
-  --slurpfile prs "$PRS_FILE" '
-  def selected_tables: [
-    "definitionHeads", "definitionVersions", "catalog", "workflows",
-    "workflowRuns", "userJourneys", "userJourneyVersions", "userJourneyRuns",
-    "intents", "intentDecisions", "goals", "reports", "agents", "macros",
-    "agencyDefinitions", "agencyStates", "agencyOutputs",
-    "agencyRecords", "taskState", "capabilityState", "dailyLogs",
-    "agencyRuns", "runEvents", "manifests", "inboxEntries"
-  ];
-  def key_for($row):
-    ($row.slug // $row.intentId // $row.goalId // $row.workflowId //
-     $row.journeyId // $row.runId // $row.recordId // $row.taskKey //
-     $row.entryId // $row.macroId // $row._id // "record") | tostring;
-  def label_for($row; $fallback):
-    ($row.title // $row.name // $row.label // $row.slug // $row.summary // $fallback) | tostring;
-  def domain_for($table):
-    if ($table | test("intent|goal"; "i")) then "business"
-    elif ($table | test("agent|capability|workflow|agency|macro"; "i")) then "agency"
-    elif ($table | test("journey"; "i")) then "quality"
-    elif ($table | test("run|task|inbox"; "i")) then "work"
-    elif ($table | test("report|manifest|definition|catalog"; "i")) then "knowledge"
-    else "other" end;
-  ($backend[0].tables // {}) as $tables |
-  ([selected_tables[] as $table |
-    ($tables[$table] // [])[] as $row |
-    (key_for($row)) as $key |
-    {
-      id: ("kody:" + $table + ":" + $key),
-      label: label_for($row; $key),
-      type: $table,
-      domain: domain_for($table),
-      description: (($row.status // $row.state // $row.kind // "") | tostring),
-      source: "kody"
-    }
-  ]) as $kodyNodes |
-  ([($issues[0] // [])[] | {
-    id: ("github:issue:" + (.number | tostring)),
-    label: .title,
-    type: "issue",
-    domain: "work",
-    description: .state,
-    resource: .url,
-    source: "github"
-  }]) as $issueNodes |
-  ([($prs[0] // [])[] | {
-    id: ("github:pr:" + (.number | tostring)),
-    label: .title,
-    type: "pull_request",
-    domain: "work",
-    description: .state,
-    resource: .url,
-    source: "github"
-  }]) as $prNodes |
-  ($kodyNodes + $issueNodes + $prNodes) as $nodes |
-  {
-    nodes: ([{
-      id: ("repo:" + $repository),
-      label: $repository,
-      type: "repository",
-      domain: "project",
-      source: "github"
-    }] + $nodes),
-    edges: [$nodes[] | {
-      source: ("repo:" + $repository),
-      target: .id,
-      relation: "contains",
-      confidence: "EXTRACTED"
-    }]
-  }
-' >"$BUSINESS_FILE"
+  --slurpfile prs "$PRS_FILE" \
+  '{repository: $repository, backend: $backend[0], issues: $issues[0], prs: $prs[0]}' |
+  jq -f "$BUSINESS_FILTER" >"$BUSINESS_FILE"
 
 jq -s '
   .[0] as $code |

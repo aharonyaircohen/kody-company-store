@@ -3,7 +3,15 @@
   "role": "primitive",
   "kind": "oneshot",
   "describe": "Reserve and dispatch due AI Agency Loops.",
-  "inputs": [],
+  "inputs": [
+    {
+      "name": "loop",
+      "flag": "--loop",
+      "type": "string",
+      "required": false,
+      "description": "Optional Loop id to force through the manual Trigger path."
+    }
+  ],
   "claudeCode": {
     "model": "inherit",
     "permissionMode": "default",
