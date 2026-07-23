@@ -5,7 +5,7 @@ fail() {
   exit 1
 }
 
-for tool in gh git jq curl uv; do
+for tool in gh git jq curl uv node; do
   command -v "$tool" >/dev/null 2>&1 || fail "$tool is required"
 done
 
