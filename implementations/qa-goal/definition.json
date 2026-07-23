@@ -5,9 +5,5 @@
     "id": "qa-goal"
   },
   "compatibleCapabilityRevision": "73f33376fc076686a653660a80c33e9ae2cddf80099cc7dbeb495af07d83c329",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

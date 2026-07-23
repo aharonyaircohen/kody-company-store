@@ -5,9 +5,5 @@
     "id": "init"
   },
   "compatibleCapabilityRevision": "52cdf881deec6d338bd315e1e421858f0a09362be80f734e5007784d61b46413",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

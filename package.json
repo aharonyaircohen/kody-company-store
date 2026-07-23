@@ -4,8 +4,7 @@
   "type": "module",
   "scripts": {
     "audit:implementations": "node scripts/audit-implementations.mjs",
-    "validate:implementations": "node scripts/refine-capability-contracts.mjs",
-    "migrate:implementations": "node scripts/refine-capability-contracts.mjs --apply",
+    "validate:implementations": "node scripts/validate-implementations.mjs",
     "test": "node --test \"cms/tests/*.test.mjs\" \"tests/*.test.mjs\"",
     "cms:validate": "node cms/bin/cms.mjs validate",
     "cms:tools": "node cms/bin/cms.mjs tools"

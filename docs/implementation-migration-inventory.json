@@ -48,8 +48,12 @@
       "auto-resolve",
       "auto-sync",
       "ci-check",
+      "init",
       "job-gap-scan",
+      "merge",
+      "preview-build",
       "preview-health",
+      "qa-goal",
       "redispatch",
       "revert",
       "task-memory-extractor"
