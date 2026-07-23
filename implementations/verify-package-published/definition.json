@@ -1,0 +1,9 @@
+{
+  "id": "verify-package-published",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "verify-package-published"
+  },
+  "compatibleCapabilityRevision": "9b8498b80867824feda76c1e9842cff12e5b3a49bc9804da858e213153f1b98a",
+  "type": "script"
+}

@@ -1,0 +1,9 @@
+{
+  "id": "publish-knowledge-system",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "publish-knowledge-system"
+  },
+  "compatibleCapabilityRevision": "af7cbe6ba28644637210d8f35224d7ceeb4e05cd6b32af30db7ae68d46529ec4",
+  "type": "script"
+}

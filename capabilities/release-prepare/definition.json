@@ -1,0 +1,52 @@
+{
+  "id": "release-prepare",
+  "action": "release-prepare",
+  "purpose": "Prepare a release PR.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "bump": {
+        "type": "string",
+        "description": "Version bump increment. Default patch."
+      },
+      "dry-run": {
+        "type": "boolean",
+        "description": "Print plan without writing files, committing, or opening a PR."
+      },
+      "prefer": {
+        "type": "string",
+        "description": "On release/vX.Y.Z branch collision: 'ours' force-pushes; 'theirs' reuses the existing PR. Default refuses non-ff."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "Issue/PR number to post the terminal notice on. Auto-injected by dispatch."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report release PR evidence to."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "release-prepare completes and returns a valid canonical result",
+  "failure": "release-prepare cannot return a valid canonical result"
+}

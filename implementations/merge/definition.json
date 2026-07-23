@@ -1,0 +1,13 @@
+{
+  "id": "merge",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "merge"
+  },
+  "compatibleCapabilityRevision": "66965164fc61438d7e3cfe82f7edcc6183a2ab822895251829d1275a76fac6c8",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

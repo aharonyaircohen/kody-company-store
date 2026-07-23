@@ -1,0 +1,60 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh",
+    "git",
+    "jq",
+    "curl",
+    "uv"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "build-knowledge-graph.sh",
+        "timeoutSec": 5400
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  },
+  "capabilityKind": "observe",
+  "readsFrom": [
+    "source",
+    "kody-backend",
+    "github-issues",
+    "github-pull-requests"
+  ],
+  "writesTo": [
+    "artifact"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "KNOWLEDGE_GRAPH_BUILT",
+      "KNOWLEDGE_GRAPH_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

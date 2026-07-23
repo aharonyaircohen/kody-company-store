@@ -1,0 +1,41 @@
+{
+  "id": "qa",
+  "action": "qa",
+  "purpose": "Verify shipped but unverified changelog entries against the live app.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "QA_COMPLETED",
+          "QA_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "qa completes and returns a valid canonical result",
+  "failure": "qa cannot return a valid canonical result"
+}

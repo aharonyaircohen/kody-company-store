@@ -1,0 +1,13 @@
+{
+  "id": "design-review",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "design-review"
+  },
+  "compatibleCapabilityRevision": "9aeb2150528fe6c2f5fbefc52b87d74dea08b95ead4adac0cd92ba89a7703e34",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "ux-designer"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "job-live-verify",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "job-live-verify"
+  },
+  "compatibleCapabilityRevision": "94f04de025697fe44e6e5f59c16e4c44a57f27e14d6f31a665a647dbc5c7d87c",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

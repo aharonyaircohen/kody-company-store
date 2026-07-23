@@ -1,0 +1,7 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "implementation": "ci-check"
+}

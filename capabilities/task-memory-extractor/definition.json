@@ -1,0 +1,54 @@
+{
+  "id": "task-memory-extractor",
+  "action": "task-memory-extractor",
+  "purpose": "Promote high-confidence task memory recommendations into .kody/memory.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Runtime capability slug whose sidecar state is loaded and updated."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "git",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v git"
+      },
+      "verify": "git --version",
+      "usage": "Commits and pushes promoted memory files when not in dry-run or no-commit mode.",
+      "allowedUses": [
+        "status",
+        "add",
+        "commit",
+        "push"
+      ]
+    }
+  ],
+  "success": "task-memory-extractor completes and returns a valid canonical result",
+  "failure": "task-memory-extractor cannot return a valid canonical result"
+}

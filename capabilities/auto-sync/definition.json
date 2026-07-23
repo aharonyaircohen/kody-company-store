@@ -1,0 +1,64 @@
+{
+  "id": "auto-sync",
+  "action": "auto-sync",
+  "purpose": "Scan stale mergeable PR branches and dispatch sync comments.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Runtime capability slug whose sidecar state is loaded and updated."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads PRs, compares branches, and posts sync or stuck comments.",
+      "allowedUses": [
+        "pr",
+        "api"
+      ]
+    },
+    {
+      "name": "jq",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v jq"
+      },
+      "verify": "jq --version",
+      "usage": "Filters PR JSON and builds next-state JSON.",
+      "allowedUses": [
+        "json"
+      ]
+    }
+  ],
+  "success": "auto-sync completes and returns a valid canonical result",
+  "failure": "auto-sync cannot return a valid canonical result"
+}

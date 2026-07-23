@@ -1,0 +1,36 @@
+{
+  "id": "kody-chat",
+  "action": "kody-chat",
+  "purpose": "In-process dashboard chat — research, planning, and creation flows wired against the connected repo.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "message": {
+        "type": "string",
+        "description": "Optional chat message."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "kody-chat completes and returns a valid canonical result",
+  "failure": "kody-chat cannot return a valid canonical result"
+}

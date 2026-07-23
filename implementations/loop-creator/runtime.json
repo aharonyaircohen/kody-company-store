@@ -1,0 +1,69 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "enableVerifyTool": false,
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      },
+      {
+        "script": "validateAgencyModelProposal",
+        "with": {
+          "modelKind": "agentLoop"
+        }
+      },
+      {
+        "script": "openAgencyModelReviewPr"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": true,
+      "describe": "GitHub issue number containing the focused model creation request."
+    }
+  ],
+  "outputContract": {
+    "actionTypes": [
+      "LOOP_CREATOR_COMPLETED",
+      "LOOP_CREATOR_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

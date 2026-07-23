@@ -1,0 +1,46 @@
+{
+  "id": "reproduce",
+  "action": "reproduce",
+  "purpose": "Write a failing test that reproduces a bug. Do NOT fix the bug — leave the test failing and capture the failure signature so subsequent fix verification can confirm the same failure mode.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to reproduce."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "REPRODUCE_COMPLETED",
+          "REPRODUCE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "reproduce completes and returns a valid canonical result",
+  "failure": "reproduce cannot return a valid canonical result"
+}

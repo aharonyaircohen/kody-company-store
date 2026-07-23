@@ -1,0 +1,9 @@
+{
+  "id": "compact-memory",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "compact-memory"
+  },
+  "compatibleCapabilityRevision": "cf513b6c250acc31cd33cc4d3cbdfeaddaee653e1d694d119041375fd47afa12",
+  "type": "script"
+}

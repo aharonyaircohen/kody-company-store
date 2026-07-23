@@ -21,7 +21,7 @@ const retiredLoops = [
 describe("Executive agency management", () => {
   it("replaces the legacy agency architect assets", () => {
     assert.equal(
-      existsSync(new URL("../capabilities/agency-architect/", import.meta.url)),
+      existsSync(new URL("../implementations/agency-architect/", import.meta.url)),
       false,
     );
     assert.equal(
@@ -43,10 +43,11 @@ describe("Executive agency management", () => {
   for (const pair of managementPairs) {
     it(`ships ${pair.loop} -> ${pair.capability} -> ${pair.agent}`, async () => {
       const loopPath = new URL(`../goals/templates/${pair.loop}/state.json`, import.meta.url);
-      const profilePath = new URL(`../capabilities/${pair.capability}/profile.json`, import.meta.url);
+      const profilePath = new URL(`../implementations/${pair.capability}/runtime.json`, import.meta.url);
+      const implementationPath = new URL(`../implementations/${pair.capability}/definition.json`, import.meta.url);
       const bodyPath = new URL(`../capabilities/${pair.capability}/capability.md`, import.meta.url);
       const skillPath = new URL(
-        `../capabilities/${pair.capability}/skills/${pair.capability}/SKILL.md`,
+        `../implementations/${pair.capability}/skills/${pair.capability}/SKILL.md`,
         import.meta.url,
       );
 
@@ -57,15 +58,15 @@ describe("Executive agency management", () => {
 
       const loop = JSON.parse(await readFile(loopPath, "utf8"));
       const profile = JSON.parse(await readFile(profilePath, "utf8"));
+      const implementation = JSON.parse(await readFile(implementationPath, "utf8"));
       const body = await readFile(bodyPath, "utf8");
       const skill = await readFile(skillPath, "utf8");
 
       assert.equal(loop.scheduleMode, "agentLoop");
       assert.equal(loop.schedule, pair.schedule);
       assert.deepEqual(loop.capabilities, [pair.capability]);
-      assert.equal(profile.agent, pair.agent);
-      assert.equal(profile.name, pair.capability);
-      assert.equal(profile.action, pair.capability);
+      assert.equal(implementation.agentRef.id, pair.agent);
+      assert.equal(implementation.id, pair.capability);
       assert.ok(profile.claudeCode.skills.includes(pair.capability));
       assert.match(`${body}\n${skill}`, /active company intents/i);
       assert.match(`${body}\n${skill}`, /intentId/);
@@ -97,21 +98,21 @@ describe("Executive agency management", () => {
   });
 
   it("makes Operation the portfolio manager's required scaling boundary", async () => {
-    const profile = JSON.parse(
+    const implementation = JSON.parse(
       await readFile(
-        new URL("../capabilities/agency-portfolio-management/profile.json", import.meta.url),
+        new URL("../implementations/agency-portfolio-management/definition.json", import.meta.url),
         "utf8",
       ),
     );
     const skill = await readFile(
       new URL(
-        "../capabilities/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
+        "../implementations/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
         import.meta.url,
       ),
       "utf8",
     );
 
-    assert.equal(profile.agent, "coo");
+    assert.equal(implementation.agentRef.id, "coo");
     assert.match(skill, /Intent owns why/i);
     assert.match(skill, /Operation owns.*responsibility/i);
     assert.match(skill, /operations\/<id>\/operation\.json/);
@@ -126,9 +127,9 @@ describe("Executive agency management", () => {
   });
 
   it("constrains runtime work to one active Operation contract", async () => {
-    const profile = JSON.parse(
+    const implementation = JSON.parse(
       await readFile(
-        new URL("../capabilities/agency-operations-management/profile.json", import.meta.url),
+        new URL("../implementations/agency-operations-management/definition.json", import.meta.url),
         "utf8",
       ),
     );
@@ -138,13 +139,13 @@ describe("Executive agency management", () => {
     );
     const skill = await readFile(
       new URL(
-        "../capabilities/agency-operations-management/skills/agency-operations-management/SKILL.md",
+        "../implementations/agency-operations-management/skills/agency-operations-management/SKILL.md",
         import.meta.url,
       ),
       "utf8",
     );
 
-    assert.equal(profile.agent, "kody");
+    assert.equal(implementation.agentRef.id, "kody");
     assert.match(`${body}\n${skill}`, /operations\/<operationId>\/operation\.json/);
     assert.match(`${body}\n${skill}`, /status.*active/i);
     assert.match(`${body}\n${skill}`, /only.*Goals.*Loops/i);
@@ -156,14 +157,14 @@ describe("Executive agency management", () => {
   it("gives portfolio managers a verifiable state-repo persistence contract", async () => {
     const company = await readFile(
       new URL(
-        "../capabilities/company-portfolio-management/skills/company-portfolio-management/SKILL.md",
+        "../implementations/company-portfolio-management/skills/company-portfolio-management/SKILL.md",
         import.meta.url,
       ),
       "utf8",
     );
     const agency = await readFile(
       new URL(
-        "../capabilities/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
+        "../implementations/agency-portfolio-management/skills/agency-portfolio-management/SKILL.md",
         import.meta.url,
       ),
       "utf8",

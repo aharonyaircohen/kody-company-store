@@ -1,0 +1,52 @@
+{
+  "id": "classify",
+  "action": "classify",
+  "purpose": "Classify an issue into one of {feature, bug, spec, chore} and dispatch the matching sub-orchestrator. Label-first fast path; LLM fallback when labels don't decide.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to classify."
+      },
+      "base": {
+        "type": "string",
+        "description": "Optional safe base branch override for manual branch targeting."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CLASSIFIED_AS_FEATURE",
+          "CLASSIFIED_AS_BUG",
+          "CLASSIFIED_AS_SPEC",
+          "CLASSIFIED_AS_CHORE",
+          "CLASSIFY_FAILED"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "classify completes and returns a valid canonical result",
+  "failure": "classify cannot return a valid canonical result"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "revert",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "revert"
+  },
+  "compatibleCapabilityRevision": "b8033b5d87ecaba57c06aa9355f6be4f3f416efcf5cc35e424b7938fe1841b94",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

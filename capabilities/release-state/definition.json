@@ -1,0 +1,48 @@
+{
+  "id": "release-state",
+  "action": "release-state",
+  "purpose": "Observe current release state and optionally report facts to a managed goal.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report release-state evidence to."
+      },
+      "evidence": {
+        "type": "string",
+        "description": "Evidence key to set on the goal. Default releaseStateObserved."
+      },
+      "package": {
+        "type": "string",
+        "description": "Package name to check in npm. Defaults to package.json name."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "git",
+    "gh",
+    "npm"
+  ],
+  "success": "release-state completes and returns a valid canonical result",
+  "failure": "release-state cannot return a valid canonical result"
+}

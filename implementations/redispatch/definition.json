@@ -1,0 +1,13 @@
+{
+  "id": "redispatch",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "redispatch"
+  },
+  "compatibleCapabilityRevision": "b1509c4e81ddca60aabc967b1e3b8d481615de04d3c23f174f69aaa005457d14",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

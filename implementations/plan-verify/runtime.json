@@ -1,0 +1,76 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 15,
+    "systemPromptAppend": "You are running Kody's plugin-wiring live verification. Emit confirmation tokens exactly as the prompt instructs.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "hooks": [
+      "kody-live-trace"
+    ],
+    "skills": [
+      "kody-live-marker"
+    ],
+    "commands": [
+      "kody-live-probe"
+    ],
+    "subagents": [],
+    "plugins": [
+      "../../plugins/test-plugin"
+    ],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      },
+      {
+        "script": "writeAgentRunSummary"
+      },
+      {
+        "script": "saveTaskState"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": true,
+      "describe": "GitHub issue number to verify against."
+    }
+  ],
+  "outputContract": {
+    "actionTypes": [
+      "VERIFY_COMPLETED",
+      "VERIFY_FAILED"
+    ]
+  }
+}

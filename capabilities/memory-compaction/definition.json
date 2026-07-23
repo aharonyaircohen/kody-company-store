@@ -1,0 +1,33 @@
+{
+  "id": "memory-compaction",
+  "action": "memory-compaction",
+  "purpose": "Memory Compaction",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "memory-compaction"
+  ],
+  "permissions": [],
+  "success": "memory-compaction completes and returns a valid canonical result",
+  "failure": "memory-compaction cannot return a valid canonical result"
+}

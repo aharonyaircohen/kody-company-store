@@ -1,0 +1,41 @@
+{
+  "id": "company-portfolio-management",
+  "action": "company-portfolio-management",
+  "purpose": "CEO reviews active company intents and company evidence and sets growth priorities.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "COMPANY_PORTFOLIO_MANAGED",
+          "COMPANY_PORTFOLIO_MANAGEMENT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "company-portfolio-management completes and returns a valid canonical result",
+  "failure": "company-portfolio-management cannot return a valid canonical result"
+}

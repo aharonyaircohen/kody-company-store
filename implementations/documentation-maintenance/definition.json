@@ -1,0 +1,13 @@
+{
+  "id": "documentation-maintenance",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "documentation-maintenance"
+  },
+  "compatibleCapabilityRevision": "4124336d31ae2bd0a0578bb393197ddb7e103eb898baaadeceb761f64d72d692",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "tech-writer"
+  }
+}

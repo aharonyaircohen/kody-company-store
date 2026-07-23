@@ -1,0 +1,57 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh",
+    "jq",
+    "node"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "shell": "run-ai-agency-doctor.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  },
+  "readsFrom": [
+    "ai-agency-setup",
+    "agency-structure-analysis"
+  ],
+  "writesTo": [
+    "ai-agency-doctor"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "AI_AGENCY_DOCTOR_COMPLETED",
+      "AI_AGENCY_DOCTOR_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

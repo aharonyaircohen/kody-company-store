@@ -1,0 +1,13 @@
+{
+  "id": "loop-creator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "loop-creator"
+  },
+  "compatibleCapabilityRevision": "aa93b0701429ad47d94a0e4d25c1115d19666fa58632476627e2b0bf6364f351",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

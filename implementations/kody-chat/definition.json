@@ -1,0 +1,13 @@
+{
+  "id": "kody-chat",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "kody-chat"
+  },
+  "compatibleCapabilityRevision": "1383a51cd165abc62e7c456092c0e5f64cd29a7f97ff7c58520d73c3c89a3857",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

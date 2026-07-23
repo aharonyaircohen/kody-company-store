@@ -1,0 +1,41 @@
+{
+  "id": "dependency-bump",
+  "action": "dependency-bump",
+  "purpose": "Track stale production dependencies and keep at most one bump PR in flight.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DEPENDENCY_BUMP_COMPLETED",
+          "DEPENDENCY_BUMP_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "dependency-bump completes and returns a valid canonical result",
+  "failure": "dependency-bump cannot return a valid canonical result"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "approval-gate",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "approval-gate"
+  },
+  "compatibleCapabilityRevision": "b339ad950c53474f87b0fe7152b4984d4917fd14b8dd5ef5923bb6713b5fbefb",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

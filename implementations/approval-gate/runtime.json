@@ -1,0 +1,59 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [
+      "approval-gate"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "APPROVAL_GATE_COMPLETED",
+      "APPROVAL_GATE_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

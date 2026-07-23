@@ -1,0 +1,42 @@
+{
+  "id": "analyze-ci-health",
+  "action": "analyze-ci-health",
+  "purpose": "Analyze CI health from GitHub workflow runs and pull request checks.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CI_HEALTH_ANALYZED",
+          "CI_HEALTH_ANALYSIS_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh",
+    "jq"
+  ],
+  "success": "analyze-ci-health completes and returns a valid canonical result",
+  "failure": "analyze-ci-health cannot return a valid canonical result"
+}

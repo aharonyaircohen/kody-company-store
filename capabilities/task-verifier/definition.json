@@ -1,0 +1,33 @@
+{
+  "id": "task-verifier",
+  "action": "task-verifier",
+  "purpose": "Task verifier - triage one unassigned backlog issue and either assign it to Kody or mark it needs-human.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "task-verifier completes and returns a valid canonical result",
+  "failure": "task-verifier cannot return a valid canonical result"
+}

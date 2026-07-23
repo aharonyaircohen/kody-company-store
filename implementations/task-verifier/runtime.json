@@ -1,0 +1,50 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "bypassPermissions",
+    "maxTurns": null,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "enableVerifyTool": false,
+    "verifyAttempts": 4,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [
+      "verifier-method"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      }
+    ]
+  },
+  "inputs": []
+}

@@ -1,0 +1,50 @@
+{
+  "id": "verify-package-published",
+  "action": "verify-package-published",
+  "purpose": "Verify package version is published to npm.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "package": {
+        "type": "string",
+        "description": "Package name. Defaults to package.json name."
+      },
+      "version": {
+        "type": "string",
+        "description": "Package version. Defaults to package.json version."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report publish evidence to."
+      },
+      "evidence": {
+        "type": "string",
+        "description": "Evidence key to set on the goal. Default packagePublished."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "npm"
+  ],
+  "success": "verify-package-published completes and returns a valid canonical result",
+  "failure": "verify-package-published cannot return a valid canonical result"
+}

@@ -1,0 +1,66 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [
+      "qa-sweep"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "capabilityTools": [
+    "start_capability"
+  ],
+  "capabilityToolMode": "append",
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "QA_SWEEP_COMPLETED",
+      "QA_SWEEP_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "id": "plan-verify",
+  "action": "plan-verify",
+  "purpose": "Live-test implementation. Loads kody-live-marker skill, /kody-live-probe command, kody-live-trace hook, and the bundled test-plugin. Asks the agent to emit confirmation tokens for each feature so Kody can validate plugin wiring end-to-end.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to verify against."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "VERIFY_COMPLETED",
+          "VERIFY_FAILED"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "plan-verify completes and returns a valid canonical result",
+  "failure": "plan-verify cannot return a valid canonical result"
+}

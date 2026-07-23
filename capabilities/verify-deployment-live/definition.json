@@ -1,0 +1,52 @@
+{
+  "id": "verify-deployment-live",
+  "action": "verify-deployment-live",
+  "purpose": "Verify deployment URL responds with expected HTTP status.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "Deployment URL to verify."
+      },
+      "expected-status": {
+        "type": "integer",
+        "description": "Expected HTTP status. Default 200."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report deployment evidence to."
+      },
+      "evidence": {
+        "type": "string",
+        "description": "Evidence key to set on the goal. Default deploymentLive."
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "curl"
+  ],
+  "success": "verify-deployment-live completes and returns a valid canonical result",
+  "failure": "verify-deployment-live cannot return a valid canonical result"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "goal-creator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "goal-creator"
+  },
+  "compatibleCapabilityRevision": "847fe73eaab9804540ffeec7991c16a970b2a07dca42497efb36aa0db04bf83d",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

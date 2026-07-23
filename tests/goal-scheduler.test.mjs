@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 
-const scriptPath = new URL("../capabilities/goal-scheduler/scheduler.sh", import.meta.url);
+const scriptPath = new URL("../implementations/goal-scheduler/scheduler.sh", import.meta.url);
 
 function installStubs(cwd, ghScript = "#!/usr/bin/env bash\nexit 0\n") {
   const binDir = join(cwd, "bin");
@@ -68,7 +68,7 @@ function writeGoal(cwd, goalId, state) {
 describe("goal-scheduler", () => {
   it("allows enough time for sequential managed-goal ticks", async () => {
     const profile = JSON.parse(
-      await readFileSync(new URL("../capabilities/goal-scheduler/profile.json", import.meta.url), "utf8"),
+      await readFileSync(new URL("../implementations/goal-scheduler/runtime.json", import.meta.url), "utf8"),
     );
     const scheduler = profile.scripts.preflight.find((step) => step.shell === "scheduler.sh");
 

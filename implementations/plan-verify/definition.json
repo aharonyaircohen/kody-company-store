@@ -1,0 +1,13 @@
+{
+  "id": "plan-verify",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "plan-verify"
+  },
+  "compatibleCapabilityRevision": "7be1d4f40618a2fbb9742b66f0cc1282f4d7c1be6b99ea3c7ea07e26fe0fb7d6",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

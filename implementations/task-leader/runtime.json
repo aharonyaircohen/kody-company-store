@@ -1,0 +1,61 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "bypassPermissions",
+    "maxTurns": null,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "enableVerifyTool": false,
+    "enableSubmitTool": true,
+    "verifyAttempts": 4,
+    "tools": [
+      "Read",
+      "Bash",
+      "mcp__kody-submit"
+    ],
+    "hooks": [],
+    "skills": [
+      "task-leader-rules"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "inputs": []
+}

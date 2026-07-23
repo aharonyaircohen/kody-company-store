@@ -1,0 +1,44 @@
+{
+  "id": "ai-agency-health-matrix",
+  "action": "ai-agency-health-matrix",
+  "purpose": "Create a repo-local AI Agency health matrix report.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AI_AGENCY_HEALTH_MATRIX_COMPLETED",
+          "AI_AGENCY_HEALTH_MATRIX_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "ai-agency-health-matrix"
+  ],
+  "permissions": [
+    "gh",
+    "node"
+  ],
+  "success": "ai-agency-health-matrix completes and returns a valid canonical result",
+  "failure": "ai-agency-health-matrix cannot return a valid canonical result"
+}

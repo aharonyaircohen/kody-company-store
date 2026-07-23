@@ -1,7 +1,0 @@
-{
-  "action": "kody-analyzer",
-  "agent": "kody",
-  "describe": "kody-analyzer",
-  "implementation": "kody-chat",
-  "name": "kody-analyzer"
-}

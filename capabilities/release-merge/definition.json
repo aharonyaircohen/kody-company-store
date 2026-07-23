@@ -1,0 +1,54 @@
+{
+  "id": "release-merge",
+  "action": "release-merge",
+  "purpose": "Wait for a release PR to go green, squash-merge it, and report branch-specific merge evidence to a managed goal. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "Release pull request number to merge."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to work on."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report merge evidence to."
+      },
+      "timeout-seconds": {
+        "type": "integer",
+        "description": "Maximum seconds to wait for pending checks before failing. Default 1800."
+      },
+      "poll-seconds": {
+        "type": "integer",
+        "description": "Seconds between CI polls while waiting. Default 30."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "release-merge completes and returns a valid canonical result",
+  "failure": "release-merge cannot return a valid canonical result"
+}

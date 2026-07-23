@@ -1,0 +1,38 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "initFlow"
+      }
+    ],
+    "postflight": []
+  },
+  "inputs": [
+    {
+      "name": "force",
+      "flag": "--force",
+      "type": "bool",
+      "required": false,
+      "describe": "Overwrite existing files instead of skipping them."
+    }
+  ]
+}

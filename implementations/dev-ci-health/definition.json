@@ -1,0 +1,13 @@
+{
+  "id": "dev-ci-health",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "dev-ci-health"
+  },
+  "compatibleCapabilityRevision": "03738ee0d9623d91aa3f4193ed002371067d2725e19735b09b0cb5cc839b0094",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

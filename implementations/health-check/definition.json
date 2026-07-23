@@ -1,0 +1,13 @@
+{
+  "id": "health-check",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "health-check"
+  },
+  "compatibleCapabilityRevision": "5d6f52fdcdc90b4c43d3ae888226f833a92ce69983e9509ab4301bce33b137a6",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

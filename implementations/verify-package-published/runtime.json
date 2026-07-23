@@ -1,0 +1,72 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "npm"
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "check.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "applyCapabilityReports"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "package",
+      "flag": "--package",
+      "type": "string",
+      "required": false,
+      "describe": "Package name. Defaults to package.json name."
+    },
+    {
+      "name": "version",
+      "flag": "--version",
+      "type": "string",
+      "required": false,
+      "describe": "Package version. Defaults to package.json version."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report publish evidence to."
+    },
+    {
+      "name": "evidence",
+      "flag": "--evidence",
+      "type": "string",
+      "required": false,
+      "describe": "Evidence key to set on the goal. Default packagePublished."
+    }
+  ]
+}

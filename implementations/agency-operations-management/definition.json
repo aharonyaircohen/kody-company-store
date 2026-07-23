@@ -1,0 +1,13 @@
+{
+  "id": "agency-operations-management",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "agency-operations-management"
+  },
+  "compatibleCapabilityRevision": "4ceb17c93c36753f29696706acfd45d5f499a0017ec0ae42c86491e88dd61fed",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

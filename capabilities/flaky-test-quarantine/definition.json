@@ -1,0 +1,41 @@
+{
+  "id": "flaky-test-quarantine",
+  "action": "flaky-test-quarantine",
+  "purpose": "Watch CI retry patterns and escalate tests that repeatedly fail then pass on rerun.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "FLAKY_TEST_QUARANTINE_COMPLETED",
+          "FLAKY_TEST_QUARANTINE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "flaky-test-quarantine completes and returns a valid canonical result",
+  "failure": "flaky-test-quarantine cannot return a valid canonical result"
+}

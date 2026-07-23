@@ -1,0 +1,41 @@
+{
+  "id": "type-debt",
+  "action": "type-debt",
+  "purpose": "Track TypeScript escape hatches and escalate meaningful growth week over week.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "TYPE_DEBT_COMPLETED",
+          "TYPE_DEBT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "type-debt completes and returns a valid canonical result",
+  "failure": "type-debt cannot return a valid canonical result"
+}

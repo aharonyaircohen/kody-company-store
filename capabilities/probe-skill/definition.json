@@ -1,0 +1,38 @@
+{
+  "id": "probe-skill",
+  "action": "probe-skill",
+  "purpose": "Live-test implementation. Loads the implementation-local 'probe-skill-marker' skill (resolved from src/capabilities/probe-skill/skills/, NOT the central catalog) and asks the agent to emit the skill's token back as an issue comment. Validates the new local-skill resolution path in buildSyntheticPlugin end-to-end.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to verify against."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "probe-skill completes and returns a valid canonical result",
+  "failure": "probe-skill cannot return a valid canonical result"
+}

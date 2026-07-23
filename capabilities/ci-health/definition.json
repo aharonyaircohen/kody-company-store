@@ -1,0 +1,31 @@
+{
+  "id": "ci-health",
+  "action": "ci-health",
+  "purpose": "Check PR CI health and report readiness evidence to a managed goal.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "ci-health completes and returns a valid canonical result",
+  "failure": "ci-health cannot return a valid canonical result"
+}

@@ -1,0 +1,57 @@
+{
+  "id": "capability-tick-scripted",
+  "action": "capability-tick-scripted",
+  "purpose": "Deterministic capability tick: runs the slug's `tickScript:` (declared in the capability profile), parses next-state from its stdout, persists. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Capability slug — folder name under .kody/capabilities/."
+      },
+      "force": {
+        "type": "boolean",
+        "description": "Accepted for parity with `capability-tick`. Scripted ticks have no agent-side schedule guard to bypass. Forwarded to the script via env if it cares."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Available to the tickScript via PATH; this implementation shells out to `bash <tickScript>`. Scripts use `gh pr list`, `gh pr comment`, etc.",
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue"
+      ]
+    }
+  ],
+  "success": "capability-tick-scripted completes and returns a valid canonical result",
+  "failure": "capability-tick-scripted cannot return a valid canonical result"
+}

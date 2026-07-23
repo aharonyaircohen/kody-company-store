@@ -1,0 +1,41 @@
+{
+  "id": "qa-verify",
+  "action": "qa-verify",
+  "purpose": "Re-check delivery PRs against their previews before merge and route pass/fail outcomes to the inbox.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "QA_VERIFY_COMPLETED",
+          "QA_VERIFY_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "qa-verify completes and returns a valid canonical result",
+  "failure": "qa-verify cannot return a valid canonical result"
+}

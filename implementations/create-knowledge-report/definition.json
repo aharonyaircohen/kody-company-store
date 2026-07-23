@@ -1,0 +1,9 @@
+{
+  "id": "create-knowledge-report",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "create-knowledge-report"
+  },
+  "compatibleCapabilityRevision": "b405968e12ad0f8d43515815d1110eeb5d9dcd383856755196b5a577314c6bed",
+  "type": "script"
+}

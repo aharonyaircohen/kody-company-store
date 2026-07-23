@@ -1,0 +1,13 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "readsFrom": [
+    "memory-compaction",
+    "reports"
+  ],
+  "writesTo": [
+    "memory-compaction"
+  ]
+}

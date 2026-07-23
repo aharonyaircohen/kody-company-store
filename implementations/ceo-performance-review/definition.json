@@ -1,0 +1,13 @@
+{
+  "id": "ceo-performance-review",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "ceo-performance-review"
+  },
+  "compatibleCapabilityRevision": "a781252684a4a713581f81273ba6477b124bf4c9121ac7f6d52f1c0268c67c58",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "ceo"
+  }
+}

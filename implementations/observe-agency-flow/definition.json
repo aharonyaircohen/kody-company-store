@@ -1,0 +1,9 @@
+{
+  "id": "observe-agency-flow",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "observe-agency-flow"
+  },
+  "compatibleCapabilityRevision": "b7b10b1047429adf4c989ff5fbdee8915e43752ac2ebc0d4c14aca9dd626c7b3",
+  "type": "script"
+}

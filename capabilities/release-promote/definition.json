@@ -1,0 +1,44 @@
+{
+  "id": "release-promote",
+  "action": "release-promote",
+  "purpose": "Open or refresh a promotion PR from git.defaultBranch to release.releaseBranch. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "dry-run": {
+        "type": "boolean",
+        "description": "Print plan without running deploy/notify commands."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "Issue/PR number post terminal notice on. Auto-injected by dispatch."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report promotion PR evidence to."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "release-promote completes and returns a valid canonical result",
+  "failure": "release-promote cannot return a valid canonical result"
+}

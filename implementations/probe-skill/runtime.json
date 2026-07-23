@@ -1,0 +1,64 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 12,
+    "systemPromptAppend": "You are running Kody's implementation-local skill live verification. Emit the token exactly as the skill instructs.",
+    "tools": [
+      "Read",
+      "Grep",
+      "Glob",
+      "Bash"
+    ],
+    "hooks": [],
+    "skills": [
+      "probe-skill-marker"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadIssueContext"
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseAgentResult"
+      },
+      {
+        "script": "writeAgentRunSummary"
+      },
+      {
+        "script": "saveTaskState"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": true,
+      "describe": "GitHub issue number to verify against."
+    }
+  ]
+}

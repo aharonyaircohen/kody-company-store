@@ -1,0 +1,54 @@
+{
+  "id": "task-memorize",
+  "action": "task-memorize",
+  "purpose": "Turn task and execution experience into durable `.kody/memory/` entries.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "TASK_MEMORIZE_COMPLETED",
+          "TASK_MEMORIZE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "gh --version"
+      },
+      "verify": "gh auth status",
+      "usage": "Read and write repository memory files when durable lessons are found.",
+      "allowedUses": [
+        "inspect task artifacts",
+        "write memory files",
+        "commit memory updates"
+      ]
+    }
+  ],
+  "success": "task-memorize completes and returns a valid canonical result",
+  "failure": "task-memorize cannot return a valid canonical result"
+}

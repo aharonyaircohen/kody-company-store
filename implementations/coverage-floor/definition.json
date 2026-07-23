@@ -1,0 +1,13 @@
+{
+  "id": "coverage-floor",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "coverage-floor"
+  },
+  "compatibleCapabilityRevision": "08e063d51365481e90def88ba634fef6735d5f4f89acd789b036aed8bc6bda59",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

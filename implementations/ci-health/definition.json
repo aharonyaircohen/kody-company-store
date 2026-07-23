@@ -1,0 +1,13 @@
+{
+  "id": "ci-health",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "ci-health"
+  },
+  "compatibleCapabilityRevision": "e6ab54ef119419e247f2a351236f9102867d626d2536651674c3f08a9b1dad11",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "intent-creator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "intent-creator"
+  },
+  "compatibleCapabilityRevision": "74c56fc4cc5116c976709be6a19b04918b3075a00b0206d5b6ac924eb0106c55",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

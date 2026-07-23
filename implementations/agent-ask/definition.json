@@ -1,0 +1,13 @@
+{
+  "id": "agent-ask",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "agent-ask"
+  },
+  "compatibleCapabilityRevision": "4bbb2a3d7edc251d5701348d353244dee0f9829feffe0215fc09b223aecc7c87",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

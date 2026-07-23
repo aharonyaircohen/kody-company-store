@@ -1,0 +1,46 @@
+{
+  "id": "operation-creator",
+  "action": "operation-creator",
+  "purpose": "Create one proposed agency Operation from a focused responsibility request.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number containing the focused model creation request."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "OPERATION_CREATOR_COMPLETED",
+          "OPERATION_CREATOR_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "operation-creator completes and returns a valid canonical result",
+  "failure": "operation-creator cannot return a valid canonical result"
+}

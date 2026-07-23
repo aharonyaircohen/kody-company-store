@@ -1,0 +1,38 @@
+{
+  "id": "task-job-fail-once",
+  "action": "task-job-fail-once",
+  "purpose": "Live-test implementation that fails the first planned job attempt and succeeds on rerun.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number that owns the task state."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "task-job-fail-once completes and returns a valid canonical result",
+  "failure": "task-job-fail-once cannot return a valid canonical result"
+}

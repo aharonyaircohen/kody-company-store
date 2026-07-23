@@ -1,0 +1,47 @@
+{
+  "id": "preview-health",
+  "action": "preview-health",
+  "purpose": "Scan open PRs and dispatch mechanical preview repairs.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads open PRs, reads the CTO trust ledger, dispatches Kody workflows, and posts PR audit/recommendation comments.",
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue",
+        "workflow"
+      ]
+    }
+  ],
+  "success": "preview-health completes and returns a valid canonical result",
+  "failure": "preview-health cannot return a valid canonical result"
+}

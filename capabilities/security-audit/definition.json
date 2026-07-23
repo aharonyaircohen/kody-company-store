@@ -1,0 +1,41 @@
+{
+  "id": "security-audit",
+  "action": "security-audit",
+  "purpose": "Coordinate a security posture sweep covering dependencies, application code, and supply chain risks.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "SECURITY_AUDIT_COMPLETED",
+          "SECURITY_AUDIT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "security-audit completes and returns a valid canonical result",
+  "failure": "security-audit cannot return a valid canonical result"
+}

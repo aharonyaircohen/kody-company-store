@@ -1,0 +1,13 @@
+{
+  "id": "task-memory-extractor",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "task-memory-extractor"
+  },
+  "compatibleCapabilityRevision": "51ddfeb8769d7a2ed61d5ba9d331933036c920fad34fe6ab8b16cfc5ee8905cf",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

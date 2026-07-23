@@ -1,0 +1,52 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "jq"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "create-knowledge-report.sh",
+        "timeoutSec": 60
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  },
+  "capabilityKind": "observe",
+  "readsFrom": [
+    "artifact"
+  ],
+  "writesTo": [
+    "artifact"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "KNOWLEDGE_REPORT_CREATED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

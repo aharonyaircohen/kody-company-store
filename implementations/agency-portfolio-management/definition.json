@@ -1,0 +1,13 @@
+{
+  "id": "agency-portfolio-management",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "agency-portfolio-management"
+  },
+  "compatibleCapabilityRevision": "2fceb49770023f464c53c5a293aab5abfcba992104923736ecf91f730298f387",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

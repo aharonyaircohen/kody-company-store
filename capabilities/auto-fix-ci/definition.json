@@ -1,0 +1,63 @@
+{
+  "id": "auto-fix-ci",
+  "action": "auto-fix-ci",
+  "purpose": "Scan open PRs with settled failing CI and dispatch fix-ci comments.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Runtime capability slug whose sidecar state is loaded and updated."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads PRs and posts fix-ci or stuck comments.",
+      "allowedUses": [
+        "pr"
+      ]
+    },
+    {
+      "name": "jq",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v jq"
+      },
+      "verify": "jq --version",
+      "usage": "Filters PR JSON and builds next-state JSON.",
+      "allowedUses": [
+        "json"
+      ]
+    }
+  ],
+  "success": "auto-fix-ci completes and returns a valid canonical result",
+  "failure": "auto-fix-ci cannot return a valid canonical result"
+}

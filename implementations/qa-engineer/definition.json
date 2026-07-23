@@ -1,0 +1,13 @@
+{
+  "id": "qa-engineer",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "qa-engineer"
+  },
+  "compatibleCapabilityRevision": "15aad8c4644b32837051626fd24f33f65ecc6d5ed3b3cce4fb4bda0282576829",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "qa"
+  }
+}

@@ -7,17 +7,21 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 const storeRoot = new URL("..", import.meta.url).pathname;
-const scriptPath = new URL("../capabilities/ai-agency-health-matrix/run-ai-agency-health-matrix.sh", import.meta.url);
+const scriptPath = new URL("../implementations/ai-agency-health-matrix/run-ai-agency-health-matrix.sh", import.meta.url);
 const healthGoalPath = new URL("../goals/templates/ai-agency-health/state.json", import.meta.url);
 
 function writeJson(file, value) {
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
 }
 
-function writeCapability(cwd, slug, profile) {
+function writeCapability(cwd, slug, definition) {
   const dir = join(cwd, ".kody", "capabilities", slug);
   mkdirSync(dir, { recursive: true });
-  writeJson(join(dir, "profile.json"), profile);
+  writeJson(join(dir, "definition.json"), {
+    id: slug,
+    action: slug,
+    purpose: definition.name ?? slug,
+  });
   writeFileSync(join(dir, "capability.md"), `# ${slug}\n`);
 }
 

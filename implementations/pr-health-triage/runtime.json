@@ -1,0 +1,76 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [
+      "Read"
+    ],
+    "hooks": [],
+    "skills": [
+      "pr-health-triage"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "capabilityTools": [
+    "list_prs_to_repair",
+    "read_ledger",
+    "recommend_to_operator"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "tools": [
+    "list_prs_to_repair",
+    "read_ledger",
+    "recommend_to_operator"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "PR_HEALTH_TRIAGE_COMPLETED",
+      "PR_HEALTH_TRIAGE_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "release-promote",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "release-promote"
+  },
+  "compatibleCapabilityRevision": "1e924d2c0843e625eb48aef0aba71c81cc7f80009eacdf1d77ae005a78462c95",
+  "type": "script"
+}

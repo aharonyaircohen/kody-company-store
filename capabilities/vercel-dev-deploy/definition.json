@@ -1,0 +1,39 @@
+{
+  "id": "vercel-dev-deploy",
+  "action": "vercel-dev-deploy",
+  "purpose": "Deploy dev branch to Vercel Preview and move the stable dev preview alias. Requires Kody secrets VERCEL_ACCESS_TOKEN, VERCEL_ORG_ID, and VERCEL_PROJECT_ID.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "VERCEL_DEV_DEPLOY_COMPLETED",
+          "VERCEL_DEV_DEPLOY_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "vercel-dev-deploy completes and returns a valid canonical result",
+  "failure": "vercel-dev-deploy cannot return a valid canonical result"
+}

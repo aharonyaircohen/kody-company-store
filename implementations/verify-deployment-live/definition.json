@@ -1,0 +1,9 @@
+{
+  "id": "verify-deployment-live",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "verify-deployment-live"
+  },
+  "compatibleCapabilityRevision": "b1a4bbc9fe0f2ea0c52d41686f46ea6da62c5f839eb75f74f2beb05a1ed4491e",
+  "type": "script"
+}

@@ -1,0 +1,50 @@
+{
+  "id": "fix-ci",
+  "action": "fix-ci",
+  "purpose": "Fix a failing CI workflow on an existing PR.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number whose CI is failing."
+      },
+      "runId": {
+        "type": "string",
+        "description": "Specific failed workflow run ID. Defaults to latest failed run on the PR branch."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "FIX_CI_COMPLETED",
+          "FIX_CI_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "fix-ci completes and returns a valid canonical result",
+  "failure": "fix-ci cannot return a valid canonical result"
+}

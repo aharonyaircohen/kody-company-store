@@ -1,0 +1,13 @@
+{
+  "id": "task-memorize",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "task-memorize"
+  },
+  "compatibleCapabilityRevision": "acb1cb6adebb2e00af4783063d57a5e1454ddd502e455a55f2599584c6529fa3",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

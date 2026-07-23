@@ -1,0 +1,55 @@
+{
+  "id": "npm-publish",
+  "action": "npm-publish",
+  "purpose": "Publish the current package.json version to npm using NPM_TOKEN. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "dry-run": {
+        "type": "boolean",
+        "description": "Print the publish plan without requiring NPM_TOKEN or publishing."
+      },
+      "tag": {
+        "type": "string",
+        "description": "npm dist-tag to publish under. Defaults to latest."
+      },
+      "access": {
+        "type": "string",
+        "description": "npm package access. Defaults to public."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "Issue/PR number to post terminal notice on."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "NPM_PUBLISH_COMPLETED",
+          "NPM_PUBLISH_FAILED"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "npm-publish completes and returns a valid canonical result",
+  "failure": "npm-publish cannot return a valid canonical result"
+}

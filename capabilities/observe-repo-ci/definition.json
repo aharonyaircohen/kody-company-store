@@ -1,0 +1,44 @@
+{
+  "id": "observe-repo-ci",
+  "action": "observe-repo-ci",
+  "purpose": "Read default-branch CI evidence and write one Observation plus the current CI Finding.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "REPO_CI_OBSERVED",
+          "REPO_CI_OBSERVATION_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "observations"
+  ],
+  "permissions": [
+    "gh",
+    "node"
+  ],
+  "success": "observe-repo-ci completes and returns a valid canonical result",
+  "failure": "observe-repo-ci cannot return a valid canonical result"
+}

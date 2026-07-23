@@ -1,0 +1,9 @@
+{
+  "id": "goal-scheduler",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "goal-scheduler"
+  },
+  "compatibleCapabilityRevision": "1360acdf5581671e54d5cbfa67e9ae92e7763b79c856e326367c852b9c2ff439",
+  "type": "script"
+}

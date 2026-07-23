@@ -1,0 +1,13 @@
+{
+  "id": "task-verifier",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "task-verifier"
+  },
+  "compatibleCapabilityRevision": "dc2bad783005344e88876c1316922c4fe53d5c44c228ce79cd5999ab950a2b18",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "id": "sync",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "sync"
+  },
+  "compatibleCapabilityRevision": "535f46ef0f984d97dbe6be15d19dce2df6a3ce670ef0d61f19e883a35409889b",
+  "type": "script"
+}

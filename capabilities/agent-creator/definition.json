@@ -1,0 +1,46 @@
+{
+  "id": "agent-creator",
+  "action": "agent-creator",
+  "purpose": "Create one Kody agent identity model from a focused request.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number containing the focused model creation request."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENT_CREATOR_COMPLETED",
+          "AGENT_CREATOR_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "agent-creator completes and returns a valid canonical result",
+  "failure": "agent-creator cannot return a valid canonical result"
+}

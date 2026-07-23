@@ -1,0 +1,48 @@
+{
+  "id": "verify-release-pr-ready",
+  "action": "verify-release-pr-ready",
+  "purpose": "Verify a release PR is open, non-draft, and green.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "Release pull request number."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report readiness evidence to."
+      },
+      "evidence": {
+        "type": "string",
+        "description": "Evidence key to set on the goal. Default releasePrReady."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "verify-release-pr-ready completes and returns a valid canonical result",
+  "failure": "verify-release-pr-ready cannot return a valid canonical result"
+}

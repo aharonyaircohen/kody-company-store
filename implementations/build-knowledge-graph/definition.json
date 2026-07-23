@@ -1,0 +1,9 @@
+{
+  "id": "build-knowledge-graph",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "build-knowledge-graph"
+  },
+  "compatibleCapabilityRevision": "f86cd5ff51b02aa98f20ee970d3f2d9af786411d4c915ec620dd534ac9a4a4aa",
+  "type": "script"
+}

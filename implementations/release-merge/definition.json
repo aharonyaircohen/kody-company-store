@@ -1,0 +1,9 @@
+{
+  "id": "release-merge",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "release-merge"
+  },
+  "compatibleCapabilityRevision": "e1d114c6616b223473075f55b6b34a5ebcfacdfcff2c733928e9c81ac4085102",
+  "type": "script"
+}

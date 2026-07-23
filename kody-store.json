@@ -9,6 +9,7 @@
   ],
   "assetRoots": {
     "capabilities": "capabilities",
+    "implementations": "implementations",
     "commands": "commands",
     "goals": "goals",
     "workflows": "workflows",

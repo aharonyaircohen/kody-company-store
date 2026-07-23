@@ -1,0 +1,36 @@
+{
+  "id": "init",
+  "action": "init",
+  "purpose": "Scaffold a consumer repo with kody.config.json and the @kody workflow. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "force": {
+        "type": "boolean",
+        "description": "Overwrite existing files instead of skipping them."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "init completes and returns a valid canonical result",
+  "failure": "init cannot return a valid canonical result"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "cms-content-editor",
+  "action": "cms-content-editor",
+  "purpose": "Apply explicit queued CMS document creates and updates through the Dashboard CMS API.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CMS_CONTENT_EDITOR_COMPLETED",
+          "CMS_CONTENT_EDITOR_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "cms-content-editor completes and returns a valid canonical result",
+  "failure": "cms-content-editor cannot return a valid canonical result"
+}

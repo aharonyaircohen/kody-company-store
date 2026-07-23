@@ -4,11 +4,11 @@ import { spawnSync } from "node:child_process";
 import { describe, it } from "node:test";
 
 const profileUrl = new URL(
-  "../capabilities/build-knowledge-graph/profile.json",
+  "../implementations/build-knowledge-graph/runtime.json",
   import.meta.url,
 );
 const scriptUrl = new URL(
-  "../capabilities/build-knowledge-graph/build-knowledge-graph.sh",
+  "../implementations/build-knowledge-graph/build-knowledge-graph.sh",
   import.meta.url,
 );
 const loopUrl = new URL(
@@ -17,26 +17,26 @@ const loopUrl = new URL(
 );
 const workflowUrl = new URL("../workflows/refresh-knowledge-system/workflow.json", import.meta.url);
 const publishScriptUrl = new URL(
-  "../capabilities/publish-knowledge-system/publish-knowledge-system.sh",
+  "../implementations/publish-knowledge-system/publish-knowledge-system.sh",
   import.meta.url,
 );
 const dispatchProfileUrl = new URL(
-  "../capabilities/dispatch-due-loops/profile.json",
+  "../implementations/dispatch-due-loops/runtime.json",
   import.meta.url,
 );
 const businessFilterUrl = new URL(
-  "../capabilities/build-knowledge-graph/build-business-graph.jq",
+  "../implementations/build-knowledge-graph/build-business-graph.jq",
   import.meta.url,
 );
 
 describe("knowledge-system-refresh", () => {
   it("keeps graph identity only on the Knowledge System builder", async () => {
-    const root = new URL("../capabilities/", import.meta.url);
+    const root = new URL("../implementations/", import.meta.url);
     const folders = await readdir(root);
     const names = await Promise.all(
       folders.map(async (folder) => {
-        const raw = await readFile(new URL(`${folder}/profile.json`, root), "utf8");
-        return JSON.parse(raw).name;
+        const raw = await readFile(new URL(`${folder}/definition.json`, root), "utf8");
+        return JSON.parse(raw).id;
       }),
     );
     assert.deepEqual(names.filter((name) => name.includes("graph")), ["build-knowledge-graph"]);
@@ -44,10 +44,11 @@ describe("knowledge-system-refresh", () => {
 
   it("builds repository-scoped artifacts without publishing them", async () => {
     const profile = JSON.parse(await readFile(profileUrl, "utf8"));
+    const definition = JSON.parse(await readFile(new URL("../implementations/build-knowledge-graph/definition.json", import.meta.url), "utf8"));
     const script = await readFile(scriptUrl, "utf8");
     const businessFilter = await readFile(businessFilterUrl, "utf8");
 
-    assert.equal(profile.name, "build-knowledge-graph");
+    assert.equal(definition.id, "build-knowledge-graph");
     assert.deepEqual(profile.scripts.preflight, [
       { shell: "build-knowledge-graph.sh", timeoutSec: 5400 },
       { script: "skipAgent" },
@@ -213,8 +214,9 @@ describe("knowledge-system-refresh", () => {
 
   it("uses the same generic Loop dispatcher for manual proof", async () => {
     const profile = JSON.parse(await readFile(dispatchProfileUrl, "utf8"));
+    const capability = JSON.parse(await readFile(new URL("../capabilities/dispatch-due-loops/definition.json", import.meta.url), "utf8"));
 
-    assert.equal(profile.action, "dispatch-due-loops");
+    assert.equal(capability.action, "dispatch-due-loops");
     assert.deepEqual(profile.inputs, [
       {
         name: "loop",

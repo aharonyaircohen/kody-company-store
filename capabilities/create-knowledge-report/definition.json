@@ -1,0 +1,42 @@
+{
+  "id": "create-knowledge-report",
+  "action": "create-knowledge-report",
+  "purpose": "Create a readable report from a knowledge graph artifact.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "KNOWLEDGE_REPORT_CREATED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "artifact"
+  ],
+  "permissions": [
+    "jq"
+  ],
+  "success": "create-knowledge-report completes and returns a valid canonical result",
+  "failure": "create-knowledge-report cannot return a valid canonical result"
+}

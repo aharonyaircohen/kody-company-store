@@ -1,0 +1,13 @@
+{
+  "id": "cms-content-editor",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "cms-content-editor"
+  },
+  "compatibleCapabilityRevision": "944abcf364cdc9783d8b29600cd4daf75b3b25a85e3fd3ce1706cff64cdf9616",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "docs-code",
+  "action": "docs-code",
+  "purpose": "Find important source folders or modules that lack useful in-code documentation.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DOCS_CODE_COMPLETED",
+          "DOCS_CODE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "docs-code completes and returns a valid canonical result",
+  "failure": "docs-code cannot return a valid canonical result"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "memory-compaction",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "memory-compaction"
+  },
+  "compatibleCapabilityRevision": "932823696881f176403bc2ce8272b44e283b441bada820e4a688e7903cbe2bac",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

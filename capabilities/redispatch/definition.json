@@ -1,0 +1,52 @@
+{
+  "id": "redispatch",
+  "action": "redispatch",
+  "purpose": "Detect stalled running Kody issues and plan or post resume actions.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Runtime capability slug whose sidecar state is loaded and updated."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads issues, comments, workflow runs, and posts resume/stuck comments when live.",
+      "allowedUses": [
+        "issue",
+        "api"
+      ]
+    }
+  ],
+  "success": "redispatch completes and returns a valid canonical result",
+  "failure": "redispatch cannot return a valid canonical result"
+}

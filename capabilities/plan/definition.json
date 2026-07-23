@@ -1,0 +1,38 @@
+{
+  "id": "plan",
+  "action": "plan",
+  "purpose": "Research an issue and produce a concrete implementation plan as a comment. Read-only — no branches, no commits.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to work on."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "plan completes and returns a valid canonical result",
+  "failure": "plan cannot return a valid canonical result"
+}

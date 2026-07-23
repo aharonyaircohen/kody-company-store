@@ -1,0 +1,42 @@
+{
+  "id": "compact-memory",
+  "action": "compact-memory",
+  "purpose": "Analyze memory footprint and refresh a safe compaction proposal report.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "MEMORY_COMPACTION_REFRESHED",
+          "MEMORY_COMPACTION_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh",
+    "jq"
+  ],
+  "success": "compact-memory completes and returns a valid canonical result",
+  "failure": "compact-memory cannot return a valid canonical result"
+}

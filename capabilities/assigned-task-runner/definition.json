@@ -1,0 +1,41 @@
+{
+  "id": "assigned-task-runner",
+  "action": "assigned-task-runner",
+  "purpose": "Start one open task that is assigned to Kody and not already running.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "ASSIGNED_TASK_RUNNER_COMPLETED",
+          "ASSIGNED_TASK_RUNNER_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "assigned-task-runner completes and returns a valid canonical result",
+  "failure": "assigned-task-runner cannot return a valid canonical result"
+}

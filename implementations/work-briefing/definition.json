@@ -1,0 +1,13 @@
+{
+  "id": "work-briefing",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "work-briefing"
+  },
+  "compatibleCapabilityRevision": "180caa55791d5f4c56dd2fd5f87b9d43b4298ad147db0107ecba8e18b8383bb0",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

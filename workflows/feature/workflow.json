@@ -1,0 +1,36 @@
+{
+  "version": 1,
+  "name": "Feature Flow",
+  "capabilities": ["research", "plan", "run", "review", "fix"],
+  "steps": [
+    {
+      "capability": "research",
+      "target": "issue",
+      "reason": "Research the requested feature or refactor and gather the relevant repository context."
+    },
+    {
+      "capability": "plan",
+      "target": "issue",
+      "reason": "Create the implementation plan before changing code."
+    },
+    {
+      "capability": "run",
+      "target": "issue",
+      "reason": "Implement the planned feature, verify it, and open or update the pull request."
+    },
+    {
+      "capability": "review",
+      "target": "pr",
+      "continueOn": ["REVIEW_FAIL"],
+      "reason": "Review the generated pull request before calling the feature flow complete."
+    },
+    {
+      "capability": "fix",
+      "target": "pr",
+      "runWhen": {
+        "lastOutcome.type": ["REVIEW_CONCERNS", "REVIEW_FAIL"]
+      },
+      "reason": "Apply review feedback when the review reports concerns or a blocking failure."
+    }
+  ]
+}

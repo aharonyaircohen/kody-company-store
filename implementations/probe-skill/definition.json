@@ -1,0 +1,13 @@
+{
+  "id": "probe-skill",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "probe-skill"
+  },
+  "compatibleCapabilityRevision": "94c1197495df12f8f23c05ab580a470b4dabba54b25dffe2c0f2a64495a33a82",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

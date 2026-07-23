@@ -1,0 +1,13 @@
+{
+  "id": "flaky-test-quarantine",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "flaky-test-quarantine"
+  },
+  "compatibleCapabilityRevision": "76c2e79630d8f2bb066866ec102827fded11410ce7bdabe679b68fe5dffceaca",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,50 @@
+{
+  "id": "resolve",
+  "action": "resolve",
+  "purpose": "Resolve merge conflicts between a PR branch and the default branch.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number whose branch has conflicts with the default branch."
+      },
+      "prefer": {
+        "type": "string",
+        "description": "Force one side for every conflict: 'ours' = PR branch (HEAD), 'theirs' = base branch. Omit to let the agent merge by judgement."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "RESOLVE_COMPLETED",
+          "RESOLVE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "resolve completes and returns a valid canonical result",
+  "failure": "resolve cannot return a valid canonical result"
+}

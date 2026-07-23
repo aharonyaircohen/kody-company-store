@@ -1,0 +1,13 @@
+{
+  "id": "qa-goal",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "qa-goal"
+  },
+  "compatibleCapabilityRevision": "623487da2969af4ebb0a899ea7a4131bc07d0449c097d405c60cccecd6b99133",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

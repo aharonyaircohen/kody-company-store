@@ -1,0 +1,44 @@
+{
+  "id": "dispatch-due-loops",
+  "action": "dispatch-due-loops",
+  "purpose": "Reserve and dispatch due AI Agency Loops.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "loop": {
+        "type": "string"
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "agency-runs",
+    "agency-state"
+  ],
+  "permissions": [],
+  "success": "dispatch-due-loops completes and returns a valid canonical result",
+  "failure": "dispatch-due-loops cannot return a valid canonical result"
+}

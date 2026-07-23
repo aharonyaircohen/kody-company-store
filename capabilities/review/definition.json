@@ -1,0 +1,38 @@
+{
+  "id": "review",
+  "action": "review",
+  "purpose": "Read-only structured review of an open PR. Posts one comment, never commits.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number to review."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "review completes and returns a valid canonical result",
+  "failure": "review cannot return a valid canonical result"
+}

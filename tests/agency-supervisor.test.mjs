@@ -7,8 +7,9 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, it } from "node:test";
 
-const profilePath = new URL("../capabilities/agency-supervisor/profile.json", import.meta.url);
-const scriptPath = new URL("../capabilities/agency-supervisor/run-agency-supervisor.sh", import.meta.url);
+const profilePath = new URL("../implementations/agency-supervisor/runtime.json", import.meta.url);
+const implementationPath = new URL("../implementations/agency-supervisor/definition.json", import.meta.url);
+const scriptPath = new URL("../implementations/agency-supervisor/run-agency-supervisor.sh", import.meta.url);
 const goalPath = new URL("../goals/templates/agency-supervision-loop/state.json", import.meta.url);
 const workflowPath = new URL("../workflows/agency-supervision-loop/workflow.json", import.meta.url);
 
@@ -48,12 +49,14 @@ function writeReport(root, slug, value, generatedAt = "2026-07-18T09:00:00.000Z"
 describe("agency supervisor", () => {
   it("defines an hourly supervisor loop and Report-based output", async () => {
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
+    const implementation = JSON.parse(await readFile(implementationPath, "utf8"));
     const goal = JSON.parse(await readFile(goalPath, "utf8"));
     const workflow = JSON.parse(await readFile(workflowPath, "utf8"));
 
-    assert.equal(profile.name, "agency-supervisor");
+    assert.equal(implementation.id, "agency-supervisor");
     assert.equal(profile.capabilityKind, "observe");
-    assert.equal(profile.agent, "coo");
+    assert.equal(implementation.type, "script");
+    assert.equal(implementation.agentRef, undefined);
     assert.deepEqual(profile.scripts.preflight, [{ shell: "run-agency-supervisor.sh" }, { script: "skipAgent" }]);
     assert.equal(goal.schedule, "1h");
     assert.deepEqual(goal.loopTarget, { type: "workflow", id: "agency-supervision-loop" });

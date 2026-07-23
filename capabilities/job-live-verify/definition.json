@@ -1,0 +1,31 @@
+{
+  "id": "job-live-verify",
+  "action": "job-live-verify",
+  "purpose": "Live-test implementation that verifies job reference injection, agent identity injection, synthetic skill loading, locked capability tools, and state postflight.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "job-live-verify completes and returns a valid canonical result",
+  "failure": "job-live-verify cannot return a valid canonical result"
+}

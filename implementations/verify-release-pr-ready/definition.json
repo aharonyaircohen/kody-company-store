@@ -1,0 +1,9 @@
+{
+  "id": "verify-release-pr-ready",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "verify-release-pr-ready"
+  },
+  "compatibleCapabilityRevision": "66be68776c0a4137b587aa0689cab3c97dc04ce1f32a900e71c2c44090c5e093",
+  "type": "script"
+}

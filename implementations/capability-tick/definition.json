@@ -1,0 +1,13 @@
+{
+  "id": "capability-tick",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "capability-tick"
+  },
+  "compatibleCapabilityRevision": "fdf113395ae5b658dfabe21756213778b8aa2dd94d9a8d8a7cb87575078767ee",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

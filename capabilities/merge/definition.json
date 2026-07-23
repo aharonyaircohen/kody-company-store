@@ -1,0 +1,60 @@
+{
+  "id": "merge",
+  "action": "merge",
+  "purpose": "Self-gating squash-merge of an open PR into its base. Deterministic, no agent: merges only when GitHub reports the PR CLEAN (mergeable + required checks/reviews satisfied); otherwise refuses and comments why. Used by the CTO qa-merge capability once a QA-goal PR has graduated.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number to merge. No-op (MERGE_SKIPPED) if already closed/merged; refuses (MERGE_BLOCKED) if draft, conflicting, or not yet CLEAN."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "MERGE_COMPLETED",
+          "MERGE_BLOCKED",
+          "MERGE_SKIPPED"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads PR mergeability (`gh pr view --json`) and merges (`gh pr merge --squash --delete-branch`).",
+      "allowedUses": [
+        "pr",
+        "api"
+      ]
+    }
+  ],
+  "success": "merge completes and returns a valid canonical result",
+  "failure": "merge cannot return a valid canonical result"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "publish-knowledge-system",
+  "action": "publish-knowledge-system",
+  "purpose": "Publish existing Knowledge System artifacts.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "KNOWLEDGE_SYSTEM_PUBLISHED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "knowledge-system"
+  ],
+  "permissions": [
+    "curl",
+    "jq"
+  ],
+  "success": "publish-knowledge-system completes and returns a valid canonical result",
+  "failure": "publish-knowledge-system cannot return a valid canonical result"
+}

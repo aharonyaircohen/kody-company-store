@@ -1,0 +1,66 @@
+{
+  "id": "qa-engineer",
+  "action": "qa-engineer",
+  "purpose": "Free-form QA: browses a running site with Playwright MCP, explores routes, exercises UI states, posts a structured QA report. Opens a new issue per run by default; pass --issue <N> to comment on an existing one. Read-only on the repo.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "Base URL the agent should browse. Optional — resolveQaUrl preflight falls back to the goal-branch Vercel deployment (when --goal is set), then $PREVIEW_URL, then the `QA_URL` variable in .kody/variables.json. Errors if none resolve."
+      },
+      "scope": {
+        "type": "string",
+        "description": "Optional feature focus (e.g. 'admin chat memory recall'). Without a scope the agent does a broad smoke pass over discovered routes."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Optional kody goal id to attach findings to. When set: (1) resolveQaUrl looks up the goal-branch's latest Vercel deployment and uses its URL, (2) createQaGoal skips manifest creation and labels finding issues `goal:<id>` directly."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "Optional: comment the QA report on this existing issue instead of opening a new one."
+      },
+      "authProfile": {
+        "type": "string",
+        "description": "Path to a Playwright storageState.json for pre-authenticated sessions (skips manual login)."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "playwright",
+      "install": {
+        "required": false,
+        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+        "installCommand": "npx --yes playwright install chromium"
+      },
+      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+      "usage": "The Playwright MCP server uses Chromium under the hood. Preflight ensures it is installed. Save screenshots under `.kody/qa-reports/<run>/` if you take any — that directory is gitignored.",
+      "allowedUses": [
+        "--version"
+      ]
+    }
+  ],
+  "success": "qa-engineer completes and returns a valid canonical result",
+  "failure": "qa-engineer cannot return a valid canonical result"
+}

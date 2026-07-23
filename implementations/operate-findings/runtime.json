@@ -1,0 +1,95 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "watch",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 10,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": false,
+    "enableSubmitTool": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "capabilityTools": [
+    "read_check_runs",
+    "ensure_issue",
+    "start_capability",
+    "ensure_comment"
+  ],
+  "capabilityToolMode": "append",
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "shell": "load-agency-findings.sh"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "publishReport"
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "capabilityKind": "act",
+  "tools": [
+    "read_check_runs",
+    "ensure_issue",
+    "start_capability",
+    "ensure_comment"
+  ],
+  "readsFrom": [
+    "reports",
+    "intents",
+    "goals"
+  ],
+  "writesTo": [
+    "capability-state"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "FINDINGS_OPERATED",
+      "FINDINGS_OPERATION_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

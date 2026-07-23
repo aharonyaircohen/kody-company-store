@@ -1,0 +1,13 @@
+{
+  "id": "operate-findings",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "operate-findings"
+  },
+  "compatibleCapabilityRevision": "eff2c187309eb39e23b42eb94bc4daab762e5e2a2e2fc82f5016bbee34785680",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

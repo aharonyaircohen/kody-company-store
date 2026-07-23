@@ -1,0 +1,13 @@
+{
+  "id": "system-audit",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "system-audit"
+  },
+  "compatibleCapabilityRevision": "a6a20ece48d79192d2ca618ab8df0c6cbc3fb86b55ff80093d2e23b98e09aeac",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

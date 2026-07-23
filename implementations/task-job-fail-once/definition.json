@@ -1,0 +1,9 @@
+{
+  "id": "task-job-fail-once",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "task-job-fail-once"
+  },
+  "compatibleCapabilityRevision": "0bf8549a8204daafefdf7813f32bd2f728867a9361e990c42e7fc7a45f2bd740",
+  "type": "script"
+}

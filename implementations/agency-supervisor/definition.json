@@ -1,0 +1,9 @@
+{
+  "id": "agency-supervisor",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "agency-supervisor"
+  },
+  "compatibleCapabilityRevision": "35f7e659d13955170da31b9fe77a6b4ba748a74bbcc3d42ea7b9d482a43926b3",
+  "type": "script"
+}

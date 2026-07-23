@@ -6,6 +6,7 @@ import { describe, it } from "node:test";
 
 const manifestPath = new URL("../kody-store.json", import.meta.url);
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
+const implementationsDir = new URL("../implementations/", import.meta.url);
 const workflowsDir = new URL("../workflows/", import.meta.url);
 const goalTemplatesDir = new URL("../goals/templates/", import.meta.url);
 
@@ -28,7 +29,7 @@ describe("Store capabilities", () => {
     assert.equal(manifest.assetRoots.workflows, "workflows");
   });
 
-  it("contains migrated capability folders with profile and capability body", async () => {
+  it("contains capability contracts without runtime profiles", async () => {
     assert.equal(existsSync(capabilitiesDir), true, "capabilities must exist");
 
     const entries = await readdir(capabilitiesDir, { withFileTypes: true });
@@ -37,18 +38,19 @@ describe("Store capabilities", () => {
     assert.ok(slugs.length > 0, "capability catalog must not be empty");
     for (const slug of slugs) {
       const dir = join(capabilitiesDir.pathname, slug);
-      assert.equal(existsSync(join(dir, "profile.json")), true, `${slug} must include profile.json`);
+      assert.equal(existsSync(join(dir, "definition.json")), true, `${slug} must include definition.json`);
+      assert.equal(existsSync(join(dir, "profile.json")), false, `${slug} must not include profile.json`);
       assert.equal(existsSync(join(dir, "capability.md")), true, `${slug} must include capability.md`);
     }
   });
 
   it("ships every subagent declared by a capability profile", async () => {
-    const entries = await readdir(capabilitiesDir, { withFileTypes: true });
+    const entries = await readdir(implementationsDir, { withFileTypes: true });
     const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
 
     for (const slug of slugs) {
-      const dir = join(capabilitiesDir.pathname, slug);
-      const profilePath = join(dir, "profile.json");
+      const dir = join(implementationsDir.pathname, slug);
+      const profilePath = join(dir, "runtime.json");
       const profile = JSON.parse(await readFile(profilePath, "utf8"));
       const subagents = profile.claudeCode?.subagents ?? [];
 
@@ -65,16 +67,16 @@ describe("Store capabilities", () => {
   });
 
   it("keeps the review panel aligned to its four engineering risks", async () => {
-    const reviewDir = join(capabilitiesDir.pathname, "review");
+    const reviewDir = join(implementationsDir.pathname, "review");
     const profile = JSON.parse(
-      await readFile(join(reviewDir, "profile.json"), "utf8"),
+      await readFile(join(reviewDir, "runtime.json"), "utf8"),
     );
     const skill = await readFile(
       join(reviewDir, "skills", "code-review", "SKILL.md"),
       "utf8",
     );
     const prompt = await readFile(join(reviewDir, "prompt.md"), "utf8");
-    const capability = await readFile(join(reviewDir, "capability.md"), "utf8");
+    const capability = await readFile(join(capabilitiesDir.pathname, "review", "capability.md"), "utf8");
     const expectedReviewers = [
       "review-security",
       "review-reliability",
@@ -187,12 +189,12 @@ describe("Store capabilities", () => {
   });
 
   it("ships every declared plugin part or uses a known engine shared part", async () => {
-    const entries = await readdir(capabilitiesDir, { withFileTypes: true });
+    const entries = await readdir(implementationsDir, { withFileTypes: true });
     const slugs = entries.filter((entry) => entry.isDirectory()).map((entry) => entry.name);
 
     for (const slug of slugs) {
-      const dir = join(capabilitiesDir.pathname, slug);
-      const profilePath = join(dir, "profile.json");
+      const dir = join(implementationsDir.pathname, slug);
+      const profilePath = join(dir, "runtime.json");
       const profile = JSON.parse(await readFile(profilePath, "utf8"));
       const parts = [
         { bucket: "skills", names: profile.claudeCode?.skills ?? [], suffix: "", shared: sharedEngineParts.skills },
@@ -245,10 +247,10 @@ describe("Store capabilities", () => {
 
     assert.equal(roots[removedCapabilityRoot], undefined);
     assert.equal(roots[oldActionsRoot], undefined);
-    assert.equal(roots.implementations, undefined);
+    assert.equal(roots.implementations, "implementations");
     assert.equal(existsSync(new URL(`../${removedCapabilityRoot}/`, import.meta.url)), false);
     assert.equal(existsSync(new URL(`../${oldActionsRoot}/`, import.meta.url)), false);
-    assert.equal(existsSync(new URL("../implementations/", import.meta.url)), false);
+    assert.equal(existsSync(new URL("../implementations/", import.meta.url)), true);
     assert.equal(existsSync(new URL("../.kody/", import.meta.url)), false);
   });
 
@@ -302,12 +304,12 @@ describe("Store capabilities", () => {
   });
 
   it("keeps task delivery dispatch and verification boundaries clean", async () => {
-    const verifierProfilePath = new URL("../capabilities/task-verifier/profile.json", import.meta.url);
+    const verifierProfilePath = new URL("../implementations/task-verifier/runtime.json", import.meta.url);
     const verifierSkillPath = new URL(
-      "../capabilities/task-verifier/skills/verifier-method/SKILL.md",
+      "../implementations/task-verifier/skills/verifier-method/SKILL.md",
       import.meta.url,
     );
-    const runnerProfilePath = new URL("../capabilities/assigned-task-runner/profile.json", import.meta.url);
+    const runnerProfilePath = new URL("../implementations/assigned-task-runner/runtime.json", import.meta.url);
     const runnerBodyPath = new URL("../capabilities/assigned-task-runner/capability.md", import.meta.url);
 
     const verifierProfile = JSON.parse(await readFile(verifierProfilePath, "utf8"));
@@ -346,12 +348,12 @@ describe("Store capabilities", () => {
   });
 
   it("keeps PR health triage advisory-only", async () => {
-    const profilePath = new URL("../capabilities/pr-health-triage/profile.json", import.meta.url);
+    const profilePath = new URL("../implementations/pr-health-triage/runtime.json", import.meta.url);
     const skillPath = new URL(
-      "../capabilities/pr-health-triage/skills/pr-health-triage/SKILL.md",
+      "../implementations/pr-health-triage/skills/pr-health-triage/SKILL.md",
       import.meta.url,
     );
-    const promptPath = new URL("../capabilities/pr-health-triage/prompt.md", import.meta.url);
+    const promptPath = new URL("../implementations/pr-health-triage/prompt.md", import.meta.url);
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
     const skill = await readFile(skillPath, "utf8");
     const prompt = await readFile(promptPath, "utf8");
@@ -371,7 +373,7 @@ describe("Store capabilities", () => {
   });
 
   it("treats missing release PR checks as pending", async () => {
-    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /no checks reported/);
@@ -379,7 +381,7 @@ describe("Store capabilities", () => {
   });
 
   it("lets release-merge wait longer than the default shell timeout", async () => {
-    const profilePath = new URL("../capabilities/release-merge/profile.json", import.meta.url);
+    const profilePath = new URL("../implementations/release-merge/runtime.json", import.meta.url);
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
     const shell = profile.scripts.preflight.find((step) => step.shell === "release-merge.sh");
 
@@ -387,7 +389,7 @@ describe("Store capabilities", () => {
   });
 
   it("uses merge commits for release promotion PRs", async () => {
-    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /merge_args=\(--squash\)/);
@@ -397,7 +399,7 @@ describe("Store capabilities", () => {
   });
 
   it("does not gate release merges on wiki publish checks", async () => {
-    const scriptPath = new URL("../capabilities/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /Deploy Wiki to GitHub Pages/);
@@ -406,7 +408,7 @@ describe("Store capabilities", () => {
   });
 
   it("creates release branches from the configured default branch", async () => {
-    const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-prepare/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /checkout_default_branch/);
@@ -414,7 +416,7 @@ describe("Store capabilities", () => {
   });
 
   it("pushes release branches with the engine-selected GitHub token", async () => {
-    const scriptPath = new URL("../capabilities/release-prepare/prepare.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-prepare/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /git_push\(\)/);

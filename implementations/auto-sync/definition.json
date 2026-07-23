@@ -1,0 +1,13 @@
+{
+  "id": "auto-sync",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "auto-sync"
+  },
+  "compatibleCapabilityRevision": "f1e092dcd887f53c88beca802462eabc2e0ef35a57cac5e799e9caa96f8f5118",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

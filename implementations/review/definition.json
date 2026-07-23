@@ -1,0 +1,13 @@
+{
+  "id": "review",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "review"
+  },
+  "compatibleCapabilityRevision": "983cfc9a173c637e800358c6f2511ff89128a356a422d77ebfb0526e9ce9e600",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

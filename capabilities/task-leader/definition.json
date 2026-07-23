@@ -1,0 +1,31 @@
+{
+  "id": "task-leader",
+  "action": "task-leader",
+  "purpose": "Task leader - orchestrates reviews, fixes, merges, and dispatches every 15 minutes.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "task-leader completes and returns a valid canonical result",
+  "failure": "task-leader cannot return a valid canonical result"
+}

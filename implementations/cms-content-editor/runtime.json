@@ -1,0 +1,89 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob"
+    ],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "capabilityTools": [
+    "ensure_issue",
+    "read_thread",
+    "ensure_comment",
+    "cms_list_collections",
+    "cms_list_documents",
+    "cms_get_document",
+    "cms_create_document",
+    "cms_update_document"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "tools": [
+    "ensure_issue",
+    "read_thread",
+    "ensure_comment",
+    "cms_list_collections",
+    "cms_list_documents",
+    "cms_get_document",
+    "cms_create_document",
+    "cms_update_document"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "CMS_CONTENT_EDITOR_COMPLETED",
+      "CMS_CONTENT_EDITOR_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

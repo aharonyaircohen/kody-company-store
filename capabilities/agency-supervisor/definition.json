@@ -1,0 +1,48 @@
+{
+  "id": "agency-supervisor",
+  "action": "agency-supervisor",
+  "purpose": "Check agency evidence and record safe repairs or escalations.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENCY_SUPERVISOR_HEALTHY",
+          "AGENCY_SUPERVISOR_UNHEALTHY",
+          "AGENCY_SUPERVISOR_BLOCKED",
+          "AGENCY_SUPERVISOR_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "observations",
+    "supervision-report",
+    "escalations"
+  ],
+  "permissions": [
+    "gh",
+    "node"
+  ],
+  "success": "agency-supervisor completes and returns a valid canonical result",
+  "failure": "agency-supervisor cannot return a valid canonical result"
+}

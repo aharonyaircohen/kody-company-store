@@ -1,0 +1,13 @@
+{
+  "id": "skills-research",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "skills-research"
+  },
+  "compatibleCapabilityRevision": "6b736da22b267d9e933cb7c7712510d090909e8cc9a84cd70ca20a6ac6b68fa5",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

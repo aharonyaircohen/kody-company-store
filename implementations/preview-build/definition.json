@@ -1,0 +1,13 @@
+{
+  "id": "preview-build",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "preview-build"
+  },
+  "compatibleCapabilityRevision": "e9e3aa00d3df03340af7b558ca9dc57691a4bd75fc1eb09ce3d7f251f23ff2dc",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "id": "capability-review",
+  "action": "capability-review",
+  "purpose": "Review one capability at a time for design soundness, reachable steps, cadence, and observed output.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CAPABILITY_REVIEW_COMPLETED",
+          "CAPABILITY_REVIEW_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "capability-review completes and returns a valid canonical result",
+  "failure": "capability-review cannot return a valid canonical result"
+}

@@ -1,0 +1,43 @@
+{
+  "id": "operate-findings",
+  "action": "operate-findings",
+  "purpose": "Process open Findings through decide, deliver, verify, and learn phases.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "FINDINGS_OPERATED",
+          "FINDINGS_OPERATION_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "capability-state"
+  ],
+  "permissions": [
+    "gh"
+  ],
+  "success": "operate-findings completes and returns a valid canonical result",
+  "failure": "operate-findings cannot return a valid canonical result"
+}

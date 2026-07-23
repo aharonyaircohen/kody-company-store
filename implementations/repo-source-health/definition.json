@@ -1,0 +1,9 @@
+{
+  "id": "repo-source-health",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "repo-source-health"
+  },
+  "compatibleCapabilityRevision": "8ad25661da30b7198d73a045b382dfe29065d53191303b0508053f403d58d628",
+  "type": "script"
+}

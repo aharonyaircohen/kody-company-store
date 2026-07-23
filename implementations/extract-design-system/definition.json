@@ -1,0 +1,13 @@
+{
+  "id": "extract-design-system",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "extract-design-system"
+  },
+  "compatibleCapabilityRevision": "225105d04333ca5f38db2ddab4546ab220ca3aedb844575c1bbed777b6e82ab5",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,51 @@
+{
+  "id": "skills-research",
+  "action": "skills-research",
+  "purpose": "Research useful skills from skills.sh and recommend where they fit in Kody Dashboard.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "SKILLS_RESEARCH_COMPLETED",
+          "SKILLS_RESEARCH_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh",
+    {
+      "name": "playwright",
+      "install": {
+        "required": false,
+        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+        "installCommand": "npx --yes playwright install chromium"
+      },
+      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium' || ls \"$HOME/Library/Caches/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+      "usage": "Playwright MCP is used to browse skills.sh."
+    }
+  ],
+  "success": "skills-research completes and returns a valid canonical result",
+  "failure": "skills-research cannot return a valid canonical result"
+}

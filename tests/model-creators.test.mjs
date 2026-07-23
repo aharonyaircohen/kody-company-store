@@ -5,6 +5,7 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
+const implementationsDir = new URL("../implementations/", import.meta.url);
 
 const creators = [
   {
@@ -50,12 +51,13 @@ describe("agency-owned model creators", () => {
       const dir = join(capabilitiesDir.pathname, creator.slug);
       assert.equal(existsSync(dir), true, `${creator.slug} must live in the Store`);
 
-      const profile = JSON.parse(await readFile(join(dir, "profile.json"), "utf8"));
+      const profile = JSON.parse(await readFile(join(implementationsDir.pathname, creator.slug, "runtime.json"), "utf8"));
+      const definition = JSON.parse(await readFile(join(implementationsDir.pathname, creator.slug, "definition.json"), "utf8"));
       const body = await readFile(join(dir, "capability.md"), "utf8");
-      const prompt = await readFile(join(dir, "prompt.md"), "utf8");
+      const prompt = await readFile(join(implementationsDir.pathname, creator.slug, "prompt.md"), "utf8");
 
-      assert.equal(profile.action, creator.slug);
-      assert.equal(profile.name, creator.slug);
+      assert.equal(definition.id, creator.slug);
+      assert.equal(definition.capabilityRef.id, creator.slug);
       assert.equal(profile.role, "primitive");
       assert.equal(profile.kind, "oneshot");
       const expectedInputs = [
@@ -116,16 +118,16 @@ describe("agency-owned model creators", () => {
   });
 
   it("does not keep a central agent factory", () => {
-    assert.equal(existsSync(new URL("../capabilities/agent-factory/profile.json", import.meta.url)), false);
+    assert.equal(existsSync(new URL("../implementations/agent-factory/runtime.json", import.meta.url)), false);
   });
 
   it("keeps company direction and agency responsibility review-first", async () => {
     const intentPrompt = await readFile(
-      new URL("../capabilities/intent-creator/prompt.md", import.meta.url),
+      new URL("../implementations/intent-creator/prompt.md", import.meta.url),
       "utf8",
     );
     const operationPrompt = await readFile(
-      new URL("../capabilities/operation-creator/prompt.md", import.meta.url),
+      new URL("../implementations/operation-creator/prompt.md", import.meta.url),
       "utf8",
     );
 

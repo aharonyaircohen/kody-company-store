@@ -1,0 +1,66 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "watch",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Reads open PRs, reads the CTO trust ledger, dispatches Kody workflows, and posts PR audit/recommendation comments.",
+      "allowedUses": [
+        "pr",
+        "api",
+        "issue",
+        "workflow"
+      ]
+    }
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "runScheduledImplementationTick",
+        "with": {
+          "jobsDir": ".kody/capabilities",
+          "slug": "preview-health",
+          "shell": "tick.sh",
+          "fenceLabel": "kody-job-next-state"
+        }
+      }
+    ],
+    "postflight": [
+      {
+        "script": "writeJobStateFile",
+        "with": {
+          "jobsDir": ".kody/capabilities"
+        }
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "inputs": []
+}

@@ -1,0 +1,92 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxTurnTimeoutSec": 1200,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "setCommentTarget",
+        "with": {
+          "type": "issue"
+        }
+      },
+      {
+        "shell": "release-merge.sh",
+        "timeoutSec": 2100
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "recordOutcome"
+      },
+      {
+        "script": "applyCapabilityReports"
+      },
+      {
+        "script": "notifyTerminal",
+        "with": {
+          "label": "release merge"
+        }
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "pr",
+      "flag": "--pr",
+      "type": "int",
+      "required": true,
+      "describe": "Release pull request number to merge."
+    },
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": false,
+      "describe": "GitHub issue number to work on."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report merge evidence to."
+    },
+    {
+      "name": "timeout-seconds",
+      "flag": "--timeout-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Maximum seconds to wait for pending checks before failing. Default 1800."
+    },
+    {
+      "name": "poll-seconds",
+      "flag": "--poll-seconds",
+      "type": "int",
+      "required": false,
+      "describe": "Seconds between CI polls while waiting. Default 30."
+    }
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "id": "agency-portfolio-management",
+  "action": "agency-portfolio-management",
+  "purpose": "Scale the agency through bounded Operations derived from active Intents.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENCY_PORTFOLIO_MANAGED",
+          "AGENCY_PORTFOLIO_MANAGEMENT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "agency-portfolio-management completes and returns a valid canonical result",
+  "failure": "agency-portfolio-management cannot return a valid canonical result"
+}

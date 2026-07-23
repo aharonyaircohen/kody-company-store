@@ -1,0 +1,41 @@
+{
+  "id": "architecture-audit",
+  "action": "architecture-audit",
+  "purpose": "Run a periodic architecture-health sweep for boundaries, coupling, dependency direction, dead abstractions, and duplication.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "ARCHITECTURE_AUDIT_COMPLETED",
+          "ARCHITECTURE_AUDIT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "architecture-audit completes and returns a valid canonical result",
+  "failure": "architecture-audit cannot return a valid canonical result"
+}

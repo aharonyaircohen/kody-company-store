@@ -1,0 +1,62 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "watch",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh",
+    "node"
+  ],
+  "scripts": {
+    "preflight": [
+      {
+        "shell": "run-agency-supervisor.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  },
+  "capabilityKind": "observe",
+  "readsFrom": [
+    "observations",
+    "reports",
+    "operations",
+    "runs",
+    "activity",
+    "github"
+  ],
+  "writesTo": [
+    "observations",
+    "supervision-report",
+    "escalations"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "AGENCY_SUPERVISOR_HEALTHY",
+      "AGENCY_SUPERVISOR_UNHEALTHY",
+      "AGENCY_SUPERVISOR_BLOCKED",
+      "AGENCY_SUPERVISOR_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

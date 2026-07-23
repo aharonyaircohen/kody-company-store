@@ -1,0 +1,38 @@
+{
+  "id": "job-gap-scan",
+  "action": "job-gap-scan",
+  "purpose": "Propose one high-ROI missing capability and update the job-gap report.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "capability": {
+        "type": "string",
+        "description": "Runtime capability slug whose sidecar state is loaded and updated."
+      }
+    },
+    "required": [
+      "capability"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "job-gap-scan completes and returns a valid canonical result",
+  "failure": "job-gap-scan cannot return a valid canonical result"
+}

@@ -1,0 +1,56 @@
+{
+  "id": "research",
+  "action": "research",
+  "purpose": "Research an issue: understand the ask, map relevant repo context, and surface clarifying questions + gaps. Read-only — no branches, no commits, no prescribed next steps.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "issue": {
+        "type": "integer",
+        "description": "GitHub issue number to research."
+      }
+    },
+    "required": [
+      "issue"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "RESEARCH_COMPLETED",
+          "RESEARCH_FAILED"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "playwright",
+      "install": {
+        "required": false,
+        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+        "installCommand": "npx --yes playwright install --with-deps chromium"
+      },
+      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+      "usage": ""
+    }
+  ],
+  "success": "research completes and returns a valid canonical result",
+  "failure": "research cannot return a valid canonical result"
+}

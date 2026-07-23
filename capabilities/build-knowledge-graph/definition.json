@@ -1,0 +1,47 @@
+{
+  "id": "build-knowledge-graph",
+  "action": "build-knowledge-graph",
+  "purpose": "Build a repository-scoped knowledge graph artifact from configured sources.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "KNOWLEDGE_GRAPH_BUILT",
+          "KNOWLEDGE_GRAPH_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "artifact"
+  ],
+  "permissions": [
+    "gh",
+    "git",
+    "jq",
+    "curl",
+    "uv"
+  ],
+  "success": "build-knowledge-graph completes and returns a valid canonical result",
+  "failure": "build-knowledge-graph cannot return a valid canonical result"
+}

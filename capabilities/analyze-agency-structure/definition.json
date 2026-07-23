@@ -1,0 +1,44 @@
+{
+  "id": "analyze-agency-structure",
+  "action": "analyze-agency-structure",
+  "purpose": "Analyze agency ownership, wiring, and orchestration structure.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENCY_STRUCTURE_ANALYZED",
+          "AGENCY_STRUCTURE_ANALYSIS_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "agency-structure-analysis"
+  ],
+  "permissions": [
+    "gh",
+    "jq"
+  ],
+  "success": "analyze-agency-structure completes and returns a valid canonical result",
+  "failure": "analyze-agency-structure cannot return a valid canonical result"
+}

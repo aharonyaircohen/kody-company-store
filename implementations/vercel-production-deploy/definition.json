@@ -1,0 +1,9 @@
+{
+  "id": "vercel-production-deploy",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "vercel-production-deploy"
+  },
+  "compatibleCapabilityRevision": "e43ad5a2176b2790a6436ceed51de5370a233412f869350139f68d6526b2e27b",
+  "type": "script"
+}

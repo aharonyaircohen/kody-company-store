@@ -1,0 +1,41 @@
+{
+  "id": "docs-readme",
+  "action": "docs-readme",
+  "purpose": "Check merged PRs for documented areas that changed without matching markdown documentation updates.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DOCS_README_COMPLETED",
+          "DOCS_README_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "docs-readme completes and returns a valid canonical result",
+  "failure": "docs-readme cannot return a valid canonical result"
+}

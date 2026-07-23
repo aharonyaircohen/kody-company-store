@@ -1,0 +1,41 @@
+{
+  "id": "coverage-floor",
+  "action": "coverage-floor",
+  "purpose": "Check CI coverage against the floor and escalate when statements or branches drop too low.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "COVERAGE_FLOOR_COMPLETED",
+          "COVERAGE_FLOOR_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "coverage-floor completes and returns a valid canonical result",
+  "failure": "coverage-floor cannot return a valid canonical result"
+}

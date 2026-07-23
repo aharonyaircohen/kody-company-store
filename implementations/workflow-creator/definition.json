@@ -1,0 +1,13 @@
+{
+  "id": "workflow-creator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "workflow-creator"
+  },
+  "compatibleCapabilityRevision": "265f6a1fbd6927cb7798f709b6e5d3e784988d05de3593d74d074c6491b61a28",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

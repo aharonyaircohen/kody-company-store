@@ -1,0 +1,41 @@
+{
+  "id": "cleanup",
+  "action": "cleanup",
+  "purpose": "Coordinate branches, empty goals, stale dependency nudges, and dead-code cleanup signals.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CLEANUP_COMPLETED",
+          "CLEANUP_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "cleanup completes and returns a valid canonical result",
+  "failure": "cleanup cannot return a valid canonical result"
+}

@@ -6,7 +6,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { describe, it } from "node:test";
 
-const scriptPath = new URL("../capabilities/ai-agency-doctor/run-ai-agency-doctor.sh", import.meta.url);
+const scriptPath = new URL("../implementations/ai-agency-doctor/run-ai-agency-doctor.sh", import.meta.url);
 
 function writeJson(file, value) {
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);

@@ -1,0 +1,13 @@
+{
+  "id": "dependency-bump",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "dependency-bump"
+  },
+  "compatibleCapabilityRevision": "338f29b20e2f836d564cf17bc4f8e803b72398dd958ea54f6e8cd7429ea02da4",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

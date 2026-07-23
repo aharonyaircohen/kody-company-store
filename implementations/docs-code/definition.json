@@ -1,0 +1,13 @@
+{
+  "id": "docs-code",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "docs-code"
+  },
+  "compatibleCapabilityRevision": "c7671dd2091edbaaca1eef11f13fb791b1c9eb98ae2ac0589e8838b9d6e04e98",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "dead-code-sweep",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "dead-code-sweep"
+  },
+  "compatibleCapabilityRevision": "24148f84099d274cf8be3d759a84b9739103502edbb9c7d11e71a96eceb1ddaf",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

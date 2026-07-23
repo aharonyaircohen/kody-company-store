@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "name": "Chore Flow",
+  "capabilities": ["run", "review", "fix"],
+  "steps": [
+    {
+      "capability": "run",
+      "target": "issue",
+      "reason": "Complete the scoped chore, verify it, and open or update the pull request."
+    },
+    {
+      "capability": "review",
+      "target": "pr",
+      "continueOn": ["REVIEW_FAIL"],
+      "reason": "Review the generated pull request before calling the chore flow complete."
+    },
+    {
+      "capability": "fix",
+      "target": "pr",
+      "runWhen": {
+        "lastOutcome.type": ["REVIEW_CONCERNS", "REVIEW_FAIL"]
+      },
+      "reason": "Apply review feedback when the review reports concerns or a blocking failure."
+    }
+  ]
+}

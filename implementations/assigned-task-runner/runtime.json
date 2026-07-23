@@ -1,0 +1,75 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "enableSubmitTool": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob",
+      "mcp__kody-submit"
+    ],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    "gh"
+  ],
+  "capabilityTools": [
+    "start_capability"
+  ],
+  "capabilityToolMode": "append",
+  "scripts": {
+    "preflight": [
+      {
+        "script": "loadCapabilityState"
+      },
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "parseJobStateFromAgentResult",
+        "with": {
+          "fenceLabel": "kody-job-next-state"
+        }
+      },
+      {
+        "script": "writeJobStateFile"
+      },
+      {
+        "script": "appendCompanyActivity"
+      }
+    ]
+  },
+  "mentions": [
+    "aguyaharonyair"
+  ],
+  "inputs": [],
+  "outputContract": {
+    "actionTypes": [
+      "ASSIGNED_TASK_RUNNER_COMPLETED",
+      "ASSIGNED_TASK_RUNNER_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

@@ -1,7 +1,0 @@
-{
-  "action": "kody-mem",
-  "agent": "kody",
-  "describe": "kody-mem",
-  "implementation": "kody-chat",
-  "name": "kody-mem"
-}

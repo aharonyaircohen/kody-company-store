@@ -1,0 +1,54 @@
+{
+  "id": "ci-check",
+  "action": "ci-check",
+  "purpose": "Check GitHub CI status for a PR and optionally report the result to a managed goal. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "Pull request number to check."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report CI evidence to."
+      },
+      "evidence": {
+        "type": "string",
+        "description": "Evidence key to set on the goal. Default ciGreen."
+      },
+      "timeout-seconds": {
+        "type": "integer",
+        "description": "Maximum time to wait for pending checks before reporting not-green. Default 0."
+      },
+      "poll-seconds": {
+        "type": "integer",
+        "description": "Seconds between CI polls while waiting. Default 30."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "ci-check completes and returns a valid canonical result",
+  "failure": "ci-check cannot return a valid canonical result"
+}

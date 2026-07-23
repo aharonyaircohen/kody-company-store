@@ -1,0 +1,13 @@
+{
+  "id": "task-leader",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "task-leader"
+  },
+  "compatibleCapabilityRevision": "ea3166484da22428e2190f3bee8b11f06d464a7c711275615e825f5c6f56402e",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

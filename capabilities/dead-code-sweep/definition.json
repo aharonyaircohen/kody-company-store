@@ -1,0 +1,41 @@
+{
+  "id": "dead-code-sweep",
+  "action": "dead-code-sweep",
+  "purpose": "Coordinate monthly cleanup of unused exports, files, and dependencies.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DEAD_CODE_SWEEP_COMPLETED",
+          "DEAD_CODE_SWEEP_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "dead-code-sweep completes and returns a valid canonical result",
+  "failure": "dead-code-sweep cannot return a valid canonical result"
+}

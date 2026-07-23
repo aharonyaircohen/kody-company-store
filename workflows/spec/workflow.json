@@ -1,0 +1,17 @@
+{
+  "version": 1,
+  "name": "Spec Flow",
+  "capabilities": ["research", "plan"],
+  "steps": [
+    {
+      "capability": "research",
+      "target": "issue",
+      "reason": "Research the requested spec, RFC, or design issue and gather the relevant context."
+    },
+    {
+      "capability": "plan",
+      "target": "issue",
+      "reason": "Create the spec or implementation plan artifact and stop before implementation."
+    }
+  ]
+}

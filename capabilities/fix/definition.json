@@ -1,0 +1,61 @@
+{
+  "id": "fix",
+  "action": "fix",
+  "purpose": "Apply review feedback to an existing PR branch.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number to apply feedback to."
+      },
+      "feedback": {
+        "type": "string",
+        "description": "Inline override. If absent, the flow reads the latest PR review comment."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "FIX_COMPLETED",
+          "FIX_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "playwright",
+      "install": {
+        "required": false,
+        "checkCommand": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+        "installCommand": "npx --yes playwright install --with-deps chromium"
+      },
+      "verify": "ls \"$HOME/.cache/ms-playwright\" 2>/dev/null | grep -q '^chromium'",
+      "usage": ""
+    }
+  ],
+  "success": "fix completes and returns a valid canonical result",
+  "failure": "fix cannot return a valid canonical result"
+}

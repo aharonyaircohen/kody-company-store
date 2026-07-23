@@ -1,0 +1,13 @@
+{
+  "id": "preview-health",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "preview-health"
+  },
+  "compatibleCapabilityRevision": "40aea1ef709c7a197c7e69dd54ed29f03d14bd155b8e5c2cd6d9854631337f5d",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

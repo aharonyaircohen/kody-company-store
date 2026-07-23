@@ -1,0 +1,13 @@
+{
+  "id": "kody-analyzer",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "kody-analyzer"
+  },
+  "compatibleCapabilityRevision": "98c89d453f73622bbc268fb9933deb78a92f777ba602e1a3249c4e781f5eb3b0",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

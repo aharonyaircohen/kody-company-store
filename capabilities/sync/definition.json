@@ -1,0 +1,38 @@
+{
+  "id": "sync",
+  "action": "sync",
+  "purpose": "Merge the default (base) branch into a PR branch and push. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "GitHub PR number to update from its base branch."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "sync completes and returns a valid canonical result",
+  "failure": "sync cannot return a valid canonical result"
+}

@@ -1,0 +1,13 @@
+{
+  "id": "auto-resolve",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "auto-resolve"
+  },
+  "compatibleCapabilityRevision": "ab7dbd72bc15a1da75c4341888eb6056c5199bcbca3780d369ae6dd5c5e65ec7",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

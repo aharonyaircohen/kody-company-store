@@ -1,0 +1,41 @@
+{
+  "id": "design-review",
+  "action": "design-review",
+  "purpose": "Run a periodic design-health sweep for visual coherence, usability, and accessibility risks.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DESIGN_REVIEW_COMPLETED",
+          "DESIGN_REVIEW_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "design-review completes and returns a valid canonical result",
+  "failure": "design-review cannot return a valid canonical result"
+}

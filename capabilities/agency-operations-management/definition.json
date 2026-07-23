@@ -1,0 +1,41 @@
+{
+  "id": "agency-operations-management",
+  "action": "agency-operations-management",
+  "purpose": "Operate one active Operation within its persisted Goal and Loop scope.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENCY_OPERATIONS_MANAGED",
+          "AGENCY_OPERATIONS_MANAGEMENT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "agency-operations-management completes and returns a valid canonical result",
+  "failure": "agency-operations-management cannot return a valid canonical result"
+}

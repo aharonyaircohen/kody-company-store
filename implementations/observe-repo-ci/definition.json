@@ -1,0 +1,9 @@
+{
+  "id": "observe-repo-ci",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "observe-repo-ci"
+  },
+  "compatibleCapabilityRevision": "05281a2bb622c9cc4b622b82d626f238fd3c0bacc339617fd046b7c8238183e7",
+  "type": "script"
+}

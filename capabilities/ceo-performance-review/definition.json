@@ -1,0 +1,41 @@
+{
+  "id": "ceo-performance-review",
+  "action": "ceo-performance-review",
+  "purpose": "Review every agent by the capabilities they own and the evidence those capabilities produce.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CEO_PERFORMANCE_REVIEW_COMPLETED",
+          "CEO_PERFORMANCE_REVIEW_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "ceo-performance-review completes and returns a valid canonical result",
+  "failure": "ceo-performance-review cannot return a valid canonical result"
+}

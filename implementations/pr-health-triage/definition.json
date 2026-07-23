@@ -1,0 +1,13 @@
+{
+  "id": "pr-health-triage",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "pr-health-triage"
+  },
+  "compatibleCapabilityRevision": "0075fd300cab475fbabd4db433f8a114299e763a429129d2230e2639219441f7",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "cto"
+  }
+}

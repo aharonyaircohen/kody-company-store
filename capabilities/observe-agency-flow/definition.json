@@ -1,0 +1,44 @@
+{
+  "id": "observe-agency-flow",
+  "action": "observe-agency-flow",
+  "purpose": "Read agency pipeline evidence (stale review PRs, unanswered requests, idle findings) and write one Observation plus the current agency-flow Finding.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "AGENCY_FLOW_OBSERVED",
+          "AGENCY_FLOW_OBSERVATION_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [
+    "observations"
+  ],
+  "permissions": [
+    "gh",
+    "node"
+  ],
+  "success": "observe-agency-flow completes and returns a valid canonical result",
+  "failure": "observe-agency-flow cannot return a valid canonical result"
+}

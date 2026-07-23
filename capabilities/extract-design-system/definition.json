@@ -1,0 +1,50 @@
+{
+  "id": "extract-design-system",
+  "action": "extract-design-system",
+  "purpose": "Extract starter design tokens from a public URL and compare them to the local dashboard theme.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "url": {
+        "type": "string",
+        "description": "Public URL to inspect."
+      },
+      "mode": {
+        "type": "string",
+        "description": "extract-only or starter-files. Defaults to extract-only."
+      }
+    },
+    "required": [
+      "url"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DESIGN_SYSTEM_EXTRACTED",
+          "DESIGN_SYSTEM_EXTRACT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "extract-design-system completes and returns a valid canonical result",
+  "failure": "extract-design-system cannot return a valid canonical result"
+}

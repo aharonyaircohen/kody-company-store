@@ -1,0 +1,80 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "internal": true,
+  "role": "primitive",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "cacheable": true,
+    "tools": [
+      "Read",
+      "Bash",
+      "Grep",
+      "Glob",
+      "mcp__playwright"
+    ],
+    "hooks": [
+      "block-write"
+    ],
+    "skills": [
+      "extract-design-system"
+    ],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": [
+      {
+        "name": "playwright",
+        "command": "npx",
+        "args": [
+          "-y",
+          "--package=@playwright/mcp@latest",
+          "--",
+          "playwright-mcp"
+        ]
+      }
+    ]
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "buildSyntheticPlugin"
+      },
+      {
+        "script": "composePrompt"
+      }
+    ],
+    "postflight": []
+  },
+  "inputs": [
+    {
+      "name": "url",
+      "flag": "--url",
+      "type": "string",
+      "required": true,
+      "describe": "Public URL to inspect."
+    },
+    {
+      "name": "mode",
+      "flag": "--mode",
+      "type": "string",
+      "required": false,
+      "describe": "extract-only or starter-files. Defaults to extract-only."
+    }
+  ],
+  "outputContract": {
+    "actionTypes": [
+      "DESIGN_SYSTEM_EXTRACTED",
+      "DESIGN_SYSTEM_EXTRACT_FAILED",
+      "AGENT_NOT_RUN"
+    ]
+  }
+}

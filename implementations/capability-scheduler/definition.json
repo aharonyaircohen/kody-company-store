@@ -1,0 +1,13 @@
+{
+  "id": "capability-scheduler",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "capability-scheduler"
+  },
+  "compatibleCapabilityRevision": "b68152c9e0d2be4ab7ac9b198c06cda4cf3320398e7a30e630631e7d7653c84e",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "id": "capability-creator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "capability-creator"
+  },
+  "compatibleCapabilityRevision": "d7b1abe6d6d9cc0669af8405fe7bd623715b727269560511fe1c0e57cf1a2d9e",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

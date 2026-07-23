@@ -1,0 +1,70 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "kind": "oneshot",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "default",
+    "maxTurns": null,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [
+    {
+      "name": "docker",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v docker"
+      },
+      "verify": "docker info",
+      "usage": "Builds the per-PR preview image and pushes it to Fly's registry. Available by default on ubuntu-latest GHA runners.",
+      "allowedUses": [
+        "build",
+        "push",
+        "login"
+      ]
+    },
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Posts the preview-ready comment on the PR.",
+      "allowedUses": [
+        "pr",
+        "api"
+      ]
+    }
+  ],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "runPreviewBuild"
+      }
+    ],
+    "postflight": []
+  },
+  "inputs": [
+    {
+      "name": "pr",
+      "flag": "--pr",
+      "type": "int",
+      "required": true,
+      "describe": "PR number to build a preview for."
+    }
+  ]
+}

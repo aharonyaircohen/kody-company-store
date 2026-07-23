@@ -1,0 +1,9 @@
+{
+  "id": "ai-agency-doctor",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "ai-agency-doctor"
+  },
+  "compatibleCapabilityRevision": "b8968986096cec4058ff7f2f53ae96d7e951c2ec7258fded8682b290f6b6fa54",
+  "type": "script"
+}

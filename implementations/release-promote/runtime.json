@@ -1,0 +1,87 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "utility",
+  "phase": "shipped",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": 0,
+    "maxThinkingTokens": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "inputArtifacts": [],
+  "outputArtifacts": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "setCommentTarget",
+        "with": {
+          "type": "issue"
+        }
+      },
+      {
+        "script": "loadTaskState"
+      },
+      {
+        "shell": "release-promote.sh"
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": [
+      {
+        "script": "recordOutcome"
+      },
+      {
+        "script": "applyCapabilityReports"
+      },
+      {
+        "script": "saveTaskState"
+      },
+      {
+        "script": "notifyTerminal",
+        "with": {
+          "label": "release promote"
+        }
+      },
+      {
+        "script": "advanceFlow"
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "name": "dry-run",
+      "flag": "--dry-run",
+      "type": "bool",
+      "required": false,
+      "describe": "Print plan without running deploy/notify commands."
+    },
+    {
+      "name": "issue",
+      "flag": "--issue",
+      "type": "int",
+      "required": false,
+      "describe": "Issue/PR number post terminal notice on. Auto-injected by dispatch."
+    },
+    {
+      "name": "goal",
+      "flag": "--goal",
+      "type": "string",
+      "required": false,
+      "describe": "Managed goal id to report promotion PR evidence to."
+    }
+  ]
+}

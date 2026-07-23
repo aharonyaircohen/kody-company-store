@@ -1,0 +1,52 @@
+{
+  "adapter": "kody-engine-profile",
+  "inputBindings": {},
+  "outputBindings": {},
+  "requirements": {},
+  "role": "primitive",
+  "claudeCode": {
+    "model": "inherit",
+    "permissionMode": "acceptEdits",
+    "maxTurns": null,
+    "systemPromptAppend": null,
+    "tools": [],
+    "hooks": [],
+    "skills": [],
+    "commands": [],
+    "subagents": [],
+    "plugins": [],
+    "mcpServers": []
+  },
+  "cliTools": [],
+  "scripts": {
+    "preflight": [
+      {
+        "script": "setLifecycleLabel",
+        "with": {
+          "label": "kody:syncing",
+          "color": "c5def5",
+          "description": "kody: syncing PR with base"
+        }
+      },
+      {
+        "script": "syncFlow",
+        "with": {
+          "announceOnSuccess": true
+        }
+      },
+      {
+        "script": "skipAgent"
+      }
+    ],
+    "postflight": []
+  },
+  "inputs": [
+    {
+      "name": "pr",
+      "flag": "--pr",
+      "type": "int",
+      "required": true,
+      "describe": "GitHub PR number to update from its base branch."
+    }
+  ]
+}

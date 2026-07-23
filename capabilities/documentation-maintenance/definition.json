@@ -1,0 +1,41 @@
+{
+  "id": "documentation-maintenance",
+  "action": "documentation-maintenance",
+  "purpose": "Discover product surfaces and maintain a living documentation plan grounded in repo evidence.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "DOCUMENTATION_MAINTENANCE_COMPLETED",
+          "DOCUMENTATION_MAINTENANCE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "documentation-maintenance completes and returns a valid canonical result",
+  "failure": "documentation-maintenance cannot return a valid canonical result"
+}

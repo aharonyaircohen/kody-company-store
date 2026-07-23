@@ -1,0 +1,9 @@
+{
+  "id": "ai-agency-health-matrix",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "ai-agency-health-matrix"
+  },
+  "compatibleCapabilityRevision": "50c5b4f64a9012ed726763e17c8c1729100cacb51055dc49f8032cd5b15556cf",
+  "type": "script"
+}

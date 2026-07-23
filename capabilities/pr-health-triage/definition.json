@@ -1,0 +1,39 @@
+{
+  "id": "pr-health-triage",
+  "action": "pr-health-triage",
+  "purpose": "Review open PRs for conflicts, failed CI, or stale branches, then recommend the next safe repair.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "PR_HEALTH_TRIAGE_COMPLETED",
+          "PR_HEALTH_TRIAGE_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "pr-health-triage completes and returns a valid canonical result",
+  "failure": "pr-health-triage cannot return a valid canonical result"
+}

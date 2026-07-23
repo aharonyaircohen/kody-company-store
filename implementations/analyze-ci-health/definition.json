@@ -1,0 +1,9 @@
+{
+  "id": "analyze-ci-health",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "analyze-ci-health"
+  },
+  "compatibleCapabilityRevision": "035647d24fb421a380189edf5b250167ccc31ac310721db9e5a666c77c0804f2",
+  "type": "script"
+}

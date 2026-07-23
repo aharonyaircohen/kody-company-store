@@ -1,0 +1,13 @@
+{
+  "id": "qa-sweep",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "qa-sweep"
+  },
+  "compatibleCapabilityRevision": "cfa123c7e63a8a14205ec42e49c1b0c693f9da17d39f24255f1f314a6a73fc34",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "qa"
+  }
+}

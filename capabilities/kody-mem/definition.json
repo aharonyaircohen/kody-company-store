@@ -1,0 +1,31 @@
+{
+  "id": "kody-mem",
+  "action": "kody-mem",
+  "purpose": "kody-mem",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "kody-mem completes and returns a valid canonical result",
+  "failure": "kody-mem cannot return a valid canonical result"
+}

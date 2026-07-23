@@ -1,0 +1,66 @@
+{
+  "id": "preview-build",
+  "action": "preview-build",
+  "purpose": "Build a per-PR preview image on the GHA runner, push to Fly's registry, spin up a per-PR Fly Machine, post the preview URL on the PR. Scripted (no agent) — fast and deterministic.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "pr": {
+        "type": "integer",
+        "description": "PR number to build a preview for."
+      }
+    },
+    "required": [
+      "pr"
+    ],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    {
+      "name": "docker",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v docker"
+      },
+      "verify": "docker info",
+      "usage": "Builds the per-PR preview image and pushes it to Fly's registry. Available by default on ubuntu-latest GHA runners.",
+      "allowedUses": [
+        "build",
+        "push",
+        "login"
+      ]
+    },
+    {
+      "name": "gh",
+      "install": {
+        "required": true,
+        "checkCommand": "command -v gh"
+      },
+      "verify": "gh auth status",
+      "usage": "Posts the preview-ready comment on the PR.",
+      "allowedUses": [
+        "pr",
+        "api"
+      ]
+    }
+  ],
+  "success": "preview-build completes and returns a valid canonical result",
+  "failure": "preview-build cannot return a valid canonical result"
+}

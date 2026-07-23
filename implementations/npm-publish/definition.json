@@ -1,0 +1,9 @@
+{
+  "id": "npm-publish",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "npm-publish"
+  },
+  "compatibleCapabilityRevision": "f762f7d5e2ff89eb0a003e1de1d393cc6f0e72f8eba3cddf1e8985fd9bd2425e",
+  "type": "script"
+}

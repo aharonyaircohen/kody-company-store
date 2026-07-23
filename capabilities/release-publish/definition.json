@@ -1,0 +1,44 @@
+{
+  "id": "release-publish",
+  "action": "release-publish",
+  "purpose": "Tag merged release commit, run configured publishCommand, create GitHub release. No agent.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "dry-run": {
+        "type": "boolean",
+        "description": "Print plan without tagging or publishing."
+      },
+      "issue": {
+        "type": "integer",
+        "description": "Issue/PR number post terminal notice on. Auto-injected by dispatch."
+      },
+      "goal": {
+        "type": "string",
+        "description": "Managed goal id to report publish evidence to."
+      }
+    },
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "release-publish completes and returns a valid canonical result",
+  "failure": "release-publish cannot return a valid canonical result"
+}

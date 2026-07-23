@@ -1,0 +1,39 @@
+{
+  "id": "vercel-production-deploy",
+  "action": "vercel-production-deploy",
+  "purpose": "Deploy the configured release branch to Vercel Production, verify the public production URL, and optionally run the configured smoke command.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "VERCEL_PRODUCTION_DEPLOY_COMPLETED",
+          "VERCEL_PRODUCTION_DEPLOY_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [],
+  "success": "vercel-production-deploy completes and returns a valid canonical result",
+  "failure": "vercel-production-deploy cannot return a valid canonical result"
+}

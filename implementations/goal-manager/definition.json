@@ -1,0 +1,9 @@
+{
+  "id": "goal-manager",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "goal-manager"
+  },
+  "compatibleCapabilityRevision": "7f9f7c50b14225c6d197938bd8761f9fd8ed5f2c0daf12086d050fb6198cd7ee",
+  "type": "script"
+}

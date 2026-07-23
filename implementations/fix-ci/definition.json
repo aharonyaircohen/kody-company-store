@@ -1,0 +1,13 @@
+{
+  "id": "fix-ci",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "fix-ci"
+  },
+  "compatibleCapabilityRevision": "03cb0143fd43b41b05c9e953996012faa9c28d66decbd4f3b7740f9ae492dede",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

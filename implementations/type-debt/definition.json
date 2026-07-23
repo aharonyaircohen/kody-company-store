@@ -1,0 +1,13 @@
+{
+  "id": "type-debt",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "type-debt"
+  },
+  "compatibleCapabilityRevision": "eadc21132ad1d606e9bdda4ee7bef92a22b2398dcf9b3778a0896d066372e7f1",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

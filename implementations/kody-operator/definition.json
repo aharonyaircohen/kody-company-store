@@ -1,0 +1,13 @@
+{
+  "id": "kody-operator",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "kody-operator"
+  },
+  "compatibleCapabilityRevision": "5b131153604a1b8a796b5590d846a23851967628edaa4f6d432a8137af2d651b",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

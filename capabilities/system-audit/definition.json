@@ -1,0 +1,41 @@
+{
+  "id": "system-audit",
+  "action": "system-audit",
+  "purpose": "Audit `.kody/` coordination for broken references, missed ticks, missing state, stuck dispatches, and duplicate dispatches.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "SYSTEM_AUDIT_COMPLETED",
+          "SYSTEM_AUDIT_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "system-audit completes and returns a valid canonical result",
+  "failure": "system-audit cannot return a valid canonical result"
+}

@@ -1,0 +1,41 @@
+{
+  "id": "capability-call",
+  "action": "capability-call",
+  "purpose": "Propose one high-ROI missing capability that the system does not already have.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CAPABILITY_CALL_COMPLETED",
+          "CAPABILITY_CALL_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": {
+        "type": "string"
+      },
+      "summary": {
+        "type": "string"
+      },
+      "data": {
+        "type": "object",
+        "additionalProperties": true
+      }
+    },
+    "additionalProperties": true
+  },
+  "effects": [],
+  "permissions": [
+    "gh"
+  ],
+  "success": "capability-call completes and returns a valid canonical result",
+  "failure": "capability-call cannot return a valid canonical result"
+}

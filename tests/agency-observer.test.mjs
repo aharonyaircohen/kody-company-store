@@ -8,17 +8,17 @@ import { describe, it } from "node:test";
 
 const observerGoalPath = new URL("../goals/templates/agency-observer/state.json", import.meta.url);
 const operatingGoalPath = new URL("../goals/templates/agency-operating-loop/state.json", import.meta.url);
-const observerProfilePath = new URL("../capabilities/observe-repo-ci/profile.json", import.meta.url);
-const sourceHealthProfilePath = new URL("../capabilities/repo-source-health/profile.json", import.meta.url);
-const sourceHealthScriptPath = new URL("../capabilities/repo-source-health/run-repo-source-health.sh", import.meta.url);
+const observerProfilePath = new URL("../implementations/observe-repo-ci/runtime.json", import.meta.url);
+const sourceHealthProfilePath = new URL("../implementations/repo-source-health/runtime.json", import.meta.url);
+const sourceHealthScriptPath = new URL("../implementations/repo-source-health/run-repo-source-health.sh", import.meta.url);
 const observerWorkflowPath = new URL("../workflows/agency-observer/workflow.json", import.meta.url);
 const operatingWorkflowPath = new URL("../workflows/agency-operating-loop/workflow.json", import.meta.url);
-const operatingProfilePath = new URL("../capabilities/operate-findings/profile.json", import.meta.url);
-const operatingPromptPath = new URL("../capabilities/operate-findings/prompt.md", import.meta.url);
-const operatingLoaderPath = new URL("../capabilities/operate-findings/load-agency-findings.sh", import.meta.url);
-const observerScriptPath = new URL("../capabilities/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
-const agencyFlowProfilePath = new URL("../capabilities/observe-agency-flow/profile.json", import.meta.url);
-const agencyFlowScriptPath = new URL("../capabilities/observe-agency-flow/run-observe-agency-flow.sh", import.meta.url);
+const operatingProfilePath = new URL("../implementations/operate-findings/runtime.json", import.meta.url);
+const operatingPromptPath = new URL("../implementations/operate-findings/prompt.md", import.meta.url);
+const operatingLoaderPath = new URL("../implementations/operate-findings/load-agency-findings.sh", import.meta.url);
+const observerScriptPath = new URL("../implementations/observe-repo-ci/run-observe-repo-ci.sh", import.meta.url);
+const agencyFlowProfilePath = new URL("../implementations/observe-agency-flow/runtime.json", import.meta.url);
+const agencyFlowScriptPath = new URL("../implementations/observe-agency-flow/run-observe-agency-flow.sh", import.meta.url);
 
 function capabilityResult(stdout) {
   const line = stdout.split("\n").find((item) => item.startsWith("KODY_CAPABILITY_RESULT="));

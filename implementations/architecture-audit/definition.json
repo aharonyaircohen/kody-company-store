@@ -1,0 +1,13 @@
+{
+  "id": "architecture-audit",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "architecture-audit"
+  },
+  "compatibleCapabilityRevision": "60eb1fac0fd7fa784a39a9f1cee013a9329d39b2b39d4743769a32c70b9121f4",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "kody"
+  }
+}

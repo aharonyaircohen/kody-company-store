@@ -6,7 +6,7 @@ describe("agency operations runtime state resolution", () => {
   it("keeps Operation runtime reads in the configured external state repo", async () => {
     const skill = await readFile(
       new URL(
-        "../capabilities/agency-operations-management/skills/agency-operations-management/SKILL.md",
+        "../implementations/agency-operations-management/skills/agency-operations-management/SKILL.md",
         import.meta.url,
       ),
       "utf8",

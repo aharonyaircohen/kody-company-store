@@ -5,7 +5,7 @@ import test from "node:test"
 import { fileURLToPath } from "node:url"
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..")
-const profile = JSON.parse(fs.readFileSync(path.join(root, "capabilities/qa-engineer/profile.json"), "utf-8"))
+const profile = JSON.parse(fs.readFileSync(path.join(root, "implementations/qa-engineer/runtime.json"), "utf-8"))
 
 test("QA repository authentication is declarative and prepared before the browser starts", () => {
   const method = profile.auth.methods[0]
