@@ -74,12 +74,24 @@ jq -s '
   .[0] as $code |
   .[1] as $business |
   ($code.edges // $code.links // []) as $codeEdges |
+  (($code.nodes // []) + $business.nodes) as $knownNodes |
+  ($codeEdges + $business.edges) as $allEdges |
+  ([$allEdges[] | .source, .target] | unique) as $endpointIds |
+  ([$endpointIds[] as $id | select(([$knownNodes[].id] | index($id)) | not) |
+    {
+      id: $id,
+      label: $id,
+      type: "external-reference",
+      domain: "other",
+      source: "graph-reference"
+    }
+  ]) as $externalNodes |
   {
     directed: ($code.directed // true),
     multigraph: ($code.multigraph // false),
     graph: ($code.graph // {}),
-    nodes: (($code.nodes // []) + $business.nodes | unique_by(.id)),
-    edges: ($codeEdges + $business.edges)
+    nodes: ($knownNodes + $externalNodes | unique_by(.id)),
+    edges: $allEdges
   }
 ' "$BASE_GRAPH" "$BUSINESS_FILE" >"$GRAPH_FILE"
 

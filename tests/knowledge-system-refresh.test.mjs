@@ -59,6 +59,7 @@ describe("knowledge-system-refresh", () => {
     assert.match(businessFilter, /agencyDefinitions/);
     assert.match(businessFilter, /agencyStates/);
     assert.match(businessFilter, /agencyOutputs/);
+    assert.match(script, /external-reference/);
     assert.match(script, /GITHUB_REPOSITORY/);
     assert.match(script, /conversationEntries/);
     assert.match(script, /raw chat data is[\s\S]*intentionally excluded/i);
