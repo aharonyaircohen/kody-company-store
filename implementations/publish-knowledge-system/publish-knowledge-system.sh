@@ -2,9 +2,10 @@ set -euo pipefail
 
 ARTIFACT_DIR="${KODY_ARTIFACT_DIR:-$PWD/.kody-engine/artifacts/knowledge-system}"
 GRAPH_FILE="$ARTIFACT_DIR/graph.json"
+HTML_FILE="$ARTIFACT_DIR/graph.html"
 REPORT_FILE="$ARTIFACT_DIR/report.md"
 META_FILE="$ARTIFACT_DIR/meta.json"
-for file in "$GRAPH_FILE" "$REPORT_FILE" "$META_FILE"; do [[ -s "$file" ]] || { printf 'FAILED: artifact missing: %s\n' "$file"; exit 1; }; done
+for file in "$GRAPH_FILE" "$HTML_FILE" "$REPORT_FILE" "$META_FILE"; do [[ -s "$file" ]] || { printf 'FAILED: artifact missing: %s\n' "$file"; exit 1; }; done
 
 REPOSITORY="$(jq -r .repository "$META_FILE")"
 OWNER="${REPOSITORY%%/*}"
@@ -22,11 +23,12 @@ upload_file() {
 }
 
 GRAPH_STORAGE_ID="$(upload_file "$GRAPH_FILE" application/json)"
+HTML_STORAGE_ID="$(upload_file "$HTML_FILE" 'text/html; charset=utf-8')"
 REPORT_STORAGE_ID="$(upload_file "$REPORT_FILE" 'text/markdown; charset=utf-8')"
-publish_body="$(jq -nc --arg graphStorageId "$GRAPH_STORAGE_ID" --arg reportStorageId "$REPORT_STORAGE_ID" --slurpfile meta "$META_FILE" '{graphStorageId: $graphStorageId, reportStorageId: $reportStorageId, generatedAt: $meta[0].generatedAt, sourceRevision: $meta[0].sourceRevision, nodeCount: $meta[0].nodeCount, edgeCount: $meta[0].edgeCount, schemaVersion: 1}')"
+publish_body="$(jq -nc --arg graphStorageId "$GRAPH_STORAGE_ID" --arg htmlStorageId "$HTML_STORAGE_ID" --arg reportStorageId "$REPORT_STORAGE_ID" --slurpfile meta "$META_FILE" '{graphStorageId: $graphStorageId, htmlStorageId: $htmlStorageId, reportStorageId: $reportStorageId, generatedAt: $meta[0].generatedAt, sourceRevision: $meta[0].sourceRevision, nodeCount: $meta[0].nodeCount, edgeCount: $meta[0].edgeCount, schemaVersion: 1}')"
 curl --fail --silent --show-error -X PUT "${auth_args[@]}" -H "Content-Type: application/json" --data "$publish_body" "$KODY_DASHBOARD_URL/api/kody/knowledge-system" | jq -e '.ok == true' >/dev/null
 
-capability_result="$(jq -nc --slurpfile meta "$META_FILE" --arg graphPath "$GRAPH_FILE" --arg reportPath "$REPORT_FILE" '{version: 1, status: "pass", summary: "Knowledge System published", evidence: {"graph-published": true}, facts: {nodeCount: $meta[0].nodeCount, edgeCount: $meta[0].edgeCount, sourceRevision: $meta[0].sourceRevision}, artifacts: [{label: "knowledge-graph", path: $graphPath}, {label: "knowledge-report", path: $reportPath}], missingEvidence: [], blockers: []}')"
+capability_result="$(jq -nc --slurpfile meta "$META_FILE" --arg graphPath "$GRAPH_FILE" --arg htmlPath "$HTML_FILE" --arg reportPath "$REPORT_FILE" '{version: 1, status: "pass", summary: "Knowledge System published", evidence: {"graph-published": true}, facts: {nodeCount: $meta[0].nodeCount, edgeCount: $meta[0].edgeCount, sourceRevision: $meta[0].sourceRevision}, artifacts: [{label: "knowledge-graph", path: $graphPath}, {label: "knowledge-visualization", path: $htmlPath}, {label: "knowledge-report", path: $reportPath}], missingEvidence: [], blockers: []}')"
 if [[ -n "${KODY_OUTPUT:-}" ]]; then
   printf 'KODY_CAPABILITY_RESULT=%s\n' "$capability_result" >>"$KODY_OUTPUT"
 else

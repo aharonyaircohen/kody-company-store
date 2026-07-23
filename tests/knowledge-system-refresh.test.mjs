@@ -54,6 +54,11 @@ describe("knowledge-system-refresh", () => {
       { script: "skipAgent" },
     ]);
     assert.match(script, /graphifyy==0\.9\.18/);
+    assert.match(script, /GRAPHIFY_VIZ_NODE_LIMIT/);
+    assert.match(script, /graphify cluster-only/);
+    assert.match(script, /graph\.html/);
+    assert.match(script, /source_file/);
+    assert.match(script, /\.edges \/\/ \.links/);
     assert.match(script, /\/api\/kody\/company\/backend\/export/);
     assert.doesNotMatch(script, /-X PUT[\s\S]*\/api\/kody\/knowledge-system/);
     assert.match(businessFilter, /agencyDefinitions/);
@@ -63,6 +68,15 @@ describe("knowledge-system-refresh", () => {
     assert.match(script, /GITHUB_REPOSITORY/);
     assert.match(script, /conversationEntries/);
     assert.match(script, /raw chat data is[\s\S]*intentionally excluded/i);
+  });
+
+  it("publishes Graphify's visualization with the graph bundle", async () => {
+    const script = await readFile(publishScriptUrl, "utf8");
+
+    assert.match(script, /graph\.html/);
+    assert.match(script, /text\/html/);
+    assert.match(script, /htmlStorageId/);
+    assert.match(script, /knowledge-visualization/);
   });
 
   it("connects purpose, execution, Runs, outputs, issues, and pull requests", async () => {
