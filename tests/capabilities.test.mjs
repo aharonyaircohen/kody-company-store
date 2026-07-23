@@ -15,7 +15,7 @@ describe("Store capabilities", () => {
   const sharedEngineParts = {
     commands: new Set(["kody-live-probe"]),
     hooks: new Set(["block-git", "block-write", "kody-live-trace"]),
-    skills: new Set(["kody-live-marker", "systematic-debugging"]),
+    skills: new Set(["kody-live-marker"]),
   };
 
   it("declares capabilities as a first-class asset root", async () => {
