@@ -24,6 +24,10 @@ const businessFilterUrl = new URL(
   "../implementations/build-knowledge-graph/build-business-graph.jq",
   import.meta.url,
 );
+const fitViewerUrl = new URL(
+  "../implementations/build-knowledge-graph/scripts/fit-graphify-viewer.mjs",
+  import.meta.url,
+);
 
 describe("knowledge-system-refresh", () => {
   it("keeps graph identity only on the Knowledge System builder", async () => {
@@ -43,6 +47,7 @@ describe("knowledge-system-refresh", () => {
     const definition = JSON.parse(await readFile(new URL("../implementations/build-knowledge-graph/definition.json", import.meta.url), "utf8"));
     const script = await readFile(scriptUrl, "utf8");
     const businessFilter = await readFile(businessFilterUrl, "utf8");
+    const fitViewer = await readFile(fitViewerUrl, "utf8");
 
     assert.equal(definition.id, "build-knowledge-graph");
     assert.deepEqual(profile.scripts.preflight, [
@@ -53,8 +58,12 @@ describe("knowledge-system-refresh", () => {
     assert.match(script, /pwd\)\/\.\.\/build-business-graph\.jq/);
     assert.match(script, /technical-graph\.json/);
     assert.match(script, /cp "\$BUSINESS_FILE" "\$ARTIFACT_DIR\/graph\.json"/);
-    assert.doesNotMatch(script, /graphify cluster-only/);
-    assert.doesNotMatch(script, /graph\.html/);
+    assert.match(script, /graphify cluster-only/);
+    assert.match(script, /--graph "\$VISUALIZATION_GRAPH"/);
+    assert.match(script, /--no-label/);
+    assert.match(script, /node "\$FIT_VIEWER" "\$VISUALIZATION_HTML"/);
+    assert.match(script, /cp "\$VISUALIZATION_HTML" "\$ARTIFACT_DIR\/graph\.html"/);
+    assert.match(fitViewer, /network\.fit\(\{ animation: false \}\)/);
     assert.match(script, /--slurpfile code "\$BASE_GRAPH"/);
     assert.match(script, /\/api\/kody\/company\/backend\/export/);
     assert.doesNotMatch(script, /-X PUT[\s\S]*\/api\/kody\/knowledge-system/);
@@ -66,13 +75,13 @@ describe("knowledge-system-refresh", () => {
     assert.match(script, /raw chat data is[\s\S]*intentionally excluded/i);
   });
 
-  it("publishes the canonical visible graph without generated viewer HTML", async () => {
+  it("publishes the canonical graph and its Graphify viewer", async () => {
     const script = await readFile(publishScriptUrl, "utf8");
 
     assert.match(script, /graph\.json/);
-    assert.doesNotMatch(script, /graph\.html/);
-    assert.doesNotMatch(script, /htmlStorageId/);
-    assert.doesNotMatch(script, /knowledge-visualization/);
+    assert.match(script, /graph\.html/);
+    assert.match(script, /htmlStorageId/);
+    assert.match(script, /knowledge-visualization/);
   });
 
   it("connects purpose, execution, Runs, outputs, issues, and pull requests", async () => {

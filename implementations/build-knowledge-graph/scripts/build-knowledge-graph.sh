@@ -28,7 +28,11 @@ EXPORT_FILE="$TMP_DIR/kody-backend.json"
 ISSUES_FILE="$TMP_DIR/issues.json"
 PRS_FILE="$TMP_DIR/pull-requests.json"
 BUSINESS_FILE="$TMP_DIR/business-graph.json"
+VISUALIZATION_DIR="$TMP_DIR/visualization"
+VISUALIZATION_GRAPH="$VISUALIZATION_DIR/graphify-out/graph.json"
+VISUALIZATION_HTML="$VISUALIZATION_DIR/graphify-out/graph.html"
 BUSINESS_FILTER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/../build-business-graph.jq"
+FIT_VIEWER="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/fit-graphify-viewer.mjs"
 ARTIFACT_DIR="${KODY_ARTIFACT_DIR:-$PWD/.kody-engine/artifacts/knowledge-system}"
 
 auth_args=(
@@ -70,6 +74,14 @@ jq -n \
   '{repository: $repository, backend: $backend[0], issues: $issues[0], prs: $prs[0], code: $code[0]}' |
   jq -f "$BUSINESS_FILTER" >"$BUSINESS_FILE"
 
+mkdir -p "$(dirname "$VISUALIZATION_GRAPH")"
+cp "$BUSINESS_FILE" "$VISUALIZATION_GRAPH"
+uvx --from graphifyy==0.9.18 graphify cluster-only "$VISUALIZATION_DIR" \
+  --graph "$VISUALIZATION_GRAPH" \
+  --no-label >/dev/null
+[[ -s "$VISUALIZATION_HTML" ]] || fail "Graphify did not produce graph.html"
+node "$FIT_VIEWER" "$VISUALIZATION_HTML"
+
 NODE_COUNT="$(jq '.nodes | length' "$BUSINESS_FILE")"
 EDGE_COUNT="$(jq '.edges | length' "$BUSINESS_FILE")"
 GENERATED_AT="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
@@ -80,6 +92,7 @@ PR_COUNT="$(jq '[.nodes[] | select(.type == "pull_request")] | length' "$BUSINES
 
 mkdir -p "$ARTIFACT_DIR"
 cp "$BUSINESS_FILE" "$ARTIFACT_DIR/graph.json"
+cp "$VISUALIZATION_HTML" "$ARTIFACT_DIR/graph.html"
 cp "$BASE_GRAPH" "$ARTIFACT_DIR/technical-graph.json"
 jq -nc \
   --arg repository "$REPOSITORY" \

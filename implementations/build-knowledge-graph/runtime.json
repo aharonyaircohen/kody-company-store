@@ -25,7 +25,8 @@
     "git",
     "jq",
     "curl",
-    "uv"
+    "uv",
+    "node"
   ],
   "scripts": {
     "preflight": [
