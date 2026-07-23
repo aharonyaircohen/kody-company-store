@@ -34,7 +34,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "prepare.sh"
+        "shell": "scripts/prepare.sh"
       },
       {
         "script": "skipAgent"

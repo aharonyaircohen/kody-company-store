@@ -33,7 +33,7 @@
         "script": "buildSyntheticPlugin"
       },
       {
-        "shell": "refresh-memory-compaction.sh"
+        "shell": "scripts/refresh-memory-compaction.sh"
       },
       {
         "script": "skipAgent"

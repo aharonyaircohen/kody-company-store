@@ -1,9 +1,0 @@
-{
-  "id": "analyze-dependencies",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "analyze-dependencies"
-  },
-  "compatibleCapabilityRevision": "13a94416f7dec6f48c4b6e0c98b106b1fd070a92820ec96947ed55a7df4a7028",
-  "type": "script"
-}

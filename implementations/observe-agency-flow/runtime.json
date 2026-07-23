@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "run-observe-agency-flow.sh"
+        "shell": "scripts/run-observe-agency-flow.sh"
       },
       {
         "script": "skipAgent"

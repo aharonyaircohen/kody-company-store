@@ -1,0 +1,8 @@
+{
+  "name": "Quality Watch",
+  "steps": [
+    { "capability": "security-audit" },
+    { "capability": "coverage-floor" },
+    { "capability": "flaky-test-quarantine" }
+  ]
+}

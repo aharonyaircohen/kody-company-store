@@ -20,7 +20,9 @@
     "qa-engineer",
     "qa-sweep",
     "qa-verify",
-    "quality-watch"
+    "security-audit",
+    "coverage-floor",
+    "flaky-test-quarantine"
   ],
   "route": [],
   "stage": "watching",

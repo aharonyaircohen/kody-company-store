@@ -23,7 +23,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "vercel-production-deploy.sh"
+        "shell": "scripts/vercel-production-deploy.sh"
       },
       {
         "script": "skipAgent"

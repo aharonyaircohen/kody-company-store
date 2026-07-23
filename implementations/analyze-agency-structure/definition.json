@@ -1,9 +1,0 @@
-{
-  "id": "analyze-agency-structure",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "analyze-agency-structure"
-  },
-  "compatibleCapabilityRevision": "f82d4543e458bb2660217d58b8c23cb55c28a570cc931e026a97549ac84c0831",
-  "type": "script"
-}

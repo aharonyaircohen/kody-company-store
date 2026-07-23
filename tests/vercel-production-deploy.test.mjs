@@ -6,7 +6,7 @@ import { spawnSync } from "node:child_process";
 import { describe, it } from "node:test";
 
 const scriptPath = new URL(
-  "../implementations/vercel-production-deploy/vercel-production-deploy.sh",
+  "../implementations/vercel-production-deploy/scripts/vercel-production-deploy.sh",
   import.meta.url,
 );
 

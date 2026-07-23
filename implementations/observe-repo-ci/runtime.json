@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "run-observe-repo-ci.sh"
+        "shell": "scripts/run-observe-repo-ci.sh"
       },
       {
         "script": "skipAgent"

@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "run-ai-agency-health-matrix.sh"
+        "shell": "scripts/run-ai-agency-health-matrix.sh"
       },
       {
         "script": "skipAgent"

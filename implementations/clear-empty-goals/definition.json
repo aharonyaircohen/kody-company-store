@@ -1,0 +1,13 @@
+{
+  "id": "clear-empty-goals",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "clear-empty-goals"
+  },
+  "compatibleCapabilityRevision": "81e852515e344fa37b2429f6281963c6a2413ddab4792a4693a2817237976d84",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

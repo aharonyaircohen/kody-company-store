@@ -1,0 +1,13 @@
+{
+  "id": "cleanup-branches",
+  "capabilityRef": {
+    "kind": "capability",
+    "id": "cleanup-branches"
+  },
+  "compatibleCapabilityRevision": "dcd2089eb1de997ad784f93ed610d7314707b5756b0cea903ecc758993220e55",
+  "type": "agent",
+  "agentRef": {
+    "kind": "agent",
+    "id": "coo"
+  }
+}

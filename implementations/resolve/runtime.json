@@ -41,7 +41,7 @@
         "script": "resolveFlow"
       },
       {
-        "shell": "apply-prefer.sh",
+        "shell": "scripts/apply-prefer.sh",
         "runWhen": {
           "args.prefer": [
             "ours",

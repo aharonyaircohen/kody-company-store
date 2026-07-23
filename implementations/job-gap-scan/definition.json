@@ -5,9 +5,5 @@
     "id": "job-gap-scan"
   },
   "compatibleCapabilityRevision": "e0107d3c2e89aa0caa989fbc27dd5e7c85a9123e35f90dbdd7adcdd5203b4a94",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "ceo"
-  }
+  "type": "script"
 }

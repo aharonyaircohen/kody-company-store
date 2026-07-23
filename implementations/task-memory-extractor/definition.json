@@ -5,9 +5,5 @@
     "id": "task-memory-extractor"
   },
   "compatibleCapabilityRevision": "c5a6d92003ce0c2e687a281328a86b491f272dbd74de3b56ef87ac0f2ea4e373",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "coo"
-  }
+  "type": "script"
 }

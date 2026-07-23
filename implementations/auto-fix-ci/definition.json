@@ -5,9 +5,5 @@
     "id": "auto-fix-ci"
   },
   "compatibleCapabilityRevision": "01530888ed099afc9458eb24c376dd256b33e9aa37e0f5ee903b81d81090fa85",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

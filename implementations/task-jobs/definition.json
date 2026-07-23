@@ -1,9 +1,0 @@
-{
-  "id": "task-jobs",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "task-jobs"
-  },
-  "compatibleCapabilityRevision": "89264fe5efb1ed13a2437186e0ae6d7cc1c9353b4e44b98f9c9e742de51c58ca",
-  "type": "script"
-}

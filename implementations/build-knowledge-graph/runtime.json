@@ -30,7 +30,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "build-knowledge-graph.sh",
+        "shell": "scripts/build-knowledge-graph.sh",
         "timeoutSec": 5400
       },
       {

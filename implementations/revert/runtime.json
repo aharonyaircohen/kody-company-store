@@ -69,7 +69,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "revert.sh"
+        "shell": "scripts/revert.sh"
       }
     ],
     "postflight": [

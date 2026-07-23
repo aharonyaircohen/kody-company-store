@@ -1,0 +1,32 @@
+{
+  "id": "cleanup-branches",
+  "action": "cleanup-branches",
+  "purpose": "Delete stale task branches whose linked task is closed, done, or failed.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CLEANUP_BRANCHES_COMPLETED",
+          "CLEANUP_BRANCHES_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": { "type": "object", "additionalProperties": true }
+    },
+    "additionalProperties": true
+  },
+  "effects": ["branches"],
+  "permissions": ["gh", "git"],
+  "success": "Eligible stale branches are safely deleted or reported",
+  "failure": "Branch ownership or task state cannot be verified"
+}

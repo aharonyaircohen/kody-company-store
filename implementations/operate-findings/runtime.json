@@ -42,7 +42,7 @@
         "script": "loadCapabilityState"
       },
       {
-        "shell": "load-agency-findings.sh"
+        "shell": "scripts/load-agency-findings.sh"
       },
       {
         "script": "buildSyntheticPlugin"

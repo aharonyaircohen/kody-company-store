@@ -10,6 +10,7 @@
   "assetRoots": {
     "capabilities": "capabilities",
     "implementations": "implementations",
+    "shared": "shared",
     "commands": "commands",
     "goals": "goals",
     "workflows": "workflows",

@@ -1,9 +1,0 @@
-{
-  "id": "dispatch-due-loops",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "dispatch-due-loops"
-  },
-  "compatibleCapabilityRevision": "0810b5885b7acb0fff24872b9d1edc5239dc0a1dc7b321aec0cd742b24d06046",
-  "type": "script"
-}

@@ -1,0 +1,9 @@
+{
+  "name": "Cleanup",
+  "steps": [
+    { "capability": "clear-empty-goals" },
+    { "capability": "cleanup-branches" },
+    { "capability": "dependency-bump" },
+    { "capability": "dead-code-sweep" }
+  ]
+}

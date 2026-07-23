@@ -1,0 +1,58 @@
+{
+  "sourceTotal": 116,
+  "targetTotal": 92,
+  "defaultAction": "keep",
+  "classifications": {
+    "addAtomicMethod": [
+      "clear-empty-goals",
+      "cleanup-branches"
+    ],
+    "retireAlias": {
+      "ci-health": "ci-check",
+      "kody-analyzer": "kody-chat",
+      "kody-mem": "kody-chat",
+      "kody-operator": "kody-chat",
+      "kody-vibe": "kody-chat",
+      "memory-compaction": "compact-memory"
+    },
+    "replaceWithUnifiedGraph": [
+      "analyze-agency-structure",
+      "analyze-ci-health",
+      "analyze-dependencies",
+      "analyze-documentation",
+      "analyze-pull-requests"
+    ],
+    "moveToWorkflow": [
+      "cleanup",
+      "code-health",
+      "docs-health",
+      "quality-watch"
+    ],
+    "moveToTestFixture": [
+      "job-live-verify",
+      "plan-verify",
+      "probe-skill",
+      "task-job-fail-once"
+    ],
+    "moveToRuntimeService": [
+      "capability-scheduler",
+      "capability-tick",
+      "capability-tick-scripted",
+      "dispatch-due-loops",
+      "goal-manager",
+      "goal-scheduler",
+      "task-jobs"
+    ],
+    "retypeAsScript": [
+      "auto-fix-ci",
+      "auto-resolve",
+      "auto-sync",
+      "ci-check",
+      "job-gap-scan",
+      "preview-health",
+      "redispatch",
+      "revert",
+      "task-memory-extractor"
+    ]
+  }
+}

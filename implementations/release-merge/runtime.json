@@ -30,7 +30,7 @@
         }
       },
       {
-        "shell": "release-merge.sh",
+        "shell": "scripts/release-merge.sh",
         "timeoutSec": 2100
       },
       {

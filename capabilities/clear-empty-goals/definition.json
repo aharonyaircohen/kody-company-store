@@ -1,0 +1,32 @@
+{
+  "id": "clear-empty-goals",
+  "action": "clear-empty-goals",
+  "purpose": "Find goals with no tasks and safely remove or report them.",
+  "inputSchema": {
+    "type": "object",
+    "properties": {},
+    "required": [],
+    "additionalProperties": false
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "action": {
+        "type": "string",
+        "enum": [
+          "CLEAR_EMPTY_GOALS_COMPLETED",
+          "CLEAR_EMPTY_GOALS_FAILED",
+          "AGENT_NOT_RUN"
+        ]
+      },
+      "reason": { "type": "string" },
+      "summary": { "type": "string" },
+      "data": { "type": "object", "additionalProperties": true }
+    },
+    "additionalProperties": true
+  },
+  "effects": ["goals"],
+  "permissions": ["gh"],
+  "success": "Empty goals are safely removed or reported",
+  "failure": "Empty goals cannot be evaluated safely"
+}

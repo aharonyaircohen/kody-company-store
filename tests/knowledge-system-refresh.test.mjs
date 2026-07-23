@@ -8,7 +8,7 @@ const profileUrl = new URL(
   import.meta.url,
 );
 const scriptUrl = new URL(
-  "../implementations/build-knowledge-graph/build-knowledge-graph.sh",
+  "../implementations/build-knowledge-graph/scripts/build-knowledge-graph.sh",
   import.meta.url,
 );
 const loopUrl = new URL(
@@ -17,11 +17,7 @@ const loopUrl = new URL(
 );
 const workflowUrl = new URL("../workflows/refresh-knowledge-system/workflow.json", import.meta.url);
 const publishScriptUrl = new URL(
-  "../implementations/publish-knowledge-system/publish-knowledge-system.sh",
-  import.meta.url,
-);
-const dispatchProfileUrl = new URL(
-  "../implementations/dispatch-due-loops/runtime.json",
+  "../implementations/publish-knowledge-system/scripts/publish-knowledge-system.sh",
   import.meta.url,
 );
 const businessFilterUrl = new URL(
@@ -50,7 +46,7 @@ describe("knowledge-system-refresh", () => {
 
     assert.equal(definition.id, "build-knowledge-graph");
     assert.deepEqual(profile.scripts.preflight, [
-      { shell: "build-knowledge-graph.sh", timeoutSec: 5400 },
+      { shell: "scripts/build-knowledge-graph.sh", timeoutSec: 5400 },
       { script: "skipAgent" },
     ]);
     assert.match(script, /graphifyy==0\.9\.18/);
@@ -225,25 +221,5 @@ describe("knowledge-system-refresh", () => {
     assert.match(script, /knowledge-graph/);
     assert.match(script, /knowledge-report/);
     assert.match(script, /KODY_OUTPUT/);
-  });
-
-  it("uses the same generic Loop dispatcher for manual proof", async () => {
-    const profile = JSON.parse(await readFile(dispatchProfileUrl, "utf8"));
-    const capability = JSON.parse(await readFile(new URL("../capabilities/dispatch-due-loops/definition.json", import.meta.url), "utf8"));
-
-    assert.equal(capability.action, "dispatch-due-loops");
-    assert.deepEqual(profile.inputs, [
-      {
-        name: "loop",
-        flag: "--loop",
-        type: "string",
-        required: false,
-        description: "Optional Loop id to force through the manual Trigger path.",
-      },
-    ]);
-    assert.deepEqual(profile.scripts.preflight, [
-      { script: "dispatchAgencyLoops" },
-      { script: "skipAgent" },
-    ]);
   });
 });

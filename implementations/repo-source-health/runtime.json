@@ -29,7 +29,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "run-repo-source-health.sh",
+        "shell": "scripts/run-repo-source-health.sh",
         "timeoutSec": 5400
       },
       {

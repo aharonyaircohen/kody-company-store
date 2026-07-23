@@ -40,7 +40,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "release.sh",
+        "shell": "scripts/release.sh",
         "timeoutSec": 5400
       },
       {

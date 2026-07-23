@@ -7,6 +7,7 @@ import { describe, it } from "node:test";
 const manifestPath = new URL("../kody-store.json", import.meta.url);
 const capabilitiesDir = new URL("../capabilities/", import.meta.url);
 const implementationsDir = new URL("../implementations/", import.meta.url);
+const sharedDir = new URL("../shared/", import.meta.url);
 const workflowsDir = new URL("../workflows/", import.meta.url);
 const goalTemplatesDir = new URL("../goals/templates/", import.meta.url);
 
@@ -205,9 +206,16 @@ describe("Store capabilities", () => {
       for (const part of parts) {
         for (const name of part.names) {
           const localPart = join(dir, part.bucket, `${name}${part.suffix}`);
+          const storeSharedPart = join(
+            sharedDir.pathname,
+            part.bucket,
+            `${name}${part.suffix}`,
+          );
 
           assert.equal(
-            existsSync(localPart) || part.shared.has(name),
+            existsSync(localPart) ||
+              existsSync(storeSharedPart) ||
+              part.shared.has(name),
             true,
             `${slug} declares missing ${part.bucket} entry ${name}`,
           );
@@ -373,7 +381,7 @@ describe("Store capabilities", () => {
   });
 
   it("treats missing release PR checks as pending", async () => {
-    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/scripts/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /no checks reported/);
@@ -383,13 +391,15 @@ describe("Store capabilities", () => {
   it("lets release-merge wait longer than the default shell timeout", async () => {
     const profilePath = new URL("../implementations/release-merge/runtime.json", import.meta.url);
     const profile = JSON.parse(await readFile(profilePath, "utf8"));
-    const shell = profile.scripts.preflight.find((step) => step.shell === "release-merge.sh");
+    const shell = profile.scripts.preflight.find(
+      (step) => step.shell === "scripts/release-merge.sh",
+    );
 
     assert.equal(shell.timeoutSec, 2100);
   });
 
   it("uses merge commits for release promotion PRs", async () => {
-    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/scripts/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /merge_args=\(--squash\)/);
@@ -399,7 +409,7 @@ describe("Store capabilities", () => {
   });
 
   it("does not gate release merges on wiki publish checks", async () => {
-    const scriptPath = new URL("../implementations/release-merge/release-merge.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-merge/scripts/release-merge.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /Deploy Wiki to GitHub Pages/);
@@ -408,7 +418,7 @@ describe("Store capabilities", () => {
   });
 
   it("creates release branches from the configured default branch", async () => {
-    const scriptPath = new URL("../implementations/release-prepare/prepare.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-prepare/scripts/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /checkout_default_branch/);
@@ -416,7 +426,7 @@ describe("Store capabilities", () => {
   });
 
   it("pushes release branches with the engine-selected GitHub token", async () => {
-    const scriptPath = new URL("../implementations/release-prepare/prepare.sh", import.meta.url);
+    const scriptPath = new URL("../implementations/release-prepare/scripts/prepare.sh", import.meta.url);
     const script = await readFile(scriptPath, "utf8");
 
     assert.match(script, /git_push\(\)/);

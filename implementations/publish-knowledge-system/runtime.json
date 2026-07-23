@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "publish-knowledge-system.sh",
+        "shell": "scripts/publish-knowledge-system.sh",
         "timeoutSec": 300
       },
       {

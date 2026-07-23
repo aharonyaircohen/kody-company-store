@@ -13,13 +13,17 @@
     "evidence": []
   },
   "capabilities": [
-    "cleanup",
-    "code-health",
-    "docs-health",
+    "clear-empty-goals",
+    "cleanup-branches",
+    "dependency-bump",
+    "dead-code-sweep",
+    "architecture-audit",
+    "type-debt",
+    "docs-readme",
+    "docs-code",
     "documentation-maintenance",
-    "memory-compaction",
-    "analyze-dependencies",
-    "analyze-documentation",
+    "compact-memory",
+    "build-knowledge-graph",
     "skills-research"
   ],
   "route": [],

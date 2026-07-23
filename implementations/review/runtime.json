@@ -49,7 +49,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "install-codegraph.sh"
+        "shell": "scripts/install-codegraph.sh"
       },
       {
         "script": "setLifecycleLabel",

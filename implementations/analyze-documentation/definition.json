@@ -1,9 +1,0 @@
-{
-  "id": "analyze-documentation",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "analyze-documentation"
-  },
-  "compatibleCapabilityRevision": "b7fbe69be2465fb5a6c22a885dc3b5fcb5bde27b0d60de4093dc125e8def997b",
-  "type": "script"
-}

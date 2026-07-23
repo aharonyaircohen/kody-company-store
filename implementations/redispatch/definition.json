@@ -5,9 +5,5 @@
     "id": "redispatch"
   },
   "compatibleCapabilityRevision": "7829bbaf44d6910246254143f93630d7b8a6d3e6afeeffc50d4465a877428755",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

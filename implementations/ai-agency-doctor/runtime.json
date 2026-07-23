@@ -31,7 +31,7 @@
         "script": "buildSyntheticPlugin"
       },
       {
-        "shell": "run-ai-agency-doctor.sh"
+        "shell": "scripts/run-ai-agency-doctor.sh"
       },
       {
         "script": "skipAgent"

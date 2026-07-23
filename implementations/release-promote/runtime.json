@@ -34,7 +34,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "release-promote.sh"
+        "shell": "scripts/release-promote.sh"
       },
       {
         "script": "skipAgent"

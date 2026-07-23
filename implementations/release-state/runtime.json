@@ -29,7 +29,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "state.sh"
+        "shell": "scripts/state.sh"
       },
       {
         "script": "skipAgent"

@@ -1,9 +1,0 @@
-{
-  "id": "analyze-pull-requests",
-  "capabilityRef": {
-    "kind": "capability",
-    "id": "analyze-pull-requests"
-  },
-  "compatibleCapabilityRevision": "862246d7b21a2520755b96c80a5da4bae10e8c269e9499f5a2aa329a0cfa04a5",
-  "type": "script"
-}

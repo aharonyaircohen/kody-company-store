@@ -5,9 +5,5 @@
     "id": "preview-health"
   },
   "compatibleCapabilityRevision": "1a40a9956e8950c59b0632f91de5e0159663bb7febc10ca810ccb74c3683cf62",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "cto"
-  }
+  "type": "script"
 }

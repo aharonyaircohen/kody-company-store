@@ -3,10 +3,10 @@ import { spawnSync } from "node:child_process";
 import { mkdirSync, rmSync, writeFileSync } from "node:fs";
 import { mkdtemp } from "node:fs/promises";
 import { tmpdir } from "node:os";
-import { join } from "node:path";
+import { dirname, join } from "node:path";
 import { describe, it } from "node:test";
 
-const scriptPath = new URL("../implementations/ai-agency-doctor/run-ai-agency-doctor.sh", import.meta.url);
+const scriptPath = new URL("../implementations/ai-agency-doctor/scripts/run-ai-agency-doctor.sh", import.meta.url);
 
 function writeJson(file, value) {
   writeFileSync(file, `${JSON.stringify(value, null, 2)}\n`);
@@ -18,7 +18,9 @@ function writeCapability(cwd, slug, profile, files = {}) {
   writeJson(join(dir, "profile.json"), profile);
   writeFileSync(join(dir, "capability.md"), `# ${slug}\n`);
   for (const [name, body] of Object.entries(files)) {
-    writeFileSync(join(dir, name), body, { mode: 0o755 });
+    const file = join(dir, name);
+    mkdirSync(dirname(file), { recursive: true });
+    writeFileSync(file, body, { mode: 0o755 });
   }
 }
 
@@ -43,13 +45,13 @@ describe("ai-agency-doctor", () => {
         {
           name: "good",
           agent: "coo",
-          scripts: { preflight: [{ shell: "good.sh" }] },
+          scripts: { preflight: [{ shell: "scripts/good.sh" }] },
         },
-        { "good.sh": "#!/usr/bin/env bash\nexit 0\n" },
+        { "scripts/good.sh": "#!/usr/bin/env bash\nexit 0\n" },
       );
       writeCapability(cwd, "broken", {
         name: "broken",
-        scripts: { preflight: [{ shell: "missing.sh" }] },
+        scripts: { preflight: [{ shell: "scripts/missing.sh" }] },
       });
       writeJson(join(cwd, ".kody", "goals", "templates", "local-loop", "state.json"), {
         state: "active",
@@ -64,7 +66,10 @@ describe("ai-agency-doctor", () => {
       assert.equal(result.status, 0, result.stderr);
       assert.match(result.stdout, /AI Agency Health: Red/);
       assert.match(result.stdout, /capability\.broken\.missing-agent/);
-      assert.match(result.stdout, /capability\.broken\.missing-shell\.missing\.sh/);
+      assert.match(
+        result.stdout,
+        /capability\.broken\.missing-shell\.scripts\/missing\.sh/,
+      );
       assert.match(result.stdout, /active-capability\.store-only\.store-or-missing/);
       assert.match(result.stdout, /active-goal\.store-loop\.store-or-missing/);
       assert.match(result.stdout, /goal-template\.local-loop\.not-inactive/);

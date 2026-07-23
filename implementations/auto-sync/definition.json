@@ -5,9 +5,5 @@
     "id": "auto-sync"
   },
   "compatibleCapabilityRevision": "95863ec32addd3e8307626c6bbe2ca3ba06cba579ed9e7e8276d8cfe221663a3",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

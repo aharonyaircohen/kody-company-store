@@ -3,6 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "audit:implementations": "node scripts/audit-implementations.mjs",
     "validate:implementations": "node scripts/refine-capability-contracts.mjs",
     "migrate:implementations": "node scripts/refine-capability-contracts.mjs --apply",
     "test": "node --test \"cms/tests/*.test.mjs\" \"tests/*.test.mjs\"",

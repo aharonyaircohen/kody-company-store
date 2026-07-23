@@ -34,7 +34,7 @@
         "script": "loadTaskState"
       },
       {
-        "shell": "publish.sh",
+        "shell": "scripts/publish.sh",
         "timeoutSec": 900
       },
       {

@@ -7,7 +7,7 @@ import { join } from "node:path";
 import { describe, it } from "node:test";
 
 const storeRoot = new URL("..", import.meta.url).pathname;
-const scriptPath = new URL("../implementations/ai-agency-health-matrix/run-ai-agency-health-matrix.sh", import.meta.url);
+const scriptPath = new URL("../implementations/ai-agency-health-matrix/scripts/run-ai-agency-health-matrix.sh", import.meta.url);
 const healthGoalPath = new URL("../goals/templates/ai-agency-health/state.json", import.meta.url);
 
 function writeJson(file, value) {

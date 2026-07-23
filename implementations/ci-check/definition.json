@@ -5,9 +5,5 @@
     "id": "ci-check"
   },
   "compatibleCapabilityRevision": "6b1f95449683a559dcf4f0ecd0a016fbdd1400a9f368aa397a9f975915fe5457",
-  "type": "agent",
-  "agentRef": {
-    "kind": "agent",
-    "id": "kody"
-  }
+  "type": "script"
 }

@@ -44,7 +44,7 @@
         "with": {
           "jobsDir": ".kody/capabilities",
           "slugArg": "capability",
-          "shell": "tick.sh",
+          "shell": "scripts/tick.sh",
           "fenceLabel": "kody-job-next-state"
         }
       }

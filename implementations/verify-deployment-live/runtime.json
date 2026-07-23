@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "check.sh"
+        "shell": "scripts/check.sh"
       },
       {
         "script": "skipAgent"

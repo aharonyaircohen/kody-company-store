@@ -9,7 +9,7 @@ import { describe, it } from "node:test";
 
 const profilePath = new URL("../implementations/agency-supervisor/runtime.json", import.meta.url);
 const implementationPath = new URL("../implementations/agency-supervisor/definition.json", import.meta.url);
-const scriptPath = new URL("../implementations/agency-supervisor/run-agency-supervisor.sh", import.meta.url);
+const scriptPath = new URL("../implementations/agency-supervisor/scripts/run-agency-supervisor.sh", import.meta.url);
 const goalPath = new URL("../goals/templates/agency-supervision-loop/state.json", import.meta.url);
 const workflowPath = new URL("../workflows/agency-supervision-loop/workflow.json", import.meta.url);
 
@@ -57,7 +57,7 @@ describe("agency supervisor", () => {
     assert.equal(profile.capabilityKind, "observe");
     assert.equal(implementation.type, "script");
     assert.equal(implementation.agentRef, undefined);
-    assert.deepEqual(profile.scripts.preflight, [{ shell: "run-agency-supervisor.sh" }, { script: "skipAgent" }]);
+    assert.deepEqual(profile.scripts.preflight, [{ shell: "scripts/run-agency-supervisor.sh" }, { script: "skipAgent" }]);
     assert.equal(goal.schedule, "1h");
     assert.deepEqual(goal.loopTarget, { type: "workflow", id: "agency-supervision-loop" });
     assert.deepEqual(workflow.steps[0].report, {

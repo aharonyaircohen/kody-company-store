@@ -27,7 +27,7 @@
   "scripts": {
     "preflight": [
       {
-        "shell": "run-agency-supervisor.sh"
+        "shell": "scripts/run-agency-supervisor.sh"
       },
       {
         "script": "skipAgent"

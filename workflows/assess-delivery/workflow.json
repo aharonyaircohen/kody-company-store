@@ -4,7 +4,6 @@
   "createdAt": "2026-07-22T00:00:00Z",
   "updatedAt": "2026-07-22T00:00:00Z",
   "steps": [
-    { "capability": "analyze-ci-health" },
-    { "capability": "analyze-pull-requests" }
+    { "capability": "build-knowledge-graph" }
   ]
 }

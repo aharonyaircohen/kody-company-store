@@ -1,0 +1,7 @@
+{
+  "name": "Code Health",
+  "steps": [
+    { "capability": "architecture-audit" },
+    { "capability": "type-debt" }
+  ]
+}
